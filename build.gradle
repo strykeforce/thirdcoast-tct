@@ -1,0 +1,24 @@
+plugins {
+    id "net.ltgt.errorprone" version "0.0.13"
+}
+apply plugin: 'net.ltgt.apt-idea'
+
+dependencies {
+    compile wpilib()
+    compile talonSrx()
+    compile navx()
+    compile project(':core')
+    compile group: 'org.jline', name: 'jline-terminal', version: '3.5.1'
+    compile group: 'org.jline', name: 'jline-reader', version: '3.5.1'
+    apt 'com.google.dagger:dagger-compiler:2.12'
+}
+
+def robotManifest = {
+    attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
+    attributes 'Robot-Class': 'org.strykeforce.thirdcoast.telemetry.app.Main'
+}
+
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    manifest robotManifest
+}
