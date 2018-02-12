@@ -1,32 +1,51 @@
 package org.strykeforce.thirdcoast.telemetry.tct;
 
-import edu.wpi.first.wpilibj.SampleRobot;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.hal.HAL;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class Robot extends SampleRobot {
+public class Robot extends RobotBase {
 
-  private static final Logger logger = LoggerFactory.getLogger(Robot.class);
-  private Executor executor = Executors.newSingleThreadExecutor();
+  private static final String TELE_WARN = "Driver Station must be in TeleOperated mode";
+  private static final double DELAY = 0.01;
 
-  @Override
-  protected void robotInit() {
+  private final Executor executor = Executors.newSingleThreadExecutor();
+  private boolean warningReported = false;
+
+  public void startCompetition() {
+    // Tell the DS that the robot is ready to be enabled
+    HAL.observeUserProgramStarting();
     executor.execute(new Main());
-  }
 
-  @Override
-  public void operatorControl() {
-    while (isEnabled()) {
-      try {
-        Thread.sleep(10);
-      } catch (InterruptedException e) {
-        logger.debug("operatorControl interrupted", e);
+    while (true) {
+      if (isDisabled()) {
+        while (isDisabled()) {
+          Timer.delay(DELAY);
+        }
+      } else if (isAutonomous()) {
+        if (!warningReported) {
+          DriverStation.reportWarning(TELE_WARN, false);
+          warningReported = true;
+        }
+        while (isAutonomous() && !isDisabled()) {
+          Timer.delay(DELAY);
+        }
+      } else if (isTest()) {
+        if (!warningReported) {
+          DriverStation.reportWarning(TELE_WARN, false);
+          warningReported = true;
+        }
+        while (isTest() && isEnabled()) {
+          Timer.delay(DELAY);
+        }
+      } else {
+        while (isOperatorControl() && !isDisabled()) {
+          Timer.delay(DELAY);
+        }
       }
-    }
+    } /* while loop */
   }
-
-  @Override
-  protected void disabled() {}
 }
