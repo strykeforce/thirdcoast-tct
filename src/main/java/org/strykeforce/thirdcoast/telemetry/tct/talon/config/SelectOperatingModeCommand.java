@@ -20,16 +20,7 @@ public class SelectOperatingModeCommand extends AbstractTalonConfigCommand {
 
   @Override
   public void perform() {
-    String[] types = {
-      "Voltage",
-      "Speed",
-      "Position",
-      "Current",
-      "Motion Magic",
-      "Motion Profile",
-      "Follower",
-      "Disabled"
-    };
+    String[] types = {"Percent Output", "Velocity", "Motion Magic", "Position"};
     terminal.writer().println();
     for (int i = 0; i < types.length; i++) {
       terminal.writer().printf("%2d - %s%n", i + 1, types[i]);
@@ -65,22 +56,10 @@ public class SelectOperatingModeCommand extends AbstractTalonConfigCommand {
           mode = ControlMode.Velocity;
           break;
         case 3:
-          mode = ControlMode.Position;
-          break;
-        case 4:
-          mode = ControlMode.Current;
-          break;
-        case 6:
           mode = ControlMode.MotionMagic;
           break;
-        case 7:
-          mode = ControlMode.MotionProfile;
-          break;
-        case 8:
-          mode = ControlMode.Follower;
-          break;
-        case 9:
-          mode = ControlMode.Disabled;
+        case 4:
+          mode = ControlMode.Position;
           break;
         default:
           continue;
