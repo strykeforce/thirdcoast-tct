@@ -51,11 +51,6 @@ public abstract class TalonMenuModule {
   @Binds
   @IntoSet
   @Named("TALON")
-  public abstract Command inspectCommand(InspectCommand command);
-
-  @Binds
-  @IntoSet
-  @Named("TALON")
   public abstract Command runCommand(RunCommand command);
 
   @Binds

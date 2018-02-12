@@ -1,9 +1,9 @@
 package org.strykeforce.thirdcoast.telemetry.tct.talon;
 
-import static org.strykeforce.thirdcoast.telemetry.tct.talon.config.AbstractTalonConfigCommand.VERIFY;
-
 import com.ctre.phoenix.ParamEnum;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
+import java.io.PrintWriter;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Set;
@@ -12,6 +12,12 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.inject.Inject;
 import org.jline.reader.LineReader;
+import org.strykeforce.thirdcoast.talon.Encoder;
+import org.strykeforce.thirdcoast.talon.LimitSwitch;
+import org.strykeforce.thirdcoast.talon.MotionMagicTalonConfiguration;
+import org.strykeforce.thirdcoast.talon.PIDTalonConfiguration;
+import org.strykeforce.thirdcoast.talon.SoftLimit;
+import org.strykeforce.thirdcoast.talon.TalonConfiguration;
 import org.strykeforce.thirdcoast.talon.ThirdCoastTalon;
 import org.strykeforce.thirdcoast.telemetry.tct.AbstractCommand;
 import org.strykeforce.thirdcoast.telemetry.tct.Messages;
@@ -20,11 +26,12 @@ import org.strykeforce.thirdcoast.telemetry.tct.Messages;
 @ParametersAreNonnullByDefault
 public class ListCommand extends AbstractCommand {
 
-  public static final String NAME = VERIFY + "List Selected Talons with Current Register Values";
-  private static final String FORMAT_DESCRIPTION = "%12s";
-  private static final String FORMAT_DOUBLE = "%12.3f";
-  private static final String FORMAT_INTEGER = "%12d";
-  private static final String FORMAT_STRING = "%12s";
+  public static final String NAME = "List Selected Talons with Configuration";
+  private static final String FORMAT_DESCRIPTION = "%14s";
+  private static final String FORMAT_CONFIG_DESCRIPTION = "%-24s";
+  private static final String FORMAT_DOUBLE = "%14.3f";
+  private static final String FORMAT_INTEGER = "%14d";
+  private static final String FORMAT_STRING = "%14s";
 
   private final TalonSet talonSet;
 
@@ -62,13 +69,18 @@ public class ListCommand extends AbstractCommand {
 
   @Override
   public void perform() {
+    PrintWriter writer = terminal.writer();
+
+    //
+    // read talons directly
+    //
     Set<ThirdCoastTalon> talons = talonSet.selected();
-    terminal.writer().println();
+    writer.println();
     if (talons.size() == 0) {
-      terminal.writer().println(Messages.NO_TALONS);
+      writer.println(Messages.NO_TALONS);
       return;
     }
-    terminal.writer().print(header());
+    writer.print(header());
     outputString(
         "Mode:",
         talons
@@ -81,7 +93,6 @@ public class ListCommand extends AbstractCommand {
     outputParameter("D:", ParamEnum.eProfileParamSlot_D);
     outputParameter("F:", ParamEnum.eProfileParamSlot_F);
     outputParameter("IZone:", ParamEnum.eProfileParamSlot_IZone);
-    outputParameter("Max I Accum:", ParamEnum.eProfileParamSlot_MaxIAccum);
     outputParameter("Allowed Err:", ParamEnum.eProfileParamSlot_AllowableErr);
 
     outputInteger(
@@ -120,7 +131,101 @@ public class ListCommand extends AbstractCommand {
 
     outputParameter("VM Period:", ParamEnum.eSampleVelocityPeriod);
     outputParameter("VM Window:", ParamEnum.eSampleVelocityWindow);
-    terminal.writer().println();
+    writer.println();
+
+    //
+    // read talon configuration
+    //
+    writer.println(Messages.bold("Current session configuration:"));
+    TalonConfiguration config = talonSet.talonConfigurationBuilder().build();
+    writer.println();
+
+    stringLine("Mode:", config.getMode().name());
+    doubleLine("Max Setpoint:", config.getSetpointMax());
+    Encoder encoder = config.getEncoder();
+    if (encoder != null) {
+      writer.println();
+      stringLine("Encoder:", encoder.getDevice().name());
+      booleanLine("  Reversed:", encoder.isReversed());
+      writer.println();
+    } else {
+      stringLine("Encoder:", "DEFAULT");
+    }
+
+    NeutralMode neutralMode = config.getBrakeInNeutral();
+    stringLine("Neutral Mode:", neutralMode != null ? neutralMode.name() : "DEFAULT");
+    booleanLine("Output Reversed:", config.getOutputReversed());
+    VelocityMeasPeriod period = config.getVelocityMeasurementPeriod();
+    stringLine("Vel. Meas. Period:", period != null ? period.name() : "DEFAULT");
+    intLine("Vel. Meas. Window:", config.getVelocityMeasurementWindow());
+
+    LimitSwitch limit = config.getForwardLimitSwitch();
+    if (limit != null) {
+      writer.println();
+      booleanLine("Fwd Limit Switch:", limit.isEnabled());
+      booleanLine("  Normally Open :", limit.isNormallyOpen());
+    } else {
+      stringLine("Fwd Limit Switch:", "DEFAULT");
+    }
+
+    limit = config.getReverseLimitSwitch();
+    if (limit != null) {
+      writer.println();
+      booleanLine("Rev Limit Switch:", limit.isEnabled());
+      booleanLine("  Normally Open :", limit.isNormallyOpen());
+      writer.println();
+    } else {
+      stringLine("Rev Limit Switch:", "DEFAULT");
+    }
+
+    SoftLimit soft = config.getForwardSoftLimit();
+    if (soft != null) {
+      writer.println();
+      booleanLine("Fwd Soft Limit:", soft.isEnabled());
+      intLine("  Position:", soft.getPosition());
+      writer.println();
+    } else {
+      stringLine("Fwd Soft Limit:", "DEFAULT");
+    }
+
+    soft = config.getReverseSoftLimit();
+    if (soft != null) {
+      writer.println();
+      booleanLine("Rev Soft Limit:", soft.isEnabled());
+      intLine("  Position:", soft.getPosition());
+      writer.println();
+    } else {
+      stringLine("Rev Soft Limit:", "DEFAULT");
+    }
+
+    intLine("Current Limit:", config.getContinuousCurrentLimit());
+    doubleLine("Voltage Ramp Rate:", config.getOpenLoopRampTime());
+
+    if (config instanceof PIDTalonConfiguration) {
+      PIDTalonConfiguration pid = (PIDTalonConfiguration) config;
+      writer.println();
+      doubleLine("P:", pid.getPGain());
+      doubleLine("I:", pid.getIGain());
+      doubleLine("D:", pid.getDGain());
+      doubleLine("F:", pid.getFGain());
+      intLine("I-zone:", pid.getIZone());
+      writer.println();
+      if (pid instanceof MotionMagicTalonConfiguration) {
+        MotionMagicTalonConfiguration mmtc = (MotionMagicTalonConfiguration) pid;
+        intLine("MM Cruise Velocity:", mmtc.getMotionMagicCruiseVelocity());
+        intLine("MM Acceleration:", mmtc.getMotionMagicAcceleration());
+        writer.println();
+      }
+      intLine("Allowable CL Error:", pid.getAllowableClosedLoopError());
+      doubleLine("Nominal CL Voltage:", pid.getNominalClosedLoopVoltage());
+      doubleLine("Output Voltage Max:", pid.getVoltageCompSaturation());
+      doubleLine("Fwd Peak Output Voltage:", pid.getForwardOutputVoltagePeak());
+      doubleLine("Rev Peak Output Voltage:", pid.getReverseOutputVoltagePeak());
+      doubleLine("Fwd Nom. Output Voltage:", pid.getForwardOutputVoltageNominal());
+      doubleLine("Rev Nom. Output Voltage:", pid.getReverseOutputVoltageNominal());
+    }
+
+    writer.println();
   }
 
   private void outputParameter(String description, ParamEnum param) {
@@ -188,5 +293,45 @@ public class ListCommand extends AbstractCommand {
     }
     sb.append("\n");
     return Messages.bold(sb.toString());
+  }
+
+  private void stringLine(String description, String value) {
+    StringBuilder sb = new StringBuilder();
+    Formatter formatter = new Formatter(sb);
+    sb.append(Messages.bold(String.format(FORMAT_CONFIG_DESCRIPTION, description)));
+    formatter.format(FORMAT_STRING, value);
+    terminal.writer().println(sb.toString());
+  }
+
+  private void booleanLine(String description, @Nullable Boolean value) {
+    StringBuilder sb = new StringBuilder();
+    Formatter formatter = new Formatter(sb);
+    sb.append(Messages.bold(String.format(FORMAT_CONFIG_DESCRIPTION, description)));
+    formatter.format(FORMAT_STRING, value == null ? "DEFAULT" : (value ? "YES" : "NO"));
+    terminal.writer().println(sb.toString());
+  }
+
+  private void intLine(String description, @Nullable Integer value) {
+    StringBuilder sb = new StringBuilder();
+    Formatter formatter = new Formatter(sb);
+    sb.append(Messages.bold(String.format(FORMAT_CONFIG_DESCRIPTION, description)));
+    if (value != null) {
+      formatter.format(FORMAT_INTEGER, value);
+    } else {
+      formatter.format(FORMAT_STRING, "DEFAULT");
+    }
+    terminal.writer().println(sb.toString());
+  }
+
+  private void doubleLine(String description, @Nullable Double value) {
+    StringBuilder sb = new StringBuilder();
+    Formatter formatter = new Formatter(sb);
+    sb.append(Messages.bold(String.format(FORMAT_CONFIG_DESCRIPTION, description)));
+    if (value != null) {
+      formatter.format(FORMAT_DOUBLE, value);
+    } else {
+      formatter.format(FORMAT_STRING, "DEFAULT");
+    }
+    terminal.writer().println(sb.toString());
   }
 }

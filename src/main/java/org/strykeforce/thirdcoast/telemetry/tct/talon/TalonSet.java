@@ -68,6 +68,7 @@ public class TalonSet {
 
   public TalonConfigurationBuilder talonConfigurationBuilder() {
     if (talonConfigurationBuilder == null) {
+      logger.debug("talonConfigurationBuilder == null, instantiating new");
       talonConfigurationBuilder = new TalonConfigurationBuilder();
     }
     return talonConfigurationBuilder;
