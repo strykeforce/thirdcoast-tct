@@ -18,6 +18,7 @@ public class ForwardSoftLimitCommand extends AbstractIntConfigCommand {
 
   @Override
   protected void config(ThirdCoastTalon talon, int value) {
+    logger.info("configForwardSoftLimitThreshold = {} for {}", value, talon.getDescription());
     talon.configForwardSoftLimitThreshold(value, TIMEOUT_MS);
   }
 

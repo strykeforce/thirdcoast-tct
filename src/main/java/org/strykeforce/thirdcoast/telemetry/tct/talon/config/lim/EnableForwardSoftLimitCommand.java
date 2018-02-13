@@ -18,6 +18,7 @@ public class EnableForwardSoftLimitCommand extends AbstractBooleanConfigCommand 
 
   @Override
   protected void config(ThirdCoastTalon talon, boolean value) {
+    logger.info("configForwardSoftLimitEnable = {} for {}", value, talon.getDescription());
     talon.configForwardSoftLimitEnable(value, TIMEOUT_MS);
   }
 

@@ -31,7 +31,7 @@ class ReverseSoftLimitCommandTest extends AbstractTalonConfigCommandTest {
         1 * reader.readLine(_) >>> ["27"]
 
         1 * talon.configReverseSoftLimitThreshold(27, AbstractDoubleConfigCommand.TIMEOUT_MS) // 27
-        1 * talon.getDescription()
+        2 * talon.getDescription()
         0 * talon._
     }
 

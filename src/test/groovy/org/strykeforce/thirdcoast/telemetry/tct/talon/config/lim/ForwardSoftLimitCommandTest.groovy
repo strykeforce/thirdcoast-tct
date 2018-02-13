@@ -31,7 +31,7 @@ class ForwardSoftLimitCommandTest extends AbstractTalonConfigCommandTest {
         1 * reader.readLine(_) >>> ["27"]
 
         1 * talon.configForwardSoftLimitThreshold(27, AbstractDoubleConfigCommand.TIMEOUT_MS) // 27
-        1 * talon.getDescription()
+        2 * talon.getDescription()
         0 * talon._
     }
 

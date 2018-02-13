@@ -18,6 +18,7 @@ public class EnableReverseSoftLimitCommand extends AbstractBooleanConfigCommand 
 
   @Override
   protected void config(ThirdCoastTalon talon, boolean value) {
+    logger.info("configReverseSoftLimitEnable = {} for {}", value, talon.getDescription());
     talon.configReverseSoftLimitEnable(value, TIMEOUT_MS);
   }
 

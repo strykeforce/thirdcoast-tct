@@ -18,6 +18,7 @@ public class ReverseSoftLimitCommand extends AbstractIntConfigCommand {
 
   @Override
   protected void config(ThirdCoastTalon talon, int value) {
+    logger.info("configReverseSoftLimitThreshold = {} for {}", value, talon.getDescription());
     talon.configReverseSoftLimitThreshold(value, TIMEOUT_MS);
   }
 
