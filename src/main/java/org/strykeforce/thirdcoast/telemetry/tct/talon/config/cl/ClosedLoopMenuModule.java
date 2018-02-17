@@ -71,4 +71,14 @@ public abstract class ClosedLoopMenuModule {
   @IntoSet
   @Named("TALON_CONFIG_CL")
   public abstract Command motionMagicCruiseVelocityCommand(MotionCruiseVelocityCommand command);
+
+  @Binds
+  @IntoSet
+  @Named("TALON_CONFIG_CL")
+  public abstract Command dumpAccumulatorCommand(DumpAccumulatorCommand command);
+
+  @Binds
+  @IntoSet
+  @Named("TALON_CONFIG_CL")
+  public abstract Command maxAccumulatorCommand(MaxAccumulatorCommand command);
 }

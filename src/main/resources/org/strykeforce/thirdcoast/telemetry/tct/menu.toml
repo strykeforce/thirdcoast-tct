@@ -34,6 +34,8 @@ TALON_CONFIG_CL = [
   "org.strykeforce.thirdcoast.telemetry.tct.talon.config.cl.AllowableClosedLoopErrorCommand",
   "org.strykeforce.thirdcoast.telemetry.tct.talon.config.cl.MotionMagicCruiseVelocityCommand",
   "org.strykeforce.thirdcoast.telemetry.tct.talon.config.cl.MotionMagicAccelerationCommand",
+  "org.strykeforce.thirdcoast.telemetry.tct.talon.config.cl.MaxAccumulatorCommand",
+  "org.strykeforce.thirdcoast.telemetry.tct.talon.config.cl.DumpAccumulatorCommand",
 ]
 
 TALON_CONFIG_ENC = [
