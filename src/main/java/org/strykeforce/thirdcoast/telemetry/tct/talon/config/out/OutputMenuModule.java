@@ -60,5 +60,15 @@ public abstract class OutputMenuModule {
   @Binds
   @IntoSet
   @Named("TALON_CONFIG_OUT")
+  public abstract Command peakCurrentLimitCommand(PeakCurrentLimitCommand command);
+
+  @Binds
+  @IntoSet
+  @Named("TALON_CONFIG_OUT")
+  public abstract Command peakCurrentDurationCommand(PeakCurrentDurationCommand command);
+
+  @Binds
+  @IntoSet
+  @Named("TALON_CONFIG_OUT")
   public abstract Command brakeInNeutralCommand(BrakeInNeutralCommand command);
 }

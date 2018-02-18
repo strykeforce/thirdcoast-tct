@@ -6,28 +6,22 @@ import org.strykeforce.thirdcoast.talon.ThirdCoastTalon;
 import org.strykeforce.thirdcoast.telemetry.tct.talon.TalonSet;
 import org.strykeforce.thirdcoast.telemetry.tct.talon.config.AbstractIntConfigCommand;
 
-/** Configure Continuous Current Limit */
-public class CurrentLimitCommand extends AbstractIntConfigCommand {
+public class PeakCurrentLimitCommand extends AbstractIntConfigCommand {
 
-  public static final String NAME = "Continuous Current Limit";
+  public static final String NAME = "Peak Current Limit";
 
   @Inject
-  public CurrentLimitCommand(LineReader reader, TalonSet talonSet) {
+  public PeakCurrentLimitCommand(LineReader reader, TalonSet talonSet) {
     super(NAME, reader, talonSet);
   }
 
   @Override
   protected void saveConfig(int value) {
-    talonSet.talonConfigurationBuilder().currentLimit(value);
+    talonSet.talonConfigurationBuilder().peakCurrentLimit(value);
   }
 
   @Override
   protected void config(ThirdCoastTalon talon, int value) {
-    if (value > 0) {
-      talon.configContinuousCurrentLimit(value, TIMEOUT_MS);
-      talon.enableCurrentLimit(true);
-      return;
-    }
-    talon.enableCurrentLimit(false);
+    talon.configPeakCurrentLimit(value, TIMEOUT_MS);
   }
 }

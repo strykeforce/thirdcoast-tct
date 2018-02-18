@@ -64,9 +64,11 @@ public class SelectCommand extends AbstractCommand {
       terminal.writer().println(Messages.bold(msg));
       return;
     }
-    TalonConfigurationBuilder builder = talonSet.talonConfigurationBuilder();
+
+    TalonConfigurationBuilder builder = new TalonConfigurationBuilder();
     TalonConfiguration config = builder.build();
     talonSet.setActiveTalonConfiguration(config);
+
     talonSet.clearSelected();
     List<String> ids = Arrays.asList(line.split(","));
     for (String s : ids) {
@@ -80,7 +82,6 @@ public class SelectCommand extends AbstractCommand {
         continue;
       }
       ThirdCoastTalon talon = (ThirdCoastTalon) talonFactory.getTalon(id);
-      config.configure(talon);
       talonSet.selectTalon(talon);
       logger.info("selected talon id {} with config {}", id, config.getName());
     }
