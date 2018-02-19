@@ -10,7 +10,6 @@ version = '18.1.5'
 
 repositories {
     jcenter()
-    mavenLocal()
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' } // nanohttpd
 }
 
