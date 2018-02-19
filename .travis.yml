@@ -12,7 +12,7 @@ deploy:
       - tct/build/libs/*.jar
       - tct/script/tct.sh
     skip_cleanup:  true
-    body: "See CHANGELOG.md for details."
+    body: "Rename or link JAR file to tct.jar. See CHANGELOG.md for updates."
     on:
       tags:        true
 
