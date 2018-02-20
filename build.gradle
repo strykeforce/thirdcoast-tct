@@ -6,7 +6,7 @@ plugins {
     id 'net.ltgt.apt-idea' version '0.13'
 }
 
-version = '18.1.5'
+version = '18.1.6'
 
 repositories {
     jcenter()
@@ -17,7 +17,7 @@ dependencies {
     compile wpilib()
     compile ctre()
     compile navx()
-    compile 'org.strykeforce.thirdcoast:core:18.1.3'
+    compile 'org.strykeforce.thirdcoast:core:18.1.3.1'
     compile 'org.jline:jline-terminal:3.5.2'
     compile 'org.jline:jline-reader:3.5.2'
     compile 'ch.qos.logback:logback-classic:1.2.3'
