@@ -1,9 +1,9 @@
 plugins {
     id 'java'
     id 'groovy'
-    id 'jaci.openrio.gradle.GradleRIO' version '2018.01.22'
+    id 'jaci.openrio.gradle.GradleRIO' version '2018.03.06'
     id 'com.diffplug.gradle.spotless' version '3.9.0'
-    id 'net.ltgt.apt-idea' version '0.13'
+    id 'net.ltgt.apt-idea' version '0.15'
 }
 
 version = '18.1.6'
