@@ -48,6 +48,11 @@ public abstract class ConfigMenuModule {
   @Binds
   @IntoSet
   @Named("TALON_CONFIG")
+  public abstract Command followCommand(FollowCommand command);
+
+  @Binds
+  @IntoSet
+  @Named("TALON_CONFIG")
   public abstract Command closedLoopConfigCommand(ClosedLoopConfigCommand command);
 
   @Binds

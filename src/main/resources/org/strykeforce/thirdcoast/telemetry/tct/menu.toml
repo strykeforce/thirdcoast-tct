@@ -19,6 +19,7 @@ TALON = [
 
 TALON_CONFIG = [
   "org.strykeforce.thirdcoast.telemetry.tct.talon.config.SelectOperatingModeCommand",
+  "org.strykeforce.thirdcoast.telemetry.tct.talon.config.FollowCommand",
   "org.strykeforce.thirdcoast.telemetry.tct.talon.config.ClosedLoopConfigCommand",
   "org.strykeforce.thirdcoast.telemetry.tct.talon.config.OutputConfigCommand",
   "org.strykeforce.thirdcoast.telemetry.tct.talon.config.EncoderConfigCommand",

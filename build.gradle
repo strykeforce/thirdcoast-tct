@@ -6,7 +6,7 @@ plugins {
     id 'net.ltgt.apt-idea' version '0.15'
 }
 
-version = '18.1.6'
+version = '18.1.7'
 
 repositories {
     jcenter()
