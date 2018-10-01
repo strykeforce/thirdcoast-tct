@@ -4,6 +4,7 @@ import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
+import org.strykeforce.thirdcoast.command.Parameter.Type.*
 import org.strykeforce.thirdcoast.readBoolean
 import org.strykeforce.thirdcoast.readDouble
 import org.strykeforce.thirdcoast.readInt
@@ -13,17 +14,19 @@ private val logger = KotlinLogging.logger {}
 
 interface Parameter {
     val name: String
-    val type: String
+    val type: Type
     val desc: String
     fun readInt(reader: LineReader, default: Int = 0): Int
     fun readDouble(reader: LineReader, default: Double = 0.0): Double
     fun readBoolean(reader: LineReader, default: Boolean = false): Boolean
+
+    enum class Type { DOUBLE, INTEGER, BOOLEAN }
 }
 
 class ParameterImpl(command: Command, toml: TomlTable) : Parameter {
     override val name = toml.getString("name") ?: "NO NAME"
     override val desc = toml.getString("desc") ?: "NO DESCRIPTION"
-    override val type = toml.getString("type") ?: throw IllegalArgumentException("type missing")
+    override val type = Parameter.Type.valueOf(toml.getString("type") ?: "NULL")
     private val range = toml.getArray("range")?.let { it.getDouble(0).rangeTo(it.getDouble(1)) }
     val prompt = command.prompt(name)
 
@@ -58,18 +61,24 @@ class ParameterImpl(command: Command, toml: TomlTable) : Parameter {
         }
     }
 
-    private fun checkRange(value: Double): Double =
-        if (range?.contains(value) == true) value else throw java.lang.IllegalArgumentException()
+    private fun checkRange(value: Double): Double {
+        if (range == null) return value
+        if (range.contains(value)) {
+            return value
+        } else {
+            logger.debug { "range check failed: $range" }
+            throw java.lang.IllegalArgumentException()
+        }
+    }
 
 
     private fun checkRange(value: Int) = checkRange(value.toDouble()).toInt()
 
     private fun invalidInput(terminal: Terminal) {
         val messageType = when (type) {
-            "Int" -> "integer"
-            "Double" -> "number"
-            "Boolean" -> "boolean"
-            else -> "value"
+            INTEGER -> "integer"
+            DOUBLE -> "number"
+            BOOLEAN -> "boolean"
         }
         val messageRange = if (range != null) " in range (${range.start} - ${range.endInclusive})" else ""
         terminal.warn("enter a $messageType$messageRange")

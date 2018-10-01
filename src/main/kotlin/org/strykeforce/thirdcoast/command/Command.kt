@@ -1,7 +1,6 @@
 package org.strykeforce.thirdcoast.command
 
 import net.consensys.cava.toml.TomlTable
-import org.jline.terminal.Terminal
 import org.strykeforce.thirdcoast.talon.SlotParameterCommand
 
 interface Command {
@@ -10,7 +9,7 @@ interface Command {
     val menu: String
     val order: Int
     val children: List<Command>
-    fun execute(terminal: Terminal): Command
+    fun execute(): Command
 
     companion object {
         fun createFromToml(toml: TomlTable, parent: MenuCommand? = null, key: String = "ROOT"): Command {

@@ -6,9 +6,12 @@ import org.jline.reader.LineReaderBuilder
 import org.jline.terminal.Terminal
 import org.strykeforce.thirdcoast.readIntList
 
-class TestCommand(parent: Command?, key: String, toml: TomlTable) : AbstractCommand(parent, key, toml) {
+class TestCommand(
+    parent: Command?,
+    key: String, toml: TomlTable
+) : AbstractCommand(parent, key, toml) {
 
-    override fun execute(terminal: Terminal): Command {
+    override fun execute(): Command {
         val reader = LineReaderBuilder.builder().terminal(terminal).build()
         val writer = terminal.writer()
         writer.println(reader.readIntList("ints> ", listOf(10, 11, 12)))
@@ -17,7 +20,7 @@ class TestCommand(parent: Command?, key: String, toml: TomlTable) : AbstractComm
         val config = TalonSRXConfiguration()
         talon.getAllConfigs(config)
         writer.println(config.toString("talon1"))
-        return super.execute(terminal)
+        return super.execute()
     }
 }
 

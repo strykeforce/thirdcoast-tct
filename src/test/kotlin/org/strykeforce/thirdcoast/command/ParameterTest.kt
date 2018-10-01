@@ -5,7 +5,6 @@ import net.consensys.cava.toml.Toml
 import net.consensys.cava.toml.TomlTable
 import org.assertj.core.api.Assertions.assertThat
 import org.jline.reader.LineReader
-import org.jline.reader.LineReaderBuilder
 import org.jline.terminal.Terminal
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -17,6 +16,7 @@ import org.koin.standalone.StandAloneContext.stopKoin
 import org.koin.standalone.inject
 import org.koin.test.KoinTest
 import org.koin.test.declare
+import org.strykeforce.thirdcoast.command.Parameter.Type.DOUBLE
 import java.io.PrintWriter
 import java.util.*
 
@@ -25,9 +25,7 @@ internal class ParameterTest : KoinTest {
     private val name = UUID.randomUUID().toString()
     private val desc = UUID.randomUUID().toString()
     private val key = UUID.randomUUID().toString()
-    private val type = listOf("Int", "Double", "Boolean").shuffled().first()
-
-    private val lrb = mock<LineReaderBuilder>()
+    private val type = Parameter.Type.values().asList().shuffled().first()
 
     private val toml = """
             name = "$name"
@@ -68,8 +66,8 @@ internal class ParameterTest : KoinTest {
     @Test
     fun `checks range`() {
         val t = """
-            name = "foo"
-            type = "Double"
+            name = "$name"
+            type = "$DOUBLE"
             range = [-10.0, 10.0]
         """.trimIndent()
         val param: Parameter by inject { parametersOf(Toml.parse(t)) }
@@ -89,6 +87,25 @@ internal class ParameterTest : KoinTest {
 
         verify(mockPrintWriter, times(2))
             .println("enter a number in range (-10.0 - 10.0)")
+    }
+
+    @Test
+    fun `skip null range check`() {
+        val t = """
+            name = "$name"
+            type = "$DOUBLE"
+        """.trimIndent()
+        val param: Parameter by inject { parametersOf(Toml.parse(t)) }
+
+        val mockTerminal = mock<Terminal> {
+            on { writer() } doReturn mock<PrintWriter>()
+        }
+
+        val reader = mock<LineReader> {
+            on { readLine(any(), isNull(), any()) } doReturn "2767"
+            on { terminal } doReturn mockTerminal
+        }
+        assertThat(param.readInt(reader)).isEqualTo(2767)
     }
 
     @AfterEach

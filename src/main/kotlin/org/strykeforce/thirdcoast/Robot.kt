@@ -4,22 +4,25 @@ import edu.wpi.first.wpilibj.TimedRobot
 import mu.KotlinLogging
 import net.consensys.cava.toml.Toml
 import net.consensys.cava.toml.TomlTable
+import org.koin.core.parameter.parametersOf
 import org.koin.log.Logger.SLF4JLogger
+import org.koin.standalone.KoinComponent
 import org.koin.standalone.StandAloneContext.startKoin
+import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.Command
 import kotlin.concurrent.thread
 import kotlin.system.exitProcess
 
 private val logger = KotlinLogging.logger {}
 
-class Robot : TimedRobot() {
+class Robot : TimedRobot(), KoinComponent {
 
     override fun robotInit() {
         startKoin(listOf(tctModule), logger = SLF4JLogger())
         thread(name = "tct", start = true) {
             val toml = parseResource("/commands.toml")
             val root = Command.createFromToml(toml)
-            val shell = Shell(root)
+            val shell: Shell by inject { parametersOf(root) }
             shell.run()
             exitProcess(0)
         }

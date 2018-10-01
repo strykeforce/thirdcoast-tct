@@ -12,21 +12,21 @@ type = "menu"
       menu = "P"
       [talon.slot.k_P.param]
         name = "P"
-        type = "Double"
+        type = "DOUBLE"
         desc = "Sets the 'P' constant in the given parameter slot."
     [talon.slot.k_I]
       type = "slot.param"
       menu = "I"
       [talon.slot.k_I.param]
         name = "I"
-        type = "Double"
+        type = "DOUBLE"
         desc = "Sets the 'I' constant in the given parameter slot."
     [talon.slot.k_D]
       type = "slot.param"
       menu = "D"
       [talon.slot.k_D.param]
         name = "D"
-        type = "Double"
+        type = "DOUBLE"
         range = [-12.0, 12.0]
         desc = "Sets the 'D' constant in the given parameter slot."
     [talon.slot.k_F]
@@ -34,7 +34,7 @@ type = "menu"
       menu = "F"
       [talon.slot.k_F.param]
         name = "F"
-        type = "Double"
+        type = "DOUBLE"
         desc = "Sets the 'F' constant in the given parameter slot."
   [talon.status]
     type = "status"

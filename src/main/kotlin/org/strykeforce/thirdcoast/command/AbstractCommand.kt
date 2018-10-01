@@ -13,11 +13,12 @@ abstract class AbstractCommand(final override val parent: Command?, final overri
     override val order = toml.getLong("order")?.toInt() ?: 0
     override val menu = toml.getString("menu") ?: key
     override val children = emptyList<Command>()
-    override fun execute(terminal: Terminal) = parent ?: throw IllegalStateException("parent should not be null")
+    override fun execute() = parent ?: throw IllegalStateException("parent should not be null")
 
     val talonService: TalonService by inject(name = "Talon")
     val servoService: ServoService by inject(name = "Servo")
 
+    val terminal: Terminal by inject()
     val reader: LineReader by inject()
 
     override fun toString(): String {

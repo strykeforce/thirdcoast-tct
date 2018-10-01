@@ -1,7 +1,7 @@
 package org.strykeforce.thirdcoast
 
-import org.jline.reader.LineReaderBuilder
-import org.jline.terminal.TerminalBuilder
+import org.jline.reader.LineReader
+import org.jline.terminal.Terminal
 import org.jline.utils.AttributedStringBuilder
 import org.jline.utils.AttributedStyle
 import org.strykeforce.thirdcoast.command.Command
@@ -9,9 +9,11 @@ import org.strykeforce.thirdcoast.command.MenuCommand
 
 //    private val logger = KotlinLogging.logger {}
 
-class Shell(private var command: Command) {
-    private val terminal = TerminalBuilder.terminal()
-    private val reader = LineReaderBuilder.builder().terminal(terminal).build()
+class Shell(
+    private var command: Command,
+    private val terminal: Terminal,
+    private val reader: LineReader
+) {
     private val writer = terminal.writer()
 
     fun run() {
@@ -31,7 +33,7 @@ class Shell(private var command: Command) {
                     else -> command = command.children[choice - 1]
                 }
             } else {
-                command = command.execute(terminal)
+                command = command.execute()
             }
         }
     }

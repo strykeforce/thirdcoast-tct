@@ -28,6 +28,8 @@ val tctModule = module {
         )
     }
 
+    single { (command: Command) -> Shell(command, get(), get()) }
+
     factory<Parameter> { (command: Command, toml: TomlTable) -> ParameterImpl(command, toml) }
 
     single<Terminal> { TerminalBuilder.terminal() }
