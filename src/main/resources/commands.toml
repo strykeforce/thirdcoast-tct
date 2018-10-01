@@ -7,22 +7,35 @@ type = "menu"
     type = "menu"
     order = 5
     menu = "PID slot parameters"
-    [talon.slot.k_p]
+    [talon.slot.k_P]
       type = "slot.param"
       menu = "P"
-      [talon.slot.k_p.param]
-        name = "P constant"
+      [talon.slot.k_P.param]
+        name = "P"
         type = "Double"
         desc = "Sets the 'P' constant in the given parameter slot."
-    [talon.slot.k_i]
+    [talon.slot.k_I]
       type = "slot.param"
       menu = "I"
-    [talon.slot.k_d]
+      [talon.slot.k_I.param]
+        name = "I"
+        type = "Double"
+        desc = "Sets the 'I' constant in the given parameter slot."
+    [talon.slot.k_D]
       type = "slot.param"
       menu = "D"
-    [talon.slot.k_f]
+      [talon.slot.k_D.param]
+        name = "D"
+        type = "Double"
+        range = [-12.0, 12.0]
+        desc = "Sets the 'D' constant in the given parameter slot."
+    [talon.slot.k_F]
       type = "slot.param"
       menu = "F"
+      [talon.slot.k_F.param]
+        name = "F"
+        type = "Double"
+        desc = "Sets the 'F' constant in the given parameter slot."
   [talon.status]
     type = "status"
     order = 10

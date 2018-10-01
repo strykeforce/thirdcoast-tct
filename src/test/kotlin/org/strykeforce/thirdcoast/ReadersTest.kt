@@ -2,12 +2,13 @@ package org.strykeforce.thirdcoast
 
 import com.nhaarman.mockitokotlin2.*
 import net.consensys.cava.toml.Toml
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.assertj.core.api.Assertions.*
 import org.jline.reader.LineReader
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 
@@ -30,13 +31,24 @@ internal class ReadersTest {
         }
 
         @Test
-        fun `read invalid`() {
-            whenever(reader.readLine(any(), isNull(), any()))
-                .thenReturn("27.67")
-                .thenReturn("ABC")
-                .thenReturn("1, 2")
-                .thenReturn("42")
+        fun `read int`() {
+            whenever(reader.readLine(any(), isNull(), any())).thenReturn("42")
             assertThat(reader.readInt()).isEqualTo(42)
+        }
+
+        @Test
+        fun `read double`() {
+            whenever(reader.readLine(any(), isNull(), any())).thenReturn("27.67")
+            assertThat(reader.readInt()).isEqualTo(27)
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = ["ABC", "1, 2"])
+        fun `rejects invalid input`(candidate: String) {
+            whenever(reader.readLine(any(), isNull(), any())).thenReturn(candidate)
+            assertThatExceptionOfType(NumberFormatException::class.java).isThrownBy {
+                reader.readInt()
+            }
         }
     }
 
@@ -50,10 +62,18 @@ internal class ReadersTest {
         }
 
         @Test
-        fun `read invalid`() {
-            whenever(reader.readLine(any(), isNull(), any()))
-                .thenReturn("ABC", "1, 2", "27.67", "42")
+        fun `read double`() {
+            whenever(reader.readLine(any(), isNull(), any())).thenReturn("27.67")
             assertThat(reader.readDouble()).isEqualTo(27.67)
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = ["ABC", "1, 2"])
+        fun `rejects invalid input`(candidate: String) {
+            whenever(reader.readLine(any(), isNull(), any())).thenReturn(candidate)
+            assertThatExceptionOfType(NumberFormatException::class.java).isThrownBy {
+                reader.readDouble()
+            }
         }
     }
 
@@ -78,11 +98,13 @@ internal class ReadersTest {
             assertThat(reader.readBoolean()).isFalse()
         }
 
-        @Test
-        fun `read invalid`() {
-            whenever(reader.readLine(any(), isNull(), any()))
-                .thenReturn("ABC", "1", "Y")
-            assertThat(reader.readBoolean()).isTrue()
+        @ParameterizedTest
+        @ValueSource(strings = ["1", "true"])
+        fun `rejects invalid input`(candidate: String) {
+            whenever(reader.readLine(any(), isNull(), any())).thenReturn(candidate)
+            assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy {
+                reader.readBoolean()
+            }
         }
     }
 
@@ -91,8 +113,10 @@ internal class ReadersTest {
 
         @Test
         fun `read default`() {
-            whenever(reader.readLine(any(), isNull(), eq(""))).thenReturn("  ")
-            assertThat(reader.readIntList()).isEmpty()
+            val default = listOf(1, 2)
+            whenever(reader.readLine(any(), isNull(), eq(default.joinToString(","))))
+                .thenReturn("  ")
+            assertThat(reader.readIntList(default = default)).containsExactly(1, 2)
         }
 
         @Test
@@ -103,11 +127,17 @@ internal class ReadersTest {
 
         @Test
         fun `read list`() {
-            whenever(reader.readLine(any(), isNull(), any()))
-                .thenReturn("a,b,c")
-                .thenReturn("4 5 6")
-                .thenReturn(" 1, 2,  3 ")
+            whenever(reader.readLine(any(), isNull(), any())).thenReturn(" 1, 2,  3 ")
             assertThat(reader.readIntList()).containsExactly(1, 2, 3)
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = ["1.23", "a,b,c", "4 5 6"])
+        fun `rejects invalid input`(candidate: String) {
+            whenever(reader.readLine(any(), isNull(), any())).thenReturn(candidate)
+            assertThatExceptionOfType(NumberFormatException::class.java).isThrownBy {
+                reader.readIntList()
+            }
         }
     }
 
@@ -150,7 +180,7 @@ internal class ReadersTest {
 
 
         @Test
-        fun `gets invalid input`() {
+        fun `rejects invalid input`() {
             whenever(reader.readLine(any<String>())).thenReturn("X").thenReturn("999")
             assertThat(reader.readMenu(menu)).isEqualTo(INVALID)
             assertThat(reader.readMenu(menu)).isEqualTo(INVALID)

@@ -2,6 +2,7 @@ package org.strykeforce.thirdcoast
 
 import org.jline.reader.EndOfFileException
 import org.jline.reader.LineReader
+import org.jline.reader.UserInterruptException
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.MenuCommand
 import org.strykeforce.thirdcoast.command.prompt
@@ -12,68 +13,55 @@ const val QUIT = -2
 
 private const val PROMPT = "> "
 
-fun LineReader.readInt(prompt: String = PROMPT, default: Int = 0): Int {
-    val buffer = default.toString()
-    while (true) {
-        return try {
-            val line = this.readLine(prompt, null, buffer).trim()
-            if (line.isEmpty()) throw EndOfFileException()
-            line.toInt()
-        } catch (nfe: NumberFormatException) {
-            continue
-        } catch (eof: EndOfFileException) {
-            default
+fun LineReader.readInt(prompt: String = PROMPT, default: Int = 0) =
+    this.readDouble(prompt, default.toDouble(), true).toInt()
+
+fun LineReader.readDouble(
+    prompt: String = PROMPT,
+    default: Double = 0.0,
+    truncate: Boolean = false
+): Double {
+    val buffer =
+        if (truncate && default == Math.floor(default)) default.toInt().toString()
+        else default.toString()
+    return try {
+        val line = this.readLine(prompt, null, buffer).trim()
+        if (line.isEmpty()) throw EndOfFileException()
+        line.toDouble()
+    } catch (e: Exception) {
+        when (e) {
+            is EndOfFileException, is UserInterruptException -> default
+            else -> throw e
         }
     }
 }
 
-fun LineReader.readDouble(prompt: String = PROMPT, default: Double = 0.0): Double {
-    val buffer = default.toString()
-    while (true) {
-        return try {
-            val line = this.readLine(prompt, null, buffer).trim()
-            if (line.isEmpty()) throw EndOfFileException()
-            line.toDouble()
-        } catch (nfe: NumberFormatException) {
-            continue
-        } catch (eof: EndOfFileException) {
-            default
-        }
+fun LineReader.readBoolean(prompt: String = PROMPT, default: Boolean = false) = try {
+    val line = this.readLine(prompt, null, if (default) "y" else "n").trim()
+    when (line.toLowerCase()) {
+        "y" -> true
+        "n" -> false
+        "" -> throw EndOfFileException()
+        else -> throw IllegalArgumentException()
+    }
+} catch (e: Exception) {
+    when (e) {
+        is EndOfFileException, is UserInterruptException -> default
+        else -> throw e
     }
 }
 
-fun LineReader.readBoolean(prompt: String = PROMPT, default: Boolean = false): Boolean {
-    val buffer = if (default) "y" else "n"
-    while (true) {
-        return try {
-            val line = this.readLine(prompt, null, buffer).trim()
-            when (line.toLowerCase()) {
-                "y" -> true
-                "n" -> false
-                "" -> throw EndOfFileException()
-                else -> throw IllegalArgumentException()
-            }
-        } catch (iae: IllegalArgumentException) {
-            continue
-        } catch (eof: EndOfFileException) {
-            default
-        }
+fun LineReader.readIntList(prompt: String = PROMPT, default: List<Int> = emptyList()): List<Int> = try {
+    val line = this.readLine(prompt, null, default.joinToString(",")).trim()
+    if (line.isEmpty()) throw EndOfFileException()
+    line.split(',').map { it.trim().toInt() }
+} catch (e: Exception) {
+    when (e) {
+        is EndOfFileException, is UserInterruptException -> default
+        else -> throw e
     }
 }
 
-fun LineReader.readIntList(prompt: String = PROMPT, default: List<Int> = emptyList()): List<Int> {
-    while (true) {
-        return try {
-            val line = this.readLine(prompt, null, default.joinToString(",")).trim()
-            if (line.isEmpty()) throw EndOfFileException()
-            line.split(',').map { it.trim().toInt() }
-        } catch (e: NumberFormatException) {
-            continue
-        } catch (e: EndOfFileException) {
-            emptyList()
-        }
-    }
-}
 
 fun LineReader.readMenu(command: Command) = try {
     command as? MenuCommand ?: throw IllegalArgumentException("not a MenuCommand")

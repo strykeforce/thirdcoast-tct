@@ -1,38 +1,81 @@
 package org.strykeforce.thirdcoast.command
 
+import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.jline.reader.LineReader
-import org.jline.reader.LineReaderBuilder
 import org.jline.terminal.Terminal
 import org.strykeforce.thirdcoast.readBoolean
 import org.strykeforce.thirdcoast.readDouble
 import org.strykeforce.thirdcoast.readInt
+import org.strykeforce.thirdcoast.warn
 
+private val logger = KotlinLogging.logger {}
 
 interface Parameter {
     val name: String
     val type: String
     val desc: String
-    fun readInt(terminal: Terminal, default: Int): Int
-    fun readDouble(terminal: Terminal, default: Double): Double
-    fun readBoolean(terminal: Terminal, default: Boolean): Boolean
+    fun readInt(reader: LineReader, default: Int = 0): Int
+    fun readDouble(reader: LineReader, default: Double = 0.0): Double
+    fun readBoolean(reader: LineReader, default: Boolean = false): Boolean
 }
 
 class ParameterImpl(command: Command, toml: TomlTable) : Parameter {
     override val name = toml.getString("name") ?: "NO NAME"
     override val desc = toml.getString("desc") ?: "NO DESCRIPTION"
     override val type = toml.getString("type") ?: throw IllegalArgumentException("type missing")
+    private val range = toml.getArray("range")?.let { it.getDouble(0).rangeTo(it.getDouble(1)) }
     val prompt = command.prompt(name)
 
-    override fun readInt(terminal: Terminal, default: Int): Int = terminal.lineReader().readInt(prompt, default)
+    override fun readInt(reader: LineReader, default: Int): Int {
+        while (true) {
+            try {
+                return checkRange(reader.readInt(prompt, default))
+            } catch (e: IllegalArgumentException) {
+                invalidInput(reader.terminal)
+            }
+        }
+    }
 
 
-    override fun readDouble(terminal: Terminal, default: Double): Double =
-        terminal.lineReader().readDouble(prompt, default)
+    override fun readDouble(reader: LineReader, default: Double): Double {
+        while (true) {
+            try {
+                return checkRange(reader.readDouble(prompt, default))
+            } catch (e: IllegalArgumentException) {
+                invalidInput(reader.terminal)
+            }
+        }
+    }
 
-    override fun readBoolean(terminal: Terminal, default: Boolean): Boolean =
-        terminal.lineReader().readBoolean(prompt, default)
+    override fun readBoolean(reader: LineReader, default: Boolean): Boolean {
+        while (true) {
+            try {
+                return reader.readBoolean(prompt, default)
+            } catch (e: IllegalArgumentException) {
+                invalidInput(reader.terminal)
+            }
+        }
+    }
 
+    private fun checkRange(value: Double): Double =
+        if (range?.contains(value) == true) value else throw java.lang.IllegalArgumentException()
+
+
+    private fun checkRange(value: Int) = checkRange(value.toDouble()).toInt()
+
+    private fun invalidInput(terminal: Terminal) {
+        val messageType = when (type) {
+            "Int" -> "integer"
+            "Double" -> "number"
+            "Boolean" -> "boolean"
+            else -> "value"
+        }
+        val messageRange = if (range != null) " in range (${range.start} - ${range.endInclusive})" else ""
+        terminal.warn("enter a $messageType$messageRange")
+    }
+
+    override fun toString(): String {
+        return "ParameterImpl(name='$name', desc='$desc', type='$type')"
+    }
 }
-
-private fun Terminal.lineReader(): LineReader = LineReaderBuilder.builder().terminal(this).build()

@@ -26,6 +26,7 @@ internal class SlotParameterCommandTest : KoinTest {
             menu = "P"
             [param]
                 name = "P constant"
+                type = "Int"
         """.trimIndent()
 
         val command = SlotParameterCommand(null, "k_p", Toml.parse(toml))

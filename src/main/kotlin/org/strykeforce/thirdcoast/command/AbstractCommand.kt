@@ -1,6 +1,7 @@
 package org.strykeforce.thirdcoast.command
 
 import net.consensys.cava.toml.TomlTable
+import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -16,6 +17,8 @@ abstract class AbstractCommand(final override val parent: Command?, final overri
 
     val talonService: TalonService by inject(name = "Talon")
     val servoService: ServoService by inject(name = "Servo")
+
+    val reader: LineReader by inject()
 
     override fun toString(): String {
         var s = key

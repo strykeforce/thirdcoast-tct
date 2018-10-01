@@ -1,16 +1,30 @@
 package org.strykeforce.thirdcoast.talon
 
+import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
+import org.jline.terminal.Terminal
 import org.koin.core.parameter.parametersOf
 import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.Parameter
+import org.strykeforce.thirdcoast.info
+
+private val logger = KotlinLogging.logger {}
 
 class SlotParameterCommand(parent: Command?, key: String, toml: TomlTable) : AbstractCommand(parent, key, toml) {
 
-    val param: Parameter by inject { parametersOf(toml.getTableOrEmpty("param")) }
+    val param: Parameter by inject { parametersOf(this, toml.getTableOrEmpty("param")) }
 
+    init {
+        logger.debug { param }
+    }
+
+    override fun execute(terminal: Terminal): Command {
+        val answer = param.readDouble(reader, 42.0)
+        terminal.info(answer.toString())
+        return super.execute(terminal)
+    }
 
 //    val param = Parameter(toml.getTableOrEmpty("param"))
 //
