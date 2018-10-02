@@ -1,11 +1,14 @@
-package org.strykeforce.thirdcoast.command
+package org.strykeforce.thirdcoast.talon
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
 import net.consensys.cava.toml.TomlTable
+import org.strykeforce.thirdcoast.command.AbstractCommand
+import org.strykeforce.thirdcoast.command.Command
 
-class TestCommand(
+class StatusCommand(
     parent: Command?,
-    key: String, toml: TomlTable
+    key: String,
+    toml: TomlTable
 ) : AbstractCommand(parent, key, toml) {
 
     override fun execute(): Command {
@@ -19,11 +22,3 @@ class TestCommand(
         return super.execute()
     }
 }
-
-
-//for (f in TalonSRX::class.functions) {
-//    writer.print("${f.visibility} ${f.name} - ")
-//    for (p in f.parameters)
-//        writer.print("${p.type} ")
-//    writer.println()
-//}

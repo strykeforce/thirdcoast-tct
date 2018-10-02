@@ -1,6 +1,6 @@
 package org.strykeforce.thirdcoast.command
 
-const val PROMPT = "> "
+private const val LINE_END = "> "
 
 fun Command.breadcrumbs(): String {
     var currentNode = this
@@ -14,6 +14,6 @@ fun Command.breadcrumbs(): String {
     return promptLevels.dropLast(1).asReversed().joinToString(separator = " : ")
 }
 
-fun Command.prompt() = "${this.breadcrumbs()}$PROMPT"
+fun Command.prompt() = "${this.breadcrumbs()}$LINE_END"
 
-fun Command.prompt(parameter: String) = "${this.breadcrumbs()} : $parameter$PROMPT"
+fun Command.prompt(parameter: String) = "${this.breadcrumbs()} : $parameter$LINE_END"

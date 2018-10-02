@@ -1,7 +1,9 @@
 package org.strykeforce.thirdcoast.command
 
 import net.consensys.cava.toml.TomlTable
+import org.strykeforce.thirdcoast.talon.SelectTalonsCommand
 import org.strykeforce.thirdcoast.talon.SlotParameterCommand
+import org.strykeforce.thirdcoast.talon.StatusCommand
 
 interface Command {
     val key: String
@@ -30,7 +32,9 @@ interface Command {
                     }
                     command
                 }
-                "slot.param" -> SlotParameterCommand(parent, key, toml)
+                "talon.select" -> SelectTalonsCommand(parent, key, toml)
+                "talon.status" -> StatusCommand(parent, key, toml)
+                "talon.slot.param" -> SlotParameterCommand(parent, key, toml)
                 "test" -> TestCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
             }
