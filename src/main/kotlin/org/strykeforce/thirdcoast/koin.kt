@@ -14,19 +14,10 @@ import org.strykeforce.thirdcoast.command.ParameterImpl
 
 
 val tctModule = module {
-    single<DeviceFactory<TalonSRX>>(name = "Talon") { TalonFactoryImpl() }
-    single<DeviceService<TalonSRX>>(name = "Talon") {
-        TalonServiceImpl(
-            get(name = "Talon")
-        )
-    }
 
-    single<DeviceFactory<Servo>>(name = "Servo") { ServoFactoryImpl() }
-    single<DeviceService<Servo>>(name = "Servo") {
-        ServoServiceImpl(
-            get(name = "Servo")
-        )
-    }
+    single { TalonService { id -> TalonSRX(id) } }
+
+    single { ServoService { id -> Servo(id) } }
 
     single { (command: Command) -> Shell(command, get(), get()) }
 

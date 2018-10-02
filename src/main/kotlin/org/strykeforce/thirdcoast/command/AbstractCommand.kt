@@ -5,7 +5,6 @@ import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
-import org.strykeforce.thirdcoast.ServoService
 import org.strykeforce.thirdcoast.TalonService
 
 abstract class AbstractCommand(final override val parent: Command?, final override val key: String, toml: TomlTable) :
@@ -15,8 +14,7 @@ abstract class AbstractCommand(final override val parent: Command?, final overri
     override val children = emptyList<Command>()
     override fun execute() = parent ?: throw IllegalStateException("parent should not be null")
 
-    val talonService: TalonService by inject(name = "Talon")
-    val servoService: ServoService by inject(name = "Servo")
+    val talonService: TalonService by inject()
 
     val terminal: Terminal by inject()
     val reader: LineReader by inject()

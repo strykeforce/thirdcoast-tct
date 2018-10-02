@@ -14,7 +14,8 @@ private val logger = KotlinLogging.logger {}
 
 class SlotParameterCommand(
     parent: Command?,
-    key: String, toml: TomlTable
+    key: String,
+    toml: TomlTable
 ) : AbstractCommand(parent, key, toml) {
 
     private val param: Parameter by inject {
