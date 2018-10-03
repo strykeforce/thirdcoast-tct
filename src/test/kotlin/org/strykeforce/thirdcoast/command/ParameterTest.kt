@@ -16,6 +16,7 @@ import org.koin.standalone.StandAloneContext.stopKoin
 import org.koin.standalone.inject
 import org.koin.test.KoinTest
 import org.koin.test.declare
+import org.mockito.ArgumentMatchers.contains
 import org.strykeforce.thirdcoast.command.Parameter.Type.DOUBLE
 import java.io.PrintWriter
 import java.util.*
@@ -86,7 +87,7 @@ internal class ParameterTest : KoinTest {
         assertThat(param.readDouble(reader)).isEqualTo(-1.0)
 
         verify(mockPrintWriter, times(2))
-            .println("enter a number in range (-10.0 - 10.0)")
+            .println(contains("enter a number in range (-10.0 - 10.0)"))
     }
 
     @Test

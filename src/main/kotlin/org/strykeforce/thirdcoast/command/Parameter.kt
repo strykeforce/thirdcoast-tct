@@ -81,7 +81,7 @@ class ParameterImpl(command: Command, toml: TomlTable) : Parameter {
             BOOLEAN -> "boolean"
         }
         val messageRange = if (range != null) " in range (${range.start} - ${range.endInclusive})" else ""
-        terminal.warn("enter a $messageType$messageRange")
+        terminal.warn("Please enter a $messageType$messageRange")
     }
 
     override fun toString(): String {

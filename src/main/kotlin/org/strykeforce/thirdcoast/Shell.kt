@@ -2,8 +2,7 @@ package org.strykeforce.thirdcoast
 
 import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
-import org.jline.utils.AttributedStringBuilder
-import org.jline.utils.AttributedStyle
+import org.jline.utils.InfoCmp
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.MenuCommand
 
@@ -17,12 +16,13 @@ class Shell(
     private val writer = terminal.writer()
 
     fun run() {
+        terminal.puts(InfoCmp.Capability.clear_screen)
         while (true) {
             if (command is MenuCommand) {
-                printMenu()
+                terminal.menu(command as MenuCommand)
                 val choice = reader.readMenu(command)
                 when (choice) {
-                    INVALID -> writer.println("try again")
+                    INVALID -> terminal.warn("Please enter a choice from this menu")
                     BACK -> command = command.parent ?: command
                     QUIT -> {
                         writer.println("bye")
@@ -38,21 +38,4 @@ class Shell(
         }
     }
 
-    private fun printMenu() {
-        command.children.forEachIndexed { index, command ->
-            writer.println(command.menu.toMenu(index))
-        }
-        if (command.parent != null)
-            writer.println("back to previous menu".toMenu("b"))
-        writer.println("quit TCT".toMenu("q"))
-    }
-
 }
-
-fun String.toMenu(index: Int): String = this.toMenu((index + 1).toString())
-
-fun String.toMenu(index: String): String = AttributedStringBuilder()
-    .styled(AttributedStyle.BOLD, index)
-    .append(": $this")
-    .toAnsi()
-
