@@ -23,8 +23,8 @@ fun Terminal.status(line: String?, style: AttributedStyle = AttributedStyle.INVE
 fun Terminal.menu(command: MenuCommand) {
     val writer = this.writer()
 
-    command.children.forEachIndexed { index, command ->
-        writer.println(command.menu.toMenu(index))
+    command.children.forEachIndexed { index, cmd ->
+        writer.println(cmd.menu.toMenu(index))
     }
     if (command.parent != null)
         writer.println("back to previous menu".toMenu("b"))

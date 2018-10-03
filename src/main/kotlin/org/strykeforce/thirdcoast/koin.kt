@@ -10,7 +10,7 @@ import org.jline.terminal.TerminalBuilder
 import org.koin.dsl.module.module
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.Parameter
-import org.strykeforce.thirdcoast.command.ParameterImpl
+import org.strykeforce.thirdcoast.command.AbstractParameter
 import org.strykeforce.thirdcoast.device.ServoService
 import org.strykeforce.thirdcoast.device.TalonService
 
@@ -22,8 +22,6 @@ val tctModule = module {
     single { ServoService { id -> Servo(id) } }
 
     single { (command: Command) -> Shell(command, get(), get()) }
-
-    factory<Parameter> { (command: Command, toml: TomlTable) -> ParameterImpl(command, toml) }
 
     single<Terminal> { TerminalBuilder.terminal() }
 

@@ -1,6 +1,7 @@
 package org.strykeforce.thirdcoast.talon
 
 import net.consensys.cava.toml.Toml
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -23,13 +24,12 @@ internal class SlotParameterCommandTest : KoinTest {
         val toml = """
             type = "slot.param"
             menu = "P"
-            [param]
-                name = "P constant"
-                type = "${Parameter.Type.INTEGER}"
+            param = "eProfileParamSlot_P"
         """.trimIndent()
 
-        val command = SlotParameterCommand(null, "k_P", Toml.parse(toml))
-//        assertThat(command.param.name).isEqualTo("P constant")
+        val command = SlotParameterCommand(null, "foo", Toml.parse(toml))
+        assertThat(command.param.name).isEqualTo("P")
+        assertThat(command.menu).isEqualTo("P")
     }
 
     @AfterEach

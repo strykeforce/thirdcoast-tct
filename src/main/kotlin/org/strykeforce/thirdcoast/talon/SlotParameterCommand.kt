@@ -1,14 +1,11 @@
 package org.strykeforce.thirdcoast.talon
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRXPIDSetConfiguration
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
-import org.koin.core.parameter.parametersOf
-import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
+import org.strykeforce.thirdcoast.command.CtreParameter
 import org.strykeforce.thirdcoast.command.Parameter
-import org.strykeforce.thirdcoast.info
 
 private val logger = KotlinLogging.logger {}
 
@@ -18,17 +15,13 @@ class SlotParameterCommand(
     toml: TomlTable
 ) : AbstractCommand(parent, key, toml) {
 
-    private val param: Parameter by inject {
-        parametersOf(this, toml.getTableOrEmpty("param"))
-    }
-
-    init {
-        logger.debug { param }
-    }
+    val param: Parameter = CtreParameter.create(this, toml.getString("param") ?: "UNKNOWN")
+        .also {
+            logger.debug { it }
+            menu = it.name
+        }
 
     override fun execute(): Command {
-        val pidConfig = TalonSRXPIDSetConfiguration()
-        terminal.info(pidConfig.toString("pid"))
         return super.execute()
     }
 

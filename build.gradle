@@ -35,7 +35,6 @@ dependencies {
     
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     
     // App
     compile "org.jline:jline:3.9.0"

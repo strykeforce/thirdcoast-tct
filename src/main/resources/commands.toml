@@ -11,35 +11,38 @@ type = "menu"
     type = "menu"
     order = 5
     menu = "PID slot parameters"
-    [talon.slot.k_P]
+    [talon.slot.P]
       type ="talon.slot.param"
-      menu = "P"
-      [talon.slot.k_P.param]
-        name = "P"
-        type = "DOUBLE"
-        desc = "Sets the 'P' constant in the given parameter slot."
-    [talon.slot.k_I]
+      order = 0
+      param = "eProfileParamSlot_P"
+    [talon.slot.I]
       type ="talon.slot.param"
-      menu = "I"
-      [talon.slot.k_I.param]
-        name = "I"
-        type = "DOUBLE"
-        desc = "Sets the 'I' constant in the given parameter slot."
-    [talon.slot.k_D]
+      order = 1
+      param = "eProfileParamSlot_I"
+    [talon.slot.D]
       type ="talon.slot.param"
-      menu = "D"
-      [talon.slot.k_D.param]
-        name = "D"
-        type = "DOUBLE"
-        range = [-12.0, 12.0]
-        desc = "Sets the 'D' constant in the given parameter slot."
-    [talon.slot.k_F]
+      order = 2
+      param = "eProfileParamSlot_D"
+    [talon.slot.F]
       type ="talon.slot.param"
-      menu = "F"
-      [talon.slot.k_F.param]
-        name = "F"
-        type = "DOUBLE"
-        desc = "Sets the 'F' constant in the given parameter slot."
+      order = 3
+      param = "eProfileParamSlot_F"
+    [talon.slot.IZone]
+      type ="talon.slot.param"
+      order = 4
+      param = "eProfileParamSlot_IZone"
+    [talon.slot.AllowableErr]
+      type ="talon.slot.param"
+      order = 5
+      param = "eProfileParamSlot_AllowableErr"
+    [talon.slot.MaxIAccum]
+      type ="talon.slot.param"
+      order = 6
+      param = "eProfileParamSlot_MaxIAccum"
+    [talon.slot.PeakOutput]
+      type ="talon.slot.param"
+      order = 7
+      param = "eProfileParamSlot_PeakOutput"
   [talon.status]
     type = "talon.status"
     order = 10

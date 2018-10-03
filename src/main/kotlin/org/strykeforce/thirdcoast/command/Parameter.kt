@@ -4,7 +4,6 @@ import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
-import org.strykeforce.thirdcoast.command.Parameter.Type.*
 import org.strykeforce.thirdcoast.readBoolean
 import org.strykeforce.thirdcoast.readDouble
 import org.strykeforce.thirdcoast.readInt
@@ -15,7 +14,7 @@ private val logger = KotlinLogging.logger {}
 interface Parameter {
     val name: String
     val type: Type
-    val desc: String
+    val help: String
     fun readInt(reader: LineReader, default: Int = 0): Int
     fun readDouble(reader: LineReader, default: Double = 0.0): Double
     fun readBoolean(reader: LineReader, default: Boolean = false): Boolean
@@ -23,10 +22,13 @@ interface Parameter {
     enum class Type { DOUBLE, INTEGER, BOOLEAN }
 }
 
-class ParameterImpl(command: Command, toml: TomlTable) : Parameter {
+
+open class AbstractParameter(command: Command, toml: TomlTable) : Parameter {
+
+
     override val name = toml.getString("name") ?: "NO NAME"
-    override val desc = toml.getString("desc") ?: "NO DESCRIPTION"
     override val type = Parameter.Type.valueOf(toml.getString("type") ?: "NULL")
+    override val help = toml.getString("help") ?: "NO DESCRIPTION"
     private val range = toml.getArray("range")?.let { it.getDouble(0).rangeTo(it.getDouble(1)) }
     val prompt = command.prompt(name)
 
@@ -76,15 +78,15 @@ class ParameterImpl(command: Command, toml: TomlTable) : Parameter {
 
     private fun invalidInput(terminal: Terminal) {
         val messageType = when (type) {
-            INTEGER -> "integer"
-            DOUBLE -> "number"
-            BOOLEAN -> "boolean"
+            Parameter.Type.INTEGER -> "integer"
+            Parameter.Type.DOUBLE -> "number"
+            Parameter.Type.BOOLEAN -> "boolean"
         }
         val messageRange = if (range != null) " in range (${range.start} - ${range.endInclusive})" else ""
         terminal.warn("Please enter a $messageType$messageRange")
     }
 
     override fun toString(): String {
-        return "ParameterImpl(name='$name', desc='$desc', type='$type')"
+        return "ParameterImpl(name='$name', help='$help', type='$type')"
     }
 }
