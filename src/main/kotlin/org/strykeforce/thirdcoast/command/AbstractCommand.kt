@@ -5,7 +5,7 @@ import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
-import org.strykeforce.thirdcoast.TalonService
+import org.strykeforce.thirdcoast.device.TalonService
 
 abstract class AbstractCommand(final override val parent: Command?, final override val key: String, toml: TomlTable) :
     Command, KoinComponent {

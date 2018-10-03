@@ -11,6 +11,8 @@ import org.koin.dsl.module.module
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.Parameter
 import org.strykeforce.thirdcoast.command.ParameterImpl
+import org.strykeforce.thirdcoast.device.ServoService
+import org.strykeforce.thirdcoast.device.TalonService
 
 
 val tctModule = module {

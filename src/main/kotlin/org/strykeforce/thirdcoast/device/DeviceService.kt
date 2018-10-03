@@ -1,7 +1,5 @@
-package org.strykeforce.thirdcoast
+package org.strykeforce.thirdcoast.device
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX
-import edu.wpi.first.wpilibj.Servo
 import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
@@ -13,7 +11,8 @@ interface DeviceService<T> {
     fun activate(ids: Collection<Int>)
 }
 
-open class AbstractDeviceService<T>(private val factory: (id: Int) -> T) : DeviceService<T> {
+open class AbstractDeviceService<T>(private val factory: (id: Int) -> T) :
+    DeviceService<T> {
     private val _active: MutableMap<Int, T> = mutableMapOf()
     override val active: Set<T>
         get() = _active.values.toSet()
@@ -33,9 +32,5 @@ open class AbstractDeviceService<T>(private val factory: (id: Int) -> T) : Devic
         ids.associateTo(_active) { id -> id to get(id) }
     }
 }
-
-class TalonService(factory: (id: Int) -> TalonSRX) : AbstractDeviceService<TalonSRX>(factory)
-
-class ServoService(factory: (id: Int) -> Servo) : AbstractDeviceService<Servo>(factory)
 
 
