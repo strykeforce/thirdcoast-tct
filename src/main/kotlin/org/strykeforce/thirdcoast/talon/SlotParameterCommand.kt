@@ -1,11 +1,12 @@
 package org.strykeforce.thirdcoast.talon
 
+import com.ctre.phoenix.ParamEnum.*
+import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.CtreParameter
-import org.strykeforce.thirdcoast.command.Parameter
 
 private val logger = KotlinLogging.logger {}
 
@@ -15,41 +16,62 @@ class SlotParameterCommand(
     toml: TomlTable
 ) : AbstractCommand(parent, key, toml) {
 
-    val param: Parameter = CtreParameter.create(this, toml.getString("param") ?: "UNKNOWN")
-        .also {
-            logger.debug { it }
-            menu = it.name
-        }
+    private val timeout = talonService.timeout
+    val param = CtreParameter.create(this, toml.getString("param") ?: "UNKNOWN")
+    override val menu = param.name
 
     override fun execute(): Command {
+        val activeConfig = talonService.activeConfiguration
+        val slotIndex = talonService.activeSlot
+        val slot = when (slotIndex) {
+            0 -> activeConfig.slot_0
+            1 -> activeConfig.slot_1
+            2 -> activeConfig.slot_2
+            3 -> activeConfig.slot_3
+            else -> throw IllegalStateException("no such slot: $slotIndex")
+        }
+
+        when (param.enum) {
+            eProfileParamSlot_P -> configDoubleParam(slot.kP) { talon, value ->
+                talon.config_kP(slotIndex, value, timeout)
+            }
+            eProfileParamSlot_I -> configDoubleParam(slot.kI) { talon, value ->
+                talon.config_kI(slotIndex, value, timeout)
+            }
+            eProfileParamSlot_D -> configDoubleParam(slot.kD) { talon, value ->
+                talon.config_kD(slotIndex, value, timeout)
+            }
+            eProfileParamSlot_F -> configDoubleParam(slot.kF) { talon, value ->
+                talon.config_kF(slotIndex, value, timeout)
+            }
+            eProfileParamSlot_IZone -> configIntParam(slot.integralZone) { talon, value ->
+                talon.config_IntegralZone(slotIndex, value, timeout)
+            }
+            eProfileParamSlot_AllowableErr -> configIntParam(slot.allowableClosedloopError) { talon, value ->
+                talon.configAllowableClosedloopError(slotIndex, value, timeout)
+            }
+            eProfileParamSlot_MaxIAccum -> configDoubleParam(slot.maxIntegralAccumulator) { talon, value ->
+                talon.configMaxIntegralAccumulator(slotIndex, value, timeout)
+            }
+            eProfileParamSlot_PeakOutput -> configDoubleParam(slot.closedLoopPeakOutput) { talon, value ->
+                talon.configClosedLoopPeakOutput(slotIndex, value, timeout)
+            }
+            else -> throw java.lang.IllegalStateException(param.enum.name)
+        }
         return super.execute()
     }
 
-    private fun executeForInt() {
-        val answer = param.readInt(reader, 42)
+    private fun configIntParam(default: Int, config: (TalonSRX, Int) -> Unit) {
+        val paramValue = param.readInt(reader, default)
+        talonService.active.forEach { config(it, paramValue) }
+        logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue"}
     }
 
-//    val param = Parameter(toml.getTableOrEmpty("param"))
-//
-//    private val configTalon: (talon: TalonSRX) -> Unit  = when (key) {
-//        "k_p" -> { t -> t.config_kP(0, 0.0, 10) }
-//        "k_i" -> { t -> t.config_kI(0, 0.0, 10) }
-//        else -> TODO("not implemented")
-//    }
-//
-//    override fun execute(terminal: Terminal): Command {
-//        when (key) {
-//            "k_p" -> forEachTalon { t -> t.config_kP(0, 0.0, 10) }
-//        }
-//        terminal.info("key = $key")
-//        return super.execute(terminal)
-//    }
-//
-//    private fun forEachTalon(block: (talon: TalonSRX) -> Unit) {
-//        talonService.active.forEach(block)
-//    }
-//
-//    fun Set<TalonSRX>.configure() {}
-//
+    private fun configDoubleParam(default: Double, config: (TalonSRX, Double) -> Unit) {
+        val paramValue = param.readDouble(reader, default)
+        talonService.active.forEach { config(it, paramValue) }
+        logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue"}
+    }
+
 }
 

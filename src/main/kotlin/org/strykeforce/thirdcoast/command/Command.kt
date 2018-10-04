@@ -13,7 +13,7 @@ import org.strykeforce.thirdcoast.talon.StatusCommand
 interface Command {
     val key: String
     val parent: Command?
-    var menu: String
+    val menu: String
     val order: Int
     val children: List<Command>
     fun execute(): Command
@@ -54,7 +54,7 @@ abstract class AbstractCommand(
     toml: TomlTable
 ) : Command, KoinComponent {
     override val order = toml.getLong("order")?.toInt() ?: 0
-    override var menu = toml.getString("menu") ?: key
+    override val menu = toml.getString("menu") ?: key
     override val children = emptyList<Command>()
 
     override fun execute() = parent ?: throw IllegalStateException("parent should not be null")

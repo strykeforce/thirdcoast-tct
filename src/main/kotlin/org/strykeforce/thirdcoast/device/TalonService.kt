@@ -8,9 +8,12 @@ private val logger = KotlinLogging.logger {}
 
 class TalonService(factory: (id: Int) -> TalonSRX) : AbstractDeviceService<TalonSRX>(factory) {
 
+    val timeout = 10
+    var activeSlot: Int = 0
+
     val activeConfiguration = TalonSRXConfiguration()
         get() {
-            active.firstOrNull()?.getAllConfigs(field) ?: logger.info("get default config")
+            active.firstOrNull()?.getAllConfigs(field) ?: logger.info("no active talons, returning default config")
             return field
         }
 
