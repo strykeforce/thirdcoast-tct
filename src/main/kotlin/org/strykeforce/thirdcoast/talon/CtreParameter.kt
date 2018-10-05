@@ -10,7 +10,7 @@ class CtreParameter(command: Command, toml: TomlTable, val enum: ParamEnum) : Ab
     companion object {
         private val tomlTable by lazy { parseResource("/ctre.toml") }
 
-        fun create(command: Command, param: String) : CtreParameter {
+        fun create(command: Command, param: String): CtreParameter {
             val toml = tomlTable.getTable(param) ?: throw java.lang.IllegalArgumentException("missing param: $param")
             return CtreParameter(command, toml, ParamEnum.valueOf(param))
         }

@@ -24,7 +24,7 @@ interface Parameter {
 
 
 open class AbstractParameter(command: Command, toml: TomlTable) : Parameter {
-    
+
     override val name = toml.getString("name") ?: "NO NAME"
     override val type = Parameter.Type.valueOf(toml.getString("type") ?: "NULL")
     override val help = toml.getString("help") ?: "NO DESCRIPTION"

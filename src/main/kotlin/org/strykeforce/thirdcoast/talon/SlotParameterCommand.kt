@@ -63,13 +63,13 @@ class SlotParameterCommand(
     private fun configIntParam(default: Int, config: (TalonSRX, Int) -> Unit) {
         val paramValue = param.readInt(reader, default)
         talonService.active.forEach { config(it, paramValue) }
-        logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue"}
+        logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
     }
 
     private fun configDoubleParam(default: Double, config: (TalonSRX, Double) -> Unit) {
         val paramValue = param.readDouble(reader, default)
         talonService.active.forEach { config(it, paramValue) }
-        logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue"}
+        logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
     }
 
 }

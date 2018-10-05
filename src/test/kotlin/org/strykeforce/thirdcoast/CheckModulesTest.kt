@@ -9,13 +9,13 @@ import org.koin.test.checkModules
 
 class CheckModulesTest : KoinTest {
 
-  @Test
-  fun `dry run`() {
-    checkModules(listOf(tctModule), logger = SLF4JLogger())
-  }
+    @Test
+    fun `dry run`() {
+        checkModules(listOf(tctModule), logger = SLF4JLogger())
+    }
 
-  @AfterEach
-  fun after() {
-    stopKoin()
-  }
+    @AfterEach
+    fun after() {
+        stopKoin()
+    }
 }

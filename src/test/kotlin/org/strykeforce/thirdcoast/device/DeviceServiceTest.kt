@@ -3,9 +3,6 @@ package org.strykeforce.thirdcoast.device
 import com.nhaarman.mockitokotlin2.mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.strykeforce.thirdcoast.device.AbstractDeviceService
-import org.strykeforce.thirdcoast.device.ServoService
-import org.strykeforce.thirdcoast.device.TalonService
 
 internal class DeviceServiceTest {
 
