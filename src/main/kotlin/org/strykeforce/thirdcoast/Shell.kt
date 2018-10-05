@@ -19,7 +19,7 @@ class Shell(
         terminal.puts(InfoCmp.Capability.clear_screen)
         while (true) {
             if (command is MenuCommand) {
-                terminal.menu(command as MenuCommand)
+                terminal.printMenu(command as MenuCommand)
                 val choice = reader.readMenu(command)
                 when (choice) {
                     INVALID -> terminal.warn("Please enter a choice from this menu")

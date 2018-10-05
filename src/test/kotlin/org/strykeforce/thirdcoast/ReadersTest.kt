@@ -145,9 +145,9 @@ internal class ReadersTest {
     inner class MenuCases {
 
         private val toml = """
-            type="menu"
+            ${Command.TYPE_KEY}="${Command.MENU_TYPE}"
             [sandwich]
-            type="menu"
+            ${Command.TYPE_KEY}="${Command.MENU_TYPE}"
         """.trimIndent()
         private val menu = Command.createFromToml(Toml.parse(toml))
 
@@ -162,26 +162,26 @@ internal class ReadersTest {
 
         @Test
         fun `gets menu choice`() {
-            whenever(reader.readLine(any<String>())).thenReturn("1")
+            whenever(reader.readLine(any(), isNull(), any())).thenReturn("1")
             assertThat(reader.readMenu(menu)).isEqualTo(1)
         }
 
         @Test
         fun `gets back`() {
-            whenever(reader.readLine(any<String>())).thenReturn("b")
+            whenever(reader.readLine(any(), isNull(), any())).thenReturn("b")
             assertThat(reader.readMenu(menu)).isEqualTo(BACK)
         }
 
         @Test
         fun `gets quit`() {
-            whenever(reader.readLine(any<String>())).thenReturn("q")
+            whenever(reader.readLine(any(), isNull(), any())).thenReturn("q")
             assertThat(reader.readMenu(menu)).isEqualTo(QUIT)
         }
 
 
         @Test
         fun `rejects invalid input`() {
-            whenever(reader.readLine(any<String>())).thenReturn("X").thenReturn("999")
+            whenever(reader.readLine(any(), isNull(), any())).thenReturn("X").thenReturn("999")
             assertThat(reader.readMenu(menu)).isEqualTo(INVALID)
             assertThat(reader.readMenu(menu)).isEqualTo(INVALID)
         }

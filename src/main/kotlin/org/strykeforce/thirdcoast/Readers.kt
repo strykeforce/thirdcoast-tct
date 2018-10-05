@@ -63,21 +63,25 @@ fun LineReader.readIntList(prompt: String = PROMPT, default: List<Int> = emptyLi
 }
 
 
-fun LineReader.readMenu(command: Command) = try {
+fun LineReader.readMenu(command: Command): Int {
     command as? MenuCommand ?: throw IllegalArgumentException("not a MenuCommand")
+    return this.readMenu(command.children.size, command.prompt(), quit = true)
+}
 
-    val line = this.readLine(command.prompt()).trim()
+fun LineReader.readMenu(size: Int, prompt: String, default: String = "", quit: Boolean = false) = try {
+
+    val line = this.readLine(prompt, null, default).trim()
 
     try {
         val choice = line.toInt()
         when (choice) {
-            in 1..command.children.size -> choice
+            in 1..size -> choice
             else -> INVALID
         }
     } catch (nfe: NumberFormatException) {
         when (line.toLowerCase()) {
             "b" -> BACK
-            "q" -> QUIT
+            "q" -> if (quit) QUIT else INVALID
             else -> INVALID
         }
     }

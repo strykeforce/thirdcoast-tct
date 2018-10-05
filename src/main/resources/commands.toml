@@ -7,6 +7,10 @@ type = "menu"
     type = "talon.select"
     order = 1
     menu = "select Talons"
+  [talon.run]
+    type = "talon.run"
+    order = 3
+    menu = "run selected Talons"
   [talon.slot]
     type = "menu"
     order = 5
@@ -59,10 +63,6 @@ type = "menu"
       type = "config"
       order = 200
       menu = "configure selected Talons sensors"
-  [talon.set]
-    type = "command"
-    order = 30
-    menu = "run selected Talons"
 
 [dio]
   type = "menu"

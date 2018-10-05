@@ -6,6 +6,7 @@ import org.jline.terminal.Terminal
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.device.TalonService
+import org.strykeforce.thirdcoast.talon.RunTalonsCommand
 import org.strykeforce.thirdcoast.talon.SelectTalonsCommand
 import org.strykeforce.thirdcoast.talon.SlotParameterCommand
 import org.strykeforce.thirdcoast.talon.StatusCommand
@@ -19,12 +20,17 @@ interface Command {
     fun execute(): Command
 
     companion object {
+        const val MENU_TYPE = "menu"
+        const val MENU_KEY = "menu"
+        const val TYPE_KEY = "type"
+        const val ORDER_KEY = "order"
+
         fun createFromToml(toml: TomlTable, parent: MenuCommand? = null, key: String = "ROOT"): Command {
 
-            val type = toml.getString("type") ?: throw Exception("$key: type missing")
+            val type = toml.getString(TYPE_KEY) ?: throw Exception("$key: $TYPE_KEY missing")
 
             return when (type) {
-                "menu" -> {
+                MENU_TYPE -> {
                     val command = MenuCommand(parent, key, toml)
                     toml.keySet().filter(toml::isTable).forEach { k ->
                         val child =
@@ -38,6 +44,7 @@ interface Command {
                     command
                 }
                 "talon.select" -> SelectTalonsCommand(parent, key, toml)
+                "talon.run" -> RunTalonsCommand(parent, key, toml)
                 "talon.status" -> StatusCommand(parent, key, toml)
                 "talon.slot.param" -> SlotParameterCommand(parent, key, toml)
                 "test" -> TestCommand(parent, key, toml)
@@ -53,8 +60,8 @@ abstract class AbstractCommand(
     final override val key: String,
     toml: TomlTable
 ) : Command, KoinComponent {
-    override val order = toml.getLong("order")?.toInt() ?: 0
-    override val menu = toml.getString("menu") ?: key
+    override val order = toml.getLong(Command.ORDER_KEY)?.toInt() ?: 0
+    override val menu = toml.getString(Command.MENU_KEY) ?: key
     override val children = emptyList<Command>()
 
     override fun execute() = parent ?: throw IllegalStateException("parent should not be null")

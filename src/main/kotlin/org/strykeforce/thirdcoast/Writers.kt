@@ -20,14 +20,14 @@ fun Terminal.status(line: String?, style: AttributedStyle = AttributedStyle.INVE
     status?.update(lines) ?: this.writer().println(line)
 }
 
-fun Terminal.menu(command: MenuCommand) {
+fun Terminal.printMenu(command: MenuCommand) {
     val writer = this.writer()
 
     command.children.forEachIndexed { index, cmd ->
         writer.println(cmd.menu.toMenu(index))
     }
     if (command.parent != null)
-        writer.println("back to previous menu".toMenu("b"))
+        writer.println("back to previous printMenu".toMenu("b"))
     writer.println("quit TCT".toMenu("q"))
 }
 

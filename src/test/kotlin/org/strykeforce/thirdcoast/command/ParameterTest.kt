@@ -2,14 +2,12 @@ package org.strykeforce.thirdcoast.command
 
 import com.ctre.phoenix.ParamEnum
 import com.nhaarman.mockitokotlin2.*
-import net.consensys.cava.toml.Toml
 import org.assertj.core.api.Assertions.assertThat
 import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
 import org.junit.jupiter.api.Test
-import org.koin.core.parameter.parametersOf
 import org.mockito.ArgumentMatchers.contains
-import org.strykeforce.thirdcoast.command.Parameter.Type.DOUBLE
+import org.strykeforce.thirdcoast.talon.CtreParameter
 import java.io.PrintWriter
 import java.util.*
 

@@ -6,7 +6,6 @@ import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
-import org.strykeforce.thirdcoast.command.CtreParameter
 
 private val logger = KotlinLogging.logger {}
 
@@ -21,13 +20,13 @@ class SlotParameterCommand(
     override val menu = param.name
 
     override fun execute(): Command {
-        val activeConfig = talonService.activeConfiguration
-        val slotIndex = talonService.activeSlot
+        val config = talonService.activeConfiguration
+        val slotIndex = talonService.activeSlotIndex
         val slot = when (slotIndex) {
-            0 -> activeConfig.slot_0
-            1 -> activeConfig.slot_1
-            2 -> activeConfig.slot_2
-            3 -> activeConfig.slot_3
+            0 -> config.slot_0
+            1 -> config.slot_1
+            2 -> config.slot_2
+            3 -> config.slot_3
             else -> throw IllegalStateException("no such slot: $slotIndex")
         }
 
