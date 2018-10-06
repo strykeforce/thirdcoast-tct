@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
+import org.strykeforce.thirdcoast.command.MenuCommand
 
 internal class ReadersTest {
 
@@ -149,16 +150,7 @@ internal class ReadersTest {
             [sandwich]
             ${Command.TYPE_KEY}="${Command.MENU_TYPE}"
         """.trimIndent()
-        private val menu = Command.createFromToml(Toml.parse(toml))
-
-        @Test
-        fun `throws if not menu`() {
-            val command = object : AbstractCommand(null, "bogus", Toml.parse("")) {}
-
-            assertThatThrownBy { reader.readMenu(command) }
-                .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessageContaining("MenuCommand")
-        }
+        private val menu = Command.createFromToml(Toml.parse(toml)) as MenuCommand
 
         @Test
         fun `gets menu choice`() {

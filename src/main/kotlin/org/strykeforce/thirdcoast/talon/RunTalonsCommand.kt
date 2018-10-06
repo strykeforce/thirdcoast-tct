@@ -6,8 +6,8 @@ import org.strykeforce.thirdcoast.BACK
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.prompt
+import org.strykeforce.thirdcoast.command.toMenu
 import org.strykeforce.thirdcoast.readMenu
-import org.strykeforce.thirdcoast.toMenu
 import org.strykeforce.thirdcoast.warn
 
 class RunTalonsCommand(

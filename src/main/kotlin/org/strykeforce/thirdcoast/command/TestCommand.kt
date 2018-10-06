@@ -1,7 +1,7 @@
 package org.strykeforce.thirdcoast.command
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
 import net.consensys.cava.toml.TomlTable
+import org.strykeforce.thirdcoast.info
 
 class TestCommand(
     parent: Command?,
@@ -10,20 +10,21 @@ class TestCommand(
 
     override fun execute(): Command {
         val writer = terminal.writer()
+        val reader = terminal.reader()
+        var done = false
+        val prev = terminal.enterRawMode()
+        while (!done) {
+            writer.print("nonblocking> ")
+            terminal.flush()
+            val c = reader.read().toChar()
 
-        talonService.active.forEach {
-            val config = TalonSRXConfiguration()
-            it.getAllConfigs(config)
-            writer.println(config.toString(it.deviceID.toString()))
+            when (c) {
+                'b' -> done = true
+                else -> terminal.info("c = $c")
+            }
         }
+        terminal.attributes = prev
+        writer.println()
         return super.execute()
     }
 }
-
-
-//for (f in TalonSRX::class.functions) {
-//    writer.print("${f.visibility} ${f.name} - ")
-//    for (p in f.parameters)
-//        writer.print("${p.type} ")
-//    writer.println()
-//}

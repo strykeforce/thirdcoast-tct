@@ -18,7 +18,7 @@ val tctModule = module {
 
     single { ServoService { id -> Servo(id) } }
 
-    single { (command: Command) -> Shell(command, get(), get()) }
+    single { (command: Command) -> Shell(command, get()) }
 
     single<Terminal> { TerminalBuilder.terminal() }
 

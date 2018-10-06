@@ -3,13 +3,12 @@ package org.strykeforce.thirdcoast
 import org.jline.reader.EndOfFileException
 import org.jline.reader.LineReader
 import org.jline.reader.UserInterruptException
-import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.MenuCommand
 import org.strykeforce.thirdcoast.command.prompt
 
-const val INVALID = 0
-const val BACK = -1
-const val QUIT = -2
+const val INVALID = -1
+const val BACK = -2
+const val QUIT = -3
 
 private const val PROMPT = "> "
 
@@ -63,8 +62,7 @@ fun LineReader.readIntList(prompt: String = PROMPT, default: List<Int> = emptyLi
 }
 
 
-fun LineReader.readMenu(command: Command): Int {
-    command as? MenuCommand ?: throw IllegalArgumentException("not a MenuCommand")
+fun LineReader.readMenu(command: MenuCommand): Int {
     return this.readMenu(command.children.size, command.prompt(), quit = true)
 }
 

@@ -1,5 +1,6 @@
 package org.strykeforce.thirdcoast.command
 
+import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
@@ -11,12 +12,14 @@ import org.strykeforce.thirdcoast.talon.SelectTalonsCommand
 import org.strykeforce.thirdcoast.talon.SlotParameterCommand
 import org.strykeforce.thirdcoast.talon.StatusCommand
 
+private val logger = KotlinLogging.logger {}
+
 interface Command {
     val key: String
     val parent: Command?
     val menu: String
     val order: Int
-    val children: List<Command>
+    val children: Collection<Command>
     fun execute(): Command
 
     companion object {
@@ -39,7 +42,8 @@ interface Command {
                                 command,
                                 k
                             )
-                        command.addChild(child)
+                        logger.debug { "child hashcode = ${child.hashCode()}" }
+                        command.children.add(child)
                     }
                     command
                 }
@@ -62,7 +66,7 @@ abstract class AbstractCommand(
 ) : Command, KoinComponent {
     override val order = toml.getLong(Command.ORDER_KEY)?.toInt() ?: 0
     override val menu = toml.getString(Command.MENU_KEY) ?: key
-    override val children = emptyList<Command>()
+    override val children = emptySet<Command>()
 
     override fun execute() = parent ?: throw IllegalStateException("parent should not be null")
 
@@ -96,4 +100,5 @@ abstract class AbstractCommand(
     }
 
     private fun indent(nb: Int) = "  ".repeat(nb)
+
 }
