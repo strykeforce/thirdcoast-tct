@@ -41,38 +41,25 @@ class MenuCommand(
 
     }
 
-    private fun readMenuChoice(): Int {
-        return reader.readMenu(children.size, prompt(), quit = true)
-    }
+    private fun readMenuChoice() =
+        reader.readMenu(children.size, prompt(), quit = true)
 
-    private fun readRawMenuChoice(): Int {
-        val prev = terminal.enterRawMode()
-        terminal.writer().print(prompt())
-        terminal.flush()
-        val char = terminal.reader().read().toChar()
-        terminal.attributes = prev
-        terminal.writer().println()
-        return when (char) {
-            'b', 'B' -> return BACK
-            'q', 'Q' -> return QUIT
-            else -> validMenuChoices.indexOf(char) // -1 == INVALID
-        }
-    }
 
+    private fun readRawMenuChoice() =
+        terminal.readRawMenu(children.size, prompt(), quit = true)
 }
 
-private val menuChoices = listOf(
-    '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    'a', 'c', 'd', 'e', 'f', 'g'
-).toSortedSet()
+fun String.toMenu(index: Int, highlight: Boolean = false): String =
+    this.toMenu((index + 1).toString(), highlight)
 
+fun String.toRawMenu(index: Int): String =
+    this.toMenu(menuChoices.elementAt(index).toString())
 
-fun String.toMenu(index: Int): String = this.toMenu((index + 1).toString())
-
-fun String.toRawMenu(index: Int): String = this.toMenu(menuChoices.elementAt(index).toString())
-
-fun String.toMenu(index: String): String = AttributedStringBuilder()
-    .styled(AttributedStyle.BOLD, index.padStart(2))
-    .append(": $this")
-    .toAnsi()
+fun String.toMenu(index: String, highlight: Boolean = false): String =
+    AttributedStringBuilder()
+        .styled(AttributedStyle.BOLD, index.padStart(2))
+        .also {
+            val style = if (highlight) AttributedStyle.BOLD else AttributedStyle.DEFAULT
+            it.styled(style, ": $this")
+        }.toAnsi()
 

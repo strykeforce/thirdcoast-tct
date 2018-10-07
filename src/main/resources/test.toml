@@ -1,44 +1,48 @@
 type = "menu"
-[entry_1]
-  type = "default"
+[select]
+  type = "talon.slot.select"
   order = 1
-  menu = "entry 1"
-[entry_2]
-  type = "default"
-  order = 2
-  menu = "entry 2"
-[entry_3]
-  type = "default"
-  order = 3
-  menu = "entry 3"
-[entry_4]
-  type = "default"
-  order = 4
-[entry_5]
-  type = "default"
-  order = 5
-[entry_6]
-  type = "default"
-  order = 6
-[entry_7]
-  type = "default"
-  order = 7
-[entry_8]
-  type = "default"
-  order = 8
-[entry_9]
-  type = "default"
-  order = 9
-[entry_a]
-  type = "default"
-  order = 10
-[entry_c]
-  type = "default"
-  order = 11
-[entry_d]
+  menu = "Select active PID slot"
+[long]
   type = "menu"
-  order = 12
-  [entry_d.entry_d1]
+  order = 10
+  menu = "Long Menu"
+  [long.entry_2]
     type = "default"
-    order = 1
-    menu = "entry d.1"
+    order = 2
+    menu = "entry 2"
+  [long.entry_3]
+    type = "default"
+    order = 3
+    menu = "entry 3"
+  [long.entry_4]
+    type = "default"
+    order = 4
+  [long.entry_5]
+    type = "default"
+    order = 5
+  [long.entry_6]
+    type = "default"
+    order = 6
+  [long.entry_7]
+    type = "default"
+    order = 7
+  [long.entry_8]
+    type = "default"
+    order = 8
+  [long.entry_9]
+    type = "default"
+    order = 9
+  [long.entry_a]
+    type = "default"
+    order = 10
+  [long.entry_c]
+    type = "default"
+    order = 11
+  [long.entry_d]
+    type = "menu"
+    order = 12
+    [long.entry_d.entry_d1]
+      type = "default"
+      order = 1
+      menu = "entry d.1"

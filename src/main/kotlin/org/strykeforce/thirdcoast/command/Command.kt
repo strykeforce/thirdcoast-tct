@@ -7,10 +7,7 @@ import org.jline.terminal.Terminal
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.device.TalonService
-import org.strykeforce.thirdcoast.talon.RunTalonsCommand
-import org.strykeforce.thirdcoast.talon.SelectTalonsCommand
-import org.strykeforce.thirdcoast.talon.SlotParameterCommand
-import org.strykeforce.thirdcoast.talon.StatusCommand
+import org.strykeforce.thirdcoast.talon.*
 
 private val logger = KotlinLogging.logger {}
 
@@ -50,6 +47,7 @@ interface Command {
                 "talon.select" -> SelectTalonsCommand(parent, key, toml)
                 "talon.run" -> RunTalonsCommand(parent, key, toml)
                 "talon.status" -> StatusCommand(parent, key, toml)
+                "talon.slot.select" -> SelectSlotCommand(parent, key, toml)
                 "talon.slot.param" -> SlotParameterCommand(parent, key, toml)
                 "test" -> TestCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
