@@ -2,7 +2,11 @@ type = "menu"
 [select]
   type = "talon.slot.select"
   order = 1
-  menu = "Select active PID slot"
+  menu = "PID active slot:"
+[mode]
+  type = "talon.mode.select"
+  order = 2
+  menu = "Control mode:"
 [long]
   type = "menu"
   order = 10

@@ -45,6 +45,7 @@ interface Command {
                     command
                 }
                 "talon.select" -> SelectTalonsCommand(parent, key, toml)
+                "talon.mode.select" -> SelectControlModeCommand(parent, key, toml)
                 "talon.run" -> RunTalonsCommand(parent, key, toml)
                 "talon.status" -> StatusCommand(parent, key, toml)
                 "talon.slot.select" -> SelectSlotCommand(parent, key, toml)
