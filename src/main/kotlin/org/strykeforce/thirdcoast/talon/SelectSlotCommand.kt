@@ -16,5 +16,6 @@ class SelectSlotCommand(
 
     override fun setActive(index: Int) {
         talonService.activeSlotIndex = index
+        SlotParameterCommand.reset = true
     }
 }

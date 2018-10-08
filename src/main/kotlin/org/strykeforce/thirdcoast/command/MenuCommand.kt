@@ -22,7 +22,7 @@ class MenuCommand(
             printMenu()
             val choice = readRawMenuChoice()
             when (choice) {
-                INVALID -> terminal.warn("Please enter a choice from this menu")
+                INVALID -> terminal.invalidMenuChoice()
                 BACK -> return parent ?: this
                 QUIT -> return QuitCommand()
                 else -> return children.elementAt(choice)
@@ -32,6 +32,7 @@ class MenuCommand(
 
     private fun printMenu() {
         val writer = terminal.writer()
+        writer.println()
         children.forEachIndexed { index, cmd ->
             writer.println(cmd.menu.toRawMenu(index))
         }
@@ -58,8 +59,10 @@ fun String.toRawMenu(index: Int): String =
 fun String.toMenu(index: String, highlight: Boolean = false): String =
     AttributedStringBuilder()
         .styled(AttributedStyle.BOLD, index.padStart(2))
+        .append(": ")
         .also {
-            val style = if (highlight) AttributedStyle.BOLD else AttributedStyle.DEFAULT
-            it.styled(style, ": $this")
+            val style =
+                if (highlight) AttributedStyle.BOLD.foreground(AttributedStyle.YELLOW) else AttributedStyle.DEFAULT
+            it.styled(style, this)
         }.toAnsi()
 

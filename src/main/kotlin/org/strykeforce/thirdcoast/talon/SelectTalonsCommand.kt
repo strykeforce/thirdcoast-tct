@@ -1,5 +1,6 @@
 package org.strykeforce.thirdcoast.talon
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import net.consensys.cava.toml.TomlTable
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
@@ -12,6 +13,9 @@ class SelectTalonsCommand(
     key: String,
     toml: TomlTable
 ) : AbstractCommand(parent, key, toml) {
+
+    override val menu: String
+        get() = formatMenu(talonService.active.map(TalonSRX::getDeviceID).joinToString())
 
     override fun execute(): Command {
         while (true) {

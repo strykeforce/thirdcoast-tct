@@ -5,6 +5,7 @@ import com.nhaarman.mockitokotlin2.*
 import net.consensys.cava.toml.Toml
 import org.assertj.core.api.Assertions.assertThat
 import org.jline.reader.LineReader
+import org.jline.utils.AttributedString
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -45,7 +46,7 @@ internal class SlotParameterCommandTest : KoinTest {
         """.trimIndent()
             val command = SlotParameterCommand(null, "foo", Toml.parse(toml))
             assertThat(command.param.name).isEqualTo("P")
-            assertThat(command.menu).isEqualTo("P")
+            assertThat(AttributedString.stripAnsi(command.menu)).isEqualTo("foo: 0.0")
         }
 
         @Test

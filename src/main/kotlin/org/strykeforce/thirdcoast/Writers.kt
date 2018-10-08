@@ -15,6 +15,8 @@ fun Terminal.warn(msg: String) {
     this.writer().println(line.toAnsi())
 }
 
+fun Terminal.invalidMenuChoice() = this.warn("Please select from this menu or <ENTER> to cancel")
+
 
 fun Terminal.status(line: String?, style: AttributedStyle = AttributedStyle.INVERSE) {
     val lines = if (line != null) listOf(EMPTY, AttributedString(line, style)) else listOf(EMPTY, EMPTY)

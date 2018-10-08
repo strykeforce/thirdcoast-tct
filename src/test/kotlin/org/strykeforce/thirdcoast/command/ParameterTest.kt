@@ -34,7 +34,7 @@ internal class ParameterTest {
     @Test
     fun `has a prompt`() {
         val param: Parameter = CtreParameter.create(command, ParamEnum.eProfileParamSlot_PeakOutput.name)
-        assertThat((param as AbstractParameter).prompt).isEqualTo("$key : $name> ")
+        assertThat((param as AbstractParameter).prompt).isEqualTo("$key> ")
     }
 
     @Test

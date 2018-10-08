@@ -4,6 +4,8 @@ import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
+import org.jline.utils.AttributedString
+import org.jline.utils.AttributedStyle
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.device.TalonService
@@ -39,7 +41,6 @@ interface Command {
                                 command,
                                 k
                             )
-                        logger.debug { "child hashcode = ${child.hashCode()}" }
                         command.children.add(child)
                     }
                     command
@@ -64,7 +65,8 @@ abstract class AbstractCommand(
     toml: TomlTable
 ) : Command, KoinComponent {
     override val order = toml.getLong(Command.ORDER_KEY)?.toInt() ?: 0
-    override val menu = toml.getString(Command.MENU_KEY) ?: key
+    private val tomlMenu = toml.getString(Command.MENU_KEY) ?: key
+    override val menu = tomlMenu
     override val children = emptySet<Command>()
 
     override fun execute() = parent ?: throw IllegalStateException("parent should not be null")
@@ -73,6 +75,9 @@ abstract class AbstractCommand(
 
     val terminal: Terminal by inject()
     val reader: LineReader by inject()
+
+    protected fun formatMenu(value: String) =
+        "$tomlMenu: ${AttributedString(value, AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW)).toAnsi()}"
 
     override fun toString(): String {
         var s = key
