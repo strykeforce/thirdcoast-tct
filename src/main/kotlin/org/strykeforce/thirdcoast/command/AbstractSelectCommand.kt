@@ -30,11 +30,11 @@ abstract class AbstractSelectCommand<T>(
             when (choice) {
                 in 0..(values.size - 1) -> {
                     setActive(choice)
-                    logger.info { "control mode ${talonService.controlMode}" }
+                    logger.info { "selected ${talonService.controlMode}" }
                     done = true
                 }
                 BACK -> return super.execute()
-                else -> terminal.warn("Please enter a valid control mode")
+                else -> terminal.warn("Please select from the menu or <ENTER> to cancel")
             }
         }
         return super.execute()

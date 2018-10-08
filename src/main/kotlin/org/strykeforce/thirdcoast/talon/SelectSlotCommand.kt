@@ -5,13 +5,12 @@ import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
 
 private val SLOTS = listOf(0, 1, 2, 3)
-private val LABELS = SLOTS.map(Int::toString)
 
 class SelectSlotCommand(
     parent: Command?,
     key: String,
     toml: TomlTable
-) : AbstractSelectCommand<Int>(parent, key, toml, SLOTS, LABELS) {
+) : AbstractSelectCommand<Int>(parent, key, toml, SLOTS, SLOTS.map(Int::toString)) {
 
     override fun activeIndex() = talonService.activeSlotIndex
 
