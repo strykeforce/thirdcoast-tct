@@ -1,333 +1,79 @@
-[eOnBoot_BrakeMode]
-  name = ""
+#
+# motor output
+#
+[OUTPUT_REVERSED]
+  name = "Motor Output Reversed"
+  type = "BOOLEAN"
+  help = "Inverts the H-bridge output of the motor controller. This does not impact sensor phase and should not be used to correct sensor polarity. This will invert the hbridge output but NOT the LEDs. This ensures.... Green LEDs always represents positive request from robot-controller/closed-looping mode. Green LEDs correlates to forward limit switch. Green LEDs correlates to forward soft limit."
+[OPEN_LOOP_RAMP]
+  name = "Open-Loop Ramp Rate"
   type = "DOUBLE"
-  help = ""
-[eQuadFilterEn]
-  name = ""
+  range = [0.0, 1000.0]
+  help = "Sets the minimum desired time in seconds to go from neutral to full throttle. A value of '0' will disable the ramp."
+[CLOSED_LOOP_RAMP]
+  name = "Closed-Loop Ramp Rate"
   type = "DOUBLE"
-  help = ""
-[eQuadIdxPolarity]
-  name = ""
+  range = [0.0, 1000.0]
+  help = "Sets the minimum desired time in seconds to go from neutral to full throttle. A value of '0' will disable the ramp."
+[PEAK_OUTPUT_FORWARD]
+  name = "Foward Peak Output"
   type = "DOUBLE"
-  help = ""
-[eMotionProfileHasUnderrunErr]
-  name = ""
+  range = [0.0, 1.0]
+  help = "Sets the forward peak output percentage from 0 to 1."
+[PEAK_OUTPUT_REVERSE]
+  name = "Reverse Peak Output"
   type = "DOUBLE"
-  help = ""
-[eMotionProfileTrajectoryPointDurationMs]
-  name = ""
+  range = [-1.0, 0.0]
+  help = "Sets the reverse peak output percentage from 0 to 1."
+[NOMINAL_OUTPUT_FORWARD]
+  name = "Foward Nominal Output"
   type = "DOUBLE"
-  help = ""
-[eStatusFramePeriod]
-  name = ""
+  range = [0.0, 1.0]
+  help = "Sets the forward nominal output percentage from 0 to 1."
+[NOMINAL_OUTPUT_REVERSE]
+  name = "Reverse Nominal Output"
   type = "DOUBLE"
-  help = ""
-[eOpenloopRamp]
-  name = ""
+  range = [-1.0, 0.0]
+  help = "Sets the reverse nominal output percentage from 0 to 1."
+[NEUTRAL_DEADBAND]
+  name = "Neutral Deadband"
   type = "DOUBLE"
-  help = ""
-[eClosedloopRamp]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eNeutralDeadband]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[ePeakPosOutput]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eNominalPosOutput]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[ePeakNegOutput]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eNominalNegOutput]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eProfileParamSlot_P]
+  range = [0.001, 0.25]
+  help = "Desired deadband percentage. Minimum is 0.1%, Maximum is 25%.  Enter 0.04 for 4% (factory default)."
+
+#
+# PID slots
+#
+[SLOT_P]
   name = "P"
   type = "DOUBLE"
   help = "Sets the P constant in the selected parameter slot."
-[eProfileParamSlot_I]
+[SLOT_I]
   name = "I"
   type = "DOUBLE"
   help = "Sets the I constant in the selected parameter slot."
-[eProfileParamSlot_D]
+[SLOT_D]
   name = "D"
   type = "DOUBLE"
   help = "Sets the D constant in the selected parameter slot."
-[eProfileParamSlot_F]
+[SLOT_F]
   name = "F"
   type = "DOUBLE"
   help = "Sets the F constant in the selected parameter slot."
-[eProfileParamSlot_IZone]
+[SLOT_I_ZONE]
   name = "Integral Zone"
   type = "INTEGER"
   help = "Sets the Integral Zone (closed-loop error units * 1ms) constant in the selected parameter slot. If the (absolute) closed-loop error is outside of this zone, integral accumulator is automatically cleared."
-[eProfileParamSlot_AllowableErr]
+[SLOT_ALLOWABLE_ERR]
   name = "Allowable Closed-Loop Error"
   type = "INTEGER"
   help = "Sets the allowable closed-loop error in the selected parameter slot."
-[eProfileParamSlot_MaxIAccum]
+[SLOT_MAX_I_ACCUM]
   name = "Maximum Integral Accumulator"
   type = "DOUBLE"
   help = "Sets the maximum integral accumulator (closed-loop error units * 1ms) in the selected parameter slot."
-[eProfileParamSlot_PeakOutput]
+[SLOT_PEAK_OUTPUT]
   name = "Peak Closed-Loop Output"
   type = "DOUBLE"
   range = [0.0, 1.0]
   help = "Sets the absolute value of peak closed-loop output from 0 to 1 in the selected parameter slot. This setting is applied to the output of the associated PID loop and is seperate from the generic peak output setting."
-[eClearPositionOnLimitF]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eClearPositionOnLimitR]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eClearPositionOnQuadIdx]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eClearPosOnLimitF]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eClearPosOnLimitR]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eClearPositionOnIdx]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eSampleVelocityPeriod]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eSampleVelocityWindow]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eFeedbackSensorType]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eSelectedSensorPosition]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eFeedbackNotContinuous]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eRemoteSensorSource]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eRemoteSensorDeviceID]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eSensorTerm]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eRemoteSensorClosedLoopDisableNeutralOnLOS]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[ePIDLoopPolarity]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[ePIDLoopPeriod]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eSelectedSensorCoefficient]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eForwardSoftLimitThreshold]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eReverseSoftLimitThreshold]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eForwardSoftLimitEnable]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eReverseSoftLimitEnable]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eNominalBatteryVoltage]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eBatteryVoltageFilterSize]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eContinuousCurrentLimitAmps]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[ePeakCurrentLimitMs]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[ePeakCurrentLimitAmps]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eClosedLoopIAccum]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eCustomParam]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eStickyFaults]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eAnalogPosition]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eQuadraturePosition]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[ePulseWidthPosition]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eMotMag_Accel]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eMotMag_VelCruise]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eLimitSwitchSource]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eLimitSwitchNormClosedAndDis]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eLimitSwitchDisableNeutralOnLOS]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eLimitSwitchRemoteDevID]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eSoftLimitDisableNeutralOnLOS]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[ePulseWidthPeriod_EdgesPerRot]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[ePulseWidthPeriod_FilterWindowSz]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eYawOffset]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eCompassOffset]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eBetaGain]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eEnableCompassFusion]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eGyroNoMotionCal]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eEnterCalibration]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eFusedHeadingOffset]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eStatusFrameRate]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eAccumZ]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eTempCompDisable]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eMotionMeas_tap_threshX]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eMotionMeas_tap_threshY]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eMotionMeas_tap_threshZ]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eMotionMeas_tap_count]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eMotionMeas_tap_time]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eMotionMeas_tap_time_multi]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eMotionMeas_shake_reject_thresh]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eMotionMeas_shake_reject_time]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eMotionMeas_shake_reject_timeout]
-  name = ""
-  type = "DOUBLE"
-  help = ""
-[eDefaultConfig]
-  name = ""
-  type = "DOUBLE"
-  help = ""

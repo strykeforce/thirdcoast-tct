@@ -1,6 +1,5 @@
 package org.strykeforce.thirdcoast.command
 
-import com.ctre.phoenix.ParamEnum
 import com.nhaarman.mockitokotlin2.*
 import org.assertj.core.api.Assertions.assertThat
 import org.jline.reader.LineReader
@@ -8,6 +7,7 @@ import org.jline.terminal.Terminal
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.contains
 import org.strykeforce.thirdcoast.talon.CtreParameter
+import org.strykeforce.thirdcoast.talon.CtreParameter.Companion.create
 import java.io.PrintWriter
 import java.util.*
 
@@ -25,7 +25,7 @@ internal class ParameterTest {
 
     @Test
     fun `toml parsed`() {
-        val param: Parameter = CtreParameter.create(command, ParamEnum.eProfileParamSlot_PeakOutput.name)
+        val param: Parameter = create(command, CtreParameter.Enum.SLOT_PEAK_OUTPUT.name)
         assertThat(param.name).isEqualTo(name)
         assertThat(param.type).isEqualTo(type)
         assertThat(param.help).contains("absolute value of peak closed-loop output")
@@ -33,13 +33,13 @@ internal class ParameterTest {
 
     @Test
     fun `has a prompt`() {
-        val param: Parameter = CtreParameter.create(command, ParamEnum.eProfileParamSlot_PeakOutput.name)
-        assertThat((param as AbstractParameter).prompt).isEqualTo("$key> ")
+        val param: Parameter = create(command, CtreParameter.Enum.SLOT_PEAK_OUTPUT.name)
+        assertThat((param as AbstractParameter).prompt).contains("$key> ")
     }
 
     @Test
     fun `checks range`() {
-        val param: Parameter = CtreParameter.create(command, ParamEnum.eProfileParamSlot_PeakOutput.name)
+        val param: Parameter = create(command, CtreParameter.Enum.SLOT_PEAK_OUTPUT.name)
 
         val mockPrintWriter = mock<PrintWriter>()
 
@@ -60,7 +60,7 @@ internal class ParameterTest {
 
     @Test
     fun `skip null range check`() {
-        val param: Parameter = CtreParameter.create(command, ParamEnum.eProfileParamSlot_AllowableErr.name)
+        val param: Parameter = create(command, CtreParameter.Enum.SLOT_ALLOWABLE_ERR.name)
 
         val mockTerminal = mock<Terminal> {
             on { writer() } doReturn mock<PrintWriter>()

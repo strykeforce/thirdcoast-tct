@@ -30,7 +30,7 @@ abstract class AbstractSelectCommand<T>(
             when (choice) {
                 in 0..(values.size - 1) -> {
                     setActive(choice)
-                    logger.info { "selected ${talonService.controlMode}" }
+                    logger.info { "selected ${labels[choice]}" }
                     done = true
                 }
                 BACK -> return super.execute()

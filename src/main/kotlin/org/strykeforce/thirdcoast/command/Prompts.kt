@@ -1,11 +1,14 @@
 package org.strykeforce.thirdcoast.command
 
+import org.jline.utils.AttributedString
+import org.jline.utils.AttributedStyle
+
 private const val LINE_END = "> "
 
 fun Command.breadcrumbs(): String {
     var currentNode = this
     val promptLevels = kotlin.collections.mutableListOf<String>()
-    promptLevels += currentNode.key
+    promptLevels += currentNode.key.replace('_', ' ')
     while (currentNode.parent != null) {
         currentNode = currentNode.parent as Command
         promptLevels += currentNode.key
@@ -14,6 +17,7 @@ fun Command.breadcrumbs(): String {
     return promptLevels.dropLast(1).asReversed().joinToString(separator = " : ")
 }
 
-fun Command.prompt() = "${this.breadcrumbs()}$LINE_END"
+fun Command.prompt(): String = AttributedString("${this.breadcrumbs()}$LINE_END", AttributedStyle.BOLD).toAnsi()
 
-fun Command.prompt(parameter: String) = "${this.breadcrumbs()} : $parameter$LINE_END"
+fun Command.prompt(parameter: String): String =
+    AttributedString("${this.breadcrumbs()} : $parameter$LINE_END", AttributedStyle.BOLD).toAnsi()

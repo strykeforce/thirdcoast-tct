@@ -1,12 +1,12 @@
 package org.strykeforce.thirdcoast.talon
 
-import com.ctre.phoenix.ParamEnum.*
 import com.ctre.phoenix.motorcontrol.can.SlotConfiguration
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
+import org.strykeforce.thirdcoast.talon.CtreParameter.Enum.*
 
 private val logger = KotlinLogging.logger {}
 
@@ -21,66 +21,65 @@ class SlotParameterCommand(
     }
 
     private val timeout = talonService.timeout
-    val param = CtreParameter.create(this, toml.getString("param") ?: "UNKNOWN")
+    private val param = CtreParameter.create(this, toml.getString("param") ?: "UNKNOWN")
 
-    private var slot: SlotConfiguration = updateSlot(talonService.activeSlotIndex)
+    private var slot: SlotConfiguration = activeSlot()
 
     override val menu: String
         get() {
             if (reset) {
-                slot = updateSlot(talonService.activeSlotIndex)
-                logger.info { "first time: ${slot.toString("active")}" }
+                slot = activeSlot()
+                logger.info { "reset active slot to: ${slot.toString("active")}" }
                 reset = false
             }
-            val value = when (param.enum) {
-                eProfileParamSlot_P -> slot.kP.toString()
-                eProfileParamSlot_I -> slot.kI.toString()
-                eProfileParamSlot_D -> slot.kD.toString()
-                eProfileParamSlot_F -> slot.kF.toString()
-                eProfileParamSlot_IZone -> slot.integralZone.toString()
-                eProfileParamSlot_AllowableErr -> slot.allowableClosedloopError.toString()
-                eProfileParamSlot_MaxIAccum -> slot.maxIntegralAccumulator.toString()
-                eProfileParamSlot_PeakOutput -> slot.closedLoopPeakOutput.toString()
+
+            return when (param.enum) {
+                SLOT_P -> formatMenu(slot.kP)
+                SLOT_I -> formatMenu(slot.kI)
+                SLOT_D -> formatMenu(slot.kD)
+                SLOT_F -> formatMenu(slot.kF)
+                SLOT_I_ZONE -> formatMenu(slot.integralZone)
+                SLOT_ALLOWABLE_ERR -> formatMenu(slot.allowableClosedloopError)
+                SLOT_MAX_I_ACCUM -> formatMenu(slot.maxIntegralAccumulator)
+                SLOT_PEAK_OUTPUT -> formatMenu(slot.closedLoopPeakOutput)
                 else -> throw java.lang.IllegalStateException(param.enum.name)
             }
-
-            return formatMenu(value)
         }
 
     override fun execute(): Command {
         val slotIndex = talonService.activeSlotIndex
-        slot = updateSlot(slotIndex)
+        slot = activeSlot()
 
         when (param.enum) {
-            eProfileParamSlot_P -> configDoubleParam(slot.kP) { talon, value ->
+            SLOT_P -> configDoubleParam(slot.kP) { talon, value ->
                 talon.config_kP(slotIndex, value, timeout)
                 slot.kP = value
             }
-            eProfileParamSlot_I -> configDoubleParam(slot.kI) { talon, value ->
+            SLOT_I -> configDoubleParam(slot.kI) { talon, value ->
                 talon.config_kI(slotIndex, value, timeout)
                 slot.kI = value
             }
-            eProfileParamSlot_D -> configDoubleParam(slot.kD) { talon, value ->
+            SLOT_D -> configDoubleParam(slot.kD) { talon, value ->
                 talon.config_kD(slotIndex, value, timeout)
                 slot.kD = value
             }
-            eProfileParamSlot_F -> configDoubleParam(slot.kF) { talon, value ->
+            SLOT_F -> configDoubleParam(slot.kF) { talon, value ->
                 talon.config_kF(slotIndex, value, timeout)
                 slot.kF = value
             }
-            eProfileParamSlot_IZone -> configIntParam(slot.integralZone) { talon, value ->
+            SLOT_I_ZONE -> configIntParam(slot.integralZone) { talon, value ->
                 talon.config_IntegralZone(slotIndex, value, timeout)
                 slot.integralZone = value
             }
-            eProfileParamSlot_AllowableErr -> configIntParam(slot.allowableClosedloopError) { talon, value ->
+            SLOT_ALLOWABLE_ERR -> configIntParam(slot.allowableClosedloopError) { talon, value ->
                 talon.configAllowableClosedloopError(slotIndex, value, timeout)
                 slot.allowableClosedloopError = value
             }
-            eProfileParamSlot_MaxIAccum -> configDoubleParam(slot.maxIntegralAccumulator) { talon, value ->
+            SLOT_MAX_I_ACCUM -> configDoubleParam(slot.maxIntegralAccumulator) { talon, value ->
                 talon.configMaxIntegralAccumulator(slotIndex, value, timeout)
                 slot.maxIntegralAccumulator = value
             }
-            eProfileParamSlot_PeakOutput -> configDoubleParam(slot.closedLoopPeakOutput) { talon, value ->
+            SLOT_PEAK_OUTPUT -> configDoubleParam(slot.closedLoopPeakOutput) { talon, value ->
                 talon.configClosedLoopPeakOutput(slotIndex, value, timeout)
                 slot.closedLoopPeakOutput = value
             }
@@ -89,7 +88,7 @@ class SlotParameterCommand(
         return super.execute()
     }
 
-    private fun updateSlot(index: Int): SlotConfiguration {
+    private fun activeSlot(): SlotConfiguration {
         val config = talonService.activeConfiguration
         val slotIndex = talonService.activeSlotIndex
         return when (slotIndex) {

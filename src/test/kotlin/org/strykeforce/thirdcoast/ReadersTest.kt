@@ -2,15 +2,16 @@ package org.strykeforce.thirdcoast
 
 import com.nhaarman.mockitokotlin2.*
 import net.consensys.cava.toml.Toml
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.jline.reader.LineReader
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
+import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT
 import org.strykeforce.thirdcoast.command.MenuCommand
 
 internal class ReadersTest {
@@ -58,7 +59,7 @@ internal class ReadersTest {
 
         @Test
         fun `read default`() {
-            whenever(reader.readLine(any(), isNull(), eq("27.67"))).thenReturn(" ")
+            whenever(reader.readLine(any(), isNull(), eq(DOUBLE_FORMAT.format(27.67)))).thenReturn(" ")
             assertThat(reader.readDouble(default = 27.67)).isEqualTo(27.67)
         }
 

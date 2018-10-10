@@ -8,7 +8,7 @@ type = "menu"
     order = 10
     menu = "select active talons"
   [talon.mode]
-    type = "talon.mode.select"
+    type = "talon.mode"
     order = 15
     menu = "control mode"
   [talon.slot]
@@ -22,35 +22,87 @@ type = "menu"
     [talon.slot.P]
       type ="talon.slot.param"
       order = 20
-      param = "eProfileParamSlot_P"
+      param = "SLOT_P"
     [talon.slot.I]
       type ="talon.slot.param"
       order = 30
-      param = "eProfileParamSlot_I"
+      param = "SLOT_I"
     [talon.slot.D]
       type ="talon.slot.param"
       order = 40
-      param = "eProfileParamSlot_D"
+      param = "SLOT_D"
     [talon.slot.F]
       type ="talon.slot.param"
       order = 50
-      param = "eProfileParamSlot_F"
+      param = "SLOT_F"
     [talon.slot.IZone]
       type ="talon.slot.param"
+      menu = "I Zone"
       order = 60
-      param = "eProfileParamSlot_IZone"
+      param = "SLOT_I_ZONE"
     [talon.slot.AllowableErr]
       type ="talon.slot.param"
+      menu = "Allowable Error"
       order = 70
-      param = "eProfileParamSlot_AllowableErr"
+      param = "SLOT_ALLOWABLE_ERR"
     [talon.slot.MaxIAccum]
       type ="talon.slot.param"
+      menu = "Max I Accum"
       order = 80
-      param = "eProfileParamSlot_MaxIAccum"
+      param = "SLOT_MAX_I_ACCUM"
     [talon.slot.PeakOutput]
       type ="talon.slot.param"
+      menu = "Peak output"
       order = 90
-      param = "eProfileParamSlot_PeakOutput"
+      param = "SLOT_PEAK_OUTPUT"
+  [talon.output]
+    type = "menu"
+    order = 25
+    menu = "configure motor output"
+    [talon.output.brake]
+      type = "talon.brake"
+      order = 10
+      menu = "brake mode"
+    [talon.output.reversed]
+      type = "talon.param"
+      order = 20
+      menu = "motor output reversed"
+      param = "OUTPUT_REVERSED"
+    [talon.output.open-loop_ramp]
+      type = "talon.param"
+      order = 30
+      menu = "open-loop ramp rate"
+      param = "OPEN_LOOP_RAMP"
+    [talon.output.closed-loop_ramp]
+      type = "talon.param"
+      order = 40
+      menu = "closed-loop ramp rate"
+      param = "CLOSED_LOOP_RAMP"
+    [talon.output.forward_peak_output]
+      type = "talon.param"
+      order = 50
+      menu = "forward peak output"
+      param = "PEAK_OUTPUT_FORWARD"
+    [talon.output.reverse_peak_output]
+      type = "talon.param"
+      order = 60
+      menu = "reverse peak output"
+      param = "PEAK_OUTPUT_REVERSE"
+    [talon.output.forward_nominal_output]
+      type = "talon.param"
+      order = 70
+      menu = "forward nominal output"
+      param = "NOMINAL_OUTPUT_FORWARD"
+    [talon.output.reverse_nominal_output]
+      type = "talon.param"
+      order = 80
+      menu = "reverse nominal output"
+      param = "NOMINAL_OUTPUT_REVERSE"
+    [talon.output.neutral_deadband]
+      type = "talon.param"
+      order = 90
+      menu = "neutral deadband"
+      param = "NEUTRAL_DEADBAND"
   [talon.run]
     type = "talon.run"
     order = 30

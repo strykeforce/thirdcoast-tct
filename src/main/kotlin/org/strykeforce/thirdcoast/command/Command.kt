@@ -34,22 +34,25 @@ interface Command {
             return when (type) {
                 MENU_TYPE -> {
                     val command = MenuCommand(parent, key, toml)
-                    toml.keySet().filter(toml::isTable).forEach { k ->
-                        val child =
-                            createFromToml(
-                                toml.getTable(k)!!,
-                                command,
-                                k
-                            )
-                        command.children.add(child)
-                    }
+                    toml.keySet().filter(toml::isTable)
+                        .forEach { k ->
+                            val child =
+                                createFromToml(
+                                    toml.getTable(k)!!,
+                                    command,
+                                    k
+                                )
+                            command.children.add(child)
+                        }
                     command
                 }
                 "talon.select" -> SelectTalonsCommand(parent, key, toml)
-                "talon.mode.select" -> SelectControlModeCommand(parent, key, toml)
+                "talon.mode" -> SelectControlModeCommand(parent, key, toml)
+                "talon.brake" -> SelectBrakeModeCommand(parent, key, toml)
                 "talon.run" -> RunTalonsCommand(parent, key, toml)
                 "talon.status" -> StatusCommand(parent, key, toml)
                 "talon.slot.select" -> SelectSlotCommand(parent, key, toml)
+                "talon.param" -> ParameterCommand(parent, key, toml)
                 "talon.slot.param" -> SlotParameterCommand(parent, key, toml)
                 "test" -> TestCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
@@ -75,6 +78,12 @@ abstract class AbstractCommand(
 
     val terminal: Terminal by inject()
     val reader: LineReader by inject()
+
+    protected fun formatMenu(value: Boolean) = formatMenu(if (value) "yes" else "no")
+
+    protected fun formatMenu(value: Int) = formatMenu(value.toString())
+
+    protected fun formatMenu(value: Double) = formatMenu(DOUBLE_FORMAT.format(value))
 
     protected fun formatMenu(value: String) =
         "$tomlMenu: ${AttributedString(value, AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW)).toAnsi()}"
