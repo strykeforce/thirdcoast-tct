@@ -8,8 +8,6 @@ import org.strykeforce.thirdcoast.command.Command
 
 private val SENSORS = listOf(
     Analog,
-    CTRE_MagEncoder_Absolute,
-    CTRE_MagEncoder_Relative,
     QuadEncoder,
     PulseWidthEncodedPosition,
     RemoteSensor0,
@@ -21,10 +19,8 @@ private val SENSORS = listOf(
 )
 private val LABELS = listOf(
     "Analog",
-    "CTRE Absolute",
-    "CTRE Relative",
-    "Quad Encoder",
-    "Pulse-width Encoded Position",
+    "CTRE Relative or Quad Encoder",
+    "CTRE Absolute or Pulse-width Encoder",
     "Remote Sensor 0",
     "Remote Sensor 1",
     "Sensor Difference",
@@ -53,13 +49,19 @@ class SelectFeedbackSensorCommand(
             reset = false
         }
 
+        val sensor = when (pidIndex) {
+            0 -> config.primaryPID.selectedFeedbackSensor
+            else -> config.auxilaryPID.selectedFeedbackSensor
+        }
+    
         return SENSORS.indexOf(
-            when (pidIndex) {
-                0 -> config.primaryPID.selectedFeedbackSensor
-                1 -> config.auxilaryPID.selectedFeedbackSensor
-                else -> IllegalStateException("no such pid index: $pidIndex")
+            when (sensor) {
+                CTRE_MagEncoder_Absolute -> PulseWidthEncodedPosition
+                CTRE_MagEncoder_Relative -> QuadEncoder
+                else -> sensor
             }
-        )}
+        )
+    }
 
     override fun setActive(index: Int) {
         talonService.active.forEach { it.configSelectedFeedbackSensor(SENSORS[index], pidIndex, talonService.timeout) }
