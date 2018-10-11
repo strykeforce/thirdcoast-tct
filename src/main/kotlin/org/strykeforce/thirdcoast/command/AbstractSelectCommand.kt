@@ -24,7 +24,7 @@ abstract class AbstractSelectCommand<T>(
         var done = false
         while (!done) {
             labels.forEachIndexed { index, label ->
-                writer.println(label.toMenu(index, index == activeIndex()))
+                writer.println(label.toRawMenu(index, index == activeIndex()))
             }
             val choice = terminal.readRawMenu(values.size, prompt())
             when (choice) {

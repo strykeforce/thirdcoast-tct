@@ -7,10 +7,28 @@ type = "menu"
     type = "talon.select"
     order = 10
     menu = "select active talons"
+  [talon.run]
+    type = "talon.run"
+    order = 12
+    menu = "run active talons"
   [talon.mode]
     type = "talon.mode"
     order = 15
     menu = "control mode"
+  [talon.sensor]
+    type = "menu"
+    order = 17
+    menu = "configure feedback sensors"
+    [talon.sensor.primary]
+      type = "talon.sensor"
+      order = 10
+      menu = "primary closed-loop sensor"
+      pid = 0
+    [talon.sensor.auxiliary]
+      type = "talon.sensor"
+      order = 20
+      menu = "auxiliary closed-loop sensor"
+      pid = 1
   [talon.slot]
     type = "menu"
     order = 20
@@ -55,6 +73,20 @@ type = "menu"
       menu = "Peak output"
       order = 90
       param = "SLOT_PEAK_OUTPUT"
+  [talon.motion_magic]
+    type = "menu"
+    order = 22
+    menu = "configure motion magic"
+    [talon.motion_magic.cruise_velocity]
+      type = "talon.param"
+      order = 10
+      menu = "motion magic cruise velocity"
+      param = "MOTION_CRUISE_VELOCITY"
+    [talon.motion_magic.acceleration]
+      type = "talon.param"
+      order = 20
+      menu = "motion magic acceleration"
+      param = "MOTION_ACCELERATION"
   [talon.output]
     type = "menu"
     order = 25
@@ -103,22 +135,25 @@ type = "menu"
       order = 90
       menu = "neutral deadband"
       param = "NEUTRAL_DEADBAND"
-  [talon.run]
-    type = "talon.run"
-    order = 30
-    menu = "run active talons"
-  [talon.config]
+  [talon.voltage_compensation]
     type = "menu"
-    order = 40
-    menu = "configure active talons"
-    [talon.config.output]
-      type = "config"
-      order = 100
-      menu = "configure selected Talons output parameters"
-    [talon.config.sensor]
-      type = "config"
-      order = 200
-      menu = "configure selected Talons sensors"
+    order = 27
+    menu = "configure voltage compensation"
+    [talon.voltage_compensation.enabled]
+      type = "talon.param"
+      order = 10
+      menu = "voltage compensation enabled"
+      param = "VOLTAGE_COMP_ENABLE"
+    [talon.voltage_compensation.saturation_voltage]
+      type = "talon.param"
+      order = 20
+      menu = "voltage compensation saturation voltage"
+      param = "VOLTAGE_COMP_SATURATION"
+    [talon.voltage_compensation.filter]
+      type = "talon.param"
+      order = 30
+      menu = "voltage compensation measurement filter"
+      param = "VOLTAGE_MEASUREMENT_FILTER"
   [talon.status]
     type = "talon.status"
     order = 50

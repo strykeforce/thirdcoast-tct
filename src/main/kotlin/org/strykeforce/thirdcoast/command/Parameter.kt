@@ -9,7 +9,7 @@ import org.strykeforce.thirdcoast.readDouble
 import org.strykeforce.thirdcoast.readInt
 import org.strykeforce.thirdcoast.warn
 
-const val DOUBLE_FORMAT = "%6.4f"
+const val DOUBLE_FORMAT = "%7.4f"
 
 private val logger = KotlinLogging.logger {}
 

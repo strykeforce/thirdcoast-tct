@@ -53,8 +53,8 @@ class MenuCommand(
 fun String.toMenu(index: Int, highlight: Boolean = false): String =
     this.toMenu((index + 1).toString(), highlight)
 
-fun String.toRawMenu(index: Int): String =
-    this.toMenu(menuChoices.elementAt(index).toString())
+fun String.toRawMenu(index: Int, highlight: Boolean = false): String =
+    this.toMenu(menuChoices.elementAt(index).toString(), highlight)
 
 fun String.toMenu(index: String, highlight: Boolean = false): String =
     AttributedStringBuilder()

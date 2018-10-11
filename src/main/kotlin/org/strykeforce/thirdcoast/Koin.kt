@@ -22,6 +22,6 @@ val tctModule = module {
 
     single<Terminal> { TerminalBuilder.terminal() }
 
-    single<LineReader> { LineReaderBuilder.builder().terminal(get()).build() }
+    single<LineReader>(createOnStart = true) { LineReaderBuilder.builder().terminal(get()).build() }
 
 }

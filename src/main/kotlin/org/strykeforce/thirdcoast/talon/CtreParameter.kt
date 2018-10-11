@@ -31,6 +31,11 @@ class CtreParameter(command: Command, toml: TomlTable, val enum: Enum) : Abstrac
         PEAK_OUTPUT_REVERSE,
         NOMINAL_OUTPUT_FORWARD,
         NOMINAL_OUTPUT_REVERSE,
-        NEUTRAL_DEADBAND
+        NEUTRAL_DEADBAND,
+        VOLTAGE_COMP_ENABLE,
+        VOLTAGE_COMP_SATURATION,
+        VOLTAGE_MEASUREMENT_FILTER,
+        MOTION_CRUISE_VELOCITY,
+        MOTION_ACCELERATION,
     }
 }

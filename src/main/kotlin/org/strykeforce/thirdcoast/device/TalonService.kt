@@ -5,6 +5,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
 import mu.KotlinLogging
+import org.strykeforce.thirdcoast.talon.ParameterCommand
+import org.strykeforce.thirdcoast.talon.SelectFeedbackSensorCommand
+import org.strykeforce.thirdcoast.talon.SlotParameterCommand
 
 private val logger = KotlinLogging.logger {}
 
@@ -14,6 +17,7 @@ class TalonService(factory: (id: Int) -> TalonSRX) : AbstractDeviceService<Talon
     var activeSlotIndex: Int = 0
     var controlMode = ControlMode.PercentOutput
     var neutralMode = NeutralMode.EEPROMSetting
+    var voltageCompensation = true
 
     var activeConfiguration = TalonSRXConfiguration()
         get() {
@@ -25,16 +29,20 @@ class TalonService(factory: (id: Int) -> TalonSRX) : AbstractDeviceService<Talon
         get() = active.firstOrNull()?.inverted ?: false
 
     override fun activate(ids: Collection<Int>) {
+        SlotParameterCommand.reset = true
+        ParameterCommand.reset = true
+        SelectFeedbackSensorCommand.reset = true
         activeSlotIndex = 0
         controlMode = ControlMode.PercentOutput
         neutralMode = NeutralMode.EEPROMSetting
-        activeConfiguration = TalonSRXConfiguration()
+        voltageCompensation = true
 
         super.activate(ids)
         active.forEach {
             it.setNeutralMode(neutralMode)
             it.selectProfileSlot(activeSlotIndex, 0)
             it.inverted = false
+            it.enableVoltageCompensation(voltageCompensation)
         }
     }
 

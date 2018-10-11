@@ -28,7 +28,7 @@ class ParameterCommand(
         get() {
             if (reset) {
                 config = talonService.activeConfiguration
-                logger.info { "reset active config to: ${config.toString("active")}" }
+                logger.info { "reset active config to:\n${config.toString("active")}" }
                 reset = false
             }
             return when (param.enum) {
@@ -40,6 +40,11 @@ class ParameterCommand(
                 NOMINAL_OUTPUT_FORWARD -> formatMenu(config.nominalOutputForward)
                 NOMINAL_OUTPUT_REVERSE -> formatMenu(config.nominalOutputReverse)
                 NEUTRAL_DEADBAND -> formatMenu(config.neutralDeadband)
+                VOLTAGE_COMP_ENABLE -> formatMenu(talonService.voltageCompensation)
+                VOLTAGE_COMP_SATURATION -> formatMenu(config.voltageCompSaturation)
+                VOLTAGE_MEASUREMENT_FILTER -> formatMenu(config.voltageMeasurementFilter)
+                MOTION_CRUISE_VELOCITY -> formatMenu(config.motionCruiseVelocity)
+                MOTION_ACCELERATION -> formatMenu(config.motionAcceleration)
                 else -> throw IllegalStateException(param.enum.name)
             }
         }
@@ -79,6 +84,27 @@ class ParameterCommand(
                 talon.configNeutralDeadband(value, timeout)
                 config.neutralDeadband = value
             }
+            VOLTAGE_COMP_ENABLE -> configBooleanParam(talonService.voltageCompensation) { talon, value ->
+                talon.enableVoltageCompensation(value)
+                talonService.voltageCompensation = value
+            }
+            VOLTAGE_COMP_SATURATION -> configDoubleParam(config.voltageCompSaturation) { talon, value ->
+                talon.configVoltageCompSaturation(value, timeout)
+                config.voltageCompSaturation = value
+            }
+            VOLTAGE_MEASUREMENT_FILTER -> configIntParam(config.voltageMeasurementFilter) { talon, value ->
+                talon.configVoltageMeasurementFilter(value, timeout)
+                config.voltageMeasurementFilter = value
+            }
+            MOTION_CRUISE_VELOCITY -> configIntParam(config.motionCruiseVelocity) { talon, value ->
+                talon.configMotionCruiseVelocity(value, timeout)
+                config.motionCruiseVelocity = value
+            }
+            MOTION_ACCELERATION -> configIntParam(config.motionAcceleration) { talon, value ->
+                talon.configMotionAcceleration(value, timeout)
+                config.motionAcceleration = value
+            }
+
             else -> throw IllegalStateException(param.enum.name)
         }
         return super.execute()

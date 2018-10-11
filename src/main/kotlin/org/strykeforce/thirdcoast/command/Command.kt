@@ -54,6 +54,7 @@ interface Command {
                 "talon.slot.select" -> SelectSlotCommand(parent, key, toml)
                 "talon.param" -> ParameterCommand(parent, key, toml)
                 "talon.slot.param" -> SlotParameterCommand(parent, key, toml)
+                "talon.sensor" -> SelectFeedbackSensorCommand(parent, key, toml)
                 "test" -> TestCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
             }

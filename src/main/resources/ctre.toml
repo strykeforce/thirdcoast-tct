@@ -42,6 +42,23 @@
   help = "Desired deadband percentage. Minimum is 0.1%, Maximum is 25%.  Enter 0.04 for 4% (factory default)."
 
 #
+# voltage compensation
+#
+[VOLTAGE_COMP_ENABLE]
+  name = "Voltage Compensation Enabled"
+  type = "BOOLEAN"
+  help = "Enables voltage compensation. If enabled, voltage compensation works in all control modes."
+[VOLTAGE_COMP_SATURATION]
+  name = "Voltage Compensation Saturation Voltage"
+  type = "DOUBLE"
+  range = [0.0, 12.0]
+  help = "Sets the max voltage to apply to the H-bridge when voltage compensation is enabled.  For example, if 10 (volts) is specified and a TalonSRX is commanded to 0.5 (PercentOutput, closed-loop, etc) then the TalonSRX will attempt to apply a duty-cycle to produce 5V."
+[VOLTAGE_MEASUREMENT_FILTER]
+  name = "Voltage Measurement Filter"
+  type = "INTEGER"
+  help = "Number of samples in the rolling average of voltage measurement."
+
+#
 # PID slots
 #
 [SLOT_P]
@@ -77,3 +94,15 @@
   type = "DOUBLE"
   range = [0.0, 1.0]
   help = "Sets the absolute value of peak closed-loop output from 0 to 1 in the selected parameter slot. This setting is applied to the output of the associated PID loop and is seperate from the generic peak output setting."
+
+  #
+  # motion profile
+  #
+  [MOTION_CRUISE_VELOCITY]
+    name = "Motion Magic Cruise Velocity"
+    type = "INTEGER"
+    help = "Sets the Motion Magic Cruise Velocity. This is the peak target velocity that the motion magic curve generator can use."
+  [MOTION_ACCELERATION]
+    name = "Motion Magic Acceleration"
+    type = "INTEGER"
+    help = "Sets the Motion Magic Acceleration. This is the target acceleration that the motion magic curve generator can use."

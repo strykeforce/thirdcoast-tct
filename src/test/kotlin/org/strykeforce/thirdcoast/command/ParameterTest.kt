@@ -17,8 +17,12 @@ internal class ParameterTest {
     private val key = UUID.randomUUID().toString()
     private val type = Parameter.Type.DOUBLE
 
+    private val parent = mock<Command> {
+        on { key } doReturn "parent"
+    }
+
     private val command = mock<Command> {
-        on { parent } doReturn mock<Command>()
+        on { parent } doReturn parent
         on { key } doReturn key
     }
 
