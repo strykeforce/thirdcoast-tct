@@ -2,13 +2,12 @@ package org.strykeforce.thirdcoast.talon
 
 import com.ctre.phoenix.motorcontrol.ControlMode.*
 import net.consensys.cava.toml.TomlTable
-import org.strykeforce.thirdcoast.BACK
+import org.jline.reader.EndOfFileException
+import org.strykeforce.thirdcoast.*
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.prompt
 import org.strykeforce.thirdcoast.command.toMenu
-import org.strykeforce.thirdcoast.readMenu
-import org.strykeforce.thirdcoast.warn
 
 class RunTalonsCommand(
     parent: Command?,
@@ -17,11 +16,17 @@ class RunTalonsCommand(
 ) : AbstractCommand(parent, key, toml) {
 
     override fun execute(): Command {
-        val writer = terminal.writer()
+        var done = false
 
-        val done = false
         while (!done) {
-
+            try {
+                val line = reader.readLine(prompt()).trim()
+                if (line.isEmpty()) throw EndOfFileException()
+                val setpoint = line.toDouble()
+                talonService.active.forEach { it.set(talonService.controlMode, setpoint) }
+            } catch (e: Exception) {
+                done = true
+            }
         }
 
         return super.execute()

@@ -147,9 +147,9 @@ internal class ReadersTest {
     inner class MenuCases {
 
         private val toml = """
-            ${Command.TYPE_KEY}="${Command.MENU_TYPE}"
+            ${Command.TYPE_KEY}="menu"
             [sandwich]
-            ${Command.TYPE_KEY}="${Command.MENU_TYPE}"
+            ${Command.TYPE_KEY}="menu"
         """.trimIndent()
         private val menu = Command.createFromToml(Toml.parse(toml)) as MenuCommand
 

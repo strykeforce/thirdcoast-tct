@@ -45,6 +45,11 @@ class ParameterCommand(
                 VOLTAGE_MEASUREMENT_FILTER -> formatMenu(config.voltageMeasurementFilter)
                 MOTION_CRUISE_VELOCITY -> formatMenu(config.motionCruiseVelocity)
                 MOTION_ACCELERATION -> formatMenu(config.motionAcceleration)
+                SENSOR_PHASE -> formatMenu(talonService.sensorPhase)
+                CURRENT_LIMIT_ENABLE -> formatMenu(talonService.currentLimit)
+                CURRENT_LIMIT_CONT -> formatMenu(config.continuousCurrentLimit)
+                CURRENT_LIMIT_PEAK -> formatMenu(config.peakCurrentLimit)
+                CURRENT_LIMIT_PEAK_DURATION -> formatMenu(config.peakCurrentDuration)
                 else -> throw IllegalStateException(param.enum.name)
             }
         }
@@ -104,7 +109,26 @@ class ParameterCommand(
                 talon.configMotionAcceleration(value, timeout)
                 config.motionAcceleration = value
             }
-
+            SENSOR_PHASE -> configBooleanParam(talonService.sensorPhase) { talon, value ->
+                talon.setSensorPhase(value)
+                talonService.sensorPhase = value
+            }
+            CURRENT_LIMIT_ENABLE -> configBooleanParam(talonService.currentLimit) { talon, value ->
+                talon.enableCurrentLimit(value)
+                talonService.currentLimit = value
+            }
+            CURRENT_LIMIT_CONT -> configIntParam(config.continuousCurrentLimit) { talon, value ->
+                talon.configContinuousCurrentLimit(value, timeout)
+                config.continuousCurrentLimit = value
+            }
+            CURRENT_LIMIT_PEAK -> configIntParam(config.peakCurrentLimit) { talon, value ->
+                talon.configPeakCurrentLimit(value, timeout)
+                config.peakCurrentLimit = value
+            }
+            CURRENT_LIMIT_PEAK_DURATION -> configIntParam(config.peakCurrentDuration) { talon, value ->
+                talon.configPeakCurrentDuration(value, timeout)
+                config.peakCurrentDuration = value
+            }
             else -> throw IllegalStateException(param.enum.name)
         }
         return super.execute()

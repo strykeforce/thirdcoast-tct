@@ -53,7 +53,7 @@ class SelectFeedbackSensorCommand(
             0 -> config.primaryPID.selectedFeedbackSensor
             else -> config.auxilaryPID.selectedFeedbackSensor
         }
-    
+
         return SENSORS.indexOf(
             when (sensor) {
                 CTRE_MagEncoder_Absolute -> PulseWidthEncodedPosition

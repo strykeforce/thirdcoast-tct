@@ -22,7 +22,6 @@ interface Command {
     fun execute(): Command
 
     companion object {
-        const val MENU_TYPE = "menu"
         const val MENU_KEY = "menu"
         const val TYPE_KEY = "type"
         const val ORDER_KEY = "order"
@@ -32,7 +31,7 @@ interface Command {
             val type = toml.getString(TYPE_KEY) ?: throw Exception("$key: $TYPE_KEY missing")
 
             return when (type) {
-                MENU_TYPE -> {
+                "menu" -> {
                     val command = MenuCommand(parent, key, toml)
                     toml.keySet().filter(toml::isTable)
                         .forEach { k ->
@@ -55,6 +54,7 @@ interface Command {
                 "talon.param" -> ParameterCommand(parent, key, toml)
                 "talon.slot.param" -> SlotParameterCommand(parent, key, toml)
                 "talon.sensor" -> SelectFeedbackSensorCommand(parent, key, toml)
+                "talon.sensor.coefficient" -> FeedbackCoefficientCommand(parent, key, toml)
                 "test" -> TestCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
             }

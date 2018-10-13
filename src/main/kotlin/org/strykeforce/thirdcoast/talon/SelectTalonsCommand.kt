@@ -21,7 +21,13 @@ class SelectTalonsCommand(
         while (true) {
             try {
                 val ids = reader.readIntList(this.prompt("ids"))
+                val seen = talonService.idsInAll(ids)
                 talonService.activate(ids)
+                if (seen.isNotEmpty())
+                    terminal.warn(
+                        "reset control mode, current limit enabled, brake, voltage compensation\nand sensor phase " +
+                                "for talons: ${seen.joinToString()}"
+                    )
                 return super.execute()
             } catch (e: IllegalArgumentException) {
                 terminal.warn("Please enter a list of Talon ids separated by ','")

@@ -11,13 +11,21 @@ import org.strykeforce.thirdcoast.talon.SlotParameterCommand
 
 private val logger = KotlinLogging.logger {}
 
+private const val ACTIVE_SLOT_DEFAULT = 0
+private const val VOLTAGE_COMPENSATION_DEFAULT = true
+private const val SENSOR_PHASE_DEFAULT = false
+private const val CURRENT_LIMIT_DEFAULT = false
+private const val INVERTED_DEFAULT = false
+
 class TalonService(factory: (id: Int) -> TalonSRX) : AbstractDeviceService<TalonSRX>(factory) {
 
     val timeout = 10
-    var activeSlotIndex: Int = 0
+    var activeSlotIndex: Int = ACTIVE_SLOT_DEFAULT
     var controlMode = ControlMode.PercentOutput
     var neutralMode = NeutralMode.EEPROMSetting
-    var voltageCompensation = true
+    var voltageCompensation = VOLTAGE_COMPENSATION_DEFAULT
+    var sensorPhase = SENSOR_PHASE_DEFAULT
+    var currentLimit = CURRENT_LIMIT_DEFAULT
 
     var activeConfiguration = TalonSRXConfiguration()
         get() {
@@ -26,24 +34,27 @@ class TalonService(factory: (id: Int) -> TalonSRX) : AbstractDeviceService<Talon
         }
 
     val outputReverse: Boolean
-        get() = active.firstOrNull()?.inverted ?: false
+        get() = active.firstOrNull()?.inverted ?: INVERTED_DEFAULT
 
     override fun activate(ids: Collection<Int>) {
         SlotParameterCommand.reset = true
         ParameterCommand.reset = true
         SelectFeedbackSensorCommand.reset = true
-        activeSlotIndex = 0
+        activeSlotIndex = ACTIVE_SLOT_DEFAULT
         controlMode = ControlMode.PercentOutput
         neutralMode = NeutralMode.EEPROMSetting
-        voltageCompensation = true
+        voltageCompensation = VOLTAGE_COMPENSATION_DEFAULT
+        sensorPhase = SENSOR_PHASE_DEFAULT
+        currentLimit = CURRENT_LIMIT_DEFAULT
 
         super.activate(ids)
         active.forEach {
             it.setNeutralMode(neutralMode)
             it.selectProfileSlot(activeSlotIndex, 0)
-            it.inverted = false
             it.enableVoltageCompensation(voltageCompensation)
+            it.setSensorPhase(sensorPhase)
+            it.inverted = INVERTED_DEFAULT
+            it.enableCurrentLimit(currentLimit)
         }
     }
-
 }

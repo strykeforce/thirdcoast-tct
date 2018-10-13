@@ -31,6 +31,8 @@ open class AbstractDeviceService<T>(private val factory: (id: Int) -> T) :
         _active.clear()
         ids.associateTo(_active) { id -> id to get(id) }
     }
+
+    fun idsInAll(ids: Collection<Int>): Set<Int> = _all.keys.intersect(ids)
 }
 
 

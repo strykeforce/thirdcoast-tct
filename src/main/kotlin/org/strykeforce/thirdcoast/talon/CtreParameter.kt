@@ -37,5 +37,11 @@ class CtreParameter(command: Command, toml: TomlTable, val enum: Enum) : Abstrac
         VOLTAGE_MEASUREMENT_FILTER,
         MOTION_CRUISE_VELOCITY,
         MOTION_ACCELERATION,
+        FEEDBACK_COEFFICIENT,
+        SENSOR_PHASE,
+        CURRENT_LIMIT_ENABLE,
+        CURRENT_LIMIT_CONT,
+        CURRENT_LIMIT_PEAK,
+        CURRENT_LIMIT_PEAK_DURATION,
     }
 }
