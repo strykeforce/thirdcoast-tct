@@ -10,11 +10,21 @@ import org.koin.dsl.module.module
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.device.ServoService
 import org.strykeforce.thirdcoast.device.TalonService
+import org.strykeforce.thirdcoast.telemetry.TelemetryController
+import org.strykeforce.thirdcoast.telemetry.TelemetryService
+import org.strykeforce.thirdcoast.telemetry.grapher.ClientHandler
+import java.net.DatagramSocket
 
+private const val CLIENT_PORT = 5801
+private const val SERVER_PORT = 5800
 
 val tctModule = module {
 
-    single { TalonService { id -> TalonSRX(id) } }
+    factory { ClientHandler(CLIENT_PORT, DatagramSocket()) }
+
+    single { TelemetryService { inventory -> TelemetryController(inventory, get(), SERVER_PORT) } }
+
+    single { TalonService(get()) { id -> TalonSRX(id) } }
 
     single { ServoService { id -> Servo(id) } }
 

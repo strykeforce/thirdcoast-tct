@@ -39,7 +39,7 @@ internal class SlotParameterCommandTest : KoinTest {
         fun setUp() {
             startKoin(listOf(), logger = SLF4JLogger())
             declare {
-                single { TalonService { talon } }
+                single { TalonService(mock()) { talon } }
                 single { reader }
             }
         }
@@ -131,7 +131,7 @@ internal class SlotParameterCommandTest : KoinTest {
         fun setUp() {
             startKoin(listOf(), logger = SLF4JLogger())
             declare {
-                single { TalonService { talon } }
+                single { TalonService(mock()) { talon } }
                 single { reader }
             }
         }

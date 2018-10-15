@@ -32,7 +32,7 @@ internal class DeviceServiceTest {
 
     @Test
     fun `service gets same Talon`() {
-        val talonService = TalonService { mock() }
+        val talonService = TalonService(mock()) { mock() }
         val t1 = talonService.get(1)
         assertThat(talonService.get(1)).isSameAs(t1)
         assertThat(talonService.all).containsOnly(t1)

@@ -8,6 +8,7 @@ import mu.KotlinLogging
 import org.strykeforce.thirdcoast.talon.ParameterCommand
 import org.strykeforce.thirdcoast.talon.SelectFeedbackSensorCommand
 import org.strykeforce.thirdcoast.talon.SlotParameterCommand
+import org.strykeforce.thirdcoast.telemetry.TelemetryService
 
 private val logger = KotlinLogging.logger {}
 
@@ -17,7 +18,8 @@ private const val SENSOR_PHASE_DEFAULT = false
 private const val CURRENT_LIMIT_DEFAULT = false
 private const val INVERTED_DEFAULT = false
 
-class TalonService(factory: (id: Int) -> TalonSRX) : AbstractDeviceService<TalonSRX>(factory) {
+class TalonService(private val telemetryService: TelemetryService, factory: (id: Int) -> TalonSRX) :
+    AbstractDeviceService<TalonSRX>(factory) {
 
     val timeout = 10
     var activeSlotIndex: Int = ACTIVE_SLOT_DEFAULT
@@ -48,6 +50,7 @@ class TalonService(factory: (id: Int) -> TalonSRX) : AbstractDeviceService<Talon
         currentLimit = CURRENT_LIMIT_DEFAULT
 
         super.activate(ids)
+        telemetryService.stop()
         active.forEach {
             it.setNeutralMode(neutralMode)
             it.selectProfileSlot(activeSlotIndex, 0)
@@ -55,6 +58,8 @@ class TalonService(factory: (id: Int) -> TalonSRX) : AbstractDeviceService<Talon
             it.setSensorPhase(sensorPhase)
             it.inverted = INVERTED_DEFAULT
             it.enableCurrentLimit(currentLimit)
+            telemetryService.register(it)
         }
+        telemetryService.start()
     }
 }
