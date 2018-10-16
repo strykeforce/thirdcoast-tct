@@ -43,5 +43,12 @@ class CtreParameter(command: Command, toml: TomlTable, val enum: Enum) : Abstrac
         CURRENT_LIMIT_CONT,
         CURRENT_LIMIT_PEAK,
         CURRENT_LIMIT_PEAK_DURATION,
+        STATUS_GENERAL,
+        STATUS_FEEDBACK0,
+        STATUS_QUAD_ENCODER,
+        STATUS_AIN_TEMP_VBAT,
+        STATUS_PULSE_WIDTH,
+        STATUS_MOTION,
+        STATUS_PIDF0
     }
 }

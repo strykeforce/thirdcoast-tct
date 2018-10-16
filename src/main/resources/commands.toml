@@ -10,7 +10,11 @@ type = "menu"
   [talon.select]
     type = "talon.select"
     order = 10
-    menu = "select active talons"
+    menu = "active talons"
+  [talon.status]
+    type = "talon.status"
+    order = 12
+    menu = "status of active talons"
   [talon.mode]
     type = "talon.mode"
     order = 15
@@ -203,14 +207,41 @@ type = "menu"
       type = "default"
       order = 10
       menu = "set grapher defaults"
-    [talon.frame.status]
-      type = "default"
+    [talon.frame.general]
+      type = "talon.param"
       order = 20
-      menu = "status frames"
-    [talon.frame.control]
-      type = "default"
+      menu = "general status frame"
+      param = "STATUS_GENERAL"
+    [talon.frame.feedback_0]
+      type = "talon.param"
       order = 30
-      menu = "configure control frames"
+      menu = "feedback 0 status frame"
+      param = "STATUS_FEEDBACK0"
+    [talon.frame.quad_encoder]
+      type = "talon.param"
+      order = 40
+      menu = "quad encoder status frame"
+      param = "STATUS_QUAD_ENCODER"
+    [talon.frame.ain_temp_vbat]
+      type = "talon.param"
+      order = 50
+      menu = "ain/temp/vbat status frame"
+      param = "STATUS_AIN_TEMP_VBAT"
+    [talon.frame.pulse_width]
+      type = "talon.param"
+      order = 60
+      menu = "pulse width status frame"
+      param = "STATUS_PULSE_WIDTH"
+    [talon.frame.motion]
+      type = "talon.param"
+      order = 70
+      menu = "motion status frame"
+      param = "STATUS_MOTION"
+    [talon.frame.pidf_0]
+      type = "talon.param"
+      order = 80
+      menu = "PIDF 0 status frame"
+      param = "STATUS_PIDF0"
   [talon.limit]
     type = "menu"
     order = 70
@@ -239,10 +270,6 @@ type = "menu"
       type = "default"
       order = 60
       menu = "reverse remote limit switch"
-  [talon.status]
-    type = "talon.status"
-    order = 80
-    menu = "status of active talons"
 
 [dio]
   type = "menu"

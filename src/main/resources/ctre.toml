@@ -123,27 +123,66 @@
   range = [0.0, 1.0]
   help = "Sets the absolute value of peak closed-loop output from 0 to 1 in the selected parameter slot. This setting is applied to the output of the associated PID loop and is seperate from the generic peak output setting."
 
-  #
-  # motion profile
-  #
-  [MOTION_CRUISE_VELOCITY]
-    name = "Motion Magic Cruise Velocity"
-    type = "INTEGER"
-    help = "Sets the motion magic cruise velocity. This is the peak target velocity that the motion magic curve generator can use."
-  [MOTION_ACCELERATION]
-    name = "Motion Magic Acceleration"
-    type = "INTEGER"
-    help = "Sets the motion magic acceleration. This is the target acceleration that the motion magic curve generator can use."
+#
+# motion profile
+#
+[MOTION_CRUISE_VELOCITY]
+  name = "Motion Magic Cruise Velocity"
+  type = "INTEGER"
+  help = "Sets the motion magic cruise velocity. This is the peak target velocity that the motion magic curve generator can use."
+[MOTION_ACCELERATION]
+  name = "Motion Magic Acceleration"
+  type = "INTEGER"
+  help = "Sets the motion magic acceleration. This is the target acceleration that the motion magic curve generator can use."
 
-  #
-  # feedback sensors
-  #
-  [FEEDBACK_COEFFICIENT]
-    name = "Sensor Feedback Coefficient"
-    type = "DOUBLE"
-    range = [1.5258789062E-5, 1.0]
-    help = "Sets the sensor feedback coefficient. This is a scalar applied to the value of the feedback sensor.  Useful when you need to scale your sensor values within the closed-loop calculations.  Default value is 1."
-  [SENSOR_PHASE]
-    name = "Sensor Phase"
-    type = "BOOLEAN"
-    help = "Sets the phase of the sensor. Use when controller forward/reverse output doesn't correlate to appropriate forward/reverse reading of sensor. Pick a value so that positive PercentOutput yields a positive change in sensor. After setting this, user can freely call SetInverted() with any value."
+#
+# feedback sensors
+#
+[FEEDBACK_COEFFICIENT]
+  name = "Sensor Feedback Coefficient"
+  type = "DOUBLE"
+  range = [1.5258789062E-5, 1.0]
+  help = "Sets the sensor feedback coefficient. This is a scalar applied to the value of the feedback sensor.  Useful when you need to scale your sensor values within the closed-loop calculations.  Default value is 1."
+[SENSOR_PHASE]
+  name = "Sensor Phase"
+  type = "BOOLEAN"
+  help = "Sets the phase of the sensor. Use when controller forward/reverse output doesn't correlate to appropriate forward/reverse reading of sensor. Pick a value so that positive PercentOutput yields a positive change in sensor. After setting this, user can freely call SetInverted() with any value."
+
+#
+# status frames
+#
+[STATUS_GENERAL]
+  name = "General Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the General status frame. This frame has a default period of 10ms and provides current 10-bit motor duty cycle output, limit switch states,  fault bits, control mode, soft limit and limit switch overrides, invert and brake selections."
+[STATUS_FEEDBACK0]
+  name = "Feedback 0 Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the Feedback 0 status frame. This frame has a default period of 20ms and provides selected sensor velocity and position for PID 0, motor current, sticky faults, and motor control profile select."
+[STATUS_QUAD_ENCODER]
+  name = "Quadrature Encoder Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the Quadrature Encoder status frame. This frame has a default period of 160ms and provides quadrature encoder velocity and position, rising edge count, and quad A/B/index pin state."
+[STATUS_AIN_TEMP_VBAT]
+  name = "Analog Input / Temperature / Battery Voltage Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the Analog Input / Temperature / Battery Voltage status frame. This frame has a default period of 160ms and provides analog sensor velocity and position, talon temperature, battery voltage and selected sensor for PID 0."
+[STATUS_PULSE_WIDTH]
+  name = "Pulse Width Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the Pulse Width status frame. This frame has a default period of 160ms and provides period and pulse width on the talon index pin, and pulse-width sensor absolute position and velocity."
+[STATUS_MOTION]
+  name = "Motion Target Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the Motion Target status frame. This frame has a default period of 160ms and provides motion profile and motion magic target position, velocity and heading for the active profile."
+[STATUS_PIDF0]
+  name = "PIDF 0 Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the PIDF 0 status frame. This frame has a default period of 160ms and provides closed-loop error, integral accumulator and error derivative."
