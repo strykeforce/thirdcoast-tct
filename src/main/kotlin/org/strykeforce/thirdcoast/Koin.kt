@@ -14,6 +14,7 @@ import org.strykeforce.thirdcoast.telemetry.TelemetryController
 import org.strykeforce.thirdcoast.telemetry.TelemetryService
 import org.strykeforce.thirdcoast.telemetry.grapher.ClientHandler
 import java.net.DatagramSocket
+import java.util.function.Function
 
 private const val CLIENT_PORT = 5801
 private const val SERVER_PORT = 5800
@@ -22,7 +23,7 @@ val tctModule = module {
 
     factory { ClientHandler(CLIENT_PORT, DatagramSocket()) }
 
-    single { TelemetryService { inventory -> TelemetryController(inventory, get(), SERVER_PORT) } }
+    single { TelemetryService(Function { inventory -> TelemetryController(inventory, get(), SERVER_PORT) }) }
 
     single { TalonService(get()) { id -> TalonSRX(id) } }
 

@@ -1,5 +1,7 @@
 package org.strykeforce.thirdcoast.talon
 
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced.*
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
@@ -50,6 +52,13 @@ class ParameterCommand(
                 CURRENT_LIMIT_CONT -> formatMenu(config.continuousCurrentLimit)
                 CURRENT_LIMIT_PEAK -> formatMenu(config.peakCurrentLimit)
                 CURRENT_LIMIT_PEAK_DURATION -> formatMenu(config.peakCurrentDuration)
+                STATUS_GENERAL -> formatMenu(defaultFor(Status_1_General))
+                STATUS_FEEDBACK0 -> formatMenu(defaultFor(Status_2_Feedback0))
+                STATUS_QUAD_ENCODER -> formatMenu(defaultFor(Status_3_Quadrature))
+                STATUS_AIN_TEMP_VBAT -> formatMenu(defaultFor(Status_4_AinTempVbat))
+                STATUS_PULSE_WIDTH -> formatMenu(defaultFor(Status_8_PulseWidth))
+                STATUS_MOTION -> formatMenu(defaultFor(Status_10_MotionMagic))
+                STATUS_PIDF0 -> formatMenu(defaultFor(Status_13_Base_PIDF0))
                 else -> throw IllegalStateException(param.enum.name)
             }
         }
@@ -129,6 +138,27 @@ class ParameterCommand(
                 talon.configPeakCurrentDuration(value, timeout)
                 config.peakCurrentDuration = value
             }
+            STATUS_GENERAL -> configIntParam(defaultFor(Status_1_General)) { talon, value ->
+                talon.setStatusFramePeriod(Status_1_General, value, timeout)
+            }
+            STATUS_FEEDBACK0 -> configIntParam(defaultFor(Status_2_Feedback0)) { talon, value ->
+                talon.setStatusFramePeriod(Status_2_Feedback0, value, timeout)
+            }
+            STATUS_QUAD_ENCODER -> configIntParam(defaultFor(Status_3_Quadrature)) { talon, value ->
+                talon.setStatusFramePeriod(Status_3_Quadrature, value, timeout)
+            }
+            STATUS_AIN_TEMP_VBAT -> configIntParam(defaultFor(Status_4_AinTempVbat)) { talon, value ->
+                talon.setStatusFramePeriod(Status_4_AinTempVbat, value, timeout)
+            }
+            STATUS_PULSE_WIDTH -> configIntParam(defaultFor(Status_8_PulseWidth)) { talon, value ->
+                talon.setStatusFramePeriod(Status_8_PulseWidth, value, timeout)
+            }
+            STATUS_MOTION -> configIntParam(defaultFor(Status_10_MotionMagic)) { talon, value ->
+                talon.setStatusFramePeriod(Status_10_MotionMagic, value, timeout)
+            }
+            STATUS_PIDF0 -> configIntParam(defaultFor(Status_13_Base_PIDF0)) { talon, value ->
+                talon.setStatusFramePeriod(Status_13_Base_PIDF0, value, timeout)
+            }
             else -> throw IllegalStateException(param.enum.name)
         }
         return super.execute()
@@ -152,5 +182,8 @@ class ParameterCommand(
         talonService.active.forEach { config(it, paramValue) }
         logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
     }
+
+    private fun defaultFor(frame: StatusFrameEnhanced): Int =
+        talonService.active.first().getStatusFramePeriod(frame)
 }
 
