@@ -59,7 +59,11 @@ class ParameterCommand(
                 STATUS_PULSE_WIDTH -> formatMenu(defaultFor(Status_8_PulseWidth))
                 STATUS_MOTION -> formatMenu(defaultFor(Status_10_MotionMagic))
                 STATUS_PIDF0 -> formatMenu(defaultFor(Status_13_Base_PIDF0))
-                else -> throw IllegalStateException(param.enum.name)
+                SOFT_LIMIT_ENABLE_FORWARD -> formatMenu(config.forwardSoftLimitEnable)
+                SOFT_LIMIT_ENABLE_REVERSE -> formatMenu(config.reverseSoftLimitEnable)
+                SOFT_LIMIT_THRESHOLD_FORWARD -> formatMenu(config.forwardSoftLimitThreshold)
+                SOFT_LIMIT_THRESHOLD_REVERSE -> formatMenu(config.reverseSoftLimitThreshold)
+                else -> TODO("${param.enum} not implemented")
             }
         }
 
@@ -159,7 +163,23 @@ class ParameterCommand(
             STATUS_PIDF0 -> configIntParam(defaultFor(Status_13_Base_PIDF0)) { talon, value ->
                 talon.setStatusFramePeriod(Status_13_Base_PIDF0, value, timeout)
             }
-            else -> throw IllegalStateException(param.enum.name)
+            SOFT_LIMIT_ENABLE_FORWARD -> configBooleanParam(config.forwardSoftLimitEnable) { talon, value ->
+                talon.configForwardSoftLimitEnable(value, timeout)
+                config.forwardSoftLimitEnable = value
+            }
+            SOFT_LIMIT_ENABLE_REVERSE -> configBooleanParam(config.reverseSoftLimitEnable) { talon, value ->
+                talon.configReverseSoftLimitEnable(value, timeout)
+                config.reverseSoftLimitEnable = value
+            }
+            SOFT_LIMIT_THRESHOLD_FORWARD -> configIntParam(config.forwardSoftLimitThreshold) { talon, value ->
+                talon.configForwardSoftLimitThreshold(value, timeout)
+                config.forwardSoftLimitThreshold = value
+            }
+            SOFT_LIMIT_THRESHOLD_REVERSE -> configIntParam(config.reverseSoftLimitThreshold) { talon, value ->
+                talon.configReverseSoftLimitThreshold(value, timeout)
+                config.reverseSoftLimitThreshold = value
+            }
+            else -> TODO("${param.enum} not implemented")
         }
         return super.execute()
     }

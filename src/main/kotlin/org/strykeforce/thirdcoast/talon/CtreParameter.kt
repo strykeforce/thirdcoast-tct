@@ -49,6 +49,10 @@ class CtreParameter(command: Command, toml: TomlTable, val enum: Enum) : Abstrac
         STATUS_AIN_TEMP_VBAT,
         STATUS_PULSE_WIDTH,
         STATUS_MOTION,
-        STATUS_PIDF0
+        STATUS_PIDF0,
+        SOFT_LIMIT_ENABLE_FORWARD,
+        SOFT_LIMIT_ENABLE_REVERSE,
+        SOFT_LIMIT_THRESHOLD_FORWARD,
+        SOFT_LIMIT_THRESHOLD_REVERSE,
     }
 }

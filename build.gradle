@@ -21,12 +21,12 @@ apply plugin: "idea"
 version = '18.2.0'
 
 repositories {
+    mavenLocal()
     jcenter()
     maven { url = "https://raw.githubusercontent.com/Open-RIO/Maven-Mirror/master/m2" }
     maven { url = "http://first.wpi.edu/FRC/roborio/maven/release" }
     maven { url = "https://dl.bintray.com/kotlin/kotlin-eap" } // FIXME
     maven { url = "https://oss.sonatype.org/content/repositories/snapshots" } // nanohttpd
-    mavenLocal()
 }
 
 dependencies {

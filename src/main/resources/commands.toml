@@ -246,30 +246,54 @@ type = "menu"
     type = "menu"
     order = 70
     menu = "configure soft and hard limits"
-    [talon.limit.forward_hard]
-      type = "default"
+    [talon.limit.forward_hard_source]
+      type = "talon.hard.source"
       order = 10
-      menu = "forward hard limit switch"
-    [talon.limit.reverse_hard]
-      type = "default"
+      forward = true
+      menu = "forward hard limit source"
+    [talon.limit.forward_hard_normal]
+      type = "talon.hard.normal"
       order = 20
-      menu = "reverse hard limit switch"
-    [talon.limit.forward_soft]
-      type = "default"
+      forward = true
+      menu = "forward hard limit normal"
+    [talon.limit.reverse_hard_source]
+      type = "talon.hard.source"
       order = 30
-      menu = "forward soft limit"
-    [talon.limit.reverse_soft]
-      type = "default"
+      forward = false
+      menu = "reverse hard limit source"
+    [talon.limit.reverse_hard_normal]
+      type = "talon.hard.normal"
       order = 40
-      menu = "reverse soft limit"
-    [talon.limit.forward_remote]
-      type = "default"
+      forward = false
+      menu = "reverse hard limit normal"
+    [talon.limit.forward_soft_enabled]
+      type = "talon.param"
       order = 50
-      menu = "forward remote limit switch"
-    [talon.limit.reverse_remote]
-      type = "default"
+      menu = "forward soft limit enabled"
+      param = "SOFT_LIMIT_ENABLE_FORWARD"
+    [talon.limit.forward_soft_threshold]
+      type = "talon.param"
       order = 60
-      menu = "reverse remote limit switch"
+      menu = "forward soft limit threshold"
+      param = "SOFT_LIMIT_THRESHOLD_FORWARD"
+    [talon.limit.reverse_soft_enabled]
+      type = "talon.param"
+      order = 70
+      menu = "reverse soft limit enabled"
+      param = "SOFT_LIMIT_ENABLE_REVERSE"
+    [talon.limit.reverse_soft_threshold]
+      type = "talon.param"
+      order = 80
+      menu = "reverse soft limit threshold"
+      param = "SOFT_LIMIT_THRESHOLD_REVERSE"
+    # [talon.limit.forward_remote]
+    #   type = "default"
+    #   order = 90
+    #   menu = "forward remote limit switch"
+    # [talon.limit.reverse_remote]
+    #   type = "default"
+    #   order = 100
+    #   menu = "reverse remote limit switch"
 
 [dio]
   type = "menu"

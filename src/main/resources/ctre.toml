@@ -149,6 +149,26 @@
   help = "Sets the phase of the sensor. Use when controller forward/reverse output doesn't correlate to appropriate forward/reverse reading of sensor. Pick a value so that positive PercentOutput yields a positive change in sensor. After setting this, user can freely call SetInverted() with any value."
 
 #
+# soft limits
+#
+[SOFT_LIMIT_ENABLE_FORWARD]
+  name = "Forward Soft Limit Enabled"
+  type = "BOOLEAN"
+  help = "Enable or disable forward soft limit."
+[SOFT_LIMIT_ENABLE_REVERSE]
+  name = "Reverse Soft Limit Enabled"
+  type = "BOOLEAN"
+  help = "Enable or disable reverse soft limit."
+[SOFT_LIMIT_THRESHOLD_FORWARD]
+  name = "Forward Soft Limit Threshold"
+  type = "BOOLEAN"
+  help = "Sets the forward soft limit threshold."
+[SOFT_LIMIT_THRESHOLD_REVERSE]
+  name = "Reverse Soft Limit Threshold"
+  type = "BOOLEAN"
+  help = "Sets the reverse soft limit threshold."
+
+#
 # status frames
 #
 [STATUS_GENERAL]

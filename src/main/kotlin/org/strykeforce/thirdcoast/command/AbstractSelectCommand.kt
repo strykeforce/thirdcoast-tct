@@ -12,8 +12,8 @@ abstract class AbstractSelectCommand<T>(
     parent: Command?,
     key: String,
     toml: TomlTable,
-    private val values: List<T>,
-    private val labels: List<String>
+    protected val values: List<T>,
+    protected val labels: List<String>
 ) : AbstractCommand(parent, key, toml) {
 
     override val menu: String
@@ -40,7 +40,7 @@ abstract class AbstractSelectCommand<T>(
         return super.execute()
     }
 
-    abstract fun activeIndex(): Int
+    abstract fun activeIndex(): Int // FIXME: make a property
 
     abstract fun setActive(index: Int)
 }
