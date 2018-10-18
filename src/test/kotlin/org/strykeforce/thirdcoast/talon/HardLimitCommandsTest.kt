@@ -1,12 +1,12 @@
 package org.strykeforce.thirdcoast.talon
 
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal.Disabled
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal.NormallyOpen
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource.FeedbackConnector
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import net.consensys.cava.toml.Toml
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.koin.log.Logger.SLF4JLogger
@@ -60,5 +60,11 @@ internal class HardLimitCommandsTest : KoinTest {
         source.setActive(1) // FeedbackConnector
         verify(talon).configForwardLimitSwitchSource(FeedbackConnector, NormallyOpen)
     }
+
+    @AfterEach
+    fun tearDown() {
+        StandAloneContext.stopKoin()
+    }
+
 }
 
