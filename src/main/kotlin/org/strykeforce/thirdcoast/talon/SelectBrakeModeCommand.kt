@@ -6,20 +6,23 @@ import net.consensys.cava.toml.TomlTable
 import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
 
-
-private val MODES = listOf(EEPROMSetting, Brake, Coast)
-private val LABELS = listOf("B/C CAL Button", "Brake", "Coast")
-
 class SelectBrakeModeCommand(
     parent: Command?,
     key: String,
     toml: TomlTable
-) : AbstractSelectCommand<NeutralMode>(parent, key, toml, MODES, LABELS) {
+) : AbstractSelectCommand<NeutralMode>(
+    parent,
+    key,
+    toml,
+    listOf(EEPROMSetting, Brake, Coast),
+    listOf("B/C CAL Button", "Brake", "Coast")
+) {
 
-    override fun activeIndex() = MODES.indexOf(talonService.neutralMode)
+    override val activeIndex
+        get() = values.indexOf(talonService.neutralMode)
 
     override fun setActive(index: Int) {
-        talonService.neutralMode = MODES[index]
+        talonService.neutralMode = values[index]
         talonService.active.forEach { it.setNeutralMode(talonService.neutralMode) }
     }
 }

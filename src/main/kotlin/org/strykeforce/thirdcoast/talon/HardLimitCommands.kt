@@ -26,15 +26,16 @@ class SelectHardLimitSourceCommand(
     val isForward = toml.getBoolean("forward") ?: true
 
     val activeSource
-        get() = values[activeIndex()]
+        get() = values[activeIndex]
 
 
-    override fun activeIndex() = values.indexOf(
-        if (isForward)
-            talonService.activeConfiguration.forwardLimitSwitchSource
-        else
-            talonService.activeConfiguration.reverseLimitSwitchSource
-    )
+    override val activeIndex
+        get() = values.indexOf(
+            if (isForward)
+                talonService.activeConfiguration.forwardLimitSwitchSource
+            else
+                talonService.activeConfiguration.reverseLimitSwitchSource
+        )
 
     override fun setActive(index: Int) {
         val active = talonService.active
@@ -76,14 +77,15 @@ class SelectHardLimitNormalCommand(
     val isForward = toml.getBoolean("forward") ?: true
 
     val activeNormal
-        get() = values[activeIndex()]
+        get() = values[activeIndex]
 
-    override fun activeIndex() = values.indexOf(
-        if (isForward)
-            talonService.activeConfiguration.forwardLimitSwitchNormal
-        else
-            talonService.activeConfiguration.reverseLimitSwitchNormal
-    )
+    override val activeIndex
+        get() = values.indexOf(
+            if (isForward)
+                talonService.activeConfiguration.forwardLimitSwitchNormal
+            else
+                talonService.activeConfiguration.reverseLimitSwitchNormal
+        )
 
     override fun setActive(index: Int) {
         val active = talonService.active

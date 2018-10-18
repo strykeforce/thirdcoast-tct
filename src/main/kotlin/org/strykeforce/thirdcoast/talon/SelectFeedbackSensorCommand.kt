@@ -43,28 +43,29 @@ class SelectFeedbackSensorCommand(
 
     private var config = talonService.activeConfiguration
 
-    override fun activeIndex(): Int {
-        if (reset) {
-            config = talonService.activeConfiguration
-            reset = false
-        }
-
-        val sensor = when (pidIndex) {
-            0 -> config.primaryPID.selectedFeedbackSensor
-            else -> config.auxilaryPID.selectedFeedbackSensor
-        }
-
-        return SENSORS.indexOf(
-            when (sensor) {
-                CTRE_MagEncoder_Absolute -> PulseWidthEncodedPosition
-                CTRE_MagEncoder_Relative -> QuadEncoder
-                else -> sensor
+    override val activeIndex: Int
+        get() {
+            if (reset) {
+                config = talonService.activeConfiguration
+                reset = false
             }
-        )
-    }
+
+            val sensor = when (pidIndex) {
+                0 -> config.primaryPID.selectedFeedbackSensor
+                else -> config.auxilaryPID.selectedFeedbackSensor
+            }
+
+            return values.indexOf(
+                when (sensor) {
+                    CTRE_MagEncoder_Absolute -> PulseWidthEncodedPosition
+                    CTRE_MagEncoder_Relative -> QuadEncoder
+                    else -> sensor
+                }
+            )
+        }
 
     override fun setActive(index: Int) {
-        talonService.active.forEach { it.configSelectedFeedbackSensor(SENSORS[index], pidIndex, talonService.timeout) }
+        talonService.active.forEach { it.configSelectedFeedbackSensor(values[index], pidIndex, talonService.timeout) }
         reset = true
     }
 }

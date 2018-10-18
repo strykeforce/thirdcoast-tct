@@ -12,7 +12,8 @@ class SelectSlotCommand(
     toml: TomlTable
 ) : AbstractSelectCommand<Int>(parent, key, toml, SLOTS, SLOTS.map(Int::toString)) {
 
-    override fun activeIndex() = talonService.activeSlotIndex
+    override val activeIndex
+        get() = talonService.activeSlotIndex
 
     override fun setActive(index: Int) {
         talonService.activeSlotIndex = index

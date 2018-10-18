@@ -17,14 +17,14 @@ abstract class AbstractSelectCommand<T>(
 ) : AbstractCommand(parent, key, toml) {
 
     override val menu: String
-        get() = formatMenu(labels[activeIndex()])
+        get() = formatMenu(labels[activeIndex])
 
     override fun execute(): Command {
         val writer = terminal.writer()
         var done = false
         while (!done) {
             labels.forEachIndexed { index, label ->
-                writer.println(label.toRawMenu(index, index == activeIndex()))
+                writer.println(label.toRawMenu(index, index == activeIndex))
             }
             val choice = terminal.readRawMenu(values.size, prompt())
             when (choice) {
@@ -40,7 +40,6 @@ abstract class AbstractSelectCommand<T>(
         return super.execute()
     }
 
-    abstract fun activeIndex(): Int // FIXME: make a property
-
+    abstract val activeIndex: Int
     abstract fun setActive(index: Int)
 }
