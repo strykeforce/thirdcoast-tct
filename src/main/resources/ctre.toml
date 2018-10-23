@@ -5,6 +5,10 @@
   name = "Follower"
   type = "INTEGER"
   help = "Set the ID of the motor controller to follow."
+[FACTORY_DEFAULTS]
+  name = "Factory Defaults"
+  type = "BOOLEAN"
+  help = "Resets all configurations to factory default values."
 
 #
 # current limits
