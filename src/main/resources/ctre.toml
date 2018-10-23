@@ -1,0 +1,212 @@
+#
+# control modes
+#
+[FOLLOWER]
+  name = "Follower"
+  type = "INTEGER"
+  help = "Set the ID of the motor controller to follow."
+
+#
+# current limits
+#
+[CURRENT_LIMIT_ENABLE]
+  name = "Current Limit Enabled"
+  type = "BOOLEAN"
+  help = "Enable or disable current limit."
+[CURRENT_LIMIT_CONT]
+  name = "Continuous Current Limit"
+  type = "INTEGER"
+  help = "Sets the continuous allowable current (amps) when current limit is enabled."
+[CURRENT_LIMIT_PEAK]
+  name = "Peak Current Limit"
+  type = "INTEGER"
+  help = "Sets the peak allowable current (amps) when current limit is enabled. Current limit is activated when current exceeds the peak limit for longer than the peak duration, after which software will limit to the continuous limit. This ensures current limiting while allowing for momentary excess current events."
+[CURRENT_LIMIT_PEAK_DURATION]
+  name = "Peak Current Limit Duration"
+  type = "INTEGER"
+  help = "Sets how long (msec) to allow current-draw past peak limit."
+
+#
+# motor output
+#
+[OUTPUT_REVERSED]
+  name = "Motor Output Reversed"
+  type = "BOOLEAN"
+  help = "Inverts the H-bridge output of the motor controller. This does not impact sensor phase and should not be used to correct sensor polarity. This will invert the hbridge output but NOT the LEDs. This ensures.... Green LEDs always represents positive request from robot-controller/closed-looping mode. Green LEDs correlates to forward limit switch. Green LEDs correlates to forward soft limit."
+[OPEN_LOOP_RAMP]
+  name = "Open-Loop Ramp Rate"
+  type = "DOUBLE"
+  range = [0.0, 1000.0]
+  help = "Sets the minimum desired time in seconds to go from neutral to full throttle. A value of '0' will disable the ramp."
+[CLOSED_LOOP_RAMP]
+  name = "Closed-Loop Ramp Rate"
+  type = "DOUBLE"
+  range = [0.0, 1000.0]
+  help = "Sets the minimum desired time in seconds to go from neutral to full throttle. A value of '0' will disable the ramp."
+[PEAK_OUTPUT_FORWARD]
+  name = "Foward Peak Output"
+  type = "DOUBLE"
+  range = [0.0, 1.0]
+  help = "Sets the forward peak output percentage from 0 to 1."
+[PEAK_OUTPUT_REVERSE]
+  name = "Reverse Peak Output"
+  type = "DOUBLE"
+  range = [-1.0, 0.0]
+  help = "Sets the reverse peak output percentage from 0 to 1."
+[NOMINAL_OUTPUT_FORWARD]
+  name = "Foward Nominal Output"
+  type = "DOUBLE"
+  range = [0.0, 1.0]
+  help = "Sets the forward nominal output percentage from 0 to 1."
+[NOMINAL_OUTPUT_REVERSE]
+  name = "Reverse Nominal Output"
+  type = "DOUBLE"
+  range = [-1.0, 0.0]
+  help = "Sets the reverse nominal output percentage from 0 to 1."
+[NEUTRAL_DEADBAND]
+  name = "Neutral Deadband"
+  type = "DOUBLE"
+  range = [0.001, 0.25]
+  help = "Desired deadband percentage. Minimum is 0.1%, Maximum is 25%.  Enter 0.04 for 4% (factory default)."
+
+#
+# voltage compensation
+#
+[VOLTAGE_COMP_ENABLE]
+  name = "Voltage Compensation Enabled"
+  type = "BOOLEAN"
+  help = "Enables voltage compensation. If enabled, voltage compensation works in all control modes."
+[VOLTAGE_COMP_SATURATION]
+  name = "Voltage Compensation Saturation Voltage"
+  type = "DOUBLE"
+  range = [0.0, 12.0]
+  help = "Sets the max voltage to apply to the H-bridge when voltage compensation is enabled.  For example, if 10 (volts) is specified and a TalonSRX is commanded to 0.5 (PercentOutput, closed-loop, etc) then the TalonSRX will attempt to apply a duty-cycle to produce 5V."
+[VOLTAGE_MEASUREMENT_FILTER]
+  name = "Voltage Measurement Filter"
+  type = "INTEGER"
+  help = "Number of samples in the rolling average of voltage measurement."
+
+#
+# PID slots
+#
+[SLOT_P]
+  name = "P"
+  type = "DOUBLE"
+  help = "Sets the P constant in the selected parameter slot."
+[SLOT_I]
+  name = "I"
+  type = "DOUBLE"
+  help = "Sets the I constant in the selected parameter slot."
+[SLOT_D]
+  name = "D"
+  type = "DOUBLE"
+  help = "Sets the D constant in the selected parameter slot."
+[SLOT_F]
+  name = "F"
+  type = "DOUBLE"
+  help = "Sets the F constant in the selected parameter slot."
+[SLOT_I_ZONE]
+  name = "Integral Zone"
+  type = "INTEGER"
+  help = "Sets the Integral Zone (closed-loop error units * 1ms) constant in the selected parameter slot. If the (absolute) closed-loop error is outside of this zone, integral accumulator is automatically cleared."
+[SLOT_ALLOWABLE_ERR]
+  name = "Allowable Closed-Loop Error"
+  type = "INTEGER"
+  help = "Sets the allowable closed-loop error in the selected parameter slot."
+[SLOT_MAX_I_ACCUM]
+  name = "Maximum Integral Accumulator"
+  type = "DOUBLE"
+  help = "Sets the maximum integral accumulator (closed-loop error units * 1ms) in the selected parameter slot."
+[SLOT_PEAK_OUTPUT]
+  name = "Peak Closed-Loop Output"
+  type = "DOUBLE"
+  range = [0.0, 1.0]
+  help = "Sets the absolute value of peak closed-loop output from 0 to 1 in the selected parameter slot. This setting is applied to the output of the associated PID loop and is seperate from the generic peak output setting."
+
+#
+# motion profile
+#
+[MOTION_CRUISE_VELOCITY]
+  name = "Motion Magic Cruise Velocity"
+  type = "INTEGER"
+  help = "Sets the motion magic cruise velocity. This is the peak target velocity that the motion magic curve generator can use."
+[MOTION_ACCELERATION]
+  name = "Motion Magic Acceleration"
+  type = "INTEGER"
+  help = "Sets the motion magic acceleration. This is the target acceleration that the motion magic curve generator can use."
+
+#
+# feedback sensors
+#
+[FEEDBACK_COEFFICIENT]
+  name = "Sensor Feedback Coefficient"
+  type = "DOUBLE"
+  range = [1.5258789062E-5, 1.0]
+  help = "Sets the sensor feedback coefficient. This is a scalar applied to the value of the feedback sensor.  Useful when you need to scale your sensor values within the closed-loop calculations.  Default value is 1."
+[SENSOR_PHASE]
+  name = "Sensor Phase"
+  type = "BOOLEAN"
+  help = "Sets the phase of the sensor. Use when controller forward/reverse output doesn't correlate to appropriate forward/reverse reading of sensor. Pick a value so that positive PercentOutput yields a positive change in sensor. After setting this, user can freely call SetInverted() with any value."
+[SENSOR_POSITION]
+  name = "Sensor Position"
+  type = "INTEGER"
+  help = "Sets the position of the sensor to the given value (in raw sensor units)."
+
+#
+# soft limits
+#
+[SOFT_LIMIT_ENABLE_FORWARD]
+  name = "Forward Soft Limit Enabled"
+  type = "BOOLEAN"
+  help = "Enable or disable forward soft limit."
+[SOFT_LIMIT_ENABLE_REVERSE]
+  name = "Reverse Soft Limit Enabled"
+  type = "BOOLEAN"
+  help = "Enable or disable reverse soft limit."
+[SOFT_LIMIT_THRESHOLD_FORWARD]
+  name = "Forward Soft Limit Threshold"
+  type = "BOOLEAN"
+  help = "Sets the forward soft limit threshold."
+[SOFT_LIMIT_THRESHOLD_REVERSE]
+  name = "Reverse Soft Limit Threshold"
+  type = "BOOLEAN"
+  help = "Sets the reverse soft limit threshold."
+
+#
+# status frames
+#
+[STATUS_GENERAL]
+  name = "General Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the General status frame. This frame has a default period of 10ms and provides current 10-bit motor duty cycle output, limit switch states,  fault bits, control mode, soft limit and limit switch overrides, invert and brake selections."
+[STATUS_FEEDBACK0]
+  name = "Feedback 0 Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the Feedback 0 status frame. This frame has a default period of 20ms and provides selected sensor velocity and position for PID 0, motor current, sticky faults, and motor control profile select."
+[STATUS_QUAD_ENCODER]
+  name = "Quadrature Encoder Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the Quadrature Encoder status frame. This frame has a default period of 160ms and provides quadrature encoder velocity and position, rising edge count, and quad A/B/index pin state."
+[STATUS_AIN_TEMP_VBAT]
+  name = "Analog Input / Temperature / Battery Voltage Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the Analog Input / Temperature / Battery Voltage status frame. This frame has a default period of 160ms and provides analog sensor velocity and position, talon temperature, battery voltage and selected sensor for PID 0."
+[STATUS_PULSE_WIDTH]
+  name = "Pulse Width Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the Pulse Width status frame. This frame has a default period of 160ms and provides period and pulse width on the talon index pin, and pulse-width sensor absolute position and velocity."
+[STATUS_MOTION]
+  name = "Motion Target Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the Motion Target status frame. This frame has a default period of 160ms and provides motion profile and motion magic target position, velocity and heading for the active profile."
+[STATUS_PIDF0]
+  name = "PIDF 0 Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the PIDF 0 status frame. This frame has a default period of 160ms and provides closed-loop error, integral accumulator and error derivative."

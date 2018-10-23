@@ -1,0 +1,334 @@
+type = "menu"
+[talon]
+  type = "menu"
+  order = 10
+  menu = "work with talons"
+  [talon.run]
+    type = "talon.run"
+    order = 5
+    menu = "run active talons"
+  [talon.select]
+    type = "talon.select"
+    order = 10
+    menu = "active talons"
+  [talon.status]
+    type = "talon.status"
+    order = 12
+    menu = "status of active talons"
+  [talon.mode]
+    type = "talon.mode"
+    order = 15
+    menu = "control mode"
+  [talon.sensor]
+    type = "menu"
+    order = 17
+    menu = "configure feedback sensors"
+    [talon.sensor.primary]
+      type = "talon.sensor"
+      order = 10
+      menu = "primary closed-loop sensor"
+      pid = 0
+    [talon.sensor.auxiliary]
+      type = "talon.sensor"
+      order = 20
+      menu = "auxiliary closed-loop sensor"
+      pid = 1
+    [talon.sensor.primary_position]
+      type = "talon.sensor.position"
+      order = 30
+      menu = "primary sensor feedback position"
+      param = "SENSOR_POSITION"
+      pid = 0
+    [talon.sensor.auxiliary_position]
+      type = "talon.sensor.position"
+      order = 40
+      menu = "auxiliary sensor feedback position"
+      param = "SENSOR_POSITION"
+      pid = 1
+    [talon.sensor.primary_coefficient]
+      type = "talon.sensor.coefficient"
+      order = 50
+      menu = "primary sensor feedback coefficient"
+      param = "FEEDBACK_COEFFICIENT"
+      pid = 0
+    [talon.sensor.auxiliary_coefficient]
+      type = "talon.sensor.coefficient"
+      order = 60
+      menu = "auxiliary sensor feedback coefficient"
+      param = "FEEDBACK_COEFFICIENT"
+      pid = 1
+    [talon.sensor.phase]
+      type = "talon.param"
+      order = 70
+      menu = "sensor phase reversed"
+      param = "SENSOR_PHASE"
+  [talon.slot]
+    type = "menu"
+    order = 20
+    menu = "configure PID slots"
+    [talon.slot.select]
+      type = "talon.slot.select"
+      order = 10
+      menu = "active slot"
+    [talon.slot.P]
+      type ="talon.slot.param"
+      order = 20
+      param = "SLOT_P"
+    [talon.slot.I]
+      type ="talon.slot.param"
+      order = 30
+      param = "SLOT_I"
+    [talon.slot.D]
+      type ="talon.slot.param"
+      order = 40
+      param = "SLOT_D"
+    [talon.slot.F]
+      type ="talon.slot.param"
+      order = 50
+      param = "SLOT_F"
+    [talon.slot.IZone]
+      type ="talon.slot.param"
+      menu = "I Zone"
+      order = 60
+      param = "SLOT_I_ZONE"
+    [talon.slot.AllowableErr]
+      type ="talon.slot.param"
+      menu = "Allowable Error"
+      order = 70
+      param = "SLOT_ALLOWABLE_ERR"
+    [talon.slot.MaxIAccum]
+      type ="talon.slot.param"
+      menu = "Max I Accum"
+      order = 80
+      param = "SLOT_MAX_I_ACCUM"
+    [talon.slot.PeakOutput]
+      type ="talon.slot.param"
+      menu = "Peak output"
+      order = 90
+      param = "SLOT_PEAK_OUTPUT"
+  [talon.motion_magic]
+    type = "menu"
+    order = 22
+    menu = "configure motion magic"
+    [talon.motion_magic.cruise_velocity]
+      type = "talon.param"
+      order = 10
+      menu = "motion magic cruise velocity"
+      param = "MOTION_CRUISE_VELOCITY"
+    [talon.motion_magic.acceleration]
+      type = "talon.param"
+      order = 20
+      menu = "motion magic acceleration"
+      param = "MOTION_ACCELERATION"
+  [talon.current]
+    type = "menu"
+    order = 23
+    menu = "configure current limits"
+    [talon.current.enabled]
+      type = "talon.param"
+      order = 10
+      menu = "current limit enabled"
+      param = "CURRENT_LIMIT_ENABLE"
+    [talon.current.continuous]
+      type = "talon.param"
+      order = 20
+      menu = "continuous current limit"
+      param = "CURRENT_LIMIT_CONT"
+    [talon.current.peak]
+      type = "talon.param"
+      order = 30
+      menu = "peak current limit"
+      param = "CURRENT_LIMIT_PEAK"
+    [talon.current.peak_duration]
+      type = "talon.param"
+      order = 40
+      menu = "peak current limit duration"
+      param = "CURRENT_LIMIT_PEAK_DURATION"
+  [talon.output]
+    type = "menu"
+    order = 25
+    menu = "configure motor output"
+    [talon.output.brake]
+      type = "talon.brake"
+      order = 10
+      menu = "brake mode"
+    [talon.output.reversed]
+      type = "talon.param"
+      order = 20
+      menu = "motor output reversed"
+      param = "OUTPUT_REVERSED"
+    [talon.output.open-loop_ramp]
+      type = "talon.param"
+      order = 30
+      menu = "open-loop ramp rate"
+      param = "OPEN_LOOP_RAMP"
+    [talon.output.closed-loop_ramp]
+      type = "talon.param"
+      order = 40
+      menu = "closed-loop ramp rate"
+      param = "CLOSED_LOOP_RAMP"
+    [talon.output.forward_peak_output]
+      type = "talon.param"
+      order = 50
+      menu = "forward peak output"
+      param = "PEAK_OUTPUT_FORWARD"
+    [talon.output.reverse_peak_output]
+      type = "talon.param"
+      order = 60
+      menu = "reverse peak output"
+      param = "PEAK_OUTPUT_REVERSE"
+    [talon.output.forward_nominal_output]
+      type = "talon.param"
+      order = 70
+      menu = "forward nominal output"
+      param = "NOMINAL_OUTPUT_FORWARD"
+    [talon.output.reverse_nominal_output]
+      type = "talon.param"
+      order = 80
+      menu = "reverse nominal output"
+      param = "NOMINAL_OUTPUT_REVERSE"
+    [talon.output.neutral_deadband]
+      type = "talon.param"
+      order = 90
+      menu = "neutral deadband"
+      param = "NEUTRAL_DEADBAND"
+  [talon.voltage_compensation]
+    type = "menu"
+    order = 27
+    menu = "configure voltage compensation"
+    [talon.voltage_compensation.enabled]
+      type = "talon.param"
+      order = 10
+      menu = "voltage compensation enabled"
+      param = "VOLTAGE_COMP_ENABLE"
+    [talon.voltage_compensation.saturation_voltage]
+      type = "talon.param"
+      order = 20
+      menu = "voltage compensation saturation voltage"
+      param = "VOLTAGE_COMP_SATURATION"
+    [talon.voltage_compensation.filter]
+      type = "talon.param"
+      order = 30
+      menu = "voltage compensation measurement filter"
+      param = "VOLTAGE_MEASUREMENT_FILTER"
+  [talon.frame]
+    type = "menu"
+    order = 60
+    menu = "configure CAN bus frames"
+    [talon.frame.grapher]
+      type = "default"
+      order = 10
+      menu = "set grapher defaults"
+    [talon.frame.general]
+      type = "talon.param"
+      order = 20
+      menu = "general status frame"
+      param = "STATUS_GENERAL"
+    [talon.frame.feedback_0]
+      type = "talon.param"
+      order = 30
+      menu = "feedback 0 status frame"
+      param = "STATUS_FEEDBACK0"
+    [talon.frame.quad_encoder]
+      type = "talon.param"
+      order = 40
+      menu = "quad encoder status frame"
+      param = "STATUS_QUAD_ENCODER"
+    [talon.frame.ain_temp_vbat]
+      type = "talon.param"
+      order = 50
+      menu = "ain/temp/vbat status frame"
+      param = "STATUS_AIN_TEMP_VBAT"
+    [talon.frame.pulse_width]
+      type = "talon.param"
+      order = 60
+      menu = "pulse width status frame"
+      param = "STATUS_PULSE_WIDTH"
+    [talon.frame.motion]
+      type = "talon.param"
+      order = 70
+      menu = "motion status frame"
+      param = "STATUS_MOTION"
+    [talon.frame.pidf_0]
+      type = "talon.param"
+      order = 80
+      menu = "PIDF 0 status frame"
+      param = "STATUS_PIDF0"
+  [talon.limit]
+    type = "menu"
+    order = 70
+    menu = "configure soft and hard limits"
+    [talon.limit.forward_hard_source]
+      type = "talon.hard.source"
+      order = 10
+      forward = true
+      menu = "forward hard limit source"
+    [talon.limit.forward_hard_normal]
+      type = "talon.hard.normal"
+      order = 20
+      forward = true
+      menu = "forward hard limit normal"
+    [talon.limit.reverse_hard_source]
+      type = "talon.hard.source"
+      order = 30
+      forward = false
+      menu = "reverse hard limit source"
+    [talon.limit.reverse_hard_normal]
+      type = "talon.hard.normal"
+      order = 40
+      forward = false
+      menu = "reverse hard limit normal"
+    [talon.limit.forward_soft_enabled]
+      type = "talon.param"
+      order = 50
+      menu = "forward soft limit enabled"
+      param = "SOFT_LIMIT_ENABLE_FORWARD"
+    [talon.limit.forward_soft_threshold]
+      type = "talon.param"
+      order = 60
+      menu = "forward soft limit threshold"
+      param = "SOFT_LIMIT_THRESHOLD_FORWARD"
+    [talon.limit.reverse_soft_enabled]
+      type = "talon.param"
+      order = 70
+      menu = "reverse soft limit enabled"
+      param = "SOFT_LIMIT_ENABLE_REVERSE"
+    [talon.limit.reverse_soft_threshold]
+      type = "talon.param"
+      order = 80
+      menu = "reverse soft limit threshold"
+      param = "SOFT_LIMIT_THRESHOLD_REVERSE"
+    # [talon.limit.forward_remote]
+    #   type = "default"
+    #   order = 90
+    #   menu = "forward remote limit switch"
+    # [talon.limit.reverse_remote]
+    #   type = "default"
+    #   order = 100
+    #   menu = "reverse remote limit switch"
+
+[dio]
+  type = "menu"
+  order = 20
+  menu = "work with digital I/O"
+  [dio.status]
+    type = "status"
+    order = 10
+    menu = "status of selected digital inputs"
+  [dio.set]
+    type = "command"
+    order = 20
+    menu = "set selected digital output"
+
+[servo]
+  type = "menu"
+  order = 30
+  menu = "work with servos"
+  [servo.set]
+    type = "command"
+    order = 10
+    menu = "run selected servos"
+
+[test]
+  type = "test"
+  order = 99
