@@ -21,7 +21,6 @@ apply plugin: "idea"
 version = '18.2.0'
 
 repositories {
-    mavenLocal()
     jcenter()
     maven { url = "https://raw.githubusercontent.com/Open-RIO/Maven-Mirror/master/m2" }
     maven { url = "http://first.wpi.edu/FRC/roborio/maven/release" }
