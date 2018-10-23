@@ -63,6 +63,7 @@ class ParameterCommand(
                 SOFT_LIMIT_ENABLE_REVERSE -> formatMenu(config.reverseSoftLimitEnable)
                 SOFT_LIMIT_THRESHOLD_FORWARD -> formatMenu(config.forwardSoftLimitThreshold)
                 SOFT_LIMIT_THRESHOLD_REVERSE -> formatMenu(config.reverseSoftLimitThreshold)
+                FACTORY_DEFAULTS -> tomlMenu
                 else -> TODO("${param.enum} not implemented")
             }
         }
@@ -178,6 +179,9 @@ class ParameterCommand(
             SOFT_LIMIT_THRESHOLD_REVERSE -> configIntParam(config.reverseSoftLimitThreshold) { talon, value ->
                 talon.configReverseSoftLimitThreshold(value, timeout)
                 config.reverseSoftLimitThreshold = value
+            }
+            FACTORY_DEFAULTS -> configBooleanParam(false) { talon, value ->
+                if (value) talon.configFactoryDefault(timeout)
             }
             else -> TODO("${param.enum} not implemented")
         }

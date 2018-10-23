@@ -72,7 +72,7 @@ abstract class AbstractCommand(
     toml: TomlTable
 ) : Command, KoinComponent {
     override val order = toml.getLong(Command.ORDER_KEY)?.toInt() ?: 0
-    private val tomlMenu = toml.getString(Command.MENU_KEY) ?: key
+    protected val tomlMenu = toml.getString(Command.MENU_KEY) ?: key
     override val menu = tomlMenu
     override val children = emptySet<Command>()
 

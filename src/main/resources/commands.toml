@@ -306,6 +306,12 @@ type = "menu"
     #   type = "default"
     #   order = 100
     #   menu = "reverse remote limit switch"
+  [talon.factory_defaults]
+    type = "talon.param"
+    order = 80
+    menu = "configure factory defaults"
+    param = "FACTORY_DEFAULTS"
+
 
 [dio]
   type = "menu"

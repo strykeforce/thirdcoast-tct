@@ -55,5 +55,6 @@ class CtreParameter(command: Command, toml: TomlTable, val enum: Enum) : Abstrac
         SOFT_LIMIT_ENABLE_REVERSE,
         SOFT_LIMIT_THRESHOLD_FORWARD,
         SOFT_LIMIT_THRESHOLD_REVERSE,
+        FACTORY_DEFAULTS,
     }
 }
