@@ -39,6 +39,7 @@ class CtreParameter(command: Command, toml: TomlTable, val enum: Enum) : Abstrac
         MOTION_ACCELERATION,
         FEEDBACK_COEFFICIENT,
         SENSOR_PHASE,
+        SENSOR_POSITION,
         CURRENT_LIMIT_ENABLE,
         CURRENT_LIMIT_CONT,
         CURRENT_LIMIT_PEAK,

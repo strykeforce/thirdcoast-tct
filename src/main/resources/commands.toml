@@ -33,21 +33,33 @@ type = "menu"
       order = 20
       menu = "auxiliary closed-loop sensor"
       pid = 1
+    [talon.sensor.primary_position]
+      type = "talon.sensor.position"
+      order = 30
+      menu = "primary sensor feedback position"
+      param = "SENSOR_POSITION"
+      pid = 0
+    [talon.sensor.auxiliary_position]
+      type = "talon.sensor.position"
+      order = 40
+      menu = "auxiliary sensor feedback position"
+      param = "SENSOR_POSITION"
+      pid = 1
     [talon.sensor.primary_coefficient]
       type = "talon.sensor.coefficient"
-      order = 30
+      order = 50
       menu = "primary sensor feedback coefficient"
       param = "FEEDBACK_COEFFICIENT"
       pid = 0
     [talon.sensor.auxiliary_coefficient]
       type = "talon.sensor.coefficient"
-      order = 40
+      order = 60
       menu = "auxiliary sensor feedback coefficient"
       param = "FEEDBACK_COEFFICIENT"
       pid = 1
     [talon.sensor.phase]
       type = "talon.param"
-      order = 50
+      order = 70
       menu = "sensor phase reversed"
       param = "SENSOR_PHASE"
   [talon.slot]

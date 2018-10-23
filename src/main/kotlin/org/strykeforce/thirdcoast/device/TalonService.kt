@@ -31,7 +31,7 @@ class TalonService(private val telemetryService: TelemetryService, factory: (id:
 
     var activeConfiguration = TalonSRXConfiguration()
         get() {
-            active.firstOrNull()?.getAllConfigs(field) ?: logger.info("no active talons, returning default config")
+            active.firstOrNull()?.getAllConfigs(field) ?: logger.debug("no active talons, returning default config")
             return field
         }
 

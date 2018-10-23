@@ -55,6 +55,7 @@ interface Command {
                 "talon.slot.param" -> SlotParameterCommand(parent, key, toml)
                 "talon.sensor" -> SelectFeedbackSensorCommand(parent, key, toml)
                 "talon.sensor.coefficient" -> FeedbackCoefficientCommand(parent, key, toml)
+                "talon.sensor.position" -> SetSensorPositionCommand(parent, key, toml)
                 "talon.hard.source" -> SelectHardLimitSourceCommand(parent, key, toml)
                 "talon.hard.normal" -> SelectHardLimitNormalCommand(parent, key, toml)
                 "test" -> TestCommand(parent, key, toml)
