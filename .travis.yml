@@ -2,14 +2,6 @@ language: java
 sudo: false
 jdk:
 - openjdk8
-deploy:
-  provider: releases
-  api_key:
-    secure: Zy/vDv8nVSUQl5zD58Am5uN/5oWV5IiwoA54HPaW1Jbd/0DIIv2F7MTmipGbF7QG6xgx5B5h9NiZ6shEw74vZvCLNjiFAJ/mPFYFv54nvGwUcU2apYZUfMiPYSK3zrWe/qvSu1bkh2uj8aw4HDhBppqMzsqL1kcF7ZJ3uvpf/PLyEvPTQV8PQu9kkyOGslqsFUlcnVyjbAdk9n4QofUhbBMore76Y+NWC4E0A2tFDZ0uKwHXQM/yr4pz3sfUnil8JXGsQgEI7atqtCnvVgWY0BCXF3MmENinS9NNESLB63sN4seTNXxLAp2HnGDnUszpUrbQn429cDwfZ6ZdzANd36nvVLuZj9c6MQOW2FpMHdJzDbH2KvlEuNJP5rsiw+FKEQj3tBQv5zqUcbzhZ4AVhqlNjDc/YVShNiY5QHyNJHBOmCOscoXp35Q9I25C4BeyzAKa+E9KzEdfTWxGxzLw9j6kRyHy8RSi649cbF5S0/sip2YhBhvds6cBWfXmr8wPXyQ/3bJd4n15EoX8csjXfy2yYQOjDKp+6SbcnRCvFOjsgvTfTbNzjNRxUDj+097Lr87/e/Ao66VmDpFizbfVysM8dRhDb/GIGdijwDGVnO3SCN183oi0DH7yo8gPKC2rOZm8JoVwgsEdnR7u+C0Wd7bwxGsluIgZuRzmSn0QLQY=
-  file_glob: true
-  file: build/libs/*.jar
-  on:
-    tags: true
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
