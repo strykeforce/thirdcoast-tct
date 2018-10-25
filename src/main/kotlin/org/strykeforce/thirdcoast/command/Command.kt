@@ -77,8 +77,6 @@ abstract class AbstractCommand(
 
     override fun execute() = parent ?: throw IllegalStateException("parent should not be null")
 
-//    val talonService: TalonService by inject()
-
     val terminal: Terminal by inject()
     val reader: LineReader by inject()
 

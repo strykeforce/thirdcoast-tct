@@ -7,17 +7,6 @@ import org.strykeforce.thirdcoast.parseResource
 
 class CtreParameter(command: Command, toml: TomlTable, val enum: Enum) : AbstractParameter(command, toml) {
 
-    override val hasSlot = setOf(
-        Enum.SLOT_P,
-        Enum.SLOT_I,
-        Enum.SLOT_D,
-        Enum.SLOT_F,
-        Enum.SLOT_I_ZONE,
-        Enum.SLOT_ALLOWABLE_ERR,
-        Enum.SLOT_MAX_I_ACCUM,
-        Enum.SLOT_PEAK_OUTPUT
-    ).contains(enum)
-
     enum class Enum {
         SLOT_P,
         SLOT_I,
