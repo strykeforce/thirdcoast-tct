@@ -3,8 +3,10 @@ package org.strykeforce.thirdcoast.talon
 import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.FeedbackDevice.*
 import net.consensys.cava.toml.TomlTable
+import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
+import org.strykeforce.thirdcoast.device.TalonService
 
 private val SENSORS = listOf(
     Analog,
@@ -38,6 +40,8 @@ class SelectFeedbackSensorCommand(
     companion object {
         var reset = true
     }
+
+    private val talonService: TalonService by inject()
 
     private val pidIndex = toml.getLong("pid")?.toInt() ?: 0
 

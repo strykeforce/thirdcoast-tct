@@ -52,7 +52,6 @@ interface Command {
                 "talon.status" -> StatusCommand(parent, key, toml)
                 "talon.slot.select" -> SelectSlotCommand(parent, key, toml)
                 "talon.param" -> ParameterCommand(parent, key, toml)
-                "talon.slot.param" -> SlotParameterCommand(parent, key, toml)
                 "talon.sensor" -> SelectFeedbackSensorCommand(parent, key, toml)
                 "talon.sensor.coefficient" -> FeedbackCoefficientCommand(parent, key, toml)
                 "talon.sensor.position" -> SetSensorPositionCommand(parent, key, toml)
@@ -78,7 +77,7 @@ abstract class AbstractCommand(
 
     override fun execute() = parent ?: throw IllegalStateException("parent should not be null")
 
-    val talonService: TalonService by inject()
+//    val talonService: TalonService by inject()
 
     val terminal: Terminal by inject()
     val reader: LineReader by inject()

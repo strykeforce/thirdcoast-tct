@@ -7,7 +7,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
 import mu.KotlinLogging
 import org.strykeforce.thirdcoast.talon.ParameterCommand
 import org.strykeforce.thirdcoast.talon.SelectFeedbackSensorCommand
-import org.strykeforce.thirdcoast.talon.SlotParameterCommand
 import org.strykeforce.thirdcoast.telemetry.TelemetryService
 
 private val logger = KotlinLogging.logger {}
@@ -39,7 +38,6 @@ class TalonService(private val telemetryService: TelemetryService, factory: (id:
         get() = active.firstOrNull()?.inverted ?: INVERTED_DEFAULT
 
     override fun activate(ids: Collection<Int>) {
-        SlotParameterCommand.reset = true
         ParameterCommand.reset = true
         SelectFeedbackSensorCommand.reset = true
         activeSlotIndex = ACTIVE_SLOT_DEFAULT

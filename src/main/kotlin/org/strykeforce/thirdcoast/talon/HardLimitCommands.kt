@@ -6,8 +6,10 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchSource
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource.*
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
+import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
+import org.strykeforce.thirdcoast.device.TalonService
 
 private val logger = KotlinLogging.logger {}
 
@@ -23,6 +25,7 @@ class SelectHardLimitSourceCommand(
     listOf("Deactivated", "Feedback Connector", "Remote CANifier", "Remote TalonSRX")
 ) {
 
+    private val talonService: TalonService by inject()
     val isForward = toml.getBoolean("forward") ?: true
 
     val activeSource
@@ -74,6 +77,7 @@ class SelectHardLimitNormalCommand(
     listOf("Disabled", "Normally Closed", "Normally Open")
 ) {
 
+    private val talonService: TalonService by inject()
     val isForward = toml.getBoolean("forward") ?: true
 
     val activeNormal

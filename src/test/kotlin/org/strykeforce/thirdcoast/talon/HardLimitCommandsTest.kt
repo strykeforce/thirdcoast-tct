@@ -56,7 +56,7 @@ internal class HardLimitCommandsTest : KoinTest {
         val talonService: TalonService by inject()
         talonService.activate(listOf(1))
         val source = root.children.first().children.first() as SelectHardLimitSourceCommand
-        val normal = root.children.first().children.last() as SelectHardLimitNormalCommand
+        root.children.first().children.last() as SelectHardLimitNormalCommand
         source.setActive(1) // FeedbackConnector
         verify(talon).configForwardLimitSwitchSource(FeedbackConnector, NormallyOpen)
     }
