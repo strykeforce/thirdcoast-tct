@@ -6,14 +6,17 @@ import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.parseResource
 
 class CtreParameter(command: Command, toml: TomlTable, val enum: Enum) : AbstractParameter(command, toml) {
-    companion object {
-        private val tomlTable by lazy { parseResource("/ctre.toml") }
 
-        fun create(command: Command, param: String): CtreParameter {
-            val toml = tomlTable.getTable(param) ?: throw java.lang.IllegalArgumentException("missing param: $param")
-            return CtreParameter(command, toml, Enum.valueOf(param))
-        }
-    }
+    override val hasSlot = setOf(
+        Enum.SLOT_P,
+        Enum.SLOT_I,
+        Enum.SLOT_D,
+        Enum.SLOT_F,
+        Enum.SLOT_I_ZONE,
+        Enum.SLOT_ALLOWABLE_ERR,
+        Enum.SLOT_MAX_I_ACCUM,
+        Enum.SLOT_PEAK_OUTPUT
+    ).contains(enum)
 
     enum class Enum {
         SLOT_P,
@@ -57,4 +60,14 @@ class CtreParameter(command: Command, toml: TomlTable, val enum: Enum) : Abstrac
         SOFT_LIMIT_THRESHOLD_REVERSE,
         FACTORY_DEFAULTS,
     }
+
+    companion object {
+        private val tomlTable by lazy { parseResource("/ctre.toml") }
+
+        fun create(command: Command, param: String): CtreParameter {
+            val toml = tomlTable.getTable(param) ?: throw java.lang.IllegalArgumentException("missing param: $param")
+            return CtreParameter(command, toml, Enum.valueOf(param))
+        }
+    }
+
 }

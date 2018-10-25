@@ -2,9 +2,11 @@ package org.strykeforce.thirdcoast.talon
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import net.consensys.cava.toml.TomlTable
+import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.prompt
+import org.strykeforce.thirdcoast.device.TalonService
 import org.strykeforce.thirdcoast.readIntList
 import org.strykeforce.thirdcoast.warn
 
@@ -13,6 +15,7 @@ class SelectTalonsCommand(
     key: String,
     toml: TomlTable
 ) : AbstractCommand(parent, key, toml) {
+    private val talonService: TalonService by inject()
 
     override val menu: String
         get() = formatMenu(talonService.active.map(TalonSRX::getDeviceID).joinToString())

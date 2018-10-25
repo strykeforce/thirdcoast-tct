@@ -17,6 +17,7 @@ interface Parameter {
     val name: String
     val type: Type
     val help: String
+    val hasSlot: Boolean
     fun readInt(reader: LineReader, default: Int = 0): Int
     fun readDouble(reader: LineReader, default: Double = 0.0): Double
     fun readBoolean(reader: LineReader, default: Boolean = false): Boolean
@@ -30,6 +31,8 @@ open class AbstractParameter(command: Command, toml: TomlTable) : Parameter {
     override val name = toml.getString("name") ?: "NO NAME"
     override val type = Parameter.Type.valueOf(toml.getString("type") ?: "NULL")
     override val help = toml.getString("help") ?: "NO DESCRIPTION"
+    override val hasSlot = false
+
     private val range = toml.getArray("range")?.let { it.getDouble(0).rangeTo(it.getDouble(1)) }
     val prompt = command.prompt()
 
