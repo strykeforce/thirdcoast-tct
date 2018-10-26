@@ -9,9 +9,11 @@ import org.jline.utils.AttributedStyle
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.device.TalonService
+import org.strykeforce.thirdcoast.servo.RunServosCommand
+import org.strykeforce.thirdcoast.servo.SelectServosCommand
 import org.strykeforce.thirdcoast.talon.*
 
-private val logger = KotlinLogging.logger {}
+//private val logger = KotlinLogging.logger {}
 
 interface Command {
     val key: String
@@ -57,7 +59,8 @@ interface Command {
                 "talon.sensor.position" -> SetSensorPositionCommand(parent, key, toml)
                 "talon.hard.source" -> SelectHardLimitSourceCommand(parent, key, toml)
                 "talon.hard.normal" -> SelectHardLimitNormalCommand(parent, key, toml)
-                "test" -> TestCommand(parent, key, toml)
+                "servo.select" -> SelectServosCommand(parent, key, toml)
+                "servo.run" -> RunServosCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
             }
         }

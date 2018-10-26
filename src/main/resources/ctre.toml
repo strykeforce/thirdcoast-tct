@@ -36,7 +36,7 @@
 [OUTPUT_REVERSED]
   name = "Motor Output Reversed"
   type = "BOOLEAN"
-  help = "Inverts the H-bridge output of the motor controller. This does not impact sensor phase and should not be used to correct sensor polarity. This will invert the hbridge output but NOT the LEDs. This ensures.... Green LEDs always represents positive request from robot-controller/closed-looping mode. Green LEDs correlates to forward limit switch. Green LEDs correlates to forward soft limit."
+  help = "Inverts the H-bridge output of the motor controller. This does not impact sensor phase and should not be used to correct sensor polarity. This will invert the hbridge output but NOT the LEDs. This ensures: Green LEDs always represents positive request from robot-controller or closed-loop mode. Green LEDs correlates to forward limit switch. Green LEDs correlates to forward soft limit."
 [OPEN_LOOP_RAMP]
   name = "Open-Loop Ramp Rate"
   type = "DOUBLE"

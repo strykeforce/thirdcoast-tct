@@ -2,9 +2,7 @@ package org.strykeforce.thirdcoast.command
 
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
-import org.strykeforce.thirdcoast.BACK
-import org.strykeforce.thirdcoast.invalidMenuChoice
-import org.strykeforce.thirdcoast.readRawMenu
+import org.strykeforce.thirdcoast.*
 
 private val logger = KotlinLogging.logger {}
 
@@ -15,6 +13,8 @@ abstract class AbstractSelectCommand<T>(
     protected val values: List<T>,
     protected val labels: List<String>
 ) : AbstractCommand(parent, key, toml) {
+
+    private val help: String? = toml.getString("help")
 
     override val menu: String
         get() = formatMenu(labels[activeIndex])
@@ -34,7 +34,10 @@ abstract class AbstractSelectCommand<T>(
                     done = true
                 }
                 BACK -> return super.execute()
-                else -> terminal.invalidMenuChoice()
+                else -> {
+                    if (help != null) terminal.info(greedyWordwrap(help))
+                    terminal.invalidMenuChoice()
+                }
             }
         }
         return super.execute()
