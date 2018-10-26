@@ -8,6 +8,7 @@ import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.device.TalonService
 
+
 class SelectControlModeCommand(
     parent: Command?,
     key: String,

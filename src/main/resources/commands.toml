@@ -19,6 +19,7 @@ type = "menu"
     type = "talon.mode"
     order = 15
     menu = "control mode"
+    help = "The output mode to apply. In PercentOutput, the output is between -1.0 and 1.0, with 0.0 as stopped. In Current mode, output value is in amperes. In Velocity mode, output value is in position change / 100ms. In Position mode, output value is in encoder ticks or an analog value, depending on the sensor. In Follower mode, the output value is the integer device ID of the talon to duplicate."
   [talon.sensor]
     type = "menu"
     order = 17
@@ -28,11 +29,13 @@ type = "menu"
       order = 10
       menu = "primary closed-loop sensor"
       pid = 0
+      help = "Sensors for motor controllers provide feedback about the position, velocity, and acceleration of the system using that motor controller."
     [talon.sensor.auxiliary]
       type = "talon.sensor"
       order = 20
       menu = "auxiliary closed-loop sensor"
       pid = 1
+      help = "Sensors for motor controllers provide feedback about the position, velocity, and acceleration of the system using that motor controller."
     [talon.sensor.primary_position]
       type = "talon.sensor.position"
       order = 30
@@ -70,6 +73,7 @@ type = "menu"
       type = "talon.slot.select"
       order = 10
       menu = "active slot"
+      help = "The Talon SRX supports up to 4 PIDF Slots, each with a unique set of gains that are stored persistently across power cycles. "
     [talon.slot.P]
       type ="talon.param"
       order = 20
@@ -152,6 +156,7 @@ type = "menu"
       type = "talon.brake"
       order = 10
       menu = "brake mode"
+      help = "Mode of operation during Neutral output, brake or coast."
     [talon.output.reversed]
       type = "talon.param"
       order = 20
@@ -263,21 +268,25 @@ type = "menu"
       order = 10
       forward = true
       menu = "forward hard limit source"
+      help = "Select a limit switch source from the feedback connector, remote Talon SRX, CANifier, or deactivate the feature."
     [talon.limit.forward_hard_normal]
       type = "talon.hard.normal"
       order = 20
       forward = true
       menu = "forward hard limit normal"
+      help = "Select whether this limit switch is normally open, normally closed, or disabled, which overrides the setting from the web-based configuration page."
     [talon.limit.reverse_hard_source]
       type = "talon.hard.source"
       order = 30
       forward = false
       menu = "reverse hard limit source"
+      help = "Select a limit switch source from the feedback connector, remote Talon SRX, CANifier, or deactivate the feature."
     [talon.limit.reverse_hard_normal]
       type = "talon.hard.normal"
       order = 40
       forward = false
       menu = "reverse hard limit normal"
+      help = "Select whether this limit switch is normally open, normally closed, or disabled, which overrides the setting from the web-based configuration page."
     [talon.limit.forward_soft_enabled]
       type = "talon.param"
       order = 50
@@ -330,10 +339,14 @@ type = "menu"
   type = "menu"
   order = 30
   menu = "work with servos"
-  [servo.set]
-    type = "command"
+  [servo.run]
+    type = "servo.run"
     order = 10
     menu = "run selected servos"
+  [servo.select]
+    type = "servo.select"
+    order = 20
+    menu = "active servos"
 
 [test]
   type = "test"

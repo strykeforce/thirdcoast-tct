@@ -4,10 +4,7 @@ import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
-import org.strykeforce.thirdcoast.readBoolean
-import org.strykeforce.thirdcoast.readDouble
-import org.strykeforce.thirdcoast.readInt
-import org.strykeforce.thirdcoast.warn
+import org.strykeforce.thirdcoast.*
 
 const val DOUBLE_FORMAT = "%7.4f"
 
@@ -85,6 +82,7 @@ open class AbstractParameter(command: Command, toml: TomlTable) : Parameter {
             Parameter.Type.BOOLEAN -> "boolean"
         }
         val messageRange = if (range != null) " in range (${range.start} - ${range.endInclusive})" else ""
+        terminal.info(greedyWordwrap(help))
         terminal.warn("Please enter a $messageType$messageRange")
     }
 
