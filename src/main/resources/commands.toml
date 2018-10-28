@@ -322,19 +322,6 @@ type = "menu"
     param = "FACTORY_DEFAULTS"
 
 
-[dio]
-  type = "menu"
-  order = 20
-  menu = "work with digital I/O"
-  [dio.status]
-    type = "status"
-    order = 10
-    menu = "status of selected digital inputs"
-  [dio.set]
-    type = "command"
-    order = 20
-    menu = "set selected digital output"
-
 [servo]
   type = "menu"
   order = 30
@@ -342,12 +329,21 @@ type = "menu"
   [servo.run]
     type = "servo.run"
     order = 10
-    menu = "run selected servos"
+    menu = "set servo positions"
   [servo.select]
     type = "servo.select"
     order = 20
     menu = "active servos"
 
-[test]
-  type = "test"
-  order = 99
+# [dio]
+#   type = "menu"
+#   order = 20
+#   menu = "work with digital I/O"
+#   [dio.status]
+#     type = "status"
+#     order = 10
+#     menu = "status of selected digital inputs"
+#   [dio.set]
+#     type = "command"
+#     order = 20
+#     menu = "set selected digital output"

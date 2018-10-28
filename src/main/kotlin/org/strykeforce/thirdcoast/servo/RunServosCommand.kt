@@ -1,5 +1,6 @@
 package org.strykeforce.thirdcoast.servo
 
+import edu.wpi.first.wpilibj.Servo
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
@@ -20,6 +21,9 @@ class RunServosCommand(
 
     private val servoService: ServoService by inject()
 
+    override val menu: String
+        get() = formatMenu(servoService.active.map(Servo::get).joinToString())
+
     override fun execute(): Command {
         if (servoService.active.isEmpty()) {
             terminal.warn("no servos selected")
@@ -31,7 +35,7 @@ class RunServosCommand(
             try {
                 val setpoints = mutableListOf<Double>()
                 servoService.active.forEach {
-                    val setpoint = reader.readDouble(this.prompt("servo ${it.channel}"))
+                    val setpoint = reader.readDouble(this.prompt("servo ${it.channel}"), it.get())
                     if (!(0.0..1.0).contains(setpoint)) throw IllegalArgumentException()
                     setpoints += setpoint
                 }

@@ -7,6 +7,7 @@ import org.jline.terminal.Terminal
 import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT
 import org.strykeforce.thirdcoast.command.MenuCommand
 import org.strykeforce.thirdcoast.command.prompt
+import kotlin.math.roundToInt
 
 const val INVALID = -1
 const val BACK = -2
@@ -23,7 +24,7 @@ fun LineReader.readDouble(
     truncate: Boolean = false
 ): Double {
     val buffer =
-        if (truncate && default == Math.floor(default)) default.toInt().toString()
+        if (truncate && default == Math.floor(default)) default.roundToInt().toString()
         else DOUBLE_FORMAT.format(default)
     return try {
         val line = this.readLine(prompt, null, buffer).trim()

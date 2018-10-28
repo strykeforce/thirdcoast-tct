@@ -6,7 +6,7 @@ import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
 import org.strykeforce.thirdcoast.*
 
-const val DOUBLE_FORMAT = "%7.4f"
+const val DOUBLE_FORMAT = "%7.3f"
 
 private val logger = KotlinLogging.logger {}
 
