@@ -79,7 +79,7 @@ open class AbstractParameter(command: Command, toml: TomlTable) : Parameter {
         val messageType = when (type) {
             Parameter.Type.INTEGER -> "integer"
             Parameter.Type.DOUBLE -> "number"
-            Parameter.Type.BOOLEAN -> "boolean"
+            Parameter.Type.BOOLEAN -> "'y' or 'n'"
         }
         val messageRange = if (range != null) " in range (${range.start} - ${range.endInclusive})" else ""
         terminal.info(greedyWordwrap(help))

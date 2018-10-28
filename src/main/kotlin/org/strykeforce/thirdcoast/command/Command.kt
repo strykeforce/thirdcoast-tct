@@ -1,6 +1,5 @@
 package org.strykeforce.thirdcoast.command
 
-import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
@@ -8,9 +7,10 @@ import org.jline.utils.AttributedString
 import org.jline.utils.AttributedStyle
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
-import org.strykeforce.thirdcoast.device.TalonService
 import org.strykeforce.thirdcoast.servo.RunServosCommand
 import org.strykeforce.thirdcoast.servo.SelectServosCommand
+import org.strykeforce.thirdcoast.swerve.SaveZeroCommand
+import org.strykeforce.thirdcoast.swerve.SetAzimuthCommand
 import org.strykeforce.thirdcoast.talon.*
 
 //private val logger = KotlinLogging.logger {}
@@ -61,6 +61,8 @@ interface Command {
                 "talon.hard.normal" -> SelectHardLimitNormalCommand(parent, key, toml)
                 "servo.select" -> SelectServosCommand(parent, key, toml)
                 "servo.run" -> RunServosCommand(parent, key, toml)
+                "swerve.azimuth" -> SetAzimuthCommand(parent, key, toml)
+                "swerve.zero" -> SaveZeroCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
             }
         }
