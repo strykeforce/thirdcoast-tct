@@ -324,7 +324,7 @@ type = "menu"
 
 [servo]
   type = "menu"
-  order = 30
+  order = 20
   menu = "work with servos"
   [servo.run]
     type = "servo.run"
@@ -334,6 +334,19 @@ type = "menu"
     type = "servo.select"
     order = 20
     menu = "active servos"
+
+[swerve]
+  type = "menu"
+  order = 30
+  menu = "work with swerve"
+  [swerve.run]
+    type = "swerve.azimuth"
+    order = 10
+    menu = "lock azimuth position"
+  [swerve.select]
+    type = "swerve.zero"
+    order = 20
+    menu = "save azimuth zero positions"
 
 # [dio]
 #   type = "menu"

@@ -18,7 +18,7 @@ private val logger = KotlinLogging.logger {}
 class Robot : TimedRobot(), KoinComponent {
 
     override fun robotInit() {
-        startKoin(listOf(tctModule), logger = SLF4JLogger())
+        startKoin(listOf(tctModule, swerveModule), logger = SLF4JLogger())
         thread(name = "tct", start = true) {
             val toml = parseResource("/commands.toml")
             val root = Command.createFromToml(toml)
