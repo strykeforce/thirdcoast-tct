@@ -9,7 +9,9 @@ import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.servo.RunServosCommand
 import org.strykeforce.thirdcoast.servo.SelectServosCommand
+import org.strykeforce.thirdcoast.swerve.AdjustAzimuthCommand
 import org.strykeforce.thirdcoast.swerve.SaveZeroCommand
+import org.strykeforce.thirdcoast.swerve.SelectAzimuthCommand
 import org.strykeforce.thirdcoast.swerve.SetAzimuthCommand
 import org.strykeforce.thirdcoast.talon.*
 
@@ -62,7 +64,9 @@ interface Command {
                 "servo.select" -> SelectServosCommand(parent, key, toml)
                 "servo.run" -> RunServosCommand(parent, key, toml)
                 "swerve.azimuth" -> SetAzimuthCommand(parent, key, toml)
-                "swerve.zero" -> SaveZeroCommand(parent, key, toml)
+                "swerve.azimuth.save" -> SaveZeroCommand(parent, key, toml)
+                "swerve.azimuth.select" -> SelectAzimuthCommand(parent, key, toml)
+                "swerve.azimuth.adjust" -> AdjustAzimuthCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
             }
         }

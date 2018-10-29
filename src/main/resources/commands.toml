@@ -339,14 +339,26 @@ type = "menu"
   type = "menu"
   order = 30
   menu = "work with swerve"
-  [swerve.run]
+  [swerve.lock]
     type = "swerve.azimuth"
     order = 10
     menu = "lock azimuth position"
-  [swerve.select]
-    type = "swerve.zero"
+  [swerve.azimuth]
+    type = "menu"
     order = 20
-    menu = "save azimuth zero positions"
+    menu = "update azimuth zero positions"
+    [swerve.azimuth.save]
+      type = "swerve.azimuth.save"
+      order = 10
+      menu = "save azimuth zero positions"
+    [swerve.azimuth.select]
+      type = "swerve.azimuth.select"
+      order = 20
+      menu = "active azimuth"
+    [swerve.azimuth.adjust]
+      type = "swerve.azimuth.adjust"
+      order = 30
+      menu = "active azimuth adjustment"
 
 # [dio]
 #   type = "menu"
