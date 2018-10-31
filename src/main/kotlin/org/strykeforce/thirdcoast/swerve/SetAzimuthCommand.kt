@@ -1,5 +1,6 @@
 package org.strykeforce.thirdcoast.swerve
 
+import edu.wpi.first.wpilibj.Preferences
 import edu.wpi.first.wpilibj.Timer
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
@@ -11,6 +12,7 @@ import org.strykeforce.thirdcoast.readInt
 import org.strykeforce.thirdcoast.warn
 
 private const val DELAY = 20.0 / 1000.0
+private const val WHEEL_PREF_KEY = "SwerveDrive/wheel.0"
 
 private val logger = KotlinLogging.logger {}
 
@@ -26,6 +28,11 @@ class SetAzimuthCommand(
         get() = formatMenu(swerve.wheels.map { it.azimuthTalon.getSelectedSensorPosition(0) }.joinToString())
 
     override fun execute(): Command {
+        if (!wheelZeroSaved()) {
+            terminal.warn("swerve drive wheels are not zeroed")
+            return super.execute()
+        }
+
         swerve.zeroAzimuthEncoders()
 
         while (true) {
@@ -42,3 +49,6 @@ class SetAzimuthCommand(
         }
     }
 }
+
+private fun wheelZeroSaved() = Preferences.getInstance().containsKey(WHEEL_PREF_KEY)
+
