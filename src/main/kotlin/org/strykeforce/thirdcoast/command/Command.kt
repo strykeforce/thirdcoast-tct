@@ -7,6 +7,8 @@ import org.jline.utils.AttributedString
 import org.jline.utils.AttributedStyle
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
+import org.strykeforce.thirdcoast.dio.RunDigitalOutputsCommand
+import org.strykeforce.thirdcoast.dio.SelectDigitalOutputsCommand
 import org.strykeforce.thirdcoast.servo.RunServosCommand
 import org.strykeforce.thirdcoast.servo.SelectServosCommand
 import org.strykeforce.thirdcoast.swerve.AdjustAzimuthCommand
@@ -35,20 +37,7 @@ interface Command {
             val type = toml.getString(TYPE_KEY) ?: throw Exception("$key: $TYPE_KEY missing")
 
             return when (type) {
-                "menu" -> {
-                    val command = MenuCommand(parent, key, toml)
-                    toml.keySet().filter(toml::isTable)
-                        .forEach { k ->
-                            val child =
-                                createFromToml(
-                                    toml.getTable(k)!!,
-                                    command,
-                                    k
-                                )
-                            command.children.add(child)
-                        }
-                    command
-                }
+                "menu" -> createMenuCommand(parent, key, toml)
                 "talon.select" -> SelectTalonsCommand(parent, key, toml)
                 "talon.mode" -> SelectControlModeCommand(parent, key, toml)
                 "talon.brake" -> SelectBrakeModeCommand(parent, key, toml)
@@ -63,12 +52,24 @@ interface Command {
                 "talon.hard.normal" -> SelectHardLimitNormalCommand(parent, key, toml)
                 "servo.select" -> SelectServosCommand(parent, key, toml)
                 "servo.run" -> RunServosCommand(parent, key, toml)
+                "digital_output.select" -> SelectDigitalOutputsCommand(parent, key, toml)
+                "digital_output.run" -> RunDigitalOutputsCommand(parent, key, toml)
                 "swerve.azimuth" -> SetAzimuthCommand(parent, key, toml)
                 "swerve.azimuth.save" -> SaveZeroCommand(parent, key, toml)
                 "swerve.azimuth.select" -> SelectAzimuthCommand(parent, key, toml)
                 "swerve.azimuth.adjust" -> AdjustAzimuthCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
             }
+        }
+
+        private fun createMenuCommand(parent: MenuCommand?, key: String, toml: TomlTable): MenuCommand {
+            val command = MenuCommand(parent, key, toml)
+            toml.keySet().filter(toml::isTable)
+                .forEach { k ->
+                    val child = createFromToml(toml.getTable(k)!!, command, k)
+                    command.children.add(child)
+                }
+            return command
         }
     }
 }
