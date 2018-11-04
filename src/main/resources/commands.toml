@@ -335,6 +335,21 @@ type = "menu"
     order = 20
     menu = "active servos"
 
+[digital_output]
+  type = "menu"
+  order = 25
+  menu = "work with digital outputs"
+  [digital_output.set]
+    type = "digital_output.run"
+    order = 10
+    menu = "set digital output"
+  [digital_output.select]
+    type = "digital_output.select"
+    order = 20
+    menu = "active digital outputs"
+
+
+
 [swerve]
   type = "menu"
   order = 30
