@@ -11,11 +11,11 @@ import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.device.TalonService
-import org.strykeforce.thirdcoast.talon.CtreParameter.Enum.*
+import org.strykeforce.thirdcoast.talon.TalonParameter.Enum.*
 
 private val logger = KotlinLogging.logger {}
 
-class ParameterCommand(
+class TalonParameterCommand(
     parent: Command?,
     key: String,
     toml: TomlTable
@@ -29,7 +29,7 @@ class ParameterCommand(
 
     private val talonService: TalonService by inject()
     private val timeout = talonService.timeout
-    private val param = CtreParameter.create(this, toml.getString("param") ?: "UNKNOWN")
+    private val param = TalonParameter.create(this, toml.getString("param") ?: "UNKNOWN")
 
     override val menu: String
         get() {

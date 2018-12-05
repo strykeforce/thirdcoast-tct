@@ -14,8 +14,8 @@ internal class CheckTomlTest {
     }
 
     @Test
-    fun `check ctre`() {
-        val toml = parseResource("/ctre.toml")
+    fun `check talon`() {
+        val toml = parseResource("/talon.toml")
         val table = toml["SLOT_P"] as TomlTable
         assertThat(table["type"]).isEqualTo("DOUBLE")
     }

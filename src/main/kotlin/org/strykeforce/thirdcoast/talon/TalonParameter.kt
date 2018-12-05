@@ -5,7 +5,7 @@ import org.strykeforce.thirdcoast.command.AbstractParameter
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.parseResource
 
-class CtreParameter(command: Command, toml: TomlTable, val enum: Enum) : AbstractParameter(command, toml) {
+class TalonParameter(command: Command, toml: TomlTable, val enum: Enum) : AbstractParameter(command, toml) {
 
     enum class Enum {
         SLOT_P,
@@ -51,11 +51,11 @@ class CtreParameter(command: Command, toml: TomlTable, val enum: Enum) : Abstrac
     }
 
     companion object {
-        private val tomlTable by lazy { parseResource("/ctre.toml") }
+        private val tomlTable by lazy { parseResource("/talon.toml") }
 
-        fun create(command: Command, param: String): CtreParameter {
+        fun create(command: Command, param: String): TalonParameter {
             val toml = tomlTable.getTable(param) ?: throw java.lang.IllegalArgumentException("missing param: $param")
-            return CtreParameter(command, toml, Enum.valueOf(param))
+            return TalonParameter(command, toml, Enum.valueOf(param))
         }
     }
 

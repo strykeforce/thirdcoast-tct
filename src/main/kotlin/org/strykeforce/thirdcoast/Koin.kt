@@ -1,5 +1,6 @@
 package org.strykeforce.thirdcoast
 
+import com.ctre.phoenix.CANifier
 import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.NeutralMode
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
@@ -12,6 +13,7 @@ import org.jline.terminal.Terminal
 import org.jline.terminal.TerminalBuilder
 import org.koin.dsl.module.module
 import org.strykeforce.thirdcoast.command.Command
+import org.strykeforce.thirdcoast.device.CanifierService
 import org.strykeforce.thirdcoast.device.DigitalOutputService
 import org.strykeforce.thirdcoast.device.ServoService
 import org.strykeforce.thirdcoast.device.TalonService
@@ -38,6 +40,8 @@ val tctModule = module {
     single { ServoService { id -> Servo(id) } }
 
     single { DigitalOutputService { id -> DigitalOutput(id) } }
+
+    single { CanifierService(get()) { id -> CANifier(id) } }
 
     single { (command: Command) -> Shell(command, get()) }
 

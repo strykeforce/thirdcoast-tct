@@ -7,6 +7,7 @@ import org.jline.utils.AttributedString
 import org.jline.utils.AttributedStyle
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
+import org.strykeforce.thirdcoast.canifier.*
 import org.strykeforce.thirdcoast.dio.RunDigitalOutputsCommand
 import org.strykeforce.thirdcoast.dio.SelectDigitalOutputsCommand
 import org.strykeforce.thirdcoast.servo.RunServosCommand
@@ -42,9 +43,9 @@ interface Command {
                 "talon.mode" -> SelectControlModeCommand(parent, key, toml)
                 "talon.brake" -> SelectBrakeModeCommand(parent, key, toml)
                 "talon.run" -> RunTalonsCommand(parent, key, toml)
-                "talon.status" -> StatusCommand(parent, key, toml)
+                "talon.status" -> TalonsStatusCommand(parent, key, toml)
                 "talon.slot.select" -> SelectSlotCommand(parent, key, toml)
-                "talon.param" -> ParameterCommand(parent, key, toml)
+                "talon.param" -> TalonParameterCommand(parent, key, toml)
                 "talon.sensor" -> SelectFeedbackSensorCommand(parent, key, toml)
                 "talon.sensor.coefficient" -> FeedbackCoefficientCommand(parent, key, toml)
                 "talon.sensor.position" -> SetSensorPositionCommand(parent, key, toml)
@@ -54,6 +55,13 @@ interface Command {
                 "servo.run" -> RunServosCommand(parent, key, toml)
                 "digital_output.select" -> SelectDigitalOutputsCommand(parent, key, toml)
                 "digital_output.run" -> RunDigitalOutputsCommand(parent, key, toml)
+                "canifier.select" -> SelectCanifierCommand(parent, key, toml)
+                "canifier.status" -> CanifierStatusCommand(parent, key, toml)
+                "canifier.param" -> CanifierParameterCommand(parent, key, toml)
+                "canifier.inputs" -> CanifierGeneralInputsCommand(parent, key, toml)
+                "canifier.pwm_in" -> CanifierPwmInputsCommand(parent, key, toml)
+                "canifier.pwm_out" -> RunCanifierPwmCommand(parent, key, toml)
+                "canifier.quad_in" -> CanifierQuadInputCommand(parent, key, toml)
                 "swerve.azimuth" -> SetAzimuthCommand(parent, key, toml)
                 "swerve.azimuth.save" -> SaveZeroCommand(parent, key, toml)
                 "swerve.azimuth.select" -> SelectAzimuthCommand(parent, key, toml)

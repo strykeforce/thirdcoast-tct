@@ -21,6 +21,6 @@ class SelectSlotCommand(
 
     override fun setActive(index: Int) {
         talonService.activeSlotIndex = index
-        ParameterCommand.reset = true
+        TalonParameterCommand.reset = true
     }
 }

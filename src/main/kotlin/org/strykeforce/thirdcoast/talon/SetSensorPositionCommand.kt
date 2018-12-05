@@ -18,7 +18,7 @@ class SetSensorPositionCommand(
     private val talonService: TalonService by inject()
 
     private val timeout = talonService.timeout
-    private val param = CtreParameter.create(this, toml.getString("param") ?: "UNKNOWN")
+    private val param = TalonParameter.create(this, toml.getString("param") ?: "UNKNOWN")
     private val pidIndex = toml.getLong("pid")?.toInt() ?: 0
 
     override val menu: String
