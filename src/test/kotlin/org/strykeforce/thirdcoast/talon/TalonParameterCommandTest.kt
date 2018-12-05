@@ -20,7 +20,7 @@ import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT
 import org.strykeforce.thirdcoast.device.TalonService
 
-internal class ParameterCommandTest : KoinTest {
+internal class TalonParameterCommandTest : KoinTest {
 
     private val parent: Command = mock {
         on { key } doReturn "parent"
@@ -50,14 +50,14 @@ internal class ParameterCommandTest : KoinTest {
             name = "P"
             param = "SLOT_P"
         """.trimIndent()
-            val command = ParameterCommand(null, "foo", Toml.parse(toml))
+            val command = TalonParameterCommand(null, "foo", Toml.parse(toml))
             assertThat(AttributedString.stripAnsi(command.menu)).isEqualTo("foo: ${DOUBLE_FORMAT.format(0.0)}")
         }
 
         @Test
         fun `config P`() {
             val talonService: TalonService by inject()
-            val command = ParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_P\""))
+            val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_P\""))
             talonService.activate(listOf(1))
             command.execute()
             verify(talon).config_kP(0, 27.67, 10)
@@ -66,7 +66,7 @@ internal class ParameterCommandTest : KoinTest {
         @Test
         fun `config I`() {
             val talonService: TalonService by inject()
-            val command = ParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_I\""))
+            val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_I\""))
             talonService.activate(listOf(1))
             command.execute()
             verify(talon).config_kI(0, 27.67, 10)
@@ -75,7 +75,7 @@ internal class ParameterCommandTest : KoinTest {
         @Test
         fun `config D`() {
             val talonService: TalonService by inject()
-            val command = ParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_D\""))
+            val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_D\""))
             talonService.activate(listOf(1))
             command.execute()
             verify(talon).config_kD(0, 27.67, 10)
@@ -84,7 +84,7 @@ internal class ParameterCommandTest : KoinTest {
         @Test
         fun `config F`() {
             val talonService: TalonService by inject()
-            val command = ParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_F\""))
+            val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_F\""))
             talonService.activate(listOf(1))
             command.execute()
             verify(talon).config_kF(0, 27.67, 10)
@@ -93,7 +93,7 @@ internal class ParameterCommandTest : KoinTest {
         @Test
         fun `config IZone`() {
             val talonService: TalonService by inject()
-            val command = ParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_I_ZONE\""))
+            val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_I_ZONE\""))
             talonService.activate(listOf(1))
             command.execute()
             verify(talon).config_IntegralZone(0, 27, 10)
@@ -102,7 +102,7 @@ internal class ParameterCommandTest : KoinTest {
         @Test
         fun `config AllowableErr`() {
             val talonService: TalonService by inject()
-            val command = ParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_ALLOWABLE_ERR\""))
+            val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_ALLOWABLE_ERR\""))
             talonService.activate(listOf(1))
             command.execute()
             verify(talon).configAllowableClosedloopError(0, 27, 10)
@@ -111,7 +111,7 @@ internal class ParameterCommandTest : KoinTest {
         @Test
         fun `config MaxIAccum`() {
             val talonService: TalonService by inject()
-            val command = ParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_MAX_I_ACCUM\""))
+            val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_MAX_I_ACCUM\""))
             talonService.activate(listOf(1))
             command.execute()
             verify(talon).configMaxIntegralAccumulator(0, 27.67, 10)
@@ -140,7 +140,7 @@ internal class ParameterCommandTest : KoinTest {
         @Test
         fun `config PeakOutput`() {
             val talonService: TalonService by inject()
-            val command = ParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_PEAK_OUTPUT\""))
+            val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_PEAK_OUTPUT\""))
             talonService.activate(listOf(1))
             command.execute()
             verify(talon).configClosedLoopPeakOutput(0, 0.2767, 10)

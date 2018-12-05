@@ -7,7 +7,7 @@ import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.device.TalonService
 
-class StatusCommand(
+class TalonsStatusCommand(
     parent: Command?,
     key: String,
     toml: TomlTable

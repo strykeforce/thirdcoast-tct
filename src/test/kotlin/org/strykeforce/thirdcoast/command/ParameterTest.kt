@@ -6,8 +6,8 @@ import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.contains
-import org.strykeforce.thirdcoast.talon.CtreParameter
-import org.strykeforce.thirdcoast.talon.CtreParameter.Companion.create
+import org.strykeforce.thirdcoast.talon.TalonParameter
+import org.strykeforce.thirdcoast.talon.TalonParameter.Companion.create
 import java.io.PrintWriter
 import java.util.*
 
@@ -29,7 +29,7 @@ internal class ParameterTest {
 
     @Test
     fun `toml parsed`() {
-        val param: Parameter = create(command, CtreParameter.Enum.SLOT_PEAK_OUTPUT.name)
+        val param: Parameter = create(command, TalonParameter.Enum.SLOT_PEAK_OUTPUT.name)
         assertThat(param.name).isEqualTo(name)
         assertThat(param.type).isEqualTo(type)
         assertThat(param.help).contains("absolute value of peak closed-loop output")
@@ -37,13 +37,13 @@ internal class ParameterTest {
 
     @Test
     fun `has a prompt`() {
-        val param: Parameter = create(command, CtreParameter.Enum.SLOT_PEAK_OUTPUT.name)
+        val param: Parameter = create(command, TalonParameter.Enum.SLOT_PEAK_OUTPUT.name)
         assertThat((param as AbstractParameter).prompt).contains("$key> ")
     }
 
     @Test
     fun `checks range`() {
-        val param: Parameter = create(command, CtreParameter.Enum.SLOT_PEAK_OUTPUT.name)
+        val param: Parameter = create(command, TalonParameter.Enum.SLOT_PEAK_OUTPUT.name)
 
         val mockPrintWriter = mock<PrintWriter>()
 
@@ -64,7 +64,7 @@ internal class ParameterTest {
 
     @Test
     fun `skip null range check`() {
-        val param: Parameter = create(command, CtreParameter.Enum.SLOT_ALLOWABLE_ERR.name)
+        val param: Parameter = create(command, TalonParameter.Enum.SLOT_ALLOWABLE_ERR.name)
 
         val mockTerminal = mock<Terminal> {
             on { writer() } doReturn mock<PrintWriter>()

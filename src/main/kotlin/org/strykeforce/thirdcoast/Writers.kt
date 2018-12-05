@@ -42,3 +42,4 @@ internal fun greedyWordwrap(text: String, lineWidth: Int = 72): String {
     return sb.toString()
 }
 
+internal fun Double.format(digits: Int) = java.lang.String.format("%.${digits}f", this)

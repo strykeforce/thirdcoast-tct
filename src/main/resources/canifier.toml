@@ -1,0 +1,45 @@
+#
+# control modes
+#
+[FACTORY_DEFAULTS]
+  name = "Factory Defaults"
+  type = "BOOLEAN"
+  help = "Resets all configurations to factory default values."
+[QUAD_POSITION]
+  name = "Quadrature Encoder Position"
+  type = "INTEGER"
+  help = "Sets the position of the quadrature encoder to the given value (in raw sensor units)."
+
+#
+# status frames
+#
+[STATUS_GENERAL1]
+  name = "General 1 Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the General 1 status frame. This frame has a default period of 100ms."
+[STATUS_GENERAL2]
+  name = "General 2 Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the General 2 status frame. This frame has a default period of 10ms."
+[STATUS_PWM_INPUTS0]
+  name = "PWM Input 0 Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the PWM input 0 status frame. This frame has a default period of 100ms."
+[STATUS_PWM_INPUTS1]
+  name = "PWM Input 1 Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the PWM input 1 status frame. This frame has a default period of 100ms."
+[STATUS_PWM_INPUTS2]
+  name = "PWM Input 2 Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the PWM input 2 status frame. This frame has a default period of 100ms."
+[STATUS_PWM_INPUTS3]
+  name = "PWM Input 3 Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the PWM input 3 status frame. This frame has a default period of 100ms."

@@ -321,7 +321,6 @@ type = "menu"
     menu = "configure factory defaults"
     param = "FACTORY_DEFAULTS"
 
-
 [servo]
   type = "menu"
   order = 20
@@ -337,7 +336,7 @@ type = "menu"
 
 [digital_output]
   type = "menu"
-  order = 25
+  order = 30
   menu = "work with digital outputs"
   [digital_output.set]
     type = "digital_output.run"
@@ -348,11 +347,132 @@ type = "menu"
     order = 20
     menu = "active digital outputs"
 
+[canifier]
+  type = "menu"
+  order = 40
+  menu = "work with a canifier"
+  [canifier.select]
+    type = "canifier.select"
+    order = 10
+    menu = "active canifier"
+  [canifier.status]
+    type = "canifier.status"
+    order = 20
+    menu = "status of active canifier"
+  [canifier.general_inputs]
+    type = "canifier.inputs"
+    order = 40
+    menu = "state of general inputs"
+  [canifier.pwm_inputs]
+    type = "canifier.pwm_in"
+    order = 50
+    menu = "state of PWM inputs"
+  [canifier.quad]
+    type = "canifier.param"
+    order = 60
+    menu = "quadrature encoder position"
+    param = "QUAD_POSITION"
+  [canifier.pwm_output]
+    type = "canifier.pwm_out"
+    order = 70
+    menu = "set PWM output"
+  [canifier.general_output]
+    type = "menu"
+    order = 80
+    menu = "set general output pins"
+    [canifier.general_output.limf]
+      type = "default"
+      order = 10
+      menu = "LIMF"
+    [canifier.general_output.limr]
+      type = "default"
+      order = 20
+      menu = "LIMR"
+    [canifier.general_output.quad_a]
+      type = "default"
+      order = 30
+      menu = "QUAD A"
+    [canifier.general_output.quad_b]
+      type = "default"
+      order = 40
+      menu = "QUAD B"
+    [canifier.general_output.quad_idx]
+      type = "default"
+      order = 50
+      menu = "QUAD IDX"
+    [canifier.general_output.scl]
+      type = "default"
+      order = 60
+      menu = "SCL"
+    [canifier.general_output.sda]
+      type = "default"
+      order = 70
+      menu = "SDA"
+    [canifier.general_output.spi_clk_pwm0]
+      type = "default"
+      order = 80
+      menu = "SPI CLK PWM 0"
+    [canifier.general_output.spi_cs]
+      type = "default"
+      order = 90
+      menu = "SPI CS"
+    [canifier.general_output.spi_miso_pwm2]
+      type = "default"
+      order = 100
+      menu = "SPI MISO PWM 2"
+    [canifier.general_output.spi_mosi_pwm1]
+      type = "default"
+      order = 110
+      menu = "SPI MOSI PWM 1"
+
+  [canifier.frame]
+    type = "menu"
+    order = 90
+    menu = "configure CAN bus frames"
+    [canifier.frame.grapher]
+      type = "default"
+      order = 10
+      menu = "set grapher defaults"
+    [canifier.frame.general_1]
+      type = "canifier.param"
+      order = 20
+      menu = "general 1 status frame"
+      param = "STATUS_GENERAL1"
+    [canifier.frame.general_2]
+      type = "canifier.param"
+      order = 30
+      menu = "general 2 status frame"
+      param = "STATUS_GENERAL2"
+    [canifier.frame.pwm_0]
+      type = "canifier.param"
+      order = 40
+      menu = "PWM input 0 status frame"
+      param = "STATUS_PWM_INPUTS0"
+    [canifier.frame.pwm_1]
+      type = "canifier.param"
+      order = 50
+      menu = "PWM input 1 status frame"
+      param = "STATUS_PWM_INPUTS1"
+    [canifier.frame.pwm_2]
+      type = "canifier.param"
+      order = 60
+      menu = "PWM input 2 status frame"
+      param = "STATUS_PWM_INPUTS2"
+    [canifier.frame.pwm_3]
+      type = "canifier.param"
+      order = 70
+      menu = "PWM input 3 status frame"
+      param = "STATUS_PWM_INPUTS3"
+  [canifier.factory_defaults]
+    type = "canifier.param"
+    order = 100
+    menu = "configure factory defaults"
+    param = "FACTORY_DEFAULTS"
 
 
 [swerve]
   type = "menu"
-  order = 30
+  order = 50
   menu = "work with swerve"
   [swerve.lock]
     type = "swerve.azimuth"

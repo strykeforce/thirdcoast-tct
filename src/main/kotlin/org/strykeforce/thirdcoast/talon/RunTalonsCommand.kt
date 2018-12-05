@@ -1,7 +1,6 @@
 package org.strykeforce.thirdcoast.talon
 
-import com.ctre.phoenix.motorcontrol.ControlMode.MotionMagic
-import com.ctre.phoenix.motorcontrol.ControlMode.Position
+import com.ctre.phoenix.motorcontrol.ControlMode.*
 import edu.wpi.first.wpilibj.Timer
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
@@ -33,19 +32,27 @@ class RunTalonsCommand(
                 val setpoints = line.split(',')
                 val setpoint = setpoints[0].toDouble()
                 val duration = if (setpoints.size > 1) setpoints[1].toDouble() else 0.0
+                val mode = talonService.controlMode
 
-                talonService.active.forEach { it.set(talonService.controlMode, setpoint) }
-
-                if (duration > 0.0 && (talonService.controlMode == MotionMagic || talonService.controlMode == Position)) {
-                    terminal.warn("specifying a duration in closed-loop position mode not allowed")
-                    done = true
+                // sanity checks
+                if (mode == PercentOutput && !(-1.0..1.0).contains(setpoint)) {
+                    terminal.warn("setpoint must be in range -1.0 to 1.0 for percent output mode")
+                    continue
                 }
+
+                if ((mode == MotionMagic || mode == Position) && duration > 0.0) {
+                    terminal.warn("specifying a duration in position modes not allowed")
+                    continue
+                }
+
+                // run the talons
+                talonService.active.forEach { it.set(mode, setpoint) }
 
                 if (duration > 0.0) {
                     logger.debug { "run duration = $duration seconds" }
                     Timer.delay(duration)
                     logger.debug { "run duration expired, setting output = 0.0" }
-                    talonService.active.forEach { it.set(talonService.controlMode, 0.0) }
+                    talonService.active.forEach { it.set(mode, 0.0) }
                 }
             } catch (e: Exception) {
                 done = true

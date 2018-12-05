@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
 import mu.KotlinLogging
-import org.strykeforce.thirdcoast.talon.ParameterCommand
+import org.strykeforce.thirdcoast.talon.TalonParameterCommand
 import org.strykeforce.thirdcoast.talon.SelectFeedbackSensorCommand
 import org.strykeforce.thirdcoast.telemetry.TelemetryService
 
@@ -38,7 +38,7 @@ class TalonService(private val telemetryService: TelemetryService, factory: (id:
         get() = active.firstOrNull()?.inverted ?: INVERTED_DEFAULT
 
     override fun activate(ids: Collection<Int>) {
-        ParameterCommand.reset = true
+        TalonParameterCommand.reset = true
         SelectFeedbackSensorCommand.reset = true
         activeSlotIndex = ACTIVE_SLOT_DEFAULT
         controlMode = ControlMode.PercentOutput
