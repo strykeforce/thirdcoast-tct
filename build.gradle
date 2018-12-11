@@ -1,22 +1,8 @@
-buildscript {
-    ext {
-        kotlin_version = '1.3.0'
-        junit_version = '5.2.0'
-        koin_version = '1.0.1'
-        thirdcoast_version = '18.7.3'
-    }
+plugins {
 
-    repositories {
-        jcenter()
-        maven { url = "https://plugins.gradle.org/m2/" }
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
+    id "org.jetbrains.kotlin.jvm" version "1.3.11"
+    id "idea"
 }
-
-apply plugin: "kotlin"
-apply plugin: "idea"
 
 version = '18.2.0'
 
@@ -36,29 +22,29 @@ dependencies {
     compile "org.opencv:opencv-java:3.2.0"
 
     // Kotlin
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"
 
     // App
     compile "org.jline:jline:3.9.0"
-    compile 'net.consensys.cava:cava-toml:0.3.1'
-    compile "org.strykeforce.thirdcoast:telemetry:$thirdcoast_version"
-    compile "org.strykeforce.thirdcoast:swerve:$thirdcoast_version"
+    compile 'net.consensys.cava:cava-toml:0.5.0'
+    compile "org.strykeforce.thirdcoast:telemetry:${thirdcoast_version}"
+    compile "org.strykeforce.thirdcoast:swerve:${thirdcoast_version}"
 
     // Logging
-    compile 'io.github.microutils:kotlin-logging:1.5.9'
+    compile 'io.github.microutils:kotlin-logging:1.6.10'
     compile 'ch.qos.logback:logback-classic:1.2.3'
 
     // Koin
     compile "org.koin:koin-core:$koin_version"
-    compile "org.koin:koin-logger-slf4j:$koin_version"
-    testCompile "org.koin:koin-test:$koin_version"
+    compile "org.koin:koin-logger-slf4j:${koin_version}"
+    testCompile "org.koin:koin-test:${koin_version}"
 
     // Testing
-    testCompile "org.junit.jupiter:junit-jupiter-api:$junit_version"
-    testCompile "org.junit.jupiter:junit-jupiter-params:$junit_version"
-    testRuntime "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+    testCompile "org.junit.jupiter:junit-jupiter-api:${junit_version}"
+    testCompile "org.junit.jupiter:junit-jupiter-params:${junit_version}"
+    testRuntime "org.junit.jupiter:junit-jupiter-engine:${junit_version}"
     testCompile "org.assertj:assertj-core:3.11.1"
-    testCompile 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC2'
+    testCompile 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0'
 
 }
 
@@ -92,7 +78,7 @@ def robotManifest = {
     attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase',
             'Robot-Class': 'org.strykeforce.thirdcoast.Robot',
             'Specification-Title': 'Third Coast Telemetry',
-            'Specification-Version': version,
+            'Specification-Version': "${thirdcoast_version}",
             'Implementation-Title': 'Third Coast Telemetry Utility (tct)',
             'Implementation-Version': version
 }
