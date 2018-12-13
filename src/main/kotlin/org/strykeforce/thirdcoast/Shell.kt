@@ -12,6 +12,10 @@ class Shell(private var command: Command, private val terminal: Terminal) {
 
     fun run() {
         terminal.puts(InfoCmp.Capability.clear_screen)
+        val title = this.javaClass.`package`.implementationTitle
+        val version = this.javaClass.`package`.implementationVersion
+        terminal.writer().println("$title $version")
+
         while (true) {
             try {
                 command = command.execute()
