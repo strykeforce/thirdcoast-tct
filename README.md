@@ -12,4 +12,4 @@ Devices that are activated in `tct` are automatically configured for graphing in
 4.  You are done with the installer and may remove it: `rm tct-installer-VERSION.bsx`.
 5.  Run TCT by typing `tct` at the roboRIO command line.
 
-See examples of usage in [thirdcoast-examples](https://github.com/strykeforce/thirdcoast-examples) repo and other engineering resources at [strykeforce.org](https://strykeforce.org/resources/).
+See other engineering resources at [strykeforce.org](https://strykeforce.org/resources/).
