@@ -56,7 +56,7 @@ class SelectFeedbackSensorCommand(
 
             val sensor = when (pidIndex) {
                 0 -> config.primaryPID.selectedFeedbackSensor
-                else -> config.auxilaryPID.selectedFeedbackSensor
+                else -> config.auxiliaryPID.selectedFeedbackSensor
             }
 
             return values.indexOf(

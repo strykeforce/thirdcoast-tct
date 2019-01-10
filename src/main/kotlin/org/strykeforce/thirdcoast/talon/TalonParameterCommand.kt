@@ -254,10 +254,10 @@ class TalonParameterCommand(
         if (reset) {
             config = talonService.activeConfiguration
             slot = when (talonService.activeSlotIndex) {
-                0 -> config.slot_0
-                1 -> config.slot_1
-                2 -> config.slot_2
-                3 -> config.slot_3
+                0 -> config.slot0
+                1 -> config.slot1
+                2 -> config.slot2
+                3 -> config.slot3
                 else -> throw IllegalStateException()
             }
             reset = false

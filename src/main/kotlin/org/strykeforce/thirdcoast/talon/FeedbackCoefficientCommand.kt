@@ -25,7 +25,7 @@ class FeedbackCoefficientCommand(
         get() = formatMenu(
             when (pidIndex) {
                 0 -> talonService.activeConfiguration.primaryPID.selectedFeedbackCoefficient
-                else -> talonService.activeConfiguration.auxilaryPID.selectedFeedbackCoefficient
+                else -> talonService.activeConfiguration.auxiliaryPID.selectedFeedbackCoefficient
             }
         )
 
@@ -33,7 +33,7 @@ class FeedbackCoefficientCommand(
         val config = talonService.activeConfiguration
         val default = when (pidIndex) {
             0 -> config.primaryPID.selectedFeedbackCoefficient
-            else -> config.auxilaryPID.selectedFeedbackCoefficient
+            else -> config.auxiliaryPID.selectedFeedbackCoefficient
         }
 
         val paramValue = param.readDouble(reader, default)

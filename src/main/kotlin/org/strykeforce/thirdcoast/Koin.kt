@@ -69,7 +69,7 @@ private fun getWheels(): Array<Wheel> {
         continuousCurrentLimit = 10
         peakCurrentLimit = 0
         peakCurrentDuration = 0
-        slot_0.apply {
+        slot0.apply {
             kP = 10.0
             kI = 0.0
             kD = 100.0
