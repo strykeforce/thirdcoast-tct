@@ -197,6 +197,19 @@ type = "menu"
       order = 90
       menu = "neutral deadband"
       param = "NEUTRAL_DEADBAND"
+  [talon.velocity_measurement]
+    type = "menu"
+    order = 26
+    menu = "configure velocity measurement"
+    [talon.velocity_measurement.period]
+      type = "talon.velocity.period"
+      order = 10
+      menu = "velocity measurement period"
+    [talon.velocity_measurement.window]
+      type = "talon.param"
+      order = 20
+      menu = "velocity measurement window"
+      param = "VELOCITY_MEASUREMENT_WINDOW"
   [talon.voltage_compensation]
     type = "menu"
     order = 27

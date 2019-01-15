@@ -47,6 +47,7 @@ class TalonParameter(command: Command, toml: TomlTable, val enum: Enum) : Abstra
         SOFT_LIMIT_ENABLE_REVERSE,
         SOFT_LIMIT_THRESHOLD_FORWARD,
         SOFT_LIMIT_THRESHOLD_REVERSE,
+        VELOCITY_MEASUREMENT_WINDOW,
         FACTORY_DEFAULTS,
     }
 
