@@ -65,6 +65,7 @@ class TalonParameterCommand(
                 SOFT_LIMIT_ENABLE_REVERSE -> formatMenu(config.reverseSoftLimitEnable)
                 SOFT_LIMIT_THRESHOLD_FORWARD -> formatMenu(config.forwardSoftLimitThreshold)
                 SOFT_LIMIT_THRESHOLD_REVERSE -> formatMenu(config.reverseSoftLimitThreshold)
+                VELOCITY_MEASUREMENT_WINDOW -> formatMenu(config.velocityMeasurementWindow)
                 FACTORY_DEFAULTS -> tomlMenu
                 else -> TODO("${param.enum} not implemented")
             }
@@ -214,6 +215,10 @@ class TalonParameterCommand(
             SOFT_LIMIT_THRESHOLD_REVERSE -> configIntParam(config.reverseSoftLimitThreshold) { talon, value ->
                 talon.configReverseSoftLimitThreshold(value, timeout)
                 config.reverseSoftLimitThreshold = value
+            }
+            VELOCITY_MEASUREMENT_WINDOW -> configIntParam(config.velocityMeasurementWindow) { talon, value ->
+                talon.configVelocityMeasurementWindow(value, timeout)
+                talonService.dirty = true // let the talon round down the number to a legal value
             }
             FACTORY_DEFAULTS -> configBooleanParam(false) { talon, value ->
                 if (value) talon.configFactoryDefault(timeout)
