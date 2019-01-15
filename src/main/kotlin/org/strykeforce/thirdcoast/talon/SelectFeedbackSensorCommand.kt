@@ -37,22 +37,13 @@ class SelectFeedbackSensorCommand(
     toml: TomlTable
 ) : AbstractSelectCommand<FeedbackDevice>(parent, key, toml, SENSORS, LABELS) {
 
-    companion object {
-        var reset = true
-    }
-
     private val talonService: TalonService by inject()
 
     private val pidIndex = toml.getLong("pid")?.toInt() ?: 0
 
-    private var config = talonService.activeConfiguration
-
     override val activeIndex: Int
         get() {
-            if (reset) {
-                config = talonService.activeConfiguration
-                reset = false
-            }
+            val config = talonService.activeConfiguration
 
             val sensor = when (pidIndex) {
                 0 -> config.primaryPID.selectedFeedbackSensor
@@ -69,7 +60,12 @@ class SelectFeedbackSensorCommand(
         }
 
     override fun setActive(index: Int) {
-        talonService.active.forEach { it.configSelectedFeedbackSensor(values[index], pidIndex, talonService.timeout) }
-        reset = true
+        val sensor = values[index]
+        talonService.active.forEach { it.configSelectedFeedbackSensor(sensor, pidIndex, talonService.timeout) }
+        when (pidIndex) {
+            0 -> talonService.activeConfiguration.primaryPID.selectedFeedbackSensor = sensor
+            else -> talonService.activeConfiguration.auxiliaryPID.selectedFeedbackSensor = sensor
+        }
+
     }
 }

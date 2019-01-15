@@ -2,9 +2,7 @@ package org.strykeforce.thirdcoast.talon
 
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced.*
-import com.ctre.phoenix.motorcontrol.can.SlotConfiguration
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
-import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
@@ -21,19 +19,14 @@ class TalonParameterCommand(
     toml: TomlTable
 ) : AbstractCommand(parent, key, toml) {
 
-    companion object {
-        var reset = true
-        private var slot: SlotConfiguration = SlotConfiguration()
-        private var config = TalonSRXConfiguration()
-    }
-
     private val talonService: TalonService by inject()
     private val timeout = talonService.timeout
     private val param = TalonParameter.create(this, toml.getString("param") ?: "UNKNOWN")
 
     override val menu: String
         get() {
-            resetConfigIfNeeded()
+            val config = talonService.activeConfiguration
+            val slot = talonService.activeSlot
             return when (param.enum) {
                 SLOT_P -> formatMenu(slot.kP)
                 SLOT_I -> formatMenu(slot.kI)
@@ -43,7 +36,7 @@ class TalonParameterCommand(
                 SLOT_ALLOWABLE_ERR -> formatMenu(slot.allowableClosedloopError)
                 SLOT_MAX_I_ACCUM -> formatMenu(slot.maxIntegralAccumulator)
                 SLOT_PEAK_OUTPUT -> formatMenu(slot.closedLoopPeakOutput)
-                OUTPUT_REVERSED -> formatMenu(talonService.outputReverse)
+                OUTPUT_REVERSED -> formatMenu(talonService.outputInverted)
                 OPEN_LOOP_RAMP -> formatMenu(config.openloopRamp)
                 CLOSED_LOOP_RAMP -> formatMenu(config.closedloopRamp)
                 PEAK_OUTPUT_FORWARD -> formatMenu(config.peakOutputForward)
@@ -78,7 +71,9 @@ class TalonParameterCommand(
         }
 
     override fun execute(): Command {
-        resetConfigIfNeeded()
+        val config = talonService.activeConfiguration
+        val slot = talonService.activeSlot
+
         when (param.enum) {
             SLOT_P -> configDoubleParam(slot.kP) { talon, value ->
                 talon.config_kP(talonService.activeSlotIndex, value, timeout)
@@ -112,7 +107,7 @@ class TalonParameterCommand(
                 talon.configClosedLoopPeakOutput(talonService.activeSlotIndex, value, timeout)
                 slot.closedLoopPeakOutput = value
             }
-            OUTPUT_REVERSED -> configBooleanParam(talonService.outputReverse) { talon, value ->
+            OUTPUT_REVERSED -> configBooleanParam(talonService.outputInverted) { talon, value ->
                 talon.inverted = value
             }
             OPEN_LOOP_RAMP -> configDoubleParam(config.openloopRamp) { talon, value ->
@@ -249,22 +244,6 @@ class TalonParameterCommand(
 
     private fun defaultFor(frame: StatusFrameEnhanced): Int =
         talonService.active.first().getStatusFramePeriod(frame)
-
-    private fun resetConfigIfNeeded() {
-        if (reset) {
-            config = talonService.activeConfiguration
-            slot = when (talonService.activeSlotIndex) {
-                0 -> config.slot0
-                1 -> config.slot1
-                2 -> config.slot2
-                3 -> config.slot3
-                else -> throw IllegalStateException()
-            }
-            reset = false
-            logger.debug { "reset active config to:\n${config.toString("active")}" }
-            logger.debug { "reset active slot to: \n${slot.toString("active")}" }
-        }
-    }
 
 }
 
