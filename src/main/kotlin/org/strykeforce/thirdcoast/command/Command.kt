@@ -41,7 +41,7 @@ interface Command {
                 "menu" -> createMenuCommand(parent, key, toml)
                 "talon.select" -> SelectTalonsCommand(parent, key, toml)
                 "talon.mode" -> SelectControlModeCommand(parent, key, toml)
-                "talon.brake" -> SelectVelocityMeasurmentPeriodCommand(parent, key, toml)
+                "talon.brake" -> SelectBrakeModeCommand(parent, key, toml)
                 "talon.run" -> RunTalonsCommand(parent, key, toml)
                 "talon.status" -> TalonsStatusCommand(parent, key, toml)
                 "talon.slot.select" -> SelectSlotCommand(parent, key, toml)

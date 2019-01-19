@@ -4,7 +4,7 @@ plugins {
     id "idea"
 }
 
-version = "19.1.0"
+version = "19.1.1"
 
 repositories {
     jcenter()
