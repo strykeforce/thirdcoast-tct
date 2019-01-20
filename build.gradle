@@ -19,10 +19,10 @@ dependencies {
     compile "edu.wpi.first.ntcore:ntcore-java:2019.1.1"
     compile "edu.wpi.first.cscore:cscore-java:2019.1.1"
     compile "edu.wpi.first.thirdparty.frc2019.opencv:opencv-java:3.4.4-4"
-    
+
     // Vendor libs
-    compile "com.ctre.phoenix:api-java:5.12.0"
-    compile "com.ctre.phoenix:wpiapi-java:5.12.0"
+    compile "com.ctre.phoenix:api-java:5.12.1"
+    compile "com.ctre.phoenix:wpiapi-java:5.12.1"
 
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"
