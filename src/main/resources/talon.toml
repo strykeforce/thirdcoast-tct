@@ -96,7 +96,7 @@
 [VELOCITY_MEASUREMENT_WINDOW]
   name = "Velocity Measurement Window"
   type = "INTEGER"
-  range = [1.0, 32.0]
+  range = [1.0, 64.0]
   help = "Sets the number of velocity samples used in the rolling average velocity measurement."
 
 #
