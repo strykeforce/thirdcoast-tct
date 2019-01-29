@@ -83,6 +83,7 @@ class TalonParameterCommand(
             }
             SLOT_I -> configDoubleParam(slot.kI) { talon, value ->
                 talon.config_kI(talonService.activeSlotIndex, value, timeout)
+                talon.setIntegralAccumulator(0.0, 0, timeout)
                 slot.kI = value
             }
             SLOT_D -> configDoubleParam(slot.kD) { talon, value ->
