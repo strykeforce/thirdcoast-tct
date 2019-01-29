@@ -80,9 +80,9 @@ fun LineReader.readMenu(size: Int, prompt: String, default: String = "", quit: B
             else -> INVALID
         }
     } catch (nfe: NumberFormatException) {
-        when (line.toLowerCase()) {
-            "b" -> BACK
-            "q" -> if (quit) QUIT else INVALID
+        when (line) {
+            "b", "B" -> BACK
+            "Q" -> if (quit) QUIT else INVALID
             else -> INVALID
         }
     }
@@ -108,7 +108,7 @@ fun Terminal.readRawMenu(size: Int, prompt: String, quit: Boolean = false): Int 
     this.writer().println()
     return when (char) {
         'b', 'B', '\r' -> BACK
-        'q', 'Q' -> if (quit) QUIT else INVALID
+        'Q' -> if (quit) QUIT else INVALID
         else -> validMenuChoices.indexOf(char) // -1 == INVALID
     }
 }

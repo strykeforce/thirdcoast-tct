@@ -168,7 +168,7 @@ internal class ReadersTest {
 
         @Test
         fun `gets quit`() {
-            whenever(reader.readLine(any(), isNull(), any())).thenReturn("q")
+            whenever(reader.readLine(any(), isNull(), any())).thenReturn("Q")
             assertThat(reader.readMenu(menu)).isEqualTo(QUIT)
         }
 
