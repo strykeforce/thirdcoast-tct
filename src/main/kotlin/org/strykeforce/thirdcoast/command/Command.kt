@@ -103,7 +103,7 @@ abstract class AbstractCommand(
 
     protected fun formatMenu(value: Int) = formatMenu(value.toString())
 
-    protected fun formatMenu(value: Double) = formatMenu(DOUBLE_FORMAT.format(value))
+    protected fun formatMenu(value: Double, format: String = DOUBLE_FORMAT_3) = formatMenu(format.format(value))
 
     protected fun formatMenu(value: String) =
         "$tomlMenu: ${AttributedString(value, AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW)).toAnsi()}"

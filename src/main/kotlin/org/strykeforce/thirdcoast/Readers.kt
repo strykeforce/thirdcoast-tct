@@ -4,7 +4,7 @@ import org.jline.reader.EndOfFileException
 import org.jline.reader.LineReader
 import org.jline.reader.UserInterruptException
 import org.jline.terminal.Terminal
-import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT
+import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT_4
 import org.strykeforce.thirdcoast.command.MenuCommand
 import org.strykeforce.thirdcoast.command.prompt
 import kotlin.math.roundToInt
@@ -25,7 +25,7 @@ fun LineReader.readDouble(
 ): Double {
     val buffer =
         if (truncate && default == Math.floor(default)) default.roundToInt().toString()
-        else DOUBLE_FORMAT.format(default)
+        else DOUBLE_FORMAT_4.format(default)
     return try {
         val line = this.readLine(prompt, null, buffer).trim()
         if (line.isEmpty()) throw EndOfFileException()

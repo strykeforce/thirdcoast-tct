@@ -17,7 +17,7 @@ import org.koin.standalone.inject
 import org.koin.test.KoinTest
 import org.koin.test.declare
 import org.strykeforce.thirdcoast.command.Command
-import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT
+import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT_4
 import org.strykeforce.thirdcoast.device.TalonService
 
 internal class TalonParameterCommandTest : KoinTest {
@@ -31,7 +31,7 @@ internal class TalonParameterCommandTest : KoinTest {
         private val talon: TalonSRX = mock()
 
         private val reader: LineReader = mock {
-            on { readLine(any(), isNull(), eq(DOUBLE_FORMAT.format(0.0))) } doReturn "27.67"
+            on { readLine(any(), isNull(), eq(DOUBLE_FORMAT_4.format(0.0))) } doReturn "27.67"
             on { readLine(any(), isNull(), eq("0")) } doReturn "27"
         }
 
@@ -51,7 +51,7 @@ internal class TalonParameterCommandTest : KoinTest {
             param = "SLOT_P"
         """.trimIndent()
             val command = TalonParameterCommand(null, "foo", Toml.parse(toml))
-            assertThat(AttributedString.stripAnsi(command.menu)).isEqualTo("foo: ${DOUBLE_FORMAT.format(0.0)}")
+            assertThat(AttributedString.stripAnsi(command.menu)).isEqualTo("foo: ${DOUBLE_FORMAT_4.format(0.0)}")
         }
 
         @Test
