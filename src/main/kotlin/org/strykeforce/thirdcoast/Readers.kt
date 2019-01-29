@@ -54,7 +54,7 @@ fun LineReader.readBoolean(prompt: String = PROMPT, default: Boolean = false) = 
 }
 
 fun LineReader.readIntList(prompt: String = PROMPT, default: List<Int> = emptyList()): List<Int> = try {
-    val line = this.readLine(prompt, null, default.joinToString(",")).trim()
+    val line = this.readLine(prompt, null, default.joinToString()).trim()
     if (line.isEmpty()) throw EndOfFileException()
     line.split(',').map { it.trim().toInt() }
 } catch (e: Exception) {

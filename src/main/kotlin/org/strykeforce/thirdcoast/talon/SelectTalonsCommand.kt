@@ -7,6 +7,7 @@ import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.prompt
 import org.strykeforce.thirdcoast.device.TalonService
+import org.strykeforce.thirdcoast.info
 import org.strykeforce.thirdcoast.readIntList
 import org.strykeforce.thirdcoast.warn
 
@@ -23,13 +24,12 @@ class SelectTalonsCommand(
     override fun execute(): Command {
         while (true) {
             try {
-                val ids = reader.readIntList(this.prompt("ids"))
-                val seen = talonService.idsInAll(ids)
-                talonService.activate(ids)
-                if (seen.isNotEmpty())
-                    terminal.warn(
+                val ids = reader.readIntList(this.prompt("ids"), talonService.active.map(TalonSRX::getDeviceID))
+                val new = talonService.activate(ids)
+                if (new.isNotEmpty())
+                    terminal.info(
                         "reset control mode, current limit enabled, brake, voltage compensation\nand sensor phase " +
-                                "for talons: ${seen.joinToString()}"
+                                "for talons: ${new.joinToString()}"
                     )
                 return super.execute()
             } catch (e: IllegalArgumentException) {
