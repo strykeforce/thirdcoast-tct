@@ -8,6 +8,7 @@ import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
+import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT_4
 import org.strykeforce.thirdcoast.device.TalonService
 import org.strykeforce.thirdcoast.talon.TalonParameter.Enum.*
 
@@ -28,10 +29,10 @@ class TalonParameterCommand(
             val config = talonService.activeConfiguration
             val slot = talonService.activeSlot
             return when (param.enum) {
-                SLOT_P -> formatMenu(slot.kP)
-                SLOT_I -> formatMenu(slot.kI)
-                SLOT_D -> formatMenu(slot.kD)
-                SLOT_F -> formatMenu(slot.kF)
+                SLOT_P -> formatMenu(slot.kP, DOUBLE_FORMAT_4)
+                SLOT_I -> formatMenu(slot.kI, DOUBLE_FORMAT_4)
+                SLOT_D -> formatMenu(slot.kD, DOUBLE_FORMAT_4)
+                SLOT_F -> formatMenu(slot.kF, DOUBLE_FORMAT_4)
                 SLOT_I_ZONE -> formatMenu(slot.integralZone)
                 SLOT_ALLOWABLE_ERR -> formatMenu(slot.allowableClosedloopError)
                 SLOT_MAX_I_ACCUM -> formatMenu(slot.maxIntegralAccumulator)

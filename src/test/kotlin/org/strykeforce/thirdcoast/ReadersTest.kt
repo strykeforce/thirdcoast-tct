@@ -11,7 +11,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.strykeforce.thirdcoast.command.Command
-import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT
+import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT_3
+import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT_4
 import org.strykeforce.thirdcoast.command.MenuCommand
 
 internal class ReadersTest {
@@ -59,7 +60,7 @@ internal class ReadersTest {
 
         @Test
         fun `read default`() {
-            whenever(reader.readLine(any(), isNull(), eq(DOUBLE_FORMAT.format(27.67)))).thenReturn(" ")
+            whenever(reader.readLine(any(), isNull(), eq(DOUBLE_FORMAT_4.format(27.67)))).thenReturn(" ")
             assertThat(reader.readDouble(default = 27.67)).isEqualTo(27.67)
         }
 
