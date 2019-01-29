@@ -8,10 +8,11 @@ class CanifierService(private val telemetryService: TelemetryService, factory: (
     AbstractDeviceService<CANifier>(factory) {
     val timeout = 10
 
-    override fun activate(ids: Collection<Int>) {
-        super.activate(ids)
+    override fun activate(ids: Collection<Int>): Set<Int> {
+        val new = super.activate(ids)
         telemetryService.stop()
         active.forEach { telemetryService.register(CanifierItem(it)) }
         telemetryService.start()
+        return new
     }
 }

@@ -3,6 +3,7 @@ package org.strykeforce.thirdcoast.device
 import com.nhaarman.mockitokotlin2.mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.fail
 
 internal class DeviceServiceTest {
 
@@ -10,13 +11,18 @@ internal class DeviceServiceTest {
     fun `activate adds devices`() {
         val stringService = AbstractDeviceService { it.toString() }
 
-        stringService.activate(listOf(1, 2, 3, 3))
+        var new = stringService.activate(listOf(1, 2, 3, 3))
         assertThat(stringService.active).containsOnly("1", "2", "3")
         assertThat(stringService.all).containsOnly("1", "2", "3")
+        assertThat(new).containsExactly(1, 2, 3)
 
-        stringService.activate(listOf(4, 5, 4, 5))
+        new = stringService.activate(listOf(4, 5, 4, 5))
         assertThat(stringService.active).containsOnly("4", "5")
         assertThat(stringService.all).containsOnly("1", "2", "3", "4", "5")
+        assertThat(new).containsExactly(4, 5)
+
+        new = stringService.activate(listOf(1, 2, 3, 4, 5))
+        assertThat(new).containsExactly(1, 2, 3)
     }
 
     @Test
@@ -28,6 +34,26 @@ internal class DeviceServiceTest {
         stringService.activate(emptyList())
         assertThat(stringService.active).isEmpty()
         assertThat(stringService.all).containsOnly("1", "2", "3")
+    }
+
+    class TestDevice(val id: Int) {
+        companion object {
+            val seen: MutableSet<Int> = mutableSetOf()
+        }
+
+        init {
+            if (!seen.add(id)) fail { "re-instantiating id: $id" }
+        }
+    }
+
+    @Test
+    fun `reactivate seen devices`() {
+        val testService = AbstractDeviceService { id -> TestDevice(id) }
+        testService.activate(listOf(1, 2, 3))
+        assertThat(TestDevice.seen).containsExactly(1, 2, 3)
+        testService.activate(listOf(1))
+        testService.activate(listOf(1, 2, 3, 4))
+        assertThat(TestDevice.seen).containsExactly(1, 2, 3, 4)
     }
 
     @Test

@@ -6,8 +6,6 @@ import com.ctre.phoenix.motorcontrol.can.SlotConfiguration
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
 import mu.KotlinLogging
-import org.strykeforce.thirdcoast.talon.SelectFeedbackSensorCommand
-import org.strykeforce.thirdcoast.talon.TalonParameterCommand
 import org.strykeforce.thirdcoast.telemetry.TelemetryService
 
 private val logger = KotlinLogging.logger {}
@@ -73,18 +71,12 @@ class TalonService(private val telemetryService: TelemetryService, factory: (id:
     val outputInverted: Boolean
         get() = active.firstOrNull()?.inverted ?: OUTPUT_INVERTED_DEFAULT
 
-    override fun activate(ids: Collection<Int>) {
+    override fun activate(ids: Collection<Int>): Set<Int> {
         dirty = true
-        activeSlotIndex = ACTIVE_SLOT_DEFAULT
-        controlMode = CONTROL_MODE_DEFAULT
-        neutralMode = NEUTRAL_MODE_DEFAULT
-        voltageCompensation = VOLTAGE_COMPENSATION_ENABLED_DEFAULT
-        sensorPhase = SENSOR_PHASE_INVERTED_DEFAULT
-        currentLimit = CURRENT_LIMIT_ENABLED_DEFAULT
 
-        super.activate(ids)
+        val new = super.activate(ids)
         telemetryService.stop()
-        active.forEach {
+        active.filter { new.contains(it.deviceID) }.forEach {
             it.setNeutralMode(neutralMode)
             it.selectProfileSlot(activeSlotIndex, 0)
             it.enableVoltageCompensation(voltageCompensation)
@@ -94,5 +86,6 @@ class TalonService(private val telemetryService: TelemetryService, factory: (id:
             telemetryService.register(it)
         }
         telemetryService.start()
+        return new
     }
 }

@@ -5,10 +5,19 @@ import mu.KotlinLogging
 private val logger = KotlinLogging.logger {}
 
 interface DeviceService<T> {
+    /** All previously activated devices. */
     val active: Set<T>
+    /** Currently active devices. */
     val all: Set<T>
+
+    /** Return a activated device, reusing previously activated devices */
     fun get(id: Int): T
-    fun activate(ids: Collection<Int>)
+
+    /** Activate a collection of devices.
+     * @param ids the ids of devices to activate.
+     * @return any devices that were added to the currently active set.
+     */
+    fun activate(ids: Collection<Int>): Set<Int>
 }
 
 open class AbstractDeviceService<T>(private val factory: (id: Int) -> T) :
@@ -27,9 +36,11 @@ open class AbstractDeviceService<T>(private val factory: (id: Int) -> T) :
         return device
     }
 
-    override fun activate(ids: Collection<Int>) {
+    override fun activate(ids: Collection<Int>): Set<Int> {
+        val new = ids.toSet().minus(_active.keys)
         _active.clear()
         ids.associateTo(_active) { id -> id to get(id) }
+        return new
     }
 
     fun idsInAll(ids: Collection<Int>): Set<Int> = _all.keys.intersect(ids)

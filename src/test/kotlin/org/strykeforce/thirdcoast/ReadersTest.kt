@@ -117,7 +117,7 @@ internal class ReadersTest {
         @Test
         fun `read default`() {
             val default = listOf(1, 2)
-            whenever(reader.readLine(any(), isNull(), eq(default.joinToString(","))))
+            whenever(reader.readLine(any(), isNull(), eq(default.joinToString())))
                 .thenReturn("  ")
             assertThat(reader.readIntList(default = default)).containsExactly(1, 2)
         }
