@@ -38,7 +38,7 @@ class MenuCommand(
         }
         if (parent != null)
             writer.println("back to previous menu".toMenu("b"))
-        writer.println("quit TCT".toMenu("q"))
+        writer.println("quit TCT".toMenu("Q"))
 
     }
 
