@@ -11,6 +11,6 @@ Devices that are activated in `tct` are automatically configured for graphing in
 3. Note that all commands that you type at the roboRIO command-line in the following steps are **case-sensitive**.
 4.  SSH into your roboRIO, locate the installer you just uploaded and run: `sh tct-installer-VERSION.bsx` to install TCT. This will extract and install a JAR file in `/usr/local/lib/tct.jar` and an executable script in `/usr/local/bin/tct`.
 5.  You are done with the installer and may remove it: `rm tct-installer-VERSION.bsx`.
-6.  TCT is now in the roboRIO `PATH` and can be run by typing `tct` at the roboRIO command line. You must have a Driver Station connected and robot enabled for motors to run. Also, we recommend you don't run your `tct` ssh program (i.e. PuTTY) on the same laptop as the Driver Station since typing can cause the robot to disable or e-stop.
+6.  TCT is now in the roboRIO path and can be run by typing `tct` at the roboRIO command line. You must have a Driver Station connected and robot enabled for motors to run. Also, we recommend you don't run your `tct` ssh program (i.e. PuTTY) on the same laptop as the Driver Station since typing can cause the robot to disable or e-stop.
 
 See other engineering resources at [strykeforce.org](https://strykeforce.org/resources/).
