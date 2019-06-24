@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.strykeforce.thirdcoast.command.Command
-import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT_3
 import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT_4
 import org.strykeforce.thirdcoast.command.MenuCommand
 
