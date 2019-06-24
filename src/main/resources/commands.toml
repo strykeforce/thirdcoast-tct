@@ -347,6 +347,19 @@ type = "menu"
     order = 20
     menu = "active servos"
 
+[solenoid]
+  type = "menu"
+  order = 25
+  menu = "work with solenoids"
+  [solenoid.run]
+    type = "solenoid.run"
+    order = 10
+    menu = "set solenoid positions"
+  [solenoid.select]
+    type = "solenoid.select"
+    order = 20
+    menu = "active solenoids"
+
 [digital_output]
   type = "menu"
   order = 30

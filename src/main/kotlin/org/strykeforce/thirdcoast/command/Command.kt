@@ -12,6 +12,8 @@ import org.strykeforce.thirdcoast.dio.RunDigitalOutputsCommand
 import org.strykeforce.thirdcoast.dio.SelectDigitalOutputsCommand
 import org.strykeforce.thirdcoast.servo.RunServosCommand
 import org.strykeforce.thirdcoast.servo.SelectServosCommand
+import org.strykeforce.thirdcoast.solenoid.RunSolenoidsCommand
+import org.strykeforce.thirdcoast.solenoid.SelectSolenoidsCommand
 import org.strykeforce.thirdcoast.swerve.AdjustAzimuthCommand
 import org.strykeforce.thirdcoast.swerve.SaveZeroCommand
 import org.strykeforce.thirdcoast.swerve.SelectAzimuthCommand
@@ -54,6 +56,8 @@ interface Command {
                 "talon.velocity.period" -> SelectVelocityMeasurmentPeriodCommand(parent, key, toml)
                 "servo.select" -> SelectServosCommand(parent, key, toml)
                 "servo.run" -> RunServosCommand(parent, key, toml)
+                "solenoid.select" -> SelectSolenoidsCommand(parent, key, toml)
+                "solenoid.run" -> RunSolenoidsCommand(parent, key, toml)
                 "digital_output.select" -> SelectDigitalOutputsCommand(parent, key, toml)
                 "digital_output.run" -> RunDigitalOutputsCommand(parent, key, toml)
                 "canifier.select" -> SelectCanifierCommand(parent, key, toml)

@@ -7,16 +7,14 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
 import edu.wpi.first.wpilibj.DigitalOutput
 import edu.wpi.first.wpilibj.Servo
+import edu.wpi.first.wpilibj.Solenoid
 import org.jline.reader.LineReader
 import org.jline.reader.LineReaderBuilder
 import org.jline.terminal.Terminal
 import org.jline.terminal.TerminalBuilder
 import org.koin.dsl.module.module
 import org.strykeforce.thirdcoast.command.Command
-import org.strykeforce.thirdcoast.device.CanifierService
-import org.strykeforce.thirdcoast.device.DigitalOutputService
-import org.strykeforce.thirdcoast.device.ServoService
-import org.strykeforce.thirdcoast.device.TalonService
+import org.strykeforce.thirdcoast.device.*
 import org.strykeforce.thirdcoast.swerve.SwerveDrive
 import org.strykeforce.thirdcoast.swerve.SwerveDriveConfig
 import org.strykeforce.thirdcoast.swerve.Wheel
@@ -38,6 +36,8 @@ val tctModule = module {
     single { TalonService(get()) { id -> TalonSRX(id) } }
 
     single { ServoService { id -> Servo(id) } }
+
+    single { SolenoidService { id -> Solenoid(id) } }
 
     single { DigitalOutputService { id -> DigitalOutput(id) } }
 
