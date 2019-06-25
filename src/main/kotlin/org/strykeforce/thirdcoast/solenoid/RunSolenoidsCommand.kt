@@ -38,12 +38,12 @@ class RunSolenoidsCommand(
             try {
                 val setpoints = mutableListOf<Boolean>()
                 solenoidService.active.forEach {
-                    val setpoint = reader.readBoolean(this.prompt("solenoid ${it.name} (y/n)"), it.get())
+                    val setpoint = reader.readBoolean(this.prompt("solenoid ${it.port()} (y/n)"), it.get())
                     setpoints += setpoint
                 }
                 solenoidService.active.forEachIndexed { i, solenoid ->
                     solenoid.set(setpoints[i])
-                    logger.info { "set solenoid ${solenoid.name} to ${setpoints[i]}" }
+                    logger.info { "set solenoid ${solenoid.port()} to ${setpoints[i]}" }
                 }
                 done = true
             } catch (e: Exception) {
