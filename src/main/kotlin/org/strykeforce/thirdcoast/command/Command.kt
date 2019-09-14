@@ -14,11 +14,13 @@ import org.strykeforce.thirdcoast.servo.RunServosCommand
 import org.strykeforce.thirdcoast.servo.SelectServosCommand
 import org.strykeforce.thirdcoast.solenoid.RunSolenoidsCommand
 import org.strykeforce.thirdcoast.solenoid.SelectSolenoidsCommand
+import org.strykeforce.thirdcoast.spark.*
 import org.strykeforce.thirdcoast.swerve.AdjustAzimuthCommand
 import org.strykeforce.thirdcoast.swerve.SaveZeroCommand
 import org.strykeforce.thirdcoast.swerve.SelectAzimuthCommand
 import org.strykeforce.thirdcoast.swerve.SetAzimuthCommand
 import org.strykeforce.thirdcoast.talon.*
+import org.strykeforce.thirdcoast.talon.SelectTalonsCommand
 
 //private val logger = KotlinLogging.logger {}
 
@@ -54,6 +56,10 @@ interface Command {
                 "talon.hard.source" -> SelectHardLimitSourceCommand(parent, key, toml)
                 "talon.hard.normal" -> SelectHardLimitNormalCommand(parent, key, toml)
                 "talon.velocity.period" -> SelectVelocityMeasurmentPeriodCommand(parent, key, toml)
+                "sparkMax.hello" -> HelloCommand(parent, key, toml)
+                "sparkMax.run" -> RunSparkMaxesCommand(parent, key, toml)
+                "sparkMax.select" -> SelectSparkMaxesCommand(parent, key, toml)
+                "sparkMax.mode" -> SelectControlTypeCommand(parent, key, toml)
                 "servo.select" -> SelectServosCommand(parent, key, toml)
                 "servo.run" -> RunServosCommand(parent, key, toml)
                 "solenoid.select" -> SelectSolenoidsCommand(parent, key, toml)

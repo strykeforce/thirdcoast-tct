@@ -5,6 +5,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.NeutralMode
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
+import com.revrobotics.CANSparkMax
+import com.revrobotics.CANSparkMaxLowLevel
 import edu.wpi.first.wpilibj.DigitalOutput
 import edu.wpi.first.wpilibj.Servo
 import edu.wpi.first.wpilibj.Solenoid
@@ -34,6 +36,8 @@ val tctModule = module {
     single { TelemetryService(Function { inventory -> TelemetryController(inventory, get(), SERVER_PORT) }) }
 
     single { TalonService(get()) { id -> TalonSRX(id) } }
+
+    single {SparkMaxService(get()) {id -> CANSparkMax(id,CANSparkMaxLowLevel.MotorType.kBrushless) }}
 
     single { ServoService { id -> Servo(id) } }
 

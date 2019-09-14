@@ -334,6 +334,29 @@ type = "menu"
     menu = "configure factory defaults"
     param = "FACTORY_DEFAULTS"
 
+[sparkMax]
+    type = "menu"
+    order = 15
+    menu = "work with spark maxes"
+    [sparkMax.hello]
+        type = "sparkMax.hello"
+        order = 10
+        menu = "say hello"
+    [sparkMax.run]
+        type = "sparkMax.run"
+        order = 20
+        menu = "run active spark maxes"
+    [sparkMax.select]
+        type = "sparkMax.select"
+        order = 30
+        menu = "active spark maxes"
+    [sparkMax.mode]
+        type = "sparkMax.mode"
+        order = 40
+        menu = "control mode"
+        help = "The control mode for the output. Duty cycle is a value between -1 and 1, Voltage in V, Velocity in RPM, Position in Rotations, Current in Amps"
+
+
 [servo]
   type = "menu"
   order = 20
