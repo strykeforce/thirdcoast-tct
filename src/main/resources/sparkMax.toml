@@ -1,0 +1,179 @@
+#
+# General Parameters
+#
+[VOLTAGE_COMP_ENABLE]
+    name = "Voltage Compensation Enable"
+    type = "BOOLEAN"
+    help = "Enable Voltage Compensation"
+[VOLTAGE_COMP_VOLTAGE]
+    name = "Voltage Compensation Voltage"
+    type = "DOUBLE"
+    help = "Voltage Compensation Voltage"
+[OPEN_LOOP_RAMP]
+    name = "Open Loop Ramp Rate"
+    type = "DOUBLE"
+    help = "Time in seconds to go from 0 to full throttle, maximum rate of change in output"
+[CLOSED_LOOP_RAMP]
+    name = "Closed Loop Ramp Rate"
+    type = "DOUBLE"
+    help = "Time in seconds to go from 0 to full throttle in closed loop control modes"
+[INVERTED]
+    name = "Output Inverted"
+    type = "BOOLEAN"
+    help = "Is motor output inverted"
+
+
+
+#
+# PID SLOTS
+#
+[SLOT_P]
+    name = "P"
+    type = "DOUBLE"
+    help = "Set P parameter for the active slot"
+[SLOT_I]
+    name = "I"
+    type = "DOUBLE"
+    help = "Set I parameter for the active slot"
+[SLOT_D]
+    name = "D"
+    type = "DOUBLE"
+    help = "Set D parameter for the active slot"
+[SLOT_D_FILTER]
+    name = "D FILTER"
+    type = "DOUBLE"
+    help = "Set D filter parameter for the active slot"
+[SLOT_FF]
+    name = "FF"
+    type = "DOUBLE"
+    help = "Set FF parameter for the active slot"
+[SLOT_I_MAX_ACCUM]
+    name = "Maximum Integral Accumulator"
+    type = "DOUBLE"
+    help = "Set maximum Integral Accumulator for the active slot"
+[SLOT_I_ZONE]
+    name = "Integral Zone"
+    type = "DOUBLE"
+    help = "Sets the Integral Zone constant in the active slot. If the (absolute) closed-loop error is outside of this zone, integral accumulator is automatically cleared."
+[SLOT_OUTPUT_MIN]
+    name = "MIN Output"
+    type = "DOUBLE"
+    help = "Sets the minimum allowed output for the active slot"
+    range = [-1.0,1.0]
+[SLOT_OUTPUT_MAX]
+    name = "MAX Output"
+    type = "DOUBLE"
+    help = "Sets the maximum allowed output for the active slot"
+    range = [-1.0,1.0]
+[SLOT_MOTION_MAX_ACCEL]
+    name = "Smart Motion: MAX Accel"
+    type = "DOUBLE"
+    help = "Sets the maximum acceleration for the active slot (smart motion mode)"
+[SLOT_MOTION_MAX_VEL]
+    name = "Smart Motion: MAX Velocity"
+    type = "DOUBLE"
+    help = "Sets the maximum velocity for the active slot (smart motion mode)"
+[SLOT_MOTION_MIN_VEL]
+    name = "Smart Motion: MIN Velocity"
+    type = "DOUBLE"
+    help = "Sets the minimum velocity for the active slot (smart motion mode)"
+[SLOT_MOTION_ALLOWED_ERROR]
+    name = "Smart Motion: Allowed Closed-Loop Error"
+    type = "DOUBLE"
+    help = "Sets the allowed closed-loop error in the active slot (smart motion mode)"
+
+#
+#Current Limits
+#
+[SECONDARY_CURRENT_LIMIT]
+    name = "Secondary Current Limit"
+    type = "DOUBLE"
+    help = "Current limit for secondary current limit"
+[SECONDARY_CURRENT_LIMIT_CHOP_CYCLES]
+    name = "Secondary - Chop Cycles"
+    type = "DOUBLE"
+    help = "Number of cycles after the current limit is reached to keep controller off (default = 0)"
+[SMART_CURRENT_STALL_LIMIT]
+    name = "Smart Current - Stall Limit"
+    type = "DOUBLE"
+    help = "Current limit in stalled conditions"
+[SMART_CURRENT_FREE_LIMIT]
+    name = "Smart Current - Free Limit"
+    type = "DOUBLE"
+    help = "Current limit in free conditions"
+[SMART_CURRENT_RPM_LIMIT]
+    name = "Smart Current - Limit RPM"
+    type = "DOUBLE"
+    help = "RPM at which to transition between stalled and free current limits, all RPMs under this limit have the stall current limit, the current limit will then scale linearly to the free limit as RPM increases"
+
+#
+# Limits
+#
+
+[FWD_HARD_LIMIT_EN]
+    name = "Forward Hard Limit Enable"
+    type = "BOOLEAN"
+    help = "Enable forward limit switch"
+[REV_HARD_LIMIT_EN]
+    name = "Reverse Hard Limit Enable"
+    type = "BOOLEAN"
+    help = "Enable reverse limit switch"
+[FWD_SOFT_LIMIT_EN]
+    name = "Forward Soft Limit Enable"
+    type = "BOOLEAN"
+    help = "Enable forward soft limit"
+[FWD_SOFT_LIMIT]
+    name = "Forward Soft Limit"
+    type = "DOUBLE"
+    help = "Forward Soft Limit"
+[REV_SOFT_LIMIT_EN]
+    name = "Reverse Soft Limit Enable"
+    type = "BOOLEAN"
+    help = "Enable reverse soft limit"
+[REV_SOFT_LIMIT]
+    name = "Reverse Soft Limit"
+    type = "DOUBLE"
+    help = "Reverse Soft Limit"
+
+
+#
+# Feedback Sensor
+#
+[SENSOR_POSITION]
+    name = "Feedback Sensor Position"
+    type = "DOUBLE"
+    help = "Set feedback sensor position"
+[POSITION_CONV_FACTOR]
+    name = "Position Conversion Factor"
+    type = "DOUBLE"
+    help = "Set Position Conversion Factor, multiplied by native units to give position"
+[VELOCITY_CONV_FACTOR]
+    name = "Velocity Conversion Factor"
+    type = "DOUBLE"
+    help = "Set velocity conversion factor, multiplied by native output units to get velocity"
+[MEASUREMENT_PERIOD]
+    name = "Velocity measurement period"
+    type = "INTEGER"
+    help = "Measurement period in miliseconds, must be between 1 and 100"
+    range = [1.0,100.0]
+[SENSOR_INVERTED]
+    name = "Sensor phase inverted"
+    type = "BOOLEAN"
+    help = "Set sensor phase inverted"
+[SENSOR_MIN]
+    name = "Minimum Sensor Output"
+    type = "DOUBLE"
+    help = "If the feedback sensor has a limited range, this sets the lower bound"
+[SENSOR_MAX]
+    name = "Maximum Sensor Output"
+    type = "DOUBLE"
+    help = "If the feedback sensor has a limited range, this sets the upper bound"
+[SENSOR_AVG_DEPTH]
+    name = "Encoder average depth"
+    type = "DOUBLE"
+    help = "Sets the average sampling depth for an encoder, this is the number of samples to average for a velocity reading, in Brushless mode this does not change behavior"
+    range = [1.0, 64.0]
+[SENSOR_CPR]
+    name = "Counts per revolution"
+    type = "INTEGER"
+    help = "Counts per revolution for the encoder, this is 64 for the NEO"

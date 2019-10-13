@@ -35,24 +35,20 @@ class RunSparkMaxesCommand(
                 val mode = sparkMaxService.controlType
 
                 // sanity checks
-                if (!(-1.0..1.0).contains(setpoint)){
-                    terminal.warn("setpoint must be in range -1.0 to 1.0 for percent output mode")
-                    continue
-                }
-                /*if (mode == ControlMode.PercentOutput && !(-1.0..1.0).contains(setpoint)) {
+                if (mode == ControlType.kDutyCycle && !(-1.0..1.0).contains(setpoint)){
                     terminal.warn("setpoint must be in range -1.0 to 1.0 for percent output mode")
                     continue
                 }
 
-                if ((mode == ControlMode.MotionMagic || mode == ControlMode.Position) && duration > 0.0) {
+                if ((mode == ControlType.kSmartMotion || mode == ControlType.kPosition) && duration > 0.0) {
                     terminal.warn("specifying a duration in position modes not allowed")
                     continue
-                }*/
+                }
 
                 // run the spark max
                 sparkMaxService.active.forEach {
-                    it.set(setpoint)
-                    //it.pidController.setReference(setpoint,sparkMaxService.controlType)
+                    if(sparkMaxService.controlType == ControlType.kDutyCycle) it.set(setpoint)
+                    else it.pidController.setReference(setpoint,sparkMaxService.controlType)
                     logger.debug { "Run Spark Max ${it.deviceId} at $setpoint, running at ${it.appliedOutput}, error: ${it.lastError}" }
                 }
 

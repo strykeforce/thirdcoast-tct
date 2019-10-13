@@ -20,7 +20,10 @@ import org.strykeforce.thirdcoast.swerve.SaveZeroCommand
 import org.strykeforce.thirdcoast.swerve.SelectAzimuthCommand
 import org.strykeforce.thirdcoast.swerve.SetAzimuthCommand
 import org.strykeforce.thirdcoast.talon.*
+import org.strykeforce.thirdcoast.talon.SelectFeedbackSensorCommand
+import org.strykeforce.thirdcoast.talon.SelectSlotCommand
 import org.strykeforce.thirdcoast.talon.SelectTalonsCommand
+import org.strykeforce.thirdcoast.talon.SetSensorPositionCommand
 
 //private val logger = KotlinLogging.logger {}
 
@@ -56,10 +59,17 @@ interface Command {
                 "talon.hard.source" -> SelectHardLimitSourceCommand(parent, key, toml)
                 "talon.hard.normal" -> SelectHardLimitNormalCommand(parent, key, toml)
                 "talon.velocity.period" -> SelectVelocityMeasurmentPeriodCommand(parent, key, toml)
-                "sparkMax.hello" -> HelloCommand(parent, key, toml)
                 "sparkMax.run" -> RunSparkMaxesCommand(parent, key, toml)
+                "sparkMax.status" -> SparkMaxStatusCommand(parent, key, toml)
                 "sparkMax.select" -> SelectSparkMaxesCommand(parent, key, toml)
                 "sparkMax.mode" -> SelectControlTypeCommand(parent, key, toml)
+                "sparkMax.idle" -> SelectIdleModeCommand(parent, key, toml)
+                "sparkMax.param" -> SparkMaxParameterCommand(parent, key, toml)
+                "sparkMax.sensor" -> org.strykeforce.thirdcoast.spark.SelectFeedbackSensorCommand(parent, key, toml)
+                "sparkMax.sensor.position" -> org.strykeforce.thirdcoast.spark.SetSensorPositionCommand(parent, key, toml)
+                "sparkMax.slot.select" -> org.strykeforce.thirdcoast.spark.SelectSlotCommand(parent,key,toml)
+                "sparkMax.limit.normal" -> SelectLimitNormalCommand(parent, key, toml)
+                //"sparkMax.burnFlash" -> BurnFlashCommandparent(parent, key, toml)
                 "servo.select" -> SelectServosCommand(parent, key, toml)
                 "servo.run" -> RunServosCommand(parent, key, toml)
                 "solenoid.select" -> SelectSolenoidsCommand(parent, key, toml)

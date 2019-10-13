@@ -335,26 +335,262 @@ type = "menu"
     param = "FACTORY_DEFAULTS"
 
 [sparkMax]
+  type = "menu"
+  order = 15
+  menu = "work with spark maxes (brushless only)"
+  [sparkMax.run]
+    type = "sparkMax.run"
+    order = 20
+    menu = "run active spark maxes"
+  [sparkMax.select]
+    type = "sparkMax.select"
+    order = 30
+    menu = "active spark maxes"
+  [sparkMax.status]
+    type = "sparkMax.status"
+    order = 35
+    menu = "spark max status"
+  [sparkMax.mode]
+    type = "sparkMax.mode"
+    order = 40
+    menu = "control mode"
+    help = "The control mode for the output. Duty cycle is a value between -1 and 1, Voltage in V, Velocity in RPM, Position in Rotations, Current in Amps"
+  [sparkMax.sensor]
     type = "menu"
-    order = 15
-    menu = "work with spark maxes"
-    [sparkMax.hello]
-        type = "sparkMax.hello"
-        order = 10
-        menu = "say hello"
-    [sparkMax.run]
-        type = "sparkMax.run"
-        order = 20
-        menu = "run active spark maxes"
-    [sparkMax.select]
-        type = "sparkMax.select"
-        order = 30
-        menu = "active spark maxes"
-    [sparkMax.mode]
-        type = "sparkMax.mode"
-        order = 40
-        menu = "control mode"
-        help = "The control mode for the output. Duty cycle is a value between -1 and 1, Voltage in V, Velocity in RPM, Position in Rotations, Current in Amps"
+    order = 50
+    menu = "configure feedback sensor"
+    [sparkMax.sensor.feedback]
+      type = "sparkMax.sensor"
+      order = 10
+      menu = "feedback sensor"
+    [sparkMax.sensor.position]
+      type = "sparkMax.sensor.position"
+      order = 20
+      menu = "sensor position"
+      param = "SENSOR_POSITION"
+    [sparkMax.sensor.positionConvFactor]
+      type = "sparkMax.param"
+      order = 30
+      menu = "position conversion factor"
+      param = "POSITION_CONV_FACTOR"
+    [sparkMax.sensor.velocityConvFactor]
+      type = "sparkMax.param"
+      order = 40
+      menu = "velocity conversion factor"
+      param = "VELOCITY_CONV_FACTOR"
+    [sparkMax.sensor.measPeriod]
+      type = "sparkMax.param"
+      order = 50
+      param = "MEASUREMENT_PERIOD"
+    [sparkMax.sensor.inverted]
+      type = "sparkMax.param"
+      order = 60
+      param = "SENSOR_INVERTED"
+    [sparkMax.sensor.min]
+      type = "sparkMax.param"
+      order = 70
+      param = "SENSOR_MIN"
+    [sparkMax.sensor.max]
+      type = "sparkMax.param"
+      order = 80
+      param = "SENSOR_MAX"
+    [sparkMax.sensor.avgDepth]
+      type = "sparkMax.param"
+      order = 90
+      param = "SENSOR_AVG_DEPTH"
+    [sparkMax.sensor.cpr]
+      type = "sparkMax.param"
+      order = 100
+      param = "SENSOR_CPR"
+  [sparkMax.slot]
+    type = "menu"
+    order = 60
+    menu = "configure PID slots"
+    [sparkMax.slot.select]
+      type = "sparkMax.slot.select"
+      order = 5
+      menu = "active slot"
+      help = "the spark max supports up to 4 PIDF slots"
+    [sparkMax.slot.P]
+      type = "sparkMax.param"
+      order = 10
+      param = "SLOT_P"
+    [sparkMax.slot.I]
+      type = "sparkMax.param"
+      order = 20
+      param = "SLOT_I"
+    [sparkMax.slot.D]
+      type = "sparkMax.param"
+      order = 30
+      param = "SLOT_D"
+    [sparkMax.slot.FF]
+      type = "sparkMax.param"
+      order = 40
+      param = "SLOT_FF"
+    [sparkMax.slot.IZone]
+      type = "sparkMax.param"
+      order = 50
+      menu = "I Zone"
+      param = "SLOT_I_ZONE"
+    [sparkMax.slot.IMaxAccum]
+      type = "sparkMax.param"
+      order = 60
+      menu = "Maximum I Accumulator"
+      param = "SLOT_I_MAX_ACCUM"
+    [sparkMax.slot.DFilter]
+      type = "sparkMax.param"
+      order = 70
+      menu = "D Filter"
+      param = "SLOT_D_FILTER"
+    [sparkMax.slot.MotionMaxAccel]
+      type = "sparkMax.param"
+      order = 80
+      menu = "Smart Motion - MAX Acceleration"
+      param = "SLOT_MOTION_MAX_ACCEL"
+    [sparkMax.slot.MotionMaxVel]
+      type = "sparkMax.param"
+      order = 90
+      menu = "Smart Motion - MAX Velocity"
+      param = "SLOT_MOTION_MAX_VEL"
+    [sparkMax.slot.MotionMinVel]
+      type = "sparkMax.param"
+      order = 100
+      menu = "Smart Motion - MIN Velocity"
+      param = "SLOT_MOTION_MIN_VEL"
+    [sparkMax.slot.MotionAllowedError]
+      type = "sparkMax.param"
+      order = 110
+      menu = "Smart Motion - Allowed Closed-Loop Error"
+      param = "SLOT_MOTION_ALLOWED_ERROR"
+    [sparkMax.slot.OutputMax]
+      type = "sparkMax.param"
+      order = 120
+      menu = "MAX Output"
+      param = "SLOT_OUTPUT_MAX"
+    [sparkMax.slot.OutputMin]
+      type = "sparkMax.param"
+      order = 130
+      menu = "MIN Output"
+      param = "SLOT_OUTPUT_MIN"
+  [sparkMax.current]
+    type = "menu"
+    order = 70
+    menu = "configure current limits"
+    [sparkMax.current.SecondaryLimit]
+      type = "sparkMax.param"
+      order = 10
+      menu = "Secondary Current Limit (A)"
+      param = "SECONDARY_CURRENT_LIMIT"
+    [sparkMax.current.SecondaryCycles]
+      type = "sparkMax.param"
+      order = 20
+      menu = "Secondary Current Limit - Chop Cycles"
+      param = "SECONDARY_CURRENT_LIMIT_CHOP_CYCLES"
+    [sparkMax.current.SmartFree]
+      type = "sparkMax.param"
+      order = 30
+      menu = "Smart Current Limit - Free Limit"
+      param = "SMART_CURRENT_FREE_LIMIT"
+    [sparkMax.current.SmartStalled]
+      type = "sparkMax.param"
+      order = 40
+      menu = "Smart Current Limit - Stall Limit"
+      param = "SMART_CURRENT_STALL_LIMIT"
+    [sparkMax.current.SmartLimit]
+      type = "sparkMax.param"
+      order = 50
+      menu = "Smart Current Limit - Limit RPM"
+      param = "SMART_CURRENT_RPM_LIMIT"
+  [sparkMax.output]
+    type = "menu"
+    order = 80
+    menu = "configure motor output"
+     [sparkMax.output.IdleMode]
+       type = "sparkMax.idle"
+       order = 10
+       menu = "Idle Mode"
+       help = "mode of operation during idling: brake or coast"
+     [sparkMax.output.Inverted]
+       type = "sparkMax.param"
+       order = 20
+       menu = "output inverted"
+       param = "INVERTED"
+     [sparkMax.output.OpenLoopRamp]
+       type = "sparkMax.param"
+       order = 30
+       menu = "open-loop ramp rate"
+       param = "OPEN_LOOP_RAMP"
+     [sparkMax.output.ClosedLoopRamp]
+       type = "sparkMax.param"
+       order = 40
+       menu = "closed-loop ramp rate"
+       param = "CLOSED_LOOP_RAMP"
+     [sparkMax.output.VoltageCompEnable]
+       type = "sparkMax.param"
+       order = 50
+       menu = "enable voltage compensation"
+       param = "VOLTAGE_COMP_ENABLE"
+     [sparkMax.output.VoltageCompVoltage]
+       type = "sparkMax.param"
+       order = 60
+       menu = "voltage compensation nominal voltage"
+       param = "VOLTAGE_COMP_VOLTAGE"
+  [sparkMax.limit]
+    type = "menu"
+    order = 90
+    menu = "configure soft and hard limits"
+    [sparkMax.limit.fwdHardEnable]
+      type = "sparkMax.param"
+      order = 10
+      menu = "forward hard limit enable"
+      param = "FWD_HARD_LIMIT_EN"
+      forward = true
+    [sparkMax.limit.fwdHardNormal]
+      type = "sparkMax.limit.normal"
+      order = 20
+      menu = "forward hard limit normal"
+      help = "select whether the forward limit switch is normally open or normally closed"
+      forward = true
+    [sparkMax.limit.revHardEnable]
+      type = "sparkMax.param"
+      order = 30
+      menu = "reverse hard limit enable"
+      param = "REV_HARD_LIMIT_EN"
+      forward = false
+    [sparkMax.limit.revHardNormal]
+      type = "sparkMax.limit.normal"
+      order = 40
+      menu = "reverse hard limit normal"
+      help = "select whether the revere limit switch is normally open or normally closed"
+      forward = false
+    [sparkMax.limit.fwdSoftEnable]
+      type = "sparkMax.param"
+      order = 50
+      menu = "forward soft limit enable"
+      param = "FWD_SOFT_LIMIT_EN"
+      forward = true
+    [sparkMax.limit.fwdSoftLimit]
+      type = "sparkMax.param"
+      order = 60
+      menu = "forward soft limit"
+      param = "FWD_SOFT_LIMIT"
+      forward = true
+    [sparkMax.limit.revSoftEnable]
+      type = "sparkMax.param"
+      order = 70
+      menu = "reverse soft limit enable"
+      param = "REV_SOFT_LIMIT_EN"
+      forward = false
+    [sparkMax.limit.revSoftLimit]
+      type = "sparkMax.param"
+      order = 80
+      menu = "reverse soft limit"
+      param = "REV_SOFT_LIMIT"
+      forward = false
+  #[sparkMax.burnFlash]
+  #  type = "sparkMax.burnFlash"
+  #  order = 100
+  #  menu = "burn flash"
 
 
 [servo]
