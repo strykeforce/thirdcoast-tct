@@ -4,7 +4,7 @@ plugins {
     id "idea"
 }
 
-version = "19.3.0"
+version = "19.4.0"
 
 repositories {
     jcenter()
@@ -15,9 +15,9 @@ repositories {
 
 dependencies {
     // FRC libs
-    compile "edu.wpi.first.wpilibj:wpilibj-java:2019.1.1"
-    compile "edu.wpi.first.ntcore:ntcore-java:2019.1.1"
-    compile "edu.wpi.first.cscore:cscore-java:2019.1.1"
+    compile "edu.wpi.first.wpilibj:wpilibj-java:${wpi_version}"
+    compile "edu.wpi.first.ntcore:ntcore-java:${wpi_version}"
+    compile "edu.wpi.first.cscore:cscore-java:${wpi_version}"
     compile "edu.wpi.first.thirdparty.frc2019.opencv:opencv-java:3.4.4-4"
 
     // Vendor libs

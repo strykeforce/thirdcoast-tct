@@ -17,7 +17,6 @@ class CanifierPwmInputsCommand(
     private val canifierService: CanifierService by inject()
 
     override fun execute(): Command {
-        val writer = terminal.writer()
         canifierService.active.forEach { canifier ->
             val pulseWidthAndPeriod = DoubleArray(2)
             CANifier.PWMChannel.values().forEach { channel ->
