@@ -23,6 +23,6 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-/usr/local/frc/JRE/bin/java -Djava.library.path=/usr/local/frc/third-party/lib -jar /usr/local/lib/tct.jar 2> $log
+/usr/local/frc/JRE/bin/java -Djava.library.path=/usr/local/frc/third-party/lib -cp /usr/local/lib/tct.jar org.strykeforce.thirdcoast.Main 2> $log
 echo
 echo reboot roboRIO to restart robot code.
