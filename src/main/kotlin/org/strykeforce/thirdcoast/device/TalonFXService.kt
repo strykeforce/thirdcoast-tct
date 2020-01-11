@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.can.SlotConfiguration
 import com.ctre.phoenix.motorcontrol.can.TalonFX
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration
 import mu.KotlinLogging
-import org.strykeforce.thirdcoast.talon.TalonFXItem
 import org.strykeforce.thirdcoast.telemetry.TelemetryService
 import java.lang.IllegalStateException
 import kotlin.math.log
@@ -64,7 +63,7 @@ class TalonFXService(private val telemetryService: TelemetryService, factory: (i
             it.enableVoltageCompensation(voltageCompensation)
             it.setSensorPhase(sensorPhase)
             it.setInverted(OUTPUT_INVERTED_DEFAULT)
-            telemetryService.register(TalonFXItem(it))
+            telemetryService.register(it)
         }
         telemetryService.start()
         return new

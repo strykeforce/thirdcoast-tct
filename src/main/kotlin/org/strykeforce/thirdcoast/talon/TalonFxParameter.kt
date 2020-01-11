@@ -5,9 +5,9 @@ import org.strykeforce.thirdcoast.command.AbstractParameter
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.parseResource
 
-class TalonFXParameter(command: Command, toml: TomlTable, val enum: Enum) : AbstractParameter(command, toml) {
+class TalonFxParameter(command: Command, toml: TomlTable, val enum: fxEnum) : AbstractParameter(command, toml) {
 
-    enum class Enum{
+    enum class fxEnum{
         SLOT_P,
         SLOT_I,
         SLOT_D,
@@ -36,7 +36,10 @@ class TalonFXParameter(command: Command, toml: TomlTable, val enum: Enum) : Abst
         STATOR_CURRENT_LIMIT,
         STATOR_CURRENT_LIMIT_THRES_CURRENT,
         STATOR_CURRENT_LIMIT_THRES_TIME,
-        CURRENT_LIMIT_PEAK_DURATION,
+        SUPPLY_CURRENT_LIMIT_ENABLE,
+        SUPPLY_CURRENT_LIMIT,
+        SUPPLY_CURRENT_LIMIT_THRES_CURRENT,
+        SUPPLY_CURRENT_LIMIT_THRES_TIME,
         STATUS_GENERAL,
         STATUS_FEEDBACK0,
         STATUS_QUAD_ENCODER,
@@ -49,15 +52,16 @@ class TalonFXParameter(command: Command, toml: TomlTable, val enum: Enum) : Abst
         SOFT_LIMIT_THRESHOLD_FORWARD,
         SOFT_LIMIT_THRESHOLD_REVERSE,
         VELOCITY_MEASUREMENT_WINDOW,
+        INTEGRATED_SENSOR_OFFSET_DEGREES,
         FACTORY_DEFAULTS,
     }
 
     companion object {
         private val tomlTable by lazy { parseResource("/talonFx.toml") }
 
-        fun create(command: Command, param: String): TalonFXParameter {
+        fun create(command: Command, param: String): TalonFxParameter {
             val toml = tomlTable.getTable(param) ?: throw java.lang.IllegalArgumentException("missing param: $param")
-            return TalonFXParameter(command, toml, Enum.valueOf(param))
+            return TalonFxParameter(command, toml, fxEnum.valueOf(param))
         }
     }
 }
