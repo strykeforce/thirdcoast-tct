@@ -6,6 +6,7 @@ import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
+import org.strykeforce.thirdcoast.device.TalonFxService
 import org.strykeforce.thirdcoast.device.TalonService
 
 
@@ -21,11 +22,19 @@ class SelectControlModeCommand(
     listOf("Percent Output", "Motion Magic", "Velocity", "Position", "Follower")
 ) {
     private val talonService: TalonService by inject()
+    private val talonFxService: TalonFxService by inject()
 
-    override val activeIndex
-        get() = values.indexOf(talonService.controlMode)
+    val type = toml.getString(Command.DEVICE_KEY) ?: throw Exception("$key: ${Command.DEVICE_KEY} missing")
+
+    override val activeIndex: Int
+        get() {
+            if(type == "srx") return values.indexOf(talonService.controlMode)
+            else if(type == "fx") return values.indexOf(talonFxService.controlMode)
+            else throw IllegalArgumentException()
+        }
 
     override fun setActive(index: Int) {
-        talonService.controlMode = values[index]
+        if(type == "srx") talonService.controlMode = values[index]
+        else if(type == "fx") talonFxService.controlMode = values[index]
     }
 }

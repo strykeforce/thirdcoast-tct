@@ -6,6 +6,7 @@ import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
+import org.strykeforce.thirdcoast.device.TalonFxService
 import org.strykeforce.thirdcoast.device.TalonService
 
 class SelectVelocityMeasurmentPeriodCommand(
@@ -20,12 +21,23 @@ class SelectVelocityMeasurmentPeriodCommand(
     listOf("1 ms", "2 ms", "5 ms", "10 ms", "20 ms", "50 ms", "100 ms")
 ) {
     private val talonService: TalonService by inject()
-    override val activeIndex
-        get() = values.indexOf(talonService.activeConfiguration.velocityMeasurementPeriod)
+    private val talonFxService: TalonFxService by inject()
+    val type = toml.getString(Command.DEVICE_KEY) ?: throw Exception("$key: ${Command.DEVICE_KEY} missing")
+    override val activeIndex: Int
+        get() {
+            if(type == "srx") return values.indexOf(talonService.activeConfiguration.velocityMeasurementPeriod)
+            else if(type == "fx") return values.indexOf(talonFxService.activeConfiguration.velocityMeasurementPeriod)
+            else throw IllegalArgumentException()
+        }
 
     override fun setActive(index: Int) {
         val period = values[index]
-        talonService.active.forEach { it.configVelocityMeasurementPeriod(period, talonService.timeout) }
-        talonService.activeConfiguration.velocityMeasurementPeriod = period
+        if(type == "srx"){
+            talonService.active.forEach { it.configVelocityMeasurementPeriod(period, talonService.timeout) }
+            talonService.activeConfiguration.velocityMeasurementPeriod = period
+        }else if(type == "fx"){
+            talonFxService.active.forEach { it.configVelocityMeasurementPeriod(period, talonFxService.timeout) }
+            talonFxService.activeConfiguration.velocityMeasurementPeriod = period
+        }
     }
 }

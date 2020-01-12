@@ -3,6 +3,7 @@ package org.strykeforce.thirdcoast
 import com.ctre.phoenix.CANifier
 import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.NeutralMode
+import com.ctre.phoenix.motorcontrol.can.TalonFX
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
 import edu.wpi.first.wpilibj.DigitalOutput
@@ -34,6 +35,8 @@ val tctModule = module {
     single { TelemetryService(Function { inventory -> TelemetryController(inventory, get(), SERVER_PORT) }) }
 
     single { TalonService(get()) { id -> TalonSRX(id) } }
+    
+    single { TalonFxService(get()) { id -> TalonFX(id) } }
 
     single { ServoService { id -> Servo(id) } }
 

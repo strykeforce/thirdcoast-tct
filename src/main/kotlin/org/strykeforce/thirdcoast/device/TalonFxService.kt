@@ -21,7 +21,7 @@ private const val SENSOR_PHASE_INVERTED_DEFAULT = false
 private const val OUTPUT_INVERTED_DEFAULT = false
 
 
-class TalonFXService(private val telemetryService: TelemetryService, factory: (id:Int) -> TalonFX ):
+class TalonFxService(private val telemetryService: TelemetryService, factory: (id:Int) -> TalonFX ):
         AbstractDeviceService<TalonFX>(factory) {
 
     val timeout = 10

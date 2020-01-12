@@ -1,5 +1,6 @@
 package org.strykeforce.thirdcoast.talon
 
+import com.ctre.phoenix.motorcontrol.ControlMode
 import com.ctre.phoenix.motorcontrol.ControlMode.*
 import edu.wpi.first.wpilibj.Timer
 import mu.KotlinLogging
@@ -9,8 +10,10 @@ import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.prompt
+import org.strykeforce.thirdcoast.device.TalonFxService
 import org.strykeforce.thirdcoast.device.TalonService
 import org.strykeforce.thirdcoast.warn
+import java.lang.IllegalArgumentException
 
 private val logger = KotlinLogging.logger {}
 
@@ -20,7 +23,11 @@ class RunTalonsCommand(
     toml: TomlTable
 ) : AbstractCommand(parent, key, toml) {
 
+    val type = toml.getString(Command.DEVICE_KEY) ?: throw Exception("$key: ${Command.DEVICE_KEY} missing")
+
     private val talonService: TalonService by inject()
+    private val talonFxService: TalonFxService by inject()
+
 
     override fun execute(): Command {
         var done = false
@@ -32,7 +39,12 @@ class RunTalonsCommand(
                 val setpoints = line.split(',')
                 val setpoint = setpoints[0].toDouble()
                 val duration = if (setpoints.size > 1) setpoints[1].toDouble() else 0.0
-                val mode = talonService.controlMode
+                val mode: ControlMode
+                if (type == "srx") {
+                    mode = talonService.controlMode
+                } else if (type == "fx") {
+                    mode = talonFxService.controlMode
+                } else throw IllegalArgumentException()
 
                 // sanity checks
                 if (mode == PercentOutput && !(-1.0..1.0).contains(setpoint)) {
@@ -46,13 +58,23 @@ class RunTalonsCommand(
                 }
 
                 // run the talons
-                talonService.active.forEach { it.set(mode, setpoint) }
+                if (type == "srx"){
+                    talonService.active.forEach { it.set(mode, setpoint) }
+                } else if(type == "fx"){
+                    talonFxService.active.forEach { it.set(mode, setpoint) }
+                }
+
 
                 if (duration > 0.0) {
                     logger.debug { "run duration = $duration seconds" }
                     Timer.delay(duration)
                     logger.debug { "run duration expired, setting output = 0.0" }
-                    talonService.active.forEach { it.set(mode, 0.0) }
+                    if(type == "srx"){
+                        talonService.active.forEach { it.set(mode, 0.0) }
+                    } else if(type == "fx"){
+                        talonFxService.active.forEach { it.set(mode, 0.0) }
+                    }
+
                 }
             } catch (e: Exception) {
                 done = true

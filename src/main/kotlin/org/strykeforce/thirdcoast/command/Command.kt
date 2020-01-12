@@ -1,5 +1,6 @@
 package org.strykeforce.thirdcoast.command
 
+import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
@@ -20,7 +21,7 @@ import org.strykeforce.thirdcoast.swerve.SelectAzimuthCommand
 import org.strykeforce.thirdcoast.swerve.SetAzimuthCommand
 import org.strykeforce.thirdcoast.talon.*
 
-//private val logger = KotlinLogging.logger {}
+private val logger = KotlinLogging.logger {}
 
 interface Command {
     val key: String
@@ -34,10 +35,12 @@ interface Command {
         const val MENU_KEY = "menu"
         const val TYPE_KEY = "type"
         const val ORDER_KEY = "order"
+        const val DEVICE_KEY = "device"
 
         fun createFromToml(toml: TomlTable, parent: MenuCommand? = null, key: String = "ROOT"): Command {
 
             val type = toml.getString(TYPE_KEY) ?: throw Exception("$key: $TYPE_KEY missing")
+            logger.info { "type: $type, key: $key" }
 
             return when (type) {
                 "menu" -> createMenuCommand(parent, key, toml)
@@ -54,6 +57,9 @@ interface Command {
                 "talon.hard.source" -> SelectHardLimitSourceCommand(parent, key, toml)
                 "talon.hard.normal" -> SelectHardLimitNormalCommand(parent, key, toml)
                 "talon.velocity.period" -> SelectVelocityMeasurmentPeriodCommand(parent, key, toml)
+                "talon.commutation" -> SelectMotorCommutationCommand(parent, key, toml)
+                "talon.absoluteRange" -> SelectAbsoluteSensorRange(parent, key, toml)
+                "talon.initStrategy" -> SelectInitializationStrategy(parent, key, toml)
                 "servo.select" -> SelectServosCommand(parent, key, toml)
                 "servo.run" -> RunServosCommand(parent, key, toml)
                 "solenoid.select" -> SelectSolenoidsCommand(parent, key, toml)
@@ -81,6 +87,7 @@ interface Command {
                 .forEach { k ->
                     val child = createFromToml(toml.getTable(k)!!, command, k)
                     command.children.add(child)
+                    logger.info { "Create Menu: $k, ${command.validMenuChoices}" }
                 }
             return command
         }

@@ -1,14 +1,18 @@
 package org.strykeforce.thirdcoast.talon
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal.*
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource.*
+import com.ctre.phoenix.motorcontrol.can.BaseTalon
+import com.ctre.phoenix.motorcontrol.can.BaseTalonConfiguration
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
+import org.strykeforce.thirdcoast.device.TalonFxService
 import org.strykeforce.thirdcoast.device.TalonService
 
 private val logger = KotlinLogging.logger {}
@@ -26,31 +30,50 @@ class SelectHardLimitSourceCommand(
 ) {
 
     private val talonService: TalonService by inject()
+    private val talonFxService: TalonFxService by inject()
+
+    val type = toml.getString(Command.DEVICE_KEY) ?: throw Exception("$key: ${Command.DEVICE_KEY} missing")
     val isForward = toml.getBoolean("forward") ?: true
 
     val activeSource
         get() = values[activeIndex]
 
 
-    override val activeIndex
-        get() = values.indexOf(
-            if (isForward)
-                talonService.activeConfiguration.forwardLimitSwitchSource
-            else
-                talonService.activeConfiguration.reverseLimitSwitchSource
-        )
+    override val activeIndex: Int
+        get() {
+            var config: BaseTalonConfiguration
+            if(type == "srx") config = talonService.activeConfiguration
+            else if(type == "fx") config = talonFxService.activeConfiguration
+            else throw IllegalArgumentException()
+            return values.indexOf(
+                    if (isForward)
+                        config.forwardLimitSwitchSource
+                    else
+                        config.reverseLimitSwitchSource
+            )
+        }
 
     override fun setActive(index: Int) {
-        val active = talonService.active
+        var active: Set<BaseTalon>
+        var config: BaseTalonConfiguration
+        if(type == "srx") {
+            active = talonService.active
+            config = talonService.activeConfiguration
+        }
+        else if(type == "fx") {
+            active = talonFxService.active
+            config = talonFxService.activeConfiguration
+        }
+        else throw IllegalArgumentException()
         val source = values[index]
         val normal = getNormal()
         if (isForward) {
             active.forEach { it.configForwardLimitSwitchSource(source, normal) }
-            talonService.activeConfiguration.forwardLimitSwitchSource = source
+            config.forwardLimitSwitchSource = source
             logger.info { "set forward hard limit to $source, $normal" }
         } else {
             active.forEach { it.configReverseLimitSwitchSource(source, normal) }
-            talonService.activeConfiguration.reverseLimitSwitchSource = source
+            config.reverseLimitSwitchSource = source
             logger.info { "set reverse hard limit to $source, $normal" }
         }
     }
@@ -78,30 +101,46 @@ class SelectHardLimitNormalCommand(
 ) {
 
     private val talonService: TalonService by inject()
+    private val talonFxService: TalonFxService by inject()
+    val type = toml.getString(Command.DEVICE_KEY) ?: throw Exception("$key: ${Command.DEVICE_KEY} missing")
     val isForward = toml.getBoolean("forward") ?: true
+
+    var activeConfig = BaseTalonConfiguration(FeedbackDevice.CTRE_MagEncoder_Relative)
 
     val activeNormal
         get() = values[activeIndex]
 
-    override val activeIndex
-        get() = values.indexOf(
-            if (isForward)
-                talonService.activeConfiguration.forwardLimitSwitchNormal
-            else
-                talonService.activeConfiguration.reverseLimitSwitchNormal
-        )
+    override val activeIndex: Int
+        get() {
+            if(type == "srx") activeConfig = talonService.activeConfiguration
+            else if(type == "fx") activeConfig = talonFxService.activeConfiguration
+            else throw IllegalArgumentException()
+            return values.indexOf(
+                    if (isForward)
+                        activeConfig.forwardLimitSwitchNormal
+                    else
+                        activeConfig.reverseLimitSwitchNormal
+            )
+        }
 
     override fun setActive(index: Int) {
-        val active = talonService.active
+        val active: Set<BaseTalon>
+        if(type == "srx"){
+            activeConfig = talonService.activeConfiguration
+            active = talonService.active
+        } else if(type == "fx"){
+            activeConfig = talonFxService.activeConfiguration
+            active = talonFxService.active
+        } else throw IllegalArgumentException()
         val source = getSource()
         val normal = values[index]
         if (isForward) {
             active.forEach { it.configForwardLimitSwitchSource(source, normal) }
-            talonService.activeConfiguration.forwardLimitSwitchNormal = normal
+            activeConfig.forwardLimitSwitchNormal = normal
             logger.info { "set forward hard limit to $source, $normal" }
         } else {
             active.forEach { it.configReverseLimitSwitchSource(source, normal) }
-            talonService.activeConfiguration.reverseLimitSwitchNormal = normal
+            activeConfig.reverseLimitSwitchNormal = normal
             logger.info { "set reverse hard limit to $source, $normal" }
         }
     }

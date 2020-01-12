@@ -29,6 +29,39 @@
   name = "Peak Current Limit Duration"
   type = "INTEGER"
   help = "Sets how long (msec) to allow current-draw past peak limit."
+ [STATOR_CURRENT_LIMIT_ENABLE]
+  name = "Stator Current Limit Enable"
+  type = "BOOLEAN"
+  help = "Enable or disable stator current limit"
+ [STATOR_CURRENT_LIMIT]
+  name = "Stator Current Limit (A)"
+  type = "DOUBLE"
+  help = "Current in Amperes that the output is limited to when the threshold current and time have been reached. If threshold current is < this value, this value is used as the threshold current"
+ [STATOR_CURRENT_LIMIT_THRES_CURRENT]
+  name = "Stator Current: Trigger Current (A)"
+  type = "DOUBLE"
+  help = "Current must exceed this threshold before limiting occurs. If this number is less than the current limit that number is used"
+ [STATOR_CURRENT_LIMIT_THRES_TIME]
+  name = "Stator Current: Trigger Time (s)"
+  type = "DOUBLE"
+  help = "Current must exceed the trigger threshold for this long before limiting occurs"
+ [SUPPLY_CURRENT_LIMIT_ENABLE]
+  name = "Supply Current Limit Enable"
+  type = "BOOLEAN"
+  help = "Enable or disable the supply current limit"
+ [SUPPLY_CURRENT_LIMIT]
+  name = "Supply Current Limit (A)"
+  type = "DOUBLE"
+  help = "Current in Amperes that the output is limited to when the threshold current and time have been reached. If threshold current is < this value, this value is used as the threshold current"
+ [SUPPLY_CURRENT_LIMIT_THRES_CURRENT]
+  name = "Supply Current: Trigger Current (A)"
+  type = "DOUBLE"
+  help = "Current must exceed this threshold before limiting occurs. If this number is less than the current limit that number is used"
+ [SUPPLY_CURRENT_LIMIT_THRES_TIME]
+  name = "Supply Current: Trigger Time (s)"
+  type = "DOUBLE"
+  help = "Current must exceed the trigger threshold for this long before limiting occurs"
+
 
 #
 # motor output
@@ -164,6 +197,10 @@
   name = "Sensor Position"
   type = "INTEGER"
   help = "Sets the position of the sensor to the given value (in raw sensor units)."
+[INTEGRATED_SENSOR_OFFSET_DEGREES]
+ name = "Integrated Sensor Offset (degrees)"
+ type = "DOUBLE"
+ help = "Adjust zero point for the integrated sensor absolute position register. Absolute sensor is either 0-360 or -180-180 range and a hard limited mechanism may have a discontinuity in its functional range, this can move the zero such that there is no discontinuity in the functional range"
 
 #
 # soft limits
