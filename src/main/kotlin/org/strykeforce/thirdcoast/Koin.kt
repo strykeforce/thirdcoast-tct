@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode
 import com.ctre.phoenix.motorcontrol.can.TalonFX
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
+import com.ctre.phoenix.sensors.PigeonIMU
 import edu.wpi.first.wpilibj.DigitalOutput
 import edu.wpi.first.wpilibj.Servo
 import edu.wpi.first.wpilibj.Solenoid
@@ -45,6 +46,8 @@ val tctModule = module {
     single { DigitalOutputService { id -> DigitalOutput(id) } }
 
     single { CanifierService(get()) { id -> CANifier(id) } }
+
+    single { PigeonService(get()) { id -> PigeonIMU(id) } }
 
     single { (command: Command) -> Shell(command, get()) }
 

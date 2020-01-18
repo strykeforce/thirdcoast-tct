@@ -11,6 +11,8 @@ import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.canifier.*
 import org.strykeforce.thirdcoast.dio.RunDigitalOutputsCommand
 import org.strykeforce.thirdcoast.dio.SelectDigitalOutputsCommand
+import org.strykeforce.thirdcoast.gyro.PigeonParameterCommand
+import org.strykeforce.thirdcoast.gyro.SelectPigeonCommand
 import org.strykeforce.thirdcoast.servo.RunServosCommand
 import org.strykeforce.thirdcoast.servo.SelectServosCommand
 import org.strykeforce.thirdcoast.solenoid.RunSolenoidsCommand
@@ -77,6 +79,8 @@ interface Command {
                 "swerve.azimuth.save" -> SaveZeroCommand(parent, key, toml)
                 "swerve.azimuth.select" -> SelectAzimuthCommand(parent, key, toml)
                 "swerve.azimuth.adjust" -> AdjustAzimuthCommand(parent, key, toml)
+                "pigeon.select" -> SelectPigeonCommand(parent, key, toml)
+                "pigeon.param" -> PigeonParameterCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
             }
         }

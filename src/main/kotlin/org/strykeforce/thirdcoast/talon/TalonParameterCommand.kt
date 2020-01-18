@@ -114,6 +114,13 @@ class TalonParameterCommand(
                 STATUS_PULSE_WIDTH -> formatMenu(defaultFor(Status_8_PulseWidth))
                 STATUS_MOTION -> formatMenu(defaultFor(Status_10_MotionMagic))
                 STATUS_PIDF0 -> formatMenu(defaultFor(Status_13_Base_PIDF0))
+                STATUS_MISC -> formatMenu(defaultFor(Status_6_Misc))
+                STATUS_COMM -> formatMenu(defaultFor(Status_7_CommStatus))
+                STATUS_MOTION_BUFF -> formatMenu(defaultFor(Status_9_MotProfBuffer))
+                STATUS_FEEDBACK1 -> formatMenu(defaultFor(Status_12_Feedback1))
+                STATUS_PIDF1 -> formatMenu(defaultFor(Status_14_Turn_PIDF1))
+                STATUS_FIRMWARE_API -> formatMenu(defaultFor(Status_15_FirmwareApiStatus))
+                STATUS_UART_GADGETEER -> formatMenu(defaultFor(Status_11_UartGadgeteer))
                 SOFT_LIMIT_ENABLE_FORWARD -> formatMenu(baseConfig.forwardSoftLimitEnable)
                 SOFT_LIMIT_ENABLE_REVERSE -> formatMenu(baseConfig.reverseSoftLimitEnable)
                 SOFT_LIMIT_THRESHOLD_FORWARD -> formatMenu(baseConfig.forwardSoftLimitThreshold)
@@ -349,6 +356,27 @@ class TalonParameterCommand(
             }
             STATUS_PIDF0 -> configIntParam(defaultFor(Status_13_Base_PIDF0)) { baseTalon, value ->
                 baseTalon.setStatusFramePeriod(Status_13_Base_PIDF0, value, timeout)
+            }
+            STATUS_MISC -> configIntParam(defaultFor(Status_6_Misc)){ baseTalon, value ->
+                baseTalon.setStatusFramePeriod(Status_6_Misc, value, timeout)
+            }
+            STATUS_COMM -> configIntParam(defaultFor(Status_7_CommStatus)){ baseTalon, value ->
+                baseTalon.setStatusFramePeriod(Status_7_CommStatus, value, timeout)
+            }
+            STATUS_MOTION_BUFF -> configIntParam(defaultFor(Status_9_MotProfBuffer)){ baseTalon, value ->
+                baseTalon.setStatusFramePeriod(Status_9_MotProfBuffer, value, timeout)
+            }
+            STATUS_FEEDBACK1 -> configIntParam(defaultFor(Status_12_Feedback1)){ baseTalon, value ->
+                baseTalon.setStatusFramePeriod(Status_12_Feedback1, value, timeout)
+            }
+            STATUS_PIDF1 -> configIntParam(defaultFor(Status_14_Turn_PIDF1)){ baseTalon, value ->
+                baseTalon.setStatusFramePeriod(Status_14_Turn_PIDF1, value, timeout)
+            }
+            STATUS_FIRMWARE_API -> configIntParam(defaultFor(Status_15_FirmwareApiStatus)){ baseTalon, value ->
+                baseTalon.setStatusFramePeriod(Status_15_FirmwareApiStatus, value, timeout)
+            }
+            STATUS_UART_GADGETEER -> configIntParam(defaultFor(Status_11_UartGadgeteer)){ baseTalon, value ->
+                baseTalon.setStatusFramePeriod(Status_11_UartGadgeteer, value, timeout)
             }
             SOFT_LIMIT_ENABLE_FORWARD -> configBooleanParam(config.forwardSoftLimitEnable) { baseTalon, value ->
                 baseTalon.configForwardSoftLimitEnable(value, timeout)

@@ -260,3 +260,38 @@
   type = "INTEGER"
   range = [5.0, 160.0]
   help = "Sets the PIDF 0 status frame. This frame has a default period of 160ms and provides closed-loop error, integral accumulator and error derivative."
+[STATUS_MISC]
+  name = "Miscellaneous signal Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the status frame for miscellaneous signals."
+[STATUS_COMM]
+  name = "Communication Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the status frame for communication status"
+[STATUS_MOTION_BUFF]
+  name = "Motion Profile Buffer Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the status frame for the motion profile buffer status"
+[STATUS_FEEDBACK1]
+  name = "Feedback 1 Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "sets Feedback 1 status frame. This frame has a default period of >100ms and provides selected sensor velocity and selected sensor position."
+[STATUS_PIDF1]
+  name = "Auxiliary PID Status Frame"
+  type = "INTEGER"
+  range = [5.0, 250.0]
+  help = "sets Aux PIDF 1 status frame. This frame has a default period of >100ms and provides auxiliary PD information."
+[STATUS_FIRMWARE_API]
+  name = "Firmware and API Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the status frame for the firmware and api"
+[STATUS_UART_GADGETEER]
+  name = "Gadgeteer Status Frame"
+  type = "INTEGER"
+  range = [5.0, 250.0]
+  help = "Sets teh status frame for the gadgeteer port"
