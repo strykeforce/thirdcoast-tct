@@ -1,5 +1,6 @@
 package org.strykeforce.thirdcoast.command
 
+import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
@@ -10,6 +11,8 @@ import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.canifier.*
 import org.strykeforce.thirdcoast.dio.RunDigitalOutputsCommand
 import org.strykeforce.thirdcoast.dio.SelectDigitalOutputsCommand
+import org.strykeforce.thirdcoast.gyro.PigeonParameterCommand
+import org.strykeforce.thirdcoast.gyro.SelectPigeonCommand
 import org.strykeforce.thirdcoast.servo.RunServosCommand
 import org.strykeforce.thirdcoast.servo.SelectServosCommand
 import org.strykeforce.thirdcoast.solenoid.RunSolenoidsCommand
@@ -20,7 +23,7 @@ import org.strykeforce.thirdcoast.swerve.SelectAzimuthCommand
 import org.strykeforce.thirdcoast.swerve.SetAzimuthCommand
 import org.strykeforce.thirdcoast.talon.*
 
-//private val logger = KotlinLogging.logger {}
+private val logger = KotlinLogging.logger {}
 
 interface Command {
     val key: String
@@ -34,10 +37,12 @@ interface Command {
         const val MENU_KEY = "menu"
         const val TYPE_KEY = "type"
         const val ORDER_KEY = "order"
+        const val DEVICE_KEY = "device"
 
         fun createFromToml(toml: TomlTable, parent: MenuCommand? = null, key: String = "ROOT"): Command {
 
             val type = toml.getString(TYPE_KEY) ?: throw Exception("$key: $TYPE_KEY missing")
+            logger.info { "type: $type, key: $key" }
 
             return when (type) {
                 "menu" -> createMenuCommand(parent, key, toml)
@@ -54,6 +59,9 @@ interface Command {
                 "talon.hard.source" -> SelectHardLimitSourceCommand(parent, key, toml)
                 "talon.hard.normal" -> SelectHardLimitNormalCommand(parent, key, toml)
                 "talon.velocity.period" -> SelectVelocityMeasurmentPeriodCommand(parent, key, toml)
+                "talon.commutation" -> SelectMotorCommutationCommand(parent, key, toml)
+                "talon.absoluteRange" -> SelectAbsoluteSensorRange(parent, key, toml)
+                "talon.initStrategy" -> SelectInitializationStrategy(parent, key, toml)
                 "servo.select" -> SelectServosCommand(parent, key, toml)
                 "servo.run" -> RunServosCommand(parent, key, toml)
                 "solenoid.select" -> SelectSolenoidsCommand(parent, key, toml)
@@ -71,6 +79,8 @@ interface Command {
                 "swerve.azimuth.save" -> SaveZeroCommand(parent, key, toml)
                 "swerve.azimuth.select" -> SelectAzimuthCommand(parent, key, toml)
                 "swerve.azimuth.adjust" -> AdjustAzimuthCommand(parent, key, toml)
+                "pigeon.select" -> SelectPigeonCommand(parent, key, toml)
+                "pigeon.param" -> PigeonParameterCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
             }
         }
@@ -81,6 +91,7 @@ interface Command {
                 .forEach { k ->
                     val child = createFromToml(toml.getTable(k)!!, command, k)
                     command.children.add(child)
+                    logger.info { "Create Menu: $k, ${command.validMenuChoices}" }
                 }
             return command
         }

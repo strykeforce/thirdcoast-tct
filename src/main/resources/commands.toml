@@ -2,39 +2,46 @@ type = "menu"
 [talon]
   type = "menu"
   order = 10
-  menu = "work with talons"
+  menu = "work with talonSRXs"
   [talon.run]
     type = "talon.run"
     order = 5
     menu = "run active talons"
+    device = "srx"
   [talon.select]
     type = "talon.select"
     order = 10
     menu = "active talons"
+    device = "srx"
   [talon.status]
     type = "talon.status"
     order = 12
     menu = "status of active talons"
+    device = "srx"
   [talon.mode]
     type = "talon.mode"
     order = 15
     menu = "control mode"
+    device = "srx"
     help = "The output mode to apply. In PercentOutput, the output is between -1.0 and 1.0, with 0.0 as stopped. In Current mode, output value is in amperes. In Velocity mode, output value is in position change / 100ms. In Position mode, output value is in encoder ticks or an analog value, depending on the sensor. In Follower mode, the output value is the integer device ID of the talon to duplicate."
   [talon.sensor]
     type = "menu"
     order = 17
     menu = "configure feedback sensors"
+    device = "srx"
     [talon.sensor.primary]
       type = "talon.sensor"
       order = 10
       menu = "primary closed-loop sensor"
       pid = 0
+      device = "srx"
       help = "Sensors for motor controllers provide feedback about the position, velocity, and acceleration of the system using that motor controller."
     [talon.sensor.auxiliary]
       type = "talon.sensor"
       order = 20
       menu = "auxiliary closed-loop sensor"
       pid = 1
+      device = "srx"
       help = "Sensors for motor controllers provide feedback about the position, velocity, and acceleration of the system using that motor controller."
     [talon.sensor.primary_position]
       type = "talon.sensor.position"
@@ -42,88 +49,106 @@ type = "menu"
       menu = "primary sensor feedback position"
       param = "SENSOR_POSITION"
       pid = 0
+      device = "srx"
     [talon.sensor.auxiliary_position]
       type = "talon.sensor.position"
       order = 40
       menu = "auxiliary sensor feedback position"
       param = "SENSOR_POSITION"
       pid = 1
+      device = "srx"
     [talon.sensor.primary_coefficient]
       type = "talon.sensor.coefficient"
       order = 50
       menu = "primary sensor feedback coefficient"
       param = "FEEDBACK_COEFFICIENT"
       pid = 0
+      device = "srx"
     [talon.sensor.auxiliary_coefficient]
       type = "talon.sensor.coefficient"
       order = 60
       menu = "auxiliary sensor feedback coefficient"
       param = "FEEDBACK_COEFFICIENT"
       pid = 1
+      device = "srx"
     [talon.sensor.phase]
       type = "talon.param"
       order = 70
       menu = "sensor phase reversed"
       param = "SENSOR_PHASE"
+      device = "srx"
   [talon.slot]
     type = "menu"
     order = 20
     menu = "configure PID slots"
+    device = "srx"
     [talon.slot.select]
       type = "talon.slot.select"
       order = 10
       menu = "active slot"
+      device = "srx"
       help = "The Talon SRX supports up to 4 PIDF Slots, each with a unique set of gains that are stored persistently across power cycles. "
     [talon.slot.P]
       type ="talon.param"
       order = 20
       param = "SLOT_P"
+      device = "srx"
     [talon.slot.I]
       type ="talon.param"
       order = 30
       param = "SLOT_I"
+      device = "srx"
     [talon.slot.D]
       type ="talon.param"
       order = 40
       param = "SLOT_D"
+      device = "srx"
     [talon.slot.F]
       type ="talon.param"
       order = 50
       param = "SLOT_F"
+      device = "srx"
     [talon.slot.IZone]
       type ="talon.param"
       menu = "I Zone"
       order = 60
       param = "SLOT_I_ZONE"
+      device = "srx"
     [talon.slot.AllowableErr]
       type ="talon.param"
       menu = "Allowable Error"
       order = 70
       param = "SLOT_ALLOWABLE_ERR"
+      device = "srx"
     [talon.slot.MaxIAccum]
       type ="talon.param"
       menu = "Max I Accum"
       order = 80
       param = "SLOT_MAX_I_ACCUM"
+      device = "srx"
     [talon.slot.PeakOutput]
       type ="talon.param"
       menu = "Peak output"
       order = 90
       param = "SLOT_PEAK_OUTPUT"
+      device = "srx"
   [talon.motion_magic]
     type = "menu"
     order = 22
     menu = "configure motion magic"
+    device = "srx"
     [talon.motion_magic.cruise_velocity]
       type = "talon.param"
       order = 10
       menu = "motion magic cruise velocity"
       param = "MOTION_CRUISE_VELOCITY"
+      device = "srx"
     [talon.motion_magic.acceleration]
       type = "talon.param"
       order = 20
       menu = "motion magic acceleration"
       param = "MOTION_ACCELERATION"
+      device = "srx"
   [talon.current]
     type = "menu"
     order = 23
@@ -133,21 +158,51 @@ type = "menu"
       order = 10
       menu = "current limit enabled"
       param = "CURRENT_LIMIT_ENABLE"
+      device = "srx"
     [talon.current.continuous]
       type = "talon.param"
       order = 20
       menu = "continuous current limit"
       param = "CURRENT_LIMIT_CONT"
+      device = "srx"
     [talon.current.peak]
       type = "talon.param"
       order = 30
       menu = "peak current limit"
       param = "CURRENT_LIMIT_PEAK"
+      device = "srx"
     [talon.current.peak_duration]
       type = "talon.param"
       order = 40
       menu = "peak current limit duration"
       param = "CURRENT_LIMIT_PEAK_DURATION"
+      device = "srx"
+    [talon.current.supply_enabled]
+      type = "talon.param"
+      order = 50
+      menu = "supply current: limit enabled"
+      param = "SUPPLY_CURRENT_LIMIT_ENABLE"
+      device = "srx"
+    [talon.current.supply_limit]
+      type = "talon.param"
+      order = 60
+      menu = "supply current: current limit (A)"
+      param = "SUPPLY_CURRENT_LIMIT"
+      device = "srx"
+    [talon.current.supply_triggerCurrent]
+      type = "talon.param"
+      order = 70
+      menu = "supply current: trigger current (A)"
+      param = "SUPPLY_CURRENT_LIMIT_THRES_CURRENT"
+      device = "srx"
+      help = "current must exceed this threshold before limiting occurs. If this number is less than currentLimit, currentLimit is used as the threshold"
+    [talon.current.supply_triggerTime]
+      type = "talon.param"
+      order = 80
+      menu = "supply current: trigger time (s)"
+      param = "SUPPLY_CURRENT_LIMIT_THRES_TIME"
+      device = "srx"
+      help = "current must exceed the threshold for this long before limiting occurs"
   [talon.output]
     type = "menu"
     order = 25
@@ -157,46 +212,55 @@ type = "menu"
       order = 10
       menu = "brake mode"
       help = "Mode of operation during Neutral output, brake or coast."
+      device = "srx"
     [talon.output.reversed]
       type = "talon.param"
       order = 20
       menu = "motor output reversed"
       param = "OUTPUT_REVERSED"
+      device = "srx"
     [talon.output.open-loop_ramp]
       type = "talon.param"
       order = 30
       menu = "open-loop ramp rate"
       param = "OPEN_LOOP_RAMP"
+      device = "srx"
     [talon.output.closed-loop_ramp]
       type = "talon.param"
       order = 40
       menu = "closed-loop ramp rate"
       param = "CLOSED_LOOP_RAMP"
+      device = "srx"
     [talon.output.forward_peak_output]
       type = "talon.param"
       order = 50
       menu = "forward peak output"
       param = "PEAK_OUTPUT_FORWARD"
+      device = "srx"
     [talon.output.reverse_peak_output]
       type = "talon.param"
       order = 60
       menu = "reverse peak output"
       param = "PEAK_OUTPUT_REVERSE"
+      device = "srx"
     [talon.output.forward_nominal_output]
       type = "talon.param"
       order = 70
       menu = "forward nominal output"
       param = "NOMINAL_OUTPUT_FORWARD"
+      device = "srx"
     [talon.output.reverse_nominal_output]
       type = "talon.param"
       order = 80
       menu = "reverse nominal output"
       param = "NOMINAL_OUTPUT_REVERSE"
+      device = "srx"
     [talon.output.neutral_deadband]
       type = "talon.param"
       order = 90
       menu = "neutral deadband"
       param = "NEUTRAL_DEADBAND"
+      device = "srx"
   [talon.velocity_measurement]
     type = "menu"
     order = 26
@@ -205,11 +269,13 @@ type = "menu"
       type = "talon.velocity.period"
       order = 10
       menu = "velocity measurement period"
+      device = "srx"
     [talon.velocity_measurement.window]
       type = "talon.param"
       order = 20
       menu = "velocity measurement window"
       param = "VELOCITY_MEASUREMENT_WINDOW"
+      device = "srx"
   [talon.voltage_compensation]
     type = "menu"
     order = 27
@@ -219,16 +285,19 @@ type = "menu"
       order = 10
       menu = "voltage compensation enabled"
       param = "VOLTAGE_COMP_ENABLE"
+      device = "srx"
     [talon.voltage_compensation.saturation_voltage]
       type = "talon.param"
       order = 20
       menu = "voltage compensation saturation voltage"
       param = "VOLTAGE_COMP_SATURATION"
+      device = "srx"
     [talon.voltage_compensation.filter]
       type = "talon.param"
       order = 30
       menu = "voltage compensation measurement filter"
       param = "VOLTAGE_MEASUREMENT_FILTER"
+      device = "srx"
   [talon.frame]
     type = "menu"
     order = 60
@@ -237,41 +306,91 @@ type = "menu"
       type = "default"
       order = 10
       menu = "set grapher defaults"
+      device = "srx"
     [talon.frame.general]
       type = "talon.param"
       order = 20
       menu = "general status frame"
       param = "STATUS_GENERAL"
+      device = "srx"
     [talon.frame.feedback_0]
       type = "talon.param"
       order = 30
       menu = "feedback 0 status frame"
       param = "STATUS_FEEDBACK0"
+      device = "srx"
     [talon.frame.quad_encoder]
       type = "talon.param"
       order = 40
       menu = "quad encoder status frame"
       param = "STATUS_QUAD_ENCODER"
+      device = "srx"
     [talon.frame.ain_temp_vbat]
       type = "talon.param"
       order = 50
       menu = "ain/temp/vbat status frame"
       param = "STATUS_AIN_TEMP_VBAT"
+      device = "srx"
     [talon.frame.pulse_width]
       type = "talon.param"
       order = 60
       menu = "pulse width status frame"
       param = "STATUS_PULSE_WIDTH"
+      device = "srx"
     [talon.frame.motion]
       type = "talon.param"
       order = 70
       menu = "motion status frame"
       param = "STATUS_MOTION"
+      device = "srx"
     [talon.frame.pidf_0]
       type = "talon.param"
       order = 80
       menu = "PIDF 0 status frame"
       param = "STATUS_PIDF0"
+      device = "srx"
+    [talon.frame.misc]
+      type = "talon.param"
+      order = 90
+      menu = "Misc. status frame"
+      param = "STATUS_MISC"
+      device = "srx"
+    [talon.frame.comm]
+      type = "talon.param"
+      order = 100
+      menu = "Communication status frame"
+      param = "STATUS_COMM"
+      device = "srx"
+    [talon.frame.motionBuff]
+      type = "talon.param"
+      order = 110
+      menu = "Motion Profile Buffer status frame"
+      param = "STATUS_MOTION_BUFF"
+      device = "srx"
+    [talon.frame.feedback1]
+      type = "talon.param"
+      order = 120
+      menu = "Feedback1 status frame"
+      param = "STATUS_FEEDBACK1"
+      device = "srx"
+    [talon.frame.pidf1]
+      type = "talon.param"
+      order = 130
+      menu = "PIDF1 status frame"
+      param = "STATUS_PIDF1"
+      device = "srx"
+    [talon.frame.firmware]
+      type = "talon.param"
+      order = 140
+      menu = "Firmware and API status frame"
+      param = "STATUS_FIRMWARE_API"
+      device = "srx"
+    [talon.frame.gadgeteer]
+      type = "talon.param"
+      order = 150
+      menu = "UART Gadgeteer status frame"
+      param = "STATUS_UART_GADGETEER"
+      device = "srx"
   [talon.limit]
     type = "menu"
     order = 70
@@ -281,45 +400,53 @@ type = "menu"
       order = 10
       forward = true
       menu = "forward hard limit source"
+      device = "srx"
       help = "Select a limit switch source from the feedback connector, remote Talon SRX, CANifier, or deactivate the feature."
     [talon.limit.forward_hard_normal]
       type = "talon.hard.normal"
       order = 20
       forward = true
       menu = "forward hard limit normal"
+      device = "srx"
       help = "Select whether this limit switch is normally open, normally closed, or disabled, which overrides the setting from the web-based configuration page."
     [talon.limit.reverse_hard_source]
       type = "talon.hard.source"
       order = 30
       forward = false
       menu = "reverse hard limit source"
+      device = "srx"
       help = "Select a limit switch source from the feedback connector, remote Talon SRX, CANifier, or deactivate the feature."
     [talon.limit.reverse_hard_normal]
       type = "talon.hard.normal"
       order = 40
       forward = false
       menu = "reverse hard limit normal"
+      device = "srx"
       help = "Select whether this limit switch is normally open, normally closed, or disabled, which overrides the setting from the web-based configuration page."
     [talon.limit.forward_soft_enabled]
       type = "talon.param"
       order = 50
       menu = "forward soft limit enabled"
       param = "SOFT_LIMIT_ENABLE_FORWARD"
+      device = "srx"
     [talon.limit.forward_soft_threshold]
       type = "talon.param"
       order = 60
       menu = "forward soft limit threshold"
       param = "SOFT_LIMIT_THRESHOLD_FORWARD"
+      device = "srx"
     [talon.limit.reverse_soft_enabled]
       type = "talon.param"
       order = 70
       menu = "reverse soft limit enabled"
       param = "SOFT_LIMIT_ENABLE_REVERSE"
+      device = "srx"
     [talon.limit.reverse_soft_threshold]
       type = "talon.param"
       order = 80
       menu = "reverse soft limit threshold"
       param = "SOFT_LIMIT_THRESHOLD_REVERSE"
+      device = "srx"
     # [talon.limit.forward_remote]
     #   type = "default"
     #   order = 90
@@ -333,6 +460,485 @@ type = "menu"
     order = 80
     menu = "configure factory defaults"
     param = "FACTORY_DEFAULTS"
+    device = "srx"
+
+[talonFx]
+  type = "menu"
+  order = 15
+  menu = "work with talonFXs"
+  [talonFx.run]
+    type = "talon.run"
+    order = 5
+    menu = "run active talonFXs"
+    device = "fx"
+  [talonFx.select]
+    type = "talon.select"
+    order = 10
+    menu = "active talonFXs"
+    device = "fx"
+  [talonFx.status]
+    type = "talon.status"
+    order = 12
+    menu = "status of active talonFXs"
+    device = "fx"
+  [talonFx.mode]
+    type = "talon.mode"
+    order = 15
+    menu = "control mode"
+    device = "fx"
+    help = "The output mode to apply. In PercentOutput, the output is between -1.0 and 1.0, with 0.0 as stopped. In Current mode, output value is in amperes. In Velocity mode, output value is in position change / 100ms. In Position mode, output value is in encoder ticks or an analog value, depending on the sensor. In Follower mode, the output value is the integer device ID of the talon to duplicate."
+  [talonFx.sensor]
+    type = "menu"
+    order = 17
+    menu = "configure feedback sensors"
+    device = "fx"
+    [talonFx.sensor.primary]
+      type = "talon.sensor"
+      order = 10
+      menu = "primary closed-loop sensor"
+      pid = 0
+      device = "fx"
+      help = "Sensors for motor controllers provide feedback about the position, velocity, and acceleration of the system using that motor controller."
+    [talonFx.sensor.auxiliary]
+      type = "talon.sensor"
+      order = 20
+      menu = "auxiliary closed-loop sensor"
+      pid = 1
+      device = "fx"
+      help = "Sensors for motor controllers provide feedback about the position, velocity, and acceleration of the system using that motor controller."
+    [talonFx.sensor.primary_position]
+      type = "talon.sensor.position"
+      order = 30
+      menu = "primary sensor feedback position"
+      param = "SENSOR_POSITION"
+      pid = 0
+      device = "fx"
+    [talonFx.sensor.auxiliary_position]
+      type = "talon.sensor.position"
+      order = 40
+      menu = "auxiliary sensor feedback position"
+      param = "SENSOR_POSITION"
+      pid = 1
+      device = "fx"
+    [talonFx.sensor.primary_coefficient]
+      type = "talon.sensor.coefficient"
+      order = 50
+      menu = "primary sensor feedback coefficient"
+      param = "FEEDBACK_COEFFICIENT"
+      pid = 0
+      device = "fx"
+    [talonFx.sensor.auxiliary_coefficient]
+      type = "talon.sensor.coefficient"
+      order = 60
+      menu = "auxiliary sensor feedback coefficient"
+      param = "FEEDBACK_COEFFICIENT"
+      pid = 1
+      device = "fx"
+    [talonFx.sensor.phase]
+      type = "talon.param"
+      order = 70
+      menu = "sensor phase reversed"
+      param = "SENSOR_PHASE"
+      device = "fx"
+    [talonFx.sensor.offset]
+      type = "talon.param"
+      order = 80
+      menu = "integrated sensor offset degrees"
+      param = "INTEGRATED_SENSOR_OFFSET_DEGREES"
+      device = "fx"
+    [talonFx.sensor.absolute_range]
+      type = "talon.absoluteRange"
+      order = 90
+      menu = "absolute sensor range"
+      device = "fx"
+    [talonFx.sensor.initialization_strategy]
+      type = "talon.initStrategy"
+      order = 100
+      menu = "integrated sensor initialization strategy"
+      device = "fx"
+  [talonFx.slot]
+    type = "menu"
+    order = 20
+    menu = "configure PID slots"
+    device = "fx"
+    [talonFx.slot.select]
+      type = "talon.slot.select"
+      order = 10
+      menu = "active slot"
+      device = "fx"
+      help = "The Talon FX supports up to 4 PIDF Slots, each with a unique set of gains that are stored persistently across power cycles. "
+    [talonFx.slot.P]
+      type ="talon.param"
+      order = 20
+      param = "SLOT_P"
+      device = "fx"
+    [talonFx.slot.I]
+      type ="talon.param"
+      order = 30
+      param = "SLOT_I"
+      device = "fx"
+    [talonFx.slot.D]
+      type ="talon.param"
+      order = 40
+      param = "SLOT_D"
+      device = "fx"
+    [talonFx.slot.F]
+      type ="talon.param"
+      order = 50
+      param = "SLOT_F"
+      device = "fx"
+    [talonFx.slot.IZone]
+      type ="talon.param"
+      menu = "I Zone"
+      order = 60
+      param = "SLOT_I_ZONE"
+      device = "fx"
+    [talonFx.slot.AllowableErr]
+      type ="talon.param"
+      menu = "Allowable Error"
+      order = 70
+      param = "SLOT_ALLOWABLE_ERR"
+      device = "fx"
+    [talonFx.slot.MaxIAccum]
+      type ="talon.param"
+      menu = "Max I Accum"
+      order = 80
+      param = "SLOT_MAX_I_ACCUM"
+      device = "fx"
+    [talonFx.slot.PeakOutput]
+      type = "talon.param"
+      menu = "Peak output"
+      order = 90
+      param = "SLOT_PEAK_OUTPUT"
+      device = "fx"
+  [talonFx.motion_magic]
+    type = "menu"
+    order = 22
+    menu = "configure motion magic"
+    device = "fx"
+    [talonFx.motion_magic.cruise_velocity]
+      type = "talon.param"
+      order = 10
+      menu = "motion magic cruise velocity"
+      param = "MOTION_CRUISE_VELOCITY"
+      device = "fx"
+    [talonFx.motion_magic.acceleration]
+      type = "talon.param"
+      order = 20
+      menu = "motion magic acceleration"
+      param = "MOTION_ACCELERATION"
+      device = "fx"
+  [talonFx.current]
+    type = "menu"
+    order = 23
+    menu = "configure current limits"
+    [talonFx.current.stator_enabled]
+      type = "talon.param"
+      order = 10
+      menu = "stator current: limit enabled"
+      param = "STATOR_CURRENT_LIMIT_ENABLE"
+      device = "fx"
+    [talonFx.current.stator_limit]
+      type = "talon.param"
+      order = 20
+      menu = "stator current: current limit (A)"
+      param = "STATOR_CURRENT_LIMIT"
+      device = "fx"
+    [talonFx.current.stator_triggerCurrent]
+      type = "talon.param"
+      order = 30
+      menu = "stator current: trigger current (A)"
+      param = "STATOR_CURRENT_LIMIT_THRES_CURRENT"
+      device = "fx"
+      help = "current must exceed this threshold before current limiting occurs. If this number is less than currentLimit than that limit is used as the threshold"
+    [talonFx.current.stator_triggerTime]
+      type = "talon.param"
+      order = 40
+      menu = "stator current: trigger time (s)"
+      param = "STATOR_CURRENT_LIMIT_THRES_TIME"
+      device = "fx"
+      help = "current must exceed the threshold for this long before limiting occurs"
+    [talonFx.current.supply_enabled]
+      type = "talon.param"
+      order = 50
+      menu = "supply current: limit enabled"
+      param = "SUPPLY_CURRENT_LIMIT_ENABLE"
+      device = "fx"
+    [talonFx.current.supply_limit]
+      type = "talon.param"
+      order = 60
+      menu = "supply current: current limit (A)"
+      param = "SUPPLY_CURRENT_LIMIT"
+      device = "fx"
+    [talonFx.current.supply_triggerCurrent]
+      type = "talon.param"
+      order = 70
+      menu = "supply current: trigger current (A)"
+      param = "SUPPLY_CURRENT_LIMIT_THRES_CURRENT"
+      device = "fx"
+      help = "current must exceed this threshold before limiting occurs. If this number is less than currentLimit, currentLimit is used as the threshold"
+    [talonFx.current.supply_triggerTime]
+      type = "talon.param"
+      order = 80
+      menu = "supply current: trigger time (s)"
+      param = "SUPPLY_CURRENT_LIMIT_THRES_TIME"
+      device = "fx"
+      help = "current must exceed the threshold for this long before limiting occurs"
+  [talonFx.output]
+    type = "menu"
+    order = 25
+    menu = "configure motor output"
+    [talonFx.output.brake]
+      type = "talon.brake"
+      order = 10
+      menu = "brake mode"
+      help = "Mode of operation during Neutral output, brake or coast."
+      device = "fx"
+    [talonFx.output.reversed]
+      type = "talon.param"
+      order = 20
+      menu = "motor output reversed"
+      param = "OUTPUT_REVERSED"
+      device = "fx"
+    [talonFx.output.open-loop_ramp]
+      type = "talon.param"
+      order = 30
+      menu = "open-loop ramp rate"
+      param = "OPEN_LOOP_RAMP"
+      device = "fx"
+    [talonFx.output.closed-loop_ramp]
+      type = "talon.param"
+      order = 40
+      menu = "closed-loop ramp rate"
+      param = "CLOSED_LOOP_RAMP"
+      device = "fx"
+    [talonFx.output.forward_peak_output]
+      type = "talon.param"
+      order = 50
+      menu = "forward peak output"
+      param = "PEAK_OUTPUT_FORWARD"
+      device = "fx"
+    [talonFx.output.reverse_peak_output]
+      type = "talon.param"
+      order = 60
+      menu = "reverse peak output"
+      param = "PEAK_OUTPUT_REVERSE"
+      device = "fx"
+    [talonFx.output.forward_nominal_output]
+      type = "talon.param"
+      order = 70
+      menu = "forward nominal output"
+      param = "NOMINAL_OUTPUT_FORWARD"
+      device = "fx"
+    [talonFx.output.reverse_nominal_output]
+      type = "talon.param"
+      order = 80
+      menu = "reverse nominal output"
+      param = "NOMINAL_OUTPUT_REVERSE"
+      device = "fx"
+    [talonFx.output.neutral_deadband]
+      type = "talon.param"
+      order = 90
+      menu = "neutral deadband"
+      param = "NEUTRAL_DEADBAND"
+      device = "fx"
+    [talonFx.output.motor_commutation]
+      type = "talon.commutation"
+      order = 100
+      menu = "motor commutation"
+      device = "fx"
+  [talonFx.velocity_measurement]
+    type = "menu"
+    order = 26
+    menu = "configure velocity measurement"
+    [talonFx.velocity_measurement.period]
+      type = "talon.velocity.period"
+     order = 10
+      menu = "velocity measurement period"
+      device = "fx"
+    [talonFx.velocity_measurement.window]
+      type = "talon.param"
+      order = 20
+      menu = "velocity measurement window"
+      param = "VELOCITY_MEASUREMENT_WINDOW"
+      device = "fx"
+  [talonFx.voltage_compensation]
+    type = "menu"
+    order = 27
+    menu = "configure voltage compensation"
+    [talonFx.voltage_compensation.enabled]
+      type = "talon.param"
+      order = 10
+      menu = "voltage compensation enabled"
+      param = "VOLTAGE_COMP_ENABLE"
+      device = "fx"
+    [talonFx.voltage_compensation.saturation_voltage]
+      type = "talon.param"
+      order = 20
+      menu = "voltage compensation saturation voltage"
+      param = "VOLTAGE_COMP_SATURATION"
+      device = "fx"
+    [talonFx.voltage_compensation.filter]
+      type = "talon.param"
+      order = 30
+      menu = "voltage compensation measurement filter"
+      param = "VOLTAGE_MEASUREMENT_FILTER"
+      device = "fx"
+  [talonFx.frame]
+    type = "menu"
+    order = 60
+    menu = "configure CAN bus frames"
+    [talonFx.frame.grapher]
+      type = "default"
+      order = 10
+      menu = "set grapher defaults"
+      device = "fx"
+    [talonFx.frame.general]
+      type = "talon.param"
+      order = 20
+      menu = "general status frame"
+      param = "STATUS_GENERAL"
+      device = "fx"
+    [talonFx.frame.feedback_0]
+      type = "talon.param"
+      order = 30
+      menu = "feedback 0 status frame"
+      param = "STATUS_FEEDBACK0"
+      device = "fx"
+    [talonFx.frame.quad_encoder]
+      type = "talon.param"
+      order = 40
+      menu = "quad encoder status frame"
+      param = "STATUS_QUAD_ENCODER"
+      device = "fx"
+    [talonFx.frame.ain_temp_vbat]
+      type = "talon.param"
+      order = 50
+      menu = "ain/temp/vbat status frame"
+      param = "STATUS_AIN_TEMP_VBAT"
+      device = "fx"
+    [talonFx.frame.pulse_width]
+      type = "talon.param"
+      order = 60
+      menu = "pulse width status frame"
+      param = "STATUS_PULSE_WIDTH"
+      device = "fx"
+    [talonFx.frame.motion]
+      type = "talon.param"
+      order = 70
+      menu = "motion status frame"
+      param = "STATUS_MOTION"
+      device = "fx"
+    [talonFx.frame.pidf_0]
+      type = "talon.param"
+      order = 80
+      menu = "PIDF 0 status frame"
+      param = "STATUS_PIDF0"
+      device = "fx"
+    [talonFx.frame.misc]
+      type = "talon.param"
+      order = 90
+      menu = "Misc. status frame"
+      param = "STATUS_MISC"
+      device = "fx"
+    [talonFx.frame.comm]
+      type = "talon.param"
+      order = 100
+      menu = "Communication status frame"
+      param = "STATUS_COMM"
+      device = "fx"
+    [talonFx.frame.motionBuff]
+      type = "talon.param"
+      order = 110
+      menu = "Motion Profile Buffer status frame"
+      param = "STATUS_MOTION_BUFF"
+      device = "fx"
+    [talonFx.frame.feedback1]
+      type = "talon.param"
+      order = 120
+      menu = "Feedback1 status frame"
+      param = "STATUS_FEEDBACK1"
+      device = "fx"
+    [talonFx.frame.pidf1]
+      type = "talon.param"
+      order = 130
+      menu = "PIDF1 status frame"
+      param = "STATUS_PIDF1"
+      device = "fx"
+    [talonFx.frame.firmware]
+      type = "talon.param"
+      order = 140
+      menu = "Firmware and API status frame"
+      param = "STATUS_FIRMWARE_API"
+      device = "fx"
+    [talonFx.frame.gadgeteer]
+      type = "talon.param"
+      order = 150
+      menu = "UART Gadgeteer status frame"
+      param = "STATUS_UART_GADGETEER"
+      device = "fx"
+  [talonFx.limit]
+    type = "menu"
+    order = 70
+    menu = "configure soft and hard limits"
+    [talonFx.limit.forward_hard_source]
+      type = "talon.hard.source"
+      order = 10
+      forward = true
+      menu = "forward hard limit source"
+      device = "fx"
+      help = "Select a limit switch source from the feedback connector, remote Talon SRX, CANifier, or deactivate the feature."
+    [talonFx.limit.forward_hard_normal]
+      type = "talon.hard.normal"
+      order = 20
+      forward = true
+      menu = "forward hard limit normal"
+      device = "fx"
+     help = "Select whether this limit switch is normally open, normally closed, or disabled, which overrides the setting from the web-based configuration page."
+    [talonFx.limit.reverse_hard_source]
+      type = "talon.hard.source"
+      order = 30
+      forward = false
+      menu = "reverse hard limit source"
+      device = "fx"
+      help = "Select a limit switch source from the feedback connector, remote Talon SRX, CANifier, or deactivate the feature."
+    [talonFx.limit.reverse_hard_normal]
+      type = "talon.hard.normal"
+      order = 40
+      forward = false
+      menu = "reverse hard limit normal"
+      device = "fx"
+      help = "Select whether this limit switch is normally open, normally closed, or disabled, which overrides the setting from the web-based configuration page."
+    [talonFx.limit.forward_soft_enabled]
+      type = "talon.param"
+      order = 50
+      menu = "forward soft limit enabled"
+      param = "SOFT_LIMIT_ENABLE_FORWARD"
+      device = "fx"
+    [talonFx.limit.forward_soft_threshold]
+      type = "talon.param"
+      order = 60
+      menu = "forward soft limit threshold"
+      param = "SOFT_LIMIT_THRESHOLD_FORWARD"
+      device = "fx"
+    [talonFx.limit.reverse_soft_enabled]
+      type = "talon.param"
+      order = 70
+      menu = "reverse soft limit enabled"
+      param = "SOFT_LIMIT_ENABLE_REVERSE"
+      device = "fx"
+    [talonFx.limit.reverse_soft_threshold]
+      type = "talon.param"
+      order = 80
+      menu = "reverse soft limit threshold"
+      param = "SOFT_LIMIT_THRESHOLD_REVERSE"
+      device = "fx"
+  [talonFx.factory_default]
+    type = "talon.param"
+    order = 80
+    menu = "configure factory defaults"
+    param = "FACTORY_DEFAULTS"
+    device = "fx"
 
 [servo]
   type = "menu"
@@ -520,6 +1126,102 @@ type = "menu"
       type = "swerve.azimuth.adjust"
       order = 30
       menu = "active azimuth adjustment"
+
+[gyro]
+  type = "menu"
+  order = 60
+  menu = "work with gyro"
+  [gyro.pigeon]
+    type = "menu"
+    order = 10
+    menu = "work with pigeon"
+    [gyro.pigeon.select]
+      type = "pigeon.select"
+      order = 5
+      menu = "select active pigeon"
+    [gyro.pigeon.data]
+      type = "menu"
+      order = 10
+      menu = "set axis info"
+      [gyro.pigeon.data.yaw]
+        type = "pigeon.param"
+        order = 10
+        menu = "set yaw"
+        param = "YAW"
+      [gyro.pigeon.data.accumZ]
+        type = "pigeon.param"
+        order = 20
+        menu = "set accumulator Z-angle"
+        param = "ACCUM_Z_ANGLE"
+      [gyro.pigeon.data.fuseHead]
+        type = "pigeon.param"
+        order = 30
+        menu = "set fused heading"
+        param = "FUSED_HEADING"
+     [gyro.pigeon.data.tempComp]
+       type = "pigeon.param"
+       order = 40
+       menu = "disable temperature compensation"
+       param = "TEMP_COMP_DISABLE"
+    [gyro.pigeon.status]
+      type = "menu"
+      order = 20
+      menu = "set status frame periods"
+      [gyro.pigeon.status.general]
+        type = "pigeon.param"
+        order = 10
+        menu = "set general status frame"
+        param = "GENERAL_STATUS"
+      [gyro.pigeon.status.sixDeg]
+        type = "pigeon.param"
+        order = 20
+        menu = "set roll, pitch, yaw status frame"
+        param = "SIX_DEG_STATUS"
+      [gyro.pigeon.status.fused]
+        type = "pigeon.param"
+        order = 30
+        menu = "set 9-axis fused status frame"
+        param = "FUSED_STATUS"
+      [gyro.pigeon.status.accumGyro]
+        type = "pigeon.param"
+        order = 40
+        menu = "set accumulated gyro status frame"
+        param = "GYRO_ACCUM_STATUS"
+      [gyro.pigeon.status.genCompass]
+        type = "pigeon.param"
+        order = 50
+        menu = "set general compass status frame"
+        param = "GEN_COMPASS_STATUS"
+      [gyro.pigeon.status.genAccel]
+        type = "pigeon.param"
+        order = 60
+        menu = "set general accelerometer status frame"
+        param = "GEN_ACCEL_STATUS"
+      [gyro.pigeon.status.quaternion]
+        type = "pigeon.param"
+        order = 70
+        menu = "set quaternion status frame"
+        param = "SIX_QUAT_STATUS"
+      [gyro.pigeon.status.mag]
+        type = "pigeon.param"
+        order = 80
+        menu = "raw magnetometer status frame"
+        param = "MAG_STATUS"
+      [gyro.pigeon.status.biasGyro]
+        type = "pigeon.param"
+        order = 90
+        menu = "biased gyro status frame"
+        param = "BIAS_GYRO_STATUS"
+      [gyro.pigeon.status.biasAccel]
+        type = "pigeon.param"
+        order = 100
+        menu = "biased accelerometer status frame"
+        param = "BIAS_ACCEL_STATUS"
+    [gyro.pigeon.defaults]
+      type = "pigeon.param"
+      order = 30
+      menu = "config factory defaults"
+      param = "FACTORY_DEFAULT"
 
 # [dio]
 #   type = "menu"

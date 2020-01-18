@@ -29,6 +29,39 @@
   name = "Peak Current Limit Duration"
   type = "INTEGER"
   help = "Sets how long (msec) to allow current-draw past peak limit."
+ [STATOR_CURRENT_LIMIT_ENABLE]
+  name = "Stator Current Limit Enable"
+  type = "BOOLEAN"
+  help = "Enable or disable stator current limit"
+ [STATOR_CURRENT_LIMIT]
+  name = "Stator Current Limit (A)"
+  type = "DOUBLE"
+  help = "Current in Amperes that the output is limited to when the threshold current and time have been reached. If threshold current is < this value, this value is used as the threshold current"
+ [STATOR_CURRENT_LIMIT_THRES_CURRENT]
+  name = "Stator Current: Trigger Current (A)"
+  type = "DOUBLE"
+  help = "Current must exceed this threshold before limiting occurs. If this number is less than the current limit that number is used"
+ [STATOR_CURRENT_LIMIT_THRES_TIME]
+  name = "Stator Current: Trigger Time (s)"
+  type = "DOUBLE"
+  help = "Current must exceed the trigger threshold for this long before limiting occurs"
+ [SUPPLY_CURRENT_LIMIT_ENABLE]
+  name = "Supply Current Limit Enable"
+  type = "BOOLEAN"
+  help = "Enable or disable the supply current limit"
+ [SUPPLY_CURRENT_LIMIT]
+  name = "Supply Current Limit (A)"
+  type = "DOUBLE"
+  help = "Current in Amperes that the output is limited to when the threshold current and time have been reached. If threshold current is < this value, this value is used as the threshold current"
+ [SUPPLY_CURRENT_LIMIT_THRES_CURRENT]
+  name = "Supply Current: Trigger Current (A)"
+  type = "DOUBLE"
+  help = "Current must exceed this threshold before limiting occurs. If this number is less than the current limit that number is used"
+ [SUPPLY_CURRENT_LIMIT_THRES_TIME]
+  name = "Supply Current: Trigger Time (s)"
+  type = "DOUBLE"
+  help = "Current must exceed the trigger threshold for this long before limiting occurs"
+
 
 #
 # motor output
@@ -164,6 +197,10 @@
   name = "Sensor Position"
   type = "INTEGER"
   help = "Sets the position of the sensor to the given value (in raw sensor units)."
+[INTEGRATED_SENSOR_OFFSET_DEGREES]
+ name = "Integrated Sensor Offset (degrees)"
+ type = "DOUBLE"
+ help = "Adjust zero point for the integrated sensor absolute position register. Absolute sensor is either 0-360 or -180-180 range and a hard limited mechanism may have a discontinuity in its functional range, this can move the zero such that there is no discontinuity in the functional range"
 
 #
 # soft limits
@@ -223,3 +260,38 @@
   type = "INTEGER"
   range = [5.0, 160.0]
   help = "Sets the PIDF 0 status frame. This frame has a default period of 160ms and provides closed-loop error, integral accumulator and error derivative."
+[STATUS_MISC]
+  name = "Miscellaneous signal Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the status frame for miscellaneous signals."
+[STATUS_COMM]
+  name = "Communication Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the status frame for communication status"
+[STATUS_MOTION_BUFF]
+  name = "Motion Profile Buffer Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the status frame for the motion profile buffer status"
+[STATUS_FEEDBACK1]
+  name = "Feedback 1 Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "sets Feedback 1 status frame. This frame has a default period of >100ms and provides selected sensor velocity and selected sensor position."
+[STATUS_PIDF1]
+  name = "Auxiliary PID Status Frame"
+  type = "INTEGER"
+  range = [5.0, 250.0]
+  help = "sets Aux PIDF 1 status frame. This frame has a default period of >100ms and provides auxiliary PD information."
+[STATUS_FIRMWARE_API]
+  name = "Firmware and API Status Frame"
+  type = "INTEGER"
+  range = [5.0, 160.0]
+  help = "Sets the status frame for the firmware and api"
+[STATUS_UART_GADGETEER]
+  name = "Gadgeteer Status Frame"
+  type = "INTEGER"
+  range = [5.0, 250.0]
+  help = "Sets teh status frame for the gadgeteer port"

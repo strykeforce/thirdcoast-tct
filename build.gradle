@@ -4,6 +4,8 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "2020.1.2"
 }
 
+version = "20.0.0"
+
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
@@ -94,7 +96,7 @@ jar {
     manifest {
         attributes(
                 'Implementation-Title': 'Third Coast Telemetry Utility (tct)',
-                'Implementation-Version': '20.0.0'
+                'Implementation-Version': version
         )
     }
 }

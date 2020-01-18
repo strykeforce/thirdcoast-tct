@@ -1,0 +1,80 @@
+#Heading Info
+[ACCUM_Z_ANGLE]
+    name = "Accum Z Angle"
+    type = "DOUBLE"
+    help = "Set the accumulater Z angle"
+[YAW]
+    name = "Yaw"
+    type = "DOUBLE"
+    help = "Sets yaw to specified value"
+[FUSED_HEADING]
+    name = "Fused Heading"
+    type = "DOUBLE"
+    range = [-23040.0, 23040.0]
+    help = "Set the Fused Heading in degrees [+/- 23,040 degrees]"
+
+#Temp Compensation
+[TEMP_COMP_DISABLE]
+    name = "Temperature compensation disable"
+    type = "BOOLEAN"
+    help = "Enable or disable temperature compensation, defaults to false"
+
+[FACTORY_DEFAULT]
+    name = "Factory Default"
+    type = "BOOLEAN"
+    help = "config factory default settings"
+
+
+#Status Frame Period Update
+[GENERAL_STATUS]
+    name = "General Status Frame"
+    type = "INTEGER"
+    range = [5.0, 160.0]
+    help = "Set general status frame of pigeon: calibration status and IMU temp, default: >100ms"
+[SIX_DEG_STATUS]
+    name = "Six Degree Status Frame"
+    type = "INTEGER"
+    range = [5.0, 160.0]
+    help = "set status frame for roll, pitch, yaw fused information, default: 10ms"
+[FUSED_STATUS]
+    name = "Fused Status Frame"
+    type = "INTEGER"
+    range = [5.0, 160.0]
+    help = "9-axis fused heading, fused yaw, pitch, roll (requires magnetometer calibration), default: 10ms"
+[GYRO_ACCUM_STATUS]
+    name = "Gyro Accum Status Frame"
+    type = "INTEGER"
+    range = [5.0, 160.0]
+    help = "Accumulated Gyro Angles from the pigeon: default 20ms"
+[GEN_COMPASS_STATUS]
+    name = "General Compass Status Frame"
+    type = "INTEGER"
+    range = [5.0, 160.0]
+    help = "General Compass Information"
+[GEN_ACCEL_STATUS]
+    name = "General Accelerometer Status Frame"
+    type = "INTEGER"
+    range = [5.0, 160.0]
+    help = "Accelerometer derived angles from pigeon, default: >100ms"
+[SIX_QUAT_STATUS]
+    name = "Quaternion Status Frame"
+    type = "INTEGER"
+    range = [5.0, 160.0]
+    help = "Six degree fused quaternion from pigeon, default: >100ms"
+[MAG_STATUS]
+    name = "Magnetometer Status Frame"
+    type = "INTEGER"
+    range = [5.0, 160.0]
+    help = "Raw Magnetometer data (x,y,z) from pigeon, default: 20ms"
+[BIAS_GYRO_STATUS]
+    name = "Biased Gyro Status Frame"
+    type = "INTEGER"
+    range = [5.0, 160.0]
+    help = "Biased Gyro data (x,y,z) from pigeon, default: >100ms"
+[BIAS_ACCEL_STATUS]
+    name = "Biased Accelerometer Status Frame"
+    type = "INTEGER"
+    range = [5.0, 160.0]
+    help = "Biased Accelerometer data (x,y,z) from pigeon, default: >100ms"
+
+
