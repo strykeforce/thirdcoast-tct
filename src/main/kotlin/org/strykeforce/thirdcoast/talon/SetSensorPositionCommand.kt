@@ -35,11 +35,11 @@ class SetSensorPositionCommand(
 
         val paramValue = param.readInt(reader, default)
         if(type == "srx") {
-            talonService.active.forEach { it.setSelectedSensorPosition(paramValue, pidIndex, timeout) }
+            talonService.active.forEach { it.setSelectedSensorPosition(paramValue.toDouble(), pidIndex, timeout) }
             logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
         }
         else if(type == "fx") {
-            talonFxService.active.forEach { it.setSelectedSensorPosition(paramValue, pidIndex, talonFxService.timeout) }
+            talonFxService.active.forEach { it.setSelectedSensorPosition(paramValue.toDouble(), pidIndex, talonFxService.timeout) }
             logger.debug { "set ${talonFxService.active.size} talonfx ${param.name}: $paramValue" }
         }
         return super.execute()
