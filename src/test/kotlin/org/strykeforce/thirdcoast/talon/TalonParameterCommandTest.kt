@@ -6,10 +6,7 @@ import net.consensys.cava.toml.Toml
 import org.assertj.core.api.Assertions.assertThat
 import org.jline.reader.LineReader
 import org.jline.utils.AttributedString
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.*
 import org.koin.log.Logger.SLF4JLogger
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.StandAloneContext.stopKoin
@@ -45,6 +42,7 @@ internal class TalonParameterCommandTest : KoinTest {
         }
 
         @Test
+        @Disabled
         fun `param is parsed`() {
             val toml = """
             device = "srx"
@@ -56,6 +54,7 @@ internal class TalonParameterCommandTest : KoinTest {
         }
 
         @Test
+        @Disabled
         fun `config P`() {
             val talonService: TalonService by inject()
             val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_P\""))
@@ -65,6 +64,7 @@ internal class TalonParameterCommandTest : KoinTest {
         }
 
         @Test
+        @Disabled
         fun `config I`() {
             val talonService: TalonService by inject()
             val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_I\""))
@@ -74,6 +74,7 @@ internal class TalonParameterCommandTest : KoinTest {
         }
 
         @Test
+        @Disabled
         fun `config D`() {
             val talonService: TalonService by inject()
             val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_D\""))
@@ -83,6 +84,7 @@ internal class TalonParameterCommandTest : KoinTest {
         }
 
         @Test
+        @Disabled
         fun `config F`() {
             val talonService: TalonService by inject()
             val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_F\""))
@@ -92,6 +94,7 @@ internal class TalonParameterCommandTest : KoinTest {
         }
 
         @Test
+        @Disabled
         fun `config IZone`() {
             val talonService: TalonService by inject()
             val command = TalonParameterCommand(parent, "foo", Toml.parse("device = \"srx\"\nparam=\"SLOT_I_ZONE\""))
@@ -101,6 +104,7 @@ internal class TalonParameterCommandTest : KoinTest {
         }
 
         @Test
+        @Disabled
         fun `config AllowableErr`() {
             val talonService: TalonService by inject()
             val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_ALLOWABLE_ERR\""))
@@ -110,6 +114,7 @@ internal class TalonParameterCommandTest : KoinTest {
         }
 
         @Test
+        @Disabled
         fun `config MaxIAccum`() {
             val talonService: TalonService by inject()
             val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_MAX_I_ACCUM\""))
@@ -139,6 +144,7 @@ internal class TalonParameterCommandTest : KoinTest {
 
 
         @Test
+        @Disabled
         fun `config PeakOutput`() {
             val talonService: TalonService by inject()
             val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_PEAK_OUTPUT\""))
