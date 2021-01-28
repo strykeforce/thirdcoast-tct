@@ -41,10 +41,11 @@ class SelectHardLimitSourceCommand(
 
     override val activeIndex: Int
         get() {
-            var config: BaseTalonConfiguration
-            if(type == "srx") config = talonService.activeConfiguration
-            else if(type == "fx") config = talonFxService.activeConfiguration
-            else throw IllegalArgumentException()
+            var config: BaseTalonConfiguration = when (type) {
+                "srx" -> talonService.activeConfiguration
+                "fx" -> talonFxService.activeConfiguration
+                else -> throw IllegalArgumentException()
+            }
             return values.indexOf(
                     if (isForward)
                         config.forwardLimitSwitchSource

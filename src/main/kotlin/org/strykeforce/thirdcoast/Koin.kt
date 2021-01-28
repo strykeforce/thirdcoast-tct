@@ -80,11 +80,11 @@ private fun getWheels(): Array<Wheel> {
             kI = 0.0
             kD = 100.0
             kF = 1.0
-            integralZone = 0
-            allowableClosedloopError = 0
+            integralZone = 0.0
+            allowableClosedloopError = 0.0
         }
-        motionAcceleration = 10_000
-        motionCruiseVelocity = 800
+        motionAcceleration = 10_000.0
+        motionCruiseVelocity = 800.0
     }
 
 

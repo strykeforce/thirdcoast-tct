@@ -53,7 +53,7 @@ class AdjustAzimuthCommand(
 
     override fun execute(): Command {
         val wheel = swerve.wheels[active]
-        var position = wheel.azimuthTalon.getSelectedSensorPosition(0)
+        var position = wheel.azimuthTalon.getSelectedSensorPosition(0).toInt()
         while (true) {
             try {
                 position = reader.readInt(prompt(), position)

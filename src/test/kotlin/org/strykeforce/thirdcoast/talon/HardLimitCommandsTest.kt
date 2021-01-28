@@ -24,15 +24,18 @@ internal class HardLimitCommandsTest : KoinTest {
         type = "menu"
           [limit]
             type = "menu"
+            device = "srx"
             order = 1
             menu = "configure soft and hard limits"
             [limit.forward_hard_source]
               type = "talon.hard.source"
+              device = "srx"
               order = 1
               forward = true
               menu = "forward hard limit switch source"
             [limit.forward_hard_normal]
               type = "talon.hard.normal"
+              device = "srx"
               order = 2
               forward = true
               menu = "forward hard limit switch normal"

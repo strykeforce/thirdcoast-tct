@@ -47,6 +47,7 @@ internal class TalonParameterCommandTest : KoinTest {
         @Test
         fun `param is parsed`() {
             val toml = """
+            device = "srx"
             name = "P"
             param = "SLOT_P"
         """.trimIndent()
@@ -93,10 +94,10 @@ internal class TalonParameterCommandTest : KoinTest {
         @Test
         fun `config IZone`() {
             val talonService: TalonService by inject()
-            val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_I_ZONE\""))
+            val command = TalonParameterCommand(parent, "foo", Toml.parse("device = \"srx\"\nparam=\"SLOT_I_ZONE\""))
             talonService.activate(listOf(1))
             command.execute()
-            verify(talon).config_IntegralZone(0, 27, 10)
+            verify(talon).config_IntegralZone(0, 27.0, 10)
         }
 
         @Test
@@ -105,7 +106,7 @@ internal class TalonParameterCommandTest : KoinTest {
             val command = TalonParameterCommand(parent, "foo", Toml.parse("param=\"SLOT_ALLOWABLE_ERR\""))
             talonService.activate(listOf(1))
             command.execute()
-            verify(talon).configAllowableClosedloopError(0, 27, 10)
+            verify(talon).configAllowableClosedloopError(0, 27.0, 10)
         }
 
         @Test

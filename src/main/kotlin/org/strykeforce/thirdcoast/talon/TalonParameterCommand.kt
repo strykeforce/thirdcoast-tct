@@ -173,13 +173,13 @@ class TalonParameterCommand(
                 baseTalon.config_kF(activeSlotIndex, value, timeout)
                 slot.kF = value
             }
-            SLOT_I_ZONE -> configIntParam(slot.integralZone) { baseTalon, value ->
-                baseTalon.config_IntegralZone(activeSlotIndex, value, timeout)
-                slot.integralZone = value
+            SLOT_I_ZONE -> configIntParam(slot.integralZone.toInt()) { baseTalon, value ->
+                baseTalon.config_IntegralZone(activeSlotIndex, value.toDouble(), timeout)
+                slot.integralZone = value.toDouble()
             }
-            SLOT_ALLOWABLE_ERR -> configIntParam(slot.allowableClosedloopError) { baseTalon, value ->
-                baseTalon.configAllowableClosedloopError(activeSlotIndex, value, timeout)
-                slot.allowableClosedloopError = value
+            SLOT_ALLOWABLE_ERR -> configIntParam(slot.allowableClosedloopError.toInt()) { baseTalon, value ->
+                baseTalon.configAllowableClosedloopError(activeSlotIndex, value.toDouble(), timeout)
+                slot.allowableClosedloopError = value.toDouble()
             }
             SLOT_MAX_I_ACCUM -> configDoubleParam(slot.maxIntegralAccumulator) { baseTalon, value ->
                 baseTalon.configMaxIntegralAccumulator(activeSlotIndex, value, timeout)
@@ -236,13 +236,13 @@ class TalonParameterCommand(
                 baseTalon.configVoltageMeasurementFilter(value, timeout)
                 config.voltageMeasurementFilter = value
             }
-            MOTION_CRUISE_VELOCITY -> configIntParam(config.motionCruiseVelocity) { baseTalon, value ->
-                baseTalon.configMotionCruiseVelocity(value, timeout)
-                config.motionCruiseVelocity = value
+            MOTION_CRUISE_VELOCITY -> configIntParam(config.motionCruiseVelocity.toInt()) { baseTalon, value ->
+                baseTalon.configMotionCruiseVelocity(value.toDouble(), timeout)
+                config.motionCruiseVelocity = value.toDouble()
             }
-            MOTION_ACCELERATION -> configIntParam(config.motionAcceleration) { baseTalon, value ->
-                baseTalon.configMotionAcceleration(value, timeout)
-                config.motionAcceleration = value
+            MOTION_ACCELERATION -> configIntParam(config.motionAcceleration.toInt()) { baseTalon, value ->
+                baseTalon.configMotionAcceleration(value.toDouble(), timeout)
+                config.motionAcceleration = value.toDouble()
             }
             SENSOR_PHASE -> configBooleanParam(talonService.sensorPhase) { baseTalon, value ->
                 baseTalon.setSensorPhase(value)
@@ -386,13 +386,13 @@ class TalonParameterCommand(
                 baseTalon.configReverseSoftLimitEnable(value, timeout)
                 config.reverseSoftLimitEnable = value
             }
-            SOFT_LIMIT_THRESHOLD_FORWARD -> configIntParam(config.forwardSoftLimitThreshold) { baseTalon, value ->
-                baseTalon.configForwardSoftLimitThreshold(value, timeout)
-                config.forwardSoftLimitThreshold = value
+            SOFT_LIMIT_THRESHOLD_FORWARD -> configIntParam(config.forwardSoftLimitThreshold.toInt()) { baseTalon, value ->
+                baseTalon.configForwardSoftLimitThreshold(value.toDouble(), timeout)
+                config.forwardSoftLimitThreshold = value.toDouble()
             }
-            SOFT_LIMIT_THRESHOLD_REVERSE -> configIntParam(config.reverseSoftLimitThreshold) { baseTalon, value ->
-                baseTalon.configReverseSoftLimitThreshold(value, timeout)
-                config.reverseSoftLimitThreshold = value
+            SOFT_LIMIT_THRESHOLD_REVERSE -> configIntParam(config.reverseSoftLimitThreshold.toInt()) { baseTalon, value ->
+                baseTalon.configReverseSoftLimitThreshold(value.toDouble(), timeout)
+                config.reverseSoftLimitThreshold = value.toDouble()
             }
             VELOCITY_MEASUREMENT_WINDOW -> configIntParam(config.velocityMeasurementWindow) { baseTalon, value ->
                 baseTalon.configVelocityMeasurementWindow(value, timeout)
