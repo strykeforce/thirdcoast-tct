@@ -45,7 +45,6 @@ def includeDesktopSupport = false
 
 repositories {
     jcenter()
-    maven { url = "http://first.wpi.edu/FRC/roborio/maven/release" }
 }
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
@@ -78,7 +77,7 @@ dependencies {
     // Testing
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.2"
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.5.2"
-    testRuntime "org.junit.jupiter:junit-jupiter-engine:5.5.2"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5.2"
     testImplementation "org.assertj:assertj-core:3.11.1"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
 
@@ -100,7 +99,7 @@ jar {
     manifest {
         attributes(
                 'Implementation-Title': 'Third Coast Telemetry Utility (tct)',
-                'Implementation-Version': version
+                'Implementation-Version': archiveVersion
         )
     }
 }
