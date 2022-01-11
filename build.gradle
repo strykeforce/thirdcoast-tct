@@ -68,8 +68,8 @@ dependencies {
     implementation("net.consensys.cava:cava-toml:0.5.0")
 
     // Logging
-    implementation("io.github.microutils:kotlin-logging-jvm:2.0.6")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
+    implementation('io.github.microutils:kotlin-logging-jvm:2.1.21')
+    implementation('ch.qos.logback:logback-classic:1.2.10')
 
     // Koin
     implementation("org.koin:koin-core:1.0.2")
