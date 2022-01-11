@@ -1,6 +1,6 @@
 package org.strykeforce.thirdcoast
 
-import edu.wpi.first.wpilibj.PowerDistributionPanel
+import edu.wpi.first.wpilibj.PowerDistribution
 import org.strykeforce.thirdcoast.telemetry.item.PowerDistributionPanelItem
 import edu.wpi.first.wpilibj.TimedRobot
 import mu.KotlinLogging
@@ -23,7 +23,7 @@ class Robot : TimedRobot(), KoinComponent {
     override fun robotInit() {
         startKoin(listOf(tctModule, swerveModule), logger = SLF4JLogger())
         val telemetryService:TelemetryService by inject()
-        telemetryService.register(PowerDistributionPanelItem(PowerDistributionPanel()))
+//        telemetryService.register(PowerDistributionPanelItem(PowerDistribution()))
         thread(name = "tct", start = true) {
             val toml = parseResource("/commands.toml")
             val root = Command.createFromToml(toml)

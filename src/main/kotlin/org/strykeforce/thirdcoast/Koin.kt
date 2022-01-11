@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
 import com.ctre.phoenix.sensors.PigeonIMU
 import edu.wpi.first.wpilibj.DigitalOutput
+import edu.wpi.first.wpilibj.PneumaticsModuleType
 import edu.wpi.first.wpilibj.Servo
 import edu.wpi.first.wpilibj.Solenoid
 import org.jline.reader.LineReader
@@ -41,7 +42,7 @@ val tctModule = module {
 
     single { ServoService { id -> Servo(id) } }
 
-    single { SolenoidService { id -> Solenoid(id) } }
+    single { SolenoidService { id -> Solenoid(PneumaticsModuleType.CTREPCM, id) } }
 
     single { DigitalOutputService { id -> DigitalOutput(id) } }
 

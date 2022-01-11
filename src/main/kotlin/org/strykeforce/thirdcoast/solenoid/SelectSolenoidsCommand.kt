@@ -33,8 +33,4 @@ class SelectSolenoidsCommand(
     }
 }
 
-internal fun Solenoid.port(): String {
-    val name = this.name
-    val start = name.indexOf(',') + 1
-    return name.substring(start, start + 1)
-}
+internal fun Solenoid.port() = this.channel.toString()

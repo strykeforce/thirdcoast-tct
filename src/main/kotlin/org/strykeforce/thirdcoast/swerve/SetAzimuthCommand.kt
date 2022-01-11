@@ -50,5 +50,5 @@ class SetAzimuthCommand(
     }
 }
 
-private fun wheelZeroSaved() = Preferences.getInstance().containsKey(WHEEL_PREF_KEY)
+private fun wheelZeroSaved() = Preferences.containsKey(WHEEL_PREF_KEY)
 
