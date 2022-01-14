@@ -7,7 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.SlotConfiguration
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
 import mu.KotlinLogging
-import org.strykeforce.thirdcoast.telemetry.TelemetryService
+import org.strykeforce.telemetry.TelemetryService
 
 private val logger = KotlinLogging.logger {}
 
@@ -55,12 +55,18 @@ class TalonService(private val telemetryService: TelemetryService, factory: (id:
     var voltageCompensation = VOLTAGE_COMPENSATION_ENABLED_DEFAULT
     var sensorPhase = SENSOR_PHASE_INVERTED_DEFAULT
     var currentLimit = CURRENT_LIMIT_ENABLED_DEFAULT
-    var supplyCurrentLimit = SupplyCurrentLimitConfiguration(SUPPLY_CURRENT_LIMIT_ENABLE_DEFAULT, SUPPLY_CURRENT_LIMIT_DEFAULT, SUPPLY_CURRENT_LIMIT_TRIG_CURRENT_DEFAULT, SUPPLY_CURRENT_LIMIT_TRIG_TIME_DEFAULT)
+    var supplyCurrentLimit = SupplyCurrentLimitConfiguration(
+        SUPPLY_CURRENT_LIMIT_ENABLE_DEFAULT,
+        SUPPLY_CURRENT_LIMIT_DEFAULT,
+        SUPPLY_CURRENT_LIMIT_TRIG_CURRENT_DEFAULT,
+        SUPPLY_CURRENT_LIMIT_TRIG_TIME_DEFAULT
+    )
 
     var activeConfiguration = TalonSRXConfiguration()
         get() {
             if (!dirty) return field
-            active.firstOrNull()?.getAllConfigs(field) ?: logger.debug("no active talons, returning default config")
+            active.firstOrNull()?.getAllConfigs(field)
+                ?: logger.debug("no active talons, returning default config")
             dirty = false
             return field
         }

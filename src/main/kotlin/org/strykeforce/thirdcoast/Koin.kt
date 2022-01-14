@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
 import com.ctre.phoenix.sensors.PigeonIMU
+import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.wpilibj.DigitalOutput
 import edu.wpi.first.wpilibj.PneumaticsModuleType
 import edu.wpi.first.wpilibj.Servo
@@ -16,15 +17,14 @@ import org.jline.reader.LineReaderBuilder
 import org.jline.terminal.Terminal
 import org.jline.terminal.TerminalBuilder
 import org.koin.dsl.module.module
+import org.strykeforce.swerve.*
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.device.*
-import org.strykeforce.thirdcoast.swerve.SwerveDrive
-import org.strykeforce.thirdcoast.swerve.SwerveDriveConfig
-import org.strykeforce.thirdcoast.swerve.Wheel
-import org.strykeforce.thirdcoast.telemetry.TelemetryController
-import org.strykeforce.thirdcoast.telemetry.TelemetryService
-import org.strykeforce.thirdcoast.telemetry.grapher.ClientHandler
+import org.strykeforce.telemetry.TelemetryController
+import org.strykeforce.telemetry.TelemetryService
+import org.strykeforce.telemetry.grapher.ClientHandler
 import java.net.DatagramSocket
+import java.net.InetSocketAddress
 import java.util.function.Function
 
 private const val CLIENT_PORT = 5801
@@ -34,10 +34,18 @@ val tctModule = module {
 
     factory { ClientHandler(CLIENT_PORT, DatagramSocket()) }
 
-    single { TelemetryService(Function { inventory -> TelemetryController(inventory, get(), SERVER_PORT) }) }
+    single {
+        TelemetryService(Function { inventory ->
+            TelemetryController(
+                inventory,
+                get(),
+                InetSocketAddress(SERVER_PORT)
+            )
+        })
+    }
 
     single { TalonService(get()) { id -> TalonSRX(id) } }
-    
+
     single { TalonFxService(get()) { id -> TalonFX(id) } }
 
     single { ServoService { id -> Servo(id) } }
@@ -60,16 +68,27 @@ val tctModule = module {
 
 val swerveModule = module {
 
-    single {
-        SwerveDriveConfig().apply {
-            wheels = getWheels()
-        }
-    }
-
-    single { SwerveDrive(get()) }
+    single { SwerveDrive(*getSwerveModules()) }
 
 }
 
+private fun getSwerveModules() = Array<SwerveModule>(4) { i -> getSwerveModule(i) }
+
+private val moduleBuilder = TalonSwerveModule.Builder().driveGearRatio(1.0).wheelDiameterInches(1.0)
+    .driveMaximumMetersPerSecond(1.0)
+
+private fun getSwerveModule(i: Int) : TalonSwerveModule {
+    val location = when (i) {
+        0 -> Translation2d(1.0, 1.0)
+        1 -> Translation2d(1.0, -1.0)
+        2 -> Translation2d(-1.0, 1.0)
+        else -> Translation2d(-1.0, -1.0)
+    }
+    return moduleBuilder.azimuthTalon(TalonSRX(i)).driveTalon(TalonFX(i + 10))
+        .wheelLocationMeters(location).build()
+}
+
+/*
 private fun getWheels(): Array<Wheel> {
     val azimuthConfig = TalonSRXConfiguration().apply {
         primaryPID.selectedFeedbackSensor = FeedbackDevice.CTRE_MagEncoder_Relative
@@ -108,3 +127,4 @@ private fun getWheels(): Array<Wheel> {
         )
     }
 }
+ */
