@@ -1,10 +1,13 @@
 package org.strykeforce.thirdcoast.swerve
 
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode
 import edu.wpi.first.wpilibj.Preferences
 import edu.wpi.first.wpilibj.Timer
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
+import org.strykeforce.swerve.SwerveDrive
+import org.strykeforce.swerve.TalonSwerveModule
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.prompt
@@ -25,7 +28,9 @@ class SetAzimuthCommand(
     val swerve: SwerveDrive by inject()
 
     override val menu: String
-        get() = formatMenu(swerve.wheels.map { it.azimuthTalon.getSelectedSensorPosition(0) }.joinToString())
+        get() = formatMenu(swerve.swerveModules.map {
+            (it as TalonSwerveModule).azimuthTalon.getSelectedSensorPosition(0)
+        }.joinToString())
 
     override fun execute(): Command {
         if (!wheelZeroSaved()) {
@@ -33,15 +38,28 @@ class SetAzimuthCommand(
             return super.execute()
         }
 
-        swerve.zeroAzimuthEncoders()
+        swerve.swerveModules.forEach { it.loadAndSetAzimuthZeroReference() }
 
         while (true) {
             try {
-                val setpoint = reader.readInt(prompt())
-                swerve.wheels.forEach { it.setAzimuthPosition(setpoint) }
-                while (!swerve.wheels[0].onTarget(setpoint)) Timer.delay(DELAY)
+                val setpoint = reader.readInt(prompt()).toDouble()
+                swerve.swerveModules.forEach {
+                    (it as TalonSwerveModule).azimuthTalon.set(
+                        TalonSRXControlMode.MotionMagic,
+                        setpoint
+                    )
+                }
+                val swerveModule = swerve.swerveModules[0] as TalonSwerveModule
+                while (!swerveModule.onTarget(setpoint)) Timer.delay(DELAY)
                 Timer.delay(5 * DELAY)
-                logger.info { swerve.wheels.map { it.azimuthTalon.getSelectedSensorPosition(0) }.joinToString() }
+                logger.info {
+                    swerve.swerveModules.map {
+                        (it as TalonSwerveModule).azimuthTalon.getSelectedSensorPosition(
+                            0
+                        )
+                    }
+                        .joinToString()
+                }
                 return super.execute()
             } catch (e: Exception) {
                 terminal.warn("Please enter an integer")
@@ -50,5 +68,5 @@ class SetAzimuthCommand(
     }
 }
 
-private fun wheelZeroSaved() = Preferences.getInstance().containsKey(WHEEL_PREF_KEY)
+private fun wheelZeroSaved() = Preferences.containsKey(WHEEL_PREF_KEY)
 

@@ -7,6 +7,7 @@ import org.jline.terminal.Terminal
 import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT_4
 import org.strykeforce.thirdcoast.command.MenuCommand
 import org.strykeforce.thirdcoast.command.prompt
+import java.util.*
 import kotlin.math.roundToInt
 
 const val INVALID = -1
@@ -40,7 +41,7 @@ fun LineReader.readDouble(
 
 fun LineReader.readBoolean(prompt: String = PROMPT, default: Boolean = false) = try {
     val line = this.readLine(prompt, null, if (default) "y" else "n").trim()
-    when (line.toLowerCase()) {
+    when (line.lowercase(Locale.getDefault())) {
         "y" -> true
         "n" -> false
         "" -> throw EndOfFileException()

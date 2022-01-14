@@ -1,7 +1,7 @@
 package org.strykeforce.thirdcoast.talon
 
-import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod
-import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod.*
+import com.ctre.phoenix.sensors.SensorVelocityMeasPeriod
+import com.ctre.phoenix.sensors.SensorVelocityMeasPeriod.*
 import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractSelectCommand
@@ -13,7 +13,7 @@ class SelectVelocityMeasurmentPeriodCommand(
     parent: Command?,
     key: String,
     toml: TomlTable
-) : AbstractSelectCommand<VelocityMeasPeriod>(
+) : AbstractSelectCommand<SensorVelocityMeasPeriod>(
     parent,
     key,
     toml,

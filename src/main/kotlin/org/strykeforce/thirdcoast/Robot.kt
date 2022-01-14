@@ -1,7 +1,5 @@
 package org.strykeforce.thirdcoast
 
-import edu.wpi.first.wpilibj.PowerDistributionPanel
-import org.strykeforce.thirdcoast.telemetry.item.PowerDistributionPanelItem
 import edu.wpi.first.wpilibj.TimedRobot
 import mu.KotlinLogging
 import net.consensys.cava.toml.Toml
@@ -11,8 +9,8 @@ import org.koin.log.Logger.SLF4JLogger
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.inject
+import org.strykeforce.telemetry.TelemetryService
 import org.strykeforce.thirdcoast.command.Command
-import org.strykeforce.thirdcoast.telemetry.TelemetryService
 import kotlin.concurrent.thread
 import kotlin.system.exitProcess
 
@@ -22,8 +20,7 @@ class Robot : TimedRobot(), KoinComponent {
 
     override fun robotInit() {
         startKoin(listOf(tctModule, swerveModule), logger = SLF4JLogger())
-        val telemetryService:TelemetryService by inject()
-        telemetryService.register(PowerDistributionPanelItem(PowerDistributionPanel()))
+        val telemetryService: TelemetryService by inject()
         thread(name = "tct", start = true) {
             val toml = parseResource("/commands.toml")
             val root = Command.createFromToml(toml)
@@ -54,9 +51,8 @@ fun parseResource(path: String): TomlTable {
     exitProcess(-1)
 }
 
-fun loadResource(resource: String): String =
-    try {
-        object {}.javaClass.getResource(resource).readText(Charsets.UTF_8)
-    } catch (all: Exception) {
-        throw RuntimeException("Failed to load resource=$resource!", all)
-    }
+fun loadResource(resource: String): String = try {
+    object {}.javaClass.getResource(resource).readText(Charsets.UTF_8)
+} catch (all: Exception) {
+    throw RuntimeException("Failed to load resource=$resource!", all)
+}

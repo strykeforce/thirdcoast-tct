@@ -1,14 +1,18 @@
 package org.strykeforce.thirdcoast.swerve
 
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode
 import edu.wpi.first.wpilibj.Timer
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
+import org.strykeforce.swerve.SwerveDrive
+import org.strykeforce.swerve.TalonSwerveModule
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.prompt
 import org.strykeforce.thirdcoast.readInt
 import org.strykeforce.thirdcoast.warn
+import kotlin.math.abs
 
 private val logger = KotlinLogging.logger {}
 
@@ -46,18 +50,20 @@ class AdjustAzimuthCommand(
     toml: TomlTable
 ) : AbstractCommand(parent, key, toml) {
 
-    val swerve: SwerveDrive by inject()
+    private val swerve: SwerveDrive by inject()
 
     override val menu: String
-        get() = formatMenu(swerve.wheels[active].azimuthTalon.getSelectedSensorPosition(0))
+        get() = formatMenu(
+            (swerve.swerveModules[active] as TalonSwerveModule).azimuthTalon.getSelectedSensorPosition(0)
+        )
 
     override fun execute(): Command {
-        val wheel = swerve.wheels[active]
-        var position = wheel.azimuthTalon.getSelectedSensorPosition(0).toInt()
+        val swerveModule = swerve.swerveModules[active] as TalonSwerveModule
+        var position = swerveModule.azimuthTalon.getSelectedSensorPosition(0).toInt()
         while (true) {
             try {
                 position = reader.readInt(prompt(), position)
-                wheel.jogAround(position)
+                swerveModule.jogAround(position.toDouble())
                 logger.info { "positioned wheel $active to $position" }
                 return super.execute()
             } catch (e: IllegalArgumentException) {
@@ -72,13 +78,13 @@ class AdjustAzimuthCommand(
     }
 }
 
-private fun Wheel.jogAround(position: Int) {
+private fun TalonSwerveModule.jogAround(position: Double) {
     val positions = listOf(position - JOG, position + JOG, position)
     positions.forEach {
-        this.setAzimuthPosition(it)
+        this.azimuthTalon.set(TalonSRXControlMode.MotionMagic, it)
         while (!this.onTarget(it)) Timer.delay(DELAY)
     }
 }
 
-internal fun Wheel.onTarget(target: Int, goodEnough: Int = GOOD_ENOUGH) =
-    Math.abs(target - this.azimuthTalon.getSelectedSensorPosition(0)) < goodEnough
+internal fun TalonSwerveModule.onTarget(target: Double, goodEnough: Int = GOOD_ENOUGH) =
+    abs(target - this.azimuthTalon.getSelectedSensorPosition(0)) < goodEnough
