@@ -3,10 +3,10 @@ import edu.wpi.first.gradlerio.deploy.roborio.RoboRIO
 plugins {
     id "java"
     id "org.jetbrains.kotlin.jvm" version "1.6.20"
-    id "edu.wpi.first.GradleRIO" version "2022.4.1"
+    id "edu.wpi.first.GradleRIO" version "2023.1.1"
 }
 
-version = "22.0.1"
+version = "23.0.1-SNAPSHOT"
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
@@ -36,6 +36,7 @@ wpi.java.debugJni = false
 def includeDesktopSupport = false
 
 repositories {
+    mavenLocal()
     mavenCentral()
     jcenter()
 }
