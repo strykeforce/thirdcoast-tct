@@ -11,8 +11,8 @@ rm -rf $STAGE_DIR
 mkdir -p $STAGE_DIR/usr/local/lib
 mkdir -p $STAGE_DIR/usr/local/bin
 
-cp -c $TCT_DIR/build/libs/tct-$VERSION.jar $STAGE_DIR/usr/local/lib/tct.jar
-cp -c $TCT_DIR/script/tct $STAGE_DIR/usr/local/bin/tct
+cp  $TCT_DIR/build/libs/tct-$VERSION.jar $STAGE_DIR/usr/local/lib/tct.jar
+cp  $TCT_DIR/script/tct $STAGE_DIR/usr/local/bin/tct
 
 # tar staged files
 rm -rf $PAYLOAD_DIR
@@ -29,7 +29,7 @@ echo ""
 END
 
 chmod +x $PAYLOAD_DIR/installer
-tar -C $PAYLOAD_DIR --options "gzip:compression-level=9" -c -z -f payload.tgz files.tar installer
+tar -C $PAYLOAD_DIR -c -z -f payload.tgz files.tar installer
 
 # tar and compress payload
 cat <<'DECOMPRESS_END' > $INSTALLER
