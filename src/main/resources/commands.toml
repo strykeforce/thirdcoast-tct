@@ -465,7 +465,7 @@ type = "menu"
 [talonFx]
   type = "menu"
   order = 15
-  menu = "work with talonFXs"
+  menu = "work with legacy talonFXs"
   [talonFx.run]
     type = "talon.run"
     order = 5
@@ -939,6 +939,516 @@ type = "menu"
     menu = "configure factory defaults"
     param = "FACTORY_DEFAULTS"
     device = "fx"
+
+[FxP6]
+  type = "menu"
+  order = 17
+  menu = "work with talonFX's"
+  [FxP6.run]
+    type = "p6.run"
+    order = 10
+    menu = "run active talon fx's"
+  [FxP6.select]
+    type = "p6.select"
+    order = 20
+    menu = "active fx's"
+  [FxP6.status]
+    type = "p6.status"
+    order = 30
+    menu = "status of active talonFx's"
+  [FxP6.mode]
+    type = "menu"
+    order = 40
+    menu = "config active mode"
+    [FXP6.mode.status]
+      type = "p6.modeStatus"
+      order = 10
+      menu = "active mode"
+    [FxP6.mode.select]
+      type = "p6.mode"
+      order = 15
+      menu = "select mode type"
+    [FxP6.mode.openLoop]
+      type = "menu"
+      order = 20
+      menu = "open loop modes"
+      [FxP6.mode.openLoop.deadband]
+        type = "p6.param"
+        order = 20
+        menu = "set torque current deadband (A)"
+        param = "TORQUE_CURRENT_DEADBAND"
+    [FxP6.mode.position]
+      type = "menu"
+      order = 30
+      menu = "position modes"
+      [FxP6.mode.position.velocity]
+        type = "p6.param"
+        order = 20
+        menu = "velocity target"
+        param = "VELOCITY"
+      [FxP6.mode.position.feedFwd]
+        type = "p6.param"
+        order = 30
+        menu = "velocity feed forward"
+        param = "FEED_FORWARD"
+    [FxP6.mode.velocity]
+      type = "menu"
+      order = 40
+      menu = "velocity modes"
+      [FxP6.mode.velocity.acceleration]
+        type = "p6.param"
+        order = 20
+        menu = "select acceleration target"
+        param = "ACCELERATION"
+      [FxP6.mode.velocity.feedFwd]
+        type = "p6.param"
+        order = 30
+        menu = "feed forward"
+        param = "FEED_FORWARD"
+    [FxP6.mode.motion]
+      type = "menu"
+      order = 50
+      menu = "motion magic modes"
+      [FxP6.mode.motion.motionType]
+        type = "p6.mmType"
+        order = 10
+        menu = "select motion magic type"
+      [FxP6.mode.motion.feedFwd]
+        type = "p6.param"
+        order = 20
+        menu = "select feed forward (sel unit)"
+        param = "FEED_FORWARD"
+      [FxP6.mode.motion.velocity]
+        type = "p6.param"
+        order = 30
+        menu = "select velocity target (rot/s)"
+        param = "VELOCITY"
+      [FxP6.mode.motion.acceleration]
+        type = "p6.param"
+        order = 40
+        menu = "select acceleration target (rot/s^2)"
+        param = "ACCELERATION"
+      [FxP6.mode.motion.jerk]
+        type = "p6.param"
+        order = 50
+        menu = "select jerk target (rot/s^3)"
+        param = "JERK"
+    [FxP6.mode.diff]
+      type = "menu"
+      order = 60
+      menu = "differential modes"
+      [FxP6.mode.diff.diffType]
+        type = "p6.diffType"
+        order = 10
+        menu = "select differential type"
+      [FxP6.mode.diff.slot]
+        type = "p6.param"
+        order = 20
+        menu = "select differential slot"
+        param = "DIFFERENTIAL_SLOT"
+      [Fx.P6.mode.diff.target]
+        type = "p6.param"
+        order = 30
+        menu = "select differential target (rots)"
+        param = "DIFFERENTIAL_TARGET"
+    [FxP6.mode.follow]
+      type = "menu"
+      order = 70
+      menu = "follower modes"
+      [FxP6.mode.follow.followType]
+        type = "p6.followType"
+        order = 10
+        menu = "select follower type"
+      [FxP6.mode.follow.oppose]
+        type = "p6.param"
+        order = 20
+        menu = "oppose leader direction"
+        param = "OPPOSE_MAIN"
+    [FxP6.mode.neutral]
+      type = "menu"
+      order = 80
+      memnu = "neutral modes"
+      [FxP6.mode.neutral.select]
+        type = "p6.neutralOut"
+        order = 10
+        menu = "select neutral output"
+    [FxP6.mode.foc]
+      type = "p6.param"
+      order = 100
+      menu = "enable FOC"
+      param = "FOC"
+    [FxP6.mode.overrideNeut]
+      type = "p6.param"
+      order = 110
+      menu = "override neutral mode"
+      param = "OVERRIDE_NEUTRAL"
+  [FxP6.units]
+    type = "p6.units"
+    order = 50
+    menu = "select active units"
+  [FxP6.feedback]
+    type = "menu"
+    order = 60
+    menu = "setup feedback configs"
+    [FxP6.feedback.offset]
+      type = "p6.param"
+      order = 10
+      menu = "set rotor offset"
+      param = "ROTOR_OFFSET"
+    [FxP6.feedback.sense2mech]
+      type = "p6.param"
+      order = 20
+      menu = "set sensor to mechanism ratio"
+      param = "SENSOR_TO_MECH_RATIO"
+    [FxP6.feedback.rotor2sense]
+      type = "p6.param"
+      order = 30
+      menu = "set rotor to sensor ratio"
+      param = "ROTOR_TO_SENSOR_RATIO"
+    [FxP6.feedback.remoteId]
+      type = "p6.param"
+      order = 40
+      menu = "set remote sensor id"
+      param = "REMOTE_SENSOR_ID"
+  [FxP6.slot]
+    type = "menu"
+    order = 70
+    menu = "setup slot configs"
+    [FxP6.slot.active]
+      type = "p6.slot"
+      order = 10
+      menu = "active slot"
+    [FxP6.slot.kP]
+      type = "p6.param"
+      order = 20
+      menu = "kP"
+      param = "SLOT_KP"
+    [FxP6.slot.kI]
+      type = "p6.param"
+      order = 30
+      menu = "kI"
+      param = "SLOT_KI"
+    [FxP6.slot.kD]
+      type = "p6.param"
+      order = 40
+      menu = "kD"
+      param = "SLOT_KD"
+    [FxP6.slot.kS]
+      type = "p6.param"
+      order = 50
+      menu = "kS"
+      param = "SLOT_KS"
+    [FxP6.slot.kV]
+      type = "p6.param"
+      order = 60
+      menu = "kV"
+      param = "SLOT_KV"
+    [FxP6.slot.kA]
+      type = "p6.param"
+      order = 65
+      menu = "kA"
+      param = "SLOT_KA"
+    [FxP6.slot.kG]
+      type = "p6.param"
+      order = 70
+      menu = "kG"
+      param = "SLOT_KG"
+    [FxP6.slot.gravity]
+      type = "p6.gravity"
+      order = 80
+      menu = "gravity type"
+  [FxP6.motion]
+    type = "menu"
+    order = 80
+    menu = "setup motion magic configs"
+    [FxP6.motion.accel]
+      type = "p6.param"
+      order = 10
+      menu = "acceleration"
+      param = "MM_ACCEL"
+    [FxP6.motion.cruise]
+      type = "p6.param"
+      order = 20
+      menu = "cruise velocity"
+      param = "MM_CRUISE_VEL"
+    [FxP6.motion.jerk]
+      type = "p6.param"
+      order = 30
+      menu = "jerk"
+      param = "MM_JERK"
+  [FxP6.diff]
+    type = "menu"
+    order = 90
+    menu = "setup differential configs"
+    [FxP6.diff.duty]
+      type = "p6.param"
+      order = 10
+      menu = "peak differential duty cycle"
+      param = "PEAK_DIFF_DC"
+    [FxP6.diff.torque]
+      type = "p6.param"
+      order = 20
+      menu = "peak differential torque current"
+      param = "PEAK_DIFF_TORQUE"
+    [FxP6.diff.volt]
+      type = "p6.param"
+      order = 30
+      menu = "peak differential voltage"
+      param = "PEAK_DIFF_VOLT"
+    [FxP6.diff.remote]
+      type = "p6.param"
+      order = 40
+      menu = "differential remote id"
+      param = "DIFF_SENSOR_REMOTE_ID"
+    [FxP6.diff.fx]
+      type = "p6.param"
+      order = 50
+      menu = "differential fx id"
+      param = "DIFF_FX_ID"
+  [FxP6.current]
+    type = "menu"
+    order = 100
+    menu = "setup current limit configs"
+    [FxP6.current.statorEn]
+      type = "p6.param"
+      order = 10
+      menu = "stator limit enable"
+      param = "STATOR_LIM_EN"
+    [FxP6.current.statorLim]
+      type = "p6.param"
+      order = 20
+      menu = "stator current limit"
+      param = "STATOR_LIM"
+    [FxP6.current.suppEn]
+      type = "p6.param"
+      order = 30
+      menu = "supply limit enable"
+      param = "SUPP_LIM_EN"
+    [FxP6.current.suppLim]
+      type = "p6.param"
+      order = 40
+      menu = "supply current limit"
+      param = "SUPP_LIM"
+    [FxP6.current.tripI]
+      type = "p6.param"
+      order = 50
+      menu = "supply current trip threshold (A)"
+      param = "SUPP_TRIP_THRES"
+    [FxP6.current.tripT]
+      type = "p6.param"
+      order = 60
+      menu = "supply current trip time (s)"
+      param = "SUPP_TRIP_TIME"
+  [FxP6.motor]
+    type = "menu"
+    order = 110
+    menu = "setup motor output and ramp configs"
+    [FxP6.motor.invert]
+      type = "p6.invert"
+      order = 10
+      menu = "motor inversion"
+    [FxP6.motor.neutral]
+      type = "p6.neutral"
+      order = 20
+      menu = "neutral mode"
+    [FxP6.motor.duty]
+      type = "menu"
+      order = 30
+      menu = "duty cycle configs"
+      [FxP6.motor.duty.peakFwd]
+        type= "p6.param"
+        order = 20
+        menu = "peak forward %"
+        param = "PEAK_FWD_DC"
+      [FxP6.motor.duty.peakRev]
+        type = "p6.param"
+        order = 30
+        menu = "peak reverse %"
+        param = "PEAK_REV_DC"
+      [FxP6.motor.duty.dead]
+        type = "p6.param"
+        order = 40
+        menu = "neutral deadband (%)"
+        param = "NEUTRAL_DEADBAND_DC"
+      [FxP6.motor.duty.openRamp]
+        type = "p6.param"
+        order = 50
+        menu = "open loop ramp (%)"
+        param = "OPEN_LOOP_RAMP_DC"
+      [FxP6.motor.duty.closedRamp]
+        type = "p6.param"
+        order = 60
+        menu = "closed loop ramp (%)"
+        param = "CLOSED_LOOP_RAMP_DC"
+    [FxP6.motor.volt]
+      type = "menu"
+      order = 40
+      menu = "voltage configs"
+      [FxP6.motor.volt.peakFwd]
+        type = "p6.param"
+        order = 10
+        menu = "peak forward (V)"
+        param = "PEAK_FWD_V"
+      [FxP6.motor.volt.peakRev]
+        type = "p6.param"
+        order = 20
+        menu = "peak reverse (V)"
+        param = "PEAK_REV_V"
+      [FxP6.motor.volt.supplyConst]
+        type = "p6.param"
+        order = 30
+        menu = "supply voltage time const"
+        param = "SUPPLY_V_TIME_CONST"
+      [FxP6.motor.volt.openRamp]
+        type = "p6.param"
+        order = 40
+        menu = "open loop ramp (V)"
+        param = "OPEN_LOOP_RAMP_V"
+      [FxP6.motor.volt.closedRamp]
+        type = "p6.param"
+        order = 50
+        menu = "closed loop ramp (V)"
+        param = "CLOSED_LOOP_RAMP_V"
+    [FxP6.motor.torque]
+      type = "menu"
+      order = 50
+      menu = "torque current configs"
+      [FxP6.motor.torque.peakFwd]
+        type = "p6.param"
+        order = 10
+        menu = "peak forward (A)"
+        param = "PEAK_FWD_I"
+      [FxP6.motor.torque.peakRev]
+        type = "p6.param"
+        order = 20
+        menu = "peak reverse (A)"
+        param = "PEAK_REV_I"
+      [FxP6.motor.torque.dead]
+        type = "p6.param"
+        order = 30
+        menu = "neutral deadband (A)"
+        param = "TORQUE_NEUTRAL_DEADBAND"
+      [FxP6.motor.openRamp]
+        type = "p6.param"
+        order = 40
+        menu = "open loop ramp (A)"
+        param = "OPEN_LOOP_RAMP_I"
+      [FxP6.motor.closedRamp]
+        type = "p6.param"
+        order = 50
+        menuu = "closed loop ramp (A)"
+        param = "CLOSED_LOOP_RAMP_I"
+  [FxP6.limits]
+    type = "menu"
+    order = 120
+    menu = "setup hard/soft limits"
+    [FxP6.limits.hard]
+      type = "menu"
+      order = 10
+      menu = "hard limits"
+      [FxP6.limits.hard.fwdEn]
+        type = "p6.param"
+        order = 10
+        menu = "FWD limit enable"
+        param = "FWD_HARD_EN"
+      [FxP6.limits.hard.fwdNormal]
+        type = "p6.fwdNorm"
+        order = 10
+        menu = "FWD limit normal"
+      [FxP6.limits.hard.fwdSource]
+        type = "p6.fwdSource"
+        order = 20
+        menu = "FWD limit source"
+      [FxP6.limits.hard.fwdRemote]
+        type = "p6.param"
+        order = 30
+        menu = "FWD limit remote id"
+        param = "FWD_REMOTE_ID"
+      [FxP6.limits.hard.fwdAutoSet]
+        type = "p6.param"
+        order = 40
+        menu = "Autoset Position on FWD limit"
+        param = "FWD_AUTOSET_POS"
+      [FxP6.limits.hard.fwdAutoSetValue]
+        type = "p6.param"
+        order = 50
+        menu = "FWD autoset position value"
+        param = "FWD_AUTOSET_POS_VALUE"
+      [FxP6.limits.hard.revEn]
+        type = "p6.param"
+        order = 60
+        menu = "REV limit enable"
+        param = "REV_HARD_EN"
+      [FxP6.limits.hard.revNormal]
+        type = "p6.revNorm"
+        order = 70
+        menu = "REV limit normal"
+      [FxP6.limits.hard.revSource]
+        type = "p6.revSource"
+        order = 80
+        menu = "REV limit source"
+      [FxP6.limits.hard.revRemote]
+        type = "p6.param"
+        order = 90
+        menu = "REV limit remote id"
+        param = "REV_REMOTE_ID"
+      [FxP6.limits.hard.revAutoSet]
+        type = "p6.param"
+        order = 100
+        menu = "Autoset position on REV limit"
+        param = "REV_AUTOSET_POS"
+      [FxP6.limits.hard.revAutoSetValue]
+        type = "p6.param"
+        order = 110
+        menu = "REV autoset position value"
+        param = "REV_AUTOSET_POS_VALUE"
+    [FxP6.limits.soft]
+      type = "menu"
+      order = 20
+      menu = "soft limits"
+      [FxP6.limits.soft.fwdEn]
+        type = "p6.param"
+        order = 10
+        menu = "FWD limit enable"
+        param = "FWD_SOFT_EN"
+      [FxP6.limits.soft.fwdThres]
+        type = "p6.param"
+        order = 20
+        menu = "FWD soft limit"
+        param = "FWD_SOFT_THRES"
+      [FxP6.limits.soft.revEn]
+        type = "p6.param"
+        order = 30
+        menu = "REV limit enable"
+        param = "REV_SOFT_EN"
+      [FxP6.limits.soft.revThres]
+        type = "p6.param"
+        order = 40
+        menu = "REV soft limit"
+        param = "REV_SOFT_THRES"
+  [FxP6.audio]
+    type = "menu"
+    order = 130
+    menu = "setup audio configs"
+    [FxP6.audio.disable]
+      type = "p6.param"
+      order = 10
+      menu = "allow music on disable"
+      param = "ALLOW_MUSIC_DIS"
+    [FxP6.audio.beepBoot]
+      type = "p6.param"
+      order = 20
+      menu = "beep on boot"
+      param = "BEEP_ON_BOOT"
+    [FxP6.audio.beepConfig]
+      type = "p6.param"
+      order = 30
+      menu = "beep on config"
+      param = "BEEP_ON_CONFIG"
+  [FxP6.factory]
+    type = "menu"
+    order = 140
+    menu = "config factory default"
 
 [servo]
   type = "menu"

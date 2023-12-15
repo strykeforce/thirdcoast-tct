@@ -9,7 +9,7 @@ import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT_4
-import org.strykeforce.thirdcoast.device.TalonFxService
+import org.strykeforce.thirdcoast.device.LegacyTalonFxService
 import org.strykeforce.thirdcoast.device.TalonService
 import org.strykeforce.thirdcoast.talon.TalonParameter.Enum.*
 
@@ -22,7 +22,7 @@ class TalonParameterCommand(
 ) : AbstractCommand(parent, key, toml) {
 
     private val talonService: TalonService by inject()
-    private val talonFxService: TalonFxService by inject()
+    private val legacyTalonFxService: LegacyTalonFxService by inject()
     val type = toml.getString(Command.DEVICE_KEY) ?: throw Exception("$key: ${Command.DEVICE_KEY} missing")
     private val timeout = talonService.timeout
     private val param = TalonParameter.create(this, toml.getString("param") ?: "UNKNOWN")
@@ -37,13 +37,13 @@ class TalonParameterCommand(
                     slot = talonService.activeSlot
                 }
                 "fx" -> {
-                    baseConfig = talonFxService.activeConfiguration
-                    slot = talonFxService.activeSlot
+                    baseConfig = legacyTalonFxService.activeConfiguration
+                    slot = legacyTalonFxService.activeSlot
                 }
                 else -> throw IllegalArgumentException()
             }
             val srxConfig = talonService.activeConfiguration
-            val fxConfig = talonFxService.activeConfiguration
+            val fxConfig = legacyTalonFxService.activeConfiguration
             return when (param.enum) {
                 SLOT_P -> formatMenu(slot.kP, DOUBLE_FORMAT_4)
                 SLOT_I -> formatMenu(slot.kI, DOUBLE_FORMAT_4)
@@ -55,7 +55,7 @@ class TalonParameterCommand(
                 SLOT_PEAK_OUTPUT -> formatMenu(slot.closedLoopPeakOutput)
                 OUTPUT_REVERSED -> when(type){
                     "srx" -> formatMenu(talonService.outputInverted)
-                    "fx" -> formatMenu(talonFxService.outputInverted)
+                    "fx" -> formatMenu(legacyTalonFxService.outputInverted)
                     else -> throw IllegalArgumentException()
                 }
                 OPEN_LOOP_RAMP -> formatMenu(baseConfig.openloopRamp)
@@ -67,7 +67,7 @@ class TalonParameterCommand(
                 NEUTRAL_DEADBAND -> formatMenu(baseConfig.neutralDeadband)
                 VOLTAGE_COMP_ENABLE -> when (type) {
                     "srx" -> formatMenu(talonService.voltageCompensation)
-                    "fx" -> formatMenu(talonFxService.voltageCompensation)
+                    "fx" -> formatMenu(legacyTalonFxService.voltageCompensation)
                     else -> throw IllegalArgumentException()
                 }
                 VOLTAGE_COMP_SATURATION -> formatMenu(baseConfig.voltageCompSaturation)
@@ -76,7 +76,7 @@ class TalonParameterCommand(
                 MOTION_ACCELERATION -> formatMenu(baseConfig.motionAcceleration)
                 SENSOR_PHASE -> when (type) {
                     "srx" -> formatMenu(talonService.sensorPhase)
-                    "fx" -> formatMenu(talonFxService.sensorPhase)
+                    "fx" -> formatMenu(legacyTalonFxService.sensorPhase)
                     else -> throw IllegalArgumentException()
                 }
                 CURRENT_LIMIT_ENABLE -> formatMenu(talonService.currentLimit)
@@ -145,15 +145,15 @@ class TalonParameterCommand(
                 timeout = talonService.timeout
             }
             "fx" -> {
-                config = talonFxService.activeConfiguration
-                slot = talonFxService.activeSlot
-                activeSlotIndex = talonFxService.activeSlotIndex
-                timeout = talonFxService.timeout
+                config = legacyTalonFxService.activeConfiguration
+                slot = legacyTalonFxService.activeSlot
+                activeSlotIndex = legacyTalonFxService.activeSlotIndex
+                timeout = legacyTalonFxService.timeout
             }
             else -> throw IllegalArgumentException()
         }
         val srxConfig = talonService.activeConfiguration
-        val fxConfig = talonFxService.activeConfiguration
+        val fxConfig = legacyTalonFxService.activeConfiguration
 
         when (param.enum) {
             SLOT_P -> configDoubleParam(slot.kP) { baseTalon, value ->
@@ -224,7 +224,7 @@ class TalonParameterCommand(
                 baseTalon.enableVoltageCompensation(value)
                 when (type) {
                     "srx" -> talonService.voltageCompensation = value
-                    "fx" -> talonFxService.voltageCompensation = value
+                    "fx" -> legacyTalonFxService.voltageCompensation = value
                     else -> throw IllegalArgumentException()
                 }
             }
@@ -248,7 +248,7 @@ class TalonParameterCommand(
                 baseTalon.setSensorPhase(value)
                 when (type) {
                     "srx" -> talonService.sensorPhase = value
-                    "fx" -> talonFxService.sensorPhase = value
+                    "fx" -> legacyTalonFxService.sensorPhase = value
                     else -> throw IllegalArgumentException()
                 }
             }
@@ -399,7 +399,7 @@ class TalonParameterCommand(
                 // Let the Talon round down then number to a legal value
                 when (type) {
                     "srx" -> talonService.dirty = true
-                    "fx" -> talonFxService.dirty = true
+                    "fx" -> legacyTalonFxService.dirty = true
                     else -> throw IllegalArgumentException()
                 }
             }
@@ -423,8 +423,8 @@ class TalonParameterCommand(
                 logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
             }
             "fx" -> {
-                talonFxService.active.forEach { config(it, paramValue) }
-                logger.debug { "set ${talonFxService.active.size} talonfx ${param.name}: $paramValue" }
+                legacyTalonFxService.active.forEach { config(it, paramValue) }
+                logger.debug { "set ${legacyTalonFxService.active.size} talonfx ${param.name}: $paramValue" }
             }
             else -> throw IllegalArgumentException()
         }
@@ -438,8 +438,8 @@ class TalonParameterCommand(
 
     private fun configBooleanFxParam(default: Boolean, config: (TalonFX, Boolean) -> Unit) {
         val paramValue = param.readBoolean(reader, default)
-        talonFxService.active.forEach { config(it, paramValue) }
-        logger.debug { "set ${talonFxService.active.size} talonfx ${param.name}: $paramValue" }
+        legacyTalonFxService.active.forEach { config(it, paramValue) }
+        logger.debug { "set ${legacyTalonFxService.active.size} talonfx ${param.name}: $paramValue" }
     }
 
     private fun configIntParam(default: Int, config: (BaseTalon, Int) -> Unit) {
@@ -450,8 +450,8 @@ class TalonParameterCommand(
                 logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
             }
             "fx" -> {
-                talonFxService.active.forEach { config(it, paramValue) }
-                logger.debug { "set ${talonFxService.active.size} talonfx ${param.name}: $paramValue" }
+                legacyTalonFxService.active.forEach { config(it, paramValue) }
+                logger.debug { "set ${legacyTalonFxService.active.size} talonfx ${param.name}: $paramValue" }
             }
             else -> throw IllegalArgumentException()
         }
@@ -471,8 +471,8 @@ class TalonParameterCommand(
                 logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
             }
             "fx" -> {
-                talonFxService.active.forEach { config(it, paramValue) }
-                logger.debug { "set ${talonFxService.active.size} talonfx ${param.name}: $paramValue" }
+                legacyTalonFxService.active.forEach { config(it, paramValue) }
+                logger.debug { "set ${legacyTalonFxService.active.size} talonfx ${param.name}: $paramValue" }
             }
             else -> throw IllegalArgumentException()
         }
@@ -486,14 +486,14 @@ class TalonParameterCommand(
 
     private fun configDoubleFxParam(default: Double, config: (TalonFX, Double) -> Unit) {
         val paramValue = param.readDouble(reader, default)
-        talonFxService.active.forEach { config(it, paramValue) }
-        logger.debug { "set ${talonFxService.active.size} talonfx ${param.name}: $paramValue" }
+        legacyTalonFxService.active.forEach { config(it, paramValue) }
+        logger.debug { "set ${legacyTalonFxService.active.size} talonfx ${param.name}: $paramValue" }
     }
 
     private fun defaultFor(frame: StatusFrameEnhanced): Int {
         when (type) {
             "srx" -> return talonService.active.first().getStatusFramePeriod(frame)
-            "fx" -> return talonFxService.active.first().getStatusFramePeriod(frame)
+            "fx" -> return legacyTalonFxService.active.first().getStatusFramePeriod(frame)
             else -> throw IllegalArgumentException()
         }
     }

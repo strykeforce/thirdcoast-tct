@@ -22,6 +22,7 @@ import org.strykeforce.thirdcoast.swerve.SaveZeroCommand
 import org.strykeforce.thirdcoast.swerve.SelectAzimuthCommand
 import org.strykeforce.thirdcoast.swerve.SetAzimuthCommand
 import org.strykeforce.thirdcoast.talon.*
+import org.strykeforce.thirdcoast.talon.phoenix6.*
 
 private val logger = KotlinLogging.logger {}
 
@@ -40,9 +41,10 @@ interface Command {
         const val DEVICE_KEY = "device"
 
         fun createFromToml(toml: TomlTable, parent: MenuCommand? = null, key: String = "ROOT"): Command {
-
+            logger.info{"key: $key, toml: ${toml.keySet()}"}
             val type = toml.getString(TYPE_KEY) ?: throw Exception("$key: $TYPE_KEY missing")
             logger.info { "type: $type, key: $key" }
+
 
             return when (type) {
                 "menu" -> createMenuCommand(parent, key, toml)
@@ -81,6 +83,25 @@ interface Command {
                 "swerve.azimuth.adjust" -> AdjustAzimuthCommand(parent, key, toml)
                 "pigeon.select" -> SelectPigeonCommand(parent, key, toml)
                 "pigeon.param" -> PigeonParameterCommand(parent, key, toml)
+                "p6.run" -> P6RunCommand(parent, key, toml)
+                "p6.select" -> P6SelectTalonsCommand(parent, key, toml)
+                "p6.status" -> P6TalonStatusCommand(parent, key, toml)
+                "p6.modeStatus" -> P6ModeStatusCommand(parent, key, toml)
+                "p6.mode" -> P6SelectModeCommand(parent, key, toml)
+                "p6.param" -> Phoenix6ParameterCommand(parent, key, toml)
+                "p6.mmType" -> P6SelectMotionMagicTypeCommand(parent, key, toml)
+                "p6.diffType" -> P6SelectDifferentialTypeCommand(parent, key, toml)
+                "p6.followType" -> P6SelectFollowerTypeCommand(parent, key, toml)
+                "p6.neutralOut" -> P6SelectNeutralOutputCommand(parent, key, toml)
+                "p6.units" -> P6SelectUnitCommand(parent, key, toml)
+                "p6.slot" -> P6SelectSlotCommand(parent, key, toml)
+                "p6.gravity" -> P6SelectGravityTypeCommand(parent, key, toml)
+                "p6.invert" -> P6SelectMotorInvertCommand(parent, key, toml)
+                "p6.neutral" -> P6SelectNeutralModeCommand(parent, key, toml)
+                "p6.fwdNorm" -> P6SelectFwdHardLimitNormalCommand(parent, key, toml)
+                "p6.fwdSource" -> P6SelectFwdHardLimitSourceCommand(parent, key, toml)
+                "p6.revNorm" -> P6SelectRevHardLimitNormalCommand(parent, key, toml)
+                "p6.revSource" -> P6SelectRevHardLimitSourceCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
             }
         }

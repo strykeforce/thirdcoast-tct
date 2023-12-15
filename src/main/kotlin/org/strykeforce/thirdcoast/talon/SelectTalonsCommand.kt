@@ -7,7 +7,7 @@ import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.prompt
-import org.strykeforce.thirdcoast.device.TalonFxService
+import org.strykeforce.thirdcoast.device.LegacyTalonFxService
 import org.strykeforce.thirdcoast.device.TalonService
 import org.strykeforce.thirdcoast.info
 import org.strykeforce.thirdcoast.readIntList
@@ -19,7 +19,7 @@ class SelectTalonsCommand(
     toml: TomlTable
 ) : AbstractCommand(parent, key, toml) {
     private val talonService: TalonService by inject()
-    private val talonFxService: TalonFxService by inject()
+    private val legacyTalonFxService: LegacyTalonFxService by inject()
 
     val type = toml.getString(Command.DEVICE_KEY) ?: throw Exception("$key: ${Command.DEVICE_KEY} missing")
 
@@ -30,7 +30,7 @@ class SelectTalonsCommand(
                     return formatMenu(talonService.active.map(TalonSRX::getDeviceID).joinToString())
                 }
                 "fx" -> {
-                    return formatMenu(talonFxService.active.map(TalonFX::getDeviceID).joinToString())
+                    return formatMenu(legacyTalonFxService.active.map(TalonFX::getDeviceID).joinToString())
                 }
                 else -> throw IllegalArgumentException()
             }
@@ -46,8 +46,8 @@ class SelectTalonsCommand(
                     ids = reader.readIntList(this.prompt("ids"), talonService.active.map(TalonSRX::getDeviceID))
                     new = talonService.activate(ids)
                 } else if (type == "fx") {
-                    ids = reader.readIntList(this.prompt("ids"), talonFxService.active.map(TalonFX::getDeviceID))
-                    new = talonFxService.activate(ids)
+                    ids = reader.readIntList(this.prompt("ids"), legacyTalonFxService.active.map(TalonFX::getDeviceID))
+                    new = legacyTalonFxService.activate(ids)
 
                 } else throw IllegalArgumentException()
 

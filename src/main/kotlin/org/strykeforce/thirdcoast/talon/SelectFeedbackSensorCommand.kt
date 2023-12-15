@@ -7,7 +7,7 @@ import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
-import org.strykeforce.thirdcoast.device.TalonFxService
+import org.strykeforce.thirdcoast.device.LegacyTalonFxService
 import org.strykeforce.thirdcoast.device.TalonService
 
 private val SENSORS = listOf(
@@ -44,7 +44,7 @@ class SelectFeedbackSensorCommand(
 ) : AbstractSelectCommand<FeedbackDevice>(parent, key, toml, SENSORS, LABELS) {
 
     private val talonService: TalonService by inject()
-    private val talonFxService: TalonFxService by inject()
+    private val legacyTalonFxService: LegacyTalonFxService by inject()
     val type = toml.getString(Command.DEVICE_KEY) ?: throw Exception("$key: ${Command.DEVICE_KEY} missing")
     private val pidIndex = toml.getLong("pid")?.toInt() ?: 0
 
@@ -52,7 +52,7 @@ class SelectFeedbackSensorCommand(
         get() {
             val config: BaseTalonConfiguration
             if (type == "srx") config = talonService.activeConfiguration
-            else if (type == "fx") config = talonFxService.activeConfiguration
+            else if (type == "fx") config = legacyTalonFxService.activeConfiguration
             else throw IllegalArgumentException()
 
             val sensor = when (pidIndex) {
@@ -76,8 +76,8 @@ class SelectFeedbackSensorCommand(
             config = talonService.activeConfiguration
             talonService.active.forEach { it.configSelectedFeedbackSensor(sensor, pidIndex, talonService.timeout) }
         } else if (type == "fx") {
-            config = talonFxService.activeConfiguration
-            talonFxService.active.forEach { it.configSelectedFeedbackSensor(sensor, pidIndex, talonFxService.timeout) }
+            config = legacyTalonFxService.activeConfiguration
+            legacyTalonFxService.active.forEach { it.configSelectedFeedbackSensor(sensor, pidIndex, legacyTalonFxService.timeout) }
         } else throw IllegalArgumentException()
         when (pidIndex) {
             0 -> config.primaryPID.selectedFeedbackSensor = sensor

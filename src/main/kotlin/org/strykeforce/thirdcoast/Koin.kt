@@ -1,11 +1,8 @@
 package org.strykeforce.thirdcoast
 
 import com.ctre.phoenix.CANifier
-import com.ctre.phoenix.motorcontrol.FeedbackDevice
-import com.ctre.phoenix.motorcontrol.NeutralMode
 import com.ctre.phoenix.motorcontrol.can.TalonFX
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
-import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
 import com.ctre.phoenix.sensors.PigeonIMU
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.wpilibj.DigitalOutput
@@ -46,7 +43,9 @@ val tctModule = module {
 
     single { TalonService(get()) { id -> TalonSRX(id) } }
 
-    single { TalonFxService(get()) { id -> TalonFX(id) } }
+    single { LegacyTalonFxService(get()) { id -> TalonFX(id) } }
+
+    single { TalonFxService(get()) { id -> com.ctre.phoenix6.hardware.TalonFX(id)} }
 
     single { ServoService { id -> Servo(id) } }
 
