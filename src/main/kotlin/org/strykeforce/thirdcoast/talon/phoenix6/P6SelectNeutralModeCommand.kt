@@ -10,13 +10,13 @@ import org.strykeforce.thirdcoast.device.TalonFxService
 
 
 private val MODE = listOf(
-    Brake,
-    Coast
+    Coast,
+    Brake
 )
 
 private val LABELS = listOf(
-    "Brake",
-    "Coast"
+    "Coast",
+    "Brake"
 )
 
 class P6SelectNeutralModeCommand(

@@ -18,44 +18,44 @@
     name = "Remote Sensor ID"
     type = "INTEGER"
     help = "Device ID of which remote device to use. This is not used if the Sensor Source is the internal rotor sensor."
-    range = [0,62]
+    range = [0.0,62.0]
 
 #Slot Configs
 [SLOT_KP]
     name = "Proportional Gain"
     type = "DOUBLE"
     help = "The units for this gain is dependent on the control mode. Since this gain is multiplied by error in the input, the units should be defined as units of output per unit of input error. For example, when controlling velocity using a duty cycle closed loop, the units for the proportional gain will be duty cycle per rps of error, or 1/rps."
-    range = [0, 3.4e38]
+    range = [0.0, 3.4e38]
 [SLOT_KI]
     name = "Integral Gain"
     type = "DOUBLE"
     help = "The units for this gain is dependent on the control mode. Since this gain is multiplied by error in the input integrated over time (in units of seconds), the units should be defined as units of output per unit of integrated input error. For example, when controlling velocity using a duty cycle closed loop, integrating velocity over time results in rps * s = rotations. Therefore, the units for the integral gain will be duty cycle per rotation of accumulated error, or 1/rot."
-    range = [0, 3.4e38]
+    range = [0.0, 3.4e38]
 [SLOT_KD]
     name = "Derivitave Gain"
     type = "DOUBLE"
     help = "The units for this gain is dependent on the control mode. Since this gain is multiplied by the derivative of error in the input with respect to time (in units of seconds), the units should be defined as units of output per unit of the differentiated input error. For example, when controlling velocity using a duty cycle closed loop, the derivative of velocity with respect to time is rps/s, which is acceleration. Therefore, the units for the derivative gain will be duty cycle per unit of acceleration error, or 1/(rps/s)."
-    range = [0, 3.4e38]
+    range = [0.0, 3.4e38]
 [SLOT_KS]
     name = "Static FWD Gain"
     type = "DOUBLE"
     help = "This is added to the closed loop output. The sign is determined by target velocity. The unit for this constant is dependent on the control mode, typically fractional duty cycle, voltage, or torque current."
-    range = [-512, 511]
+    range = [-512.0, 511.0]
 [SLOT_KV]
     name = "Velocity Feedforward Gain"
     type = "DOUBLE"
     help = "The units for this gain is dependent on the control mode. Since this gain is multiplied by the requested velocity, the units should be defined as units of output per unit of requested input velocity. For example, when controlling velocity using a duty cycle closed loop, the units for the velocity feedfoward gain will be duty cycle per requested rps, or 1/rps."
-    range = [0, 3.4e38]
+    range = [0.0, 3.4e38]
 [SLOT_KA]
     name = "Acceleration Feedforward Gain"
     type = "DOUBLE"
     help = "The units for this gain is dependent on the control mode. Since this gain is multiplied by the requested acceleration, the units should be defined as units of output per unit of requested input acceleration. For example, when controlling velocity using a duty cycle closed loop, the units for the acceleration feedfoward gain will be duty cycle per requested rps/s, or 1/(rps/s)."
-    range = [0, 3.4e38]
+    range = [0.0, 3.4e38]
 [SLOT_KG]
     name = "Gravity Feedforward Gain"
     type = "DOUBLE"
     help = "This is added to the closed loop output. The sign is determined by the type of gravity feedforward. The unit for this constant is dependent on the control mode, typically fractional duty cycle, voltage, or torque current."
-    range = "-512, 511"
+    range = [-512.0, 511.0]
 
 
 #Motion Magic Configs
@@ -63,17 +63,17 @@
     name = "Motion Magic Cruise Velocity"
     type = "DOUBLE"
     help = "This is the maximum velocity Motion Magic® based control modes are allowed to use. Units: rps"
-    range = [0, 9999]
+    range = [0.0, 9999.0]
 [MM_ACCEL]
     name = "Motion Magic Acceleration"
     type = "DOUBLE"
     help = "This is the target acceleration Motion Magic® based control modes are allowed to use. Units: rps^2"
-    range = [0, 9999]
+    range = [0.0, 9999.0]
 [MM_JERK]
     name = "Motion Magic Jerk"
     type = "DOUBLE"
     help = "This is the target jerk (acceleration derivative) Motion Magic® based control modes are allowed to use. This allows Motion Magic® support of S-Curves. If this is set to zero, then Motion Magic® will not apply a Jerk limit. Units: rot/s^3"
-    range = [0, 9999]
+    range = [0.0, 9999.0]
 
 #Differential Configs
 [PEAK_DIFF_DC]
@@ -95,12 +95,12 @@
     name = "Differential Remote Sensor ID"
     type = "INTEGER"
     help = "Device ID of which remote sensor to use on the differential axis. This is used when the Differential Sensor Source is not RemoteTalonFX_Diff."
-    range = [0, 62]
+    range = [0.0, 62.0]
 [DIFF_FX_ID]
     name = "Differential Talon FX ID"
     type = "INTEGER"
     help = "Device ID of which remote Talon FX to use. This is used when the Differential Sensor Source is not disabled."
-    range = [0, 62]
+    range = [0.0, 62.0]
 
 #Current Limit Configs
 [STATOR_LIM_EN]
@@ -116,7 +116,7 @@
     name = "Supply Current Limit Enable"
     type = "BOOLEAN"
     help = "Enable motor supply current limiting."
-[SUPP_LIM_]
+[SUPP_LIM]
     name = "Supply Current Limit"
     type = "DOUBLE"
     help = "The amount of supply current allowed. This is only applicable for non-torque current control modes. Note this requires the corresponding enable to be true. Use SupplyCurrentThreshold and SupplyTimeThreshold to allow brief periods of high-current before limiting occurs. Units: A"
@@ -240,7 +240,7 @@
     name = "FWD Remote sensor ID"
     type = "INTEGER"
     help = "Device ID of the device if using remote limit switch features."
-    range = [0, 62]
+    range = [0.0, 62.0]
 [FWD_AUTOSET_POS]
     name = "FWD limit autoset position enable"
     type = "BOOLEAN"
@@ -258,7 +258,7 @@
     name = "REV Remote Sensor ID"
     type = "INTEGER"
     help = "Device ID of the device if using remote limit switch features."
-    range = [0,62]
+    range = [0.0,62.0]
 [REV_AUTOSET_POS]
     name = "REV limit autoset position enable"
     type = "BOOLEAN"
@@ -316,7 +316,7 @@
     name = "Differential Slot"
     type = "INTEGER"
     help = "Select which gains are applied to the differential controller by selecting the slot. Use the configuration api to set the gain values for the selected slot before enabling this feature. Slot must be within [0,2]."
-    range = [0,2]
+    range = [0.0,2.0]
 [DIFFERENTIAL_TARGET]
     name = "Differential Position"
     type = "DOUBLE"
@@ -329,4 +329,15 @@
     name = "Override Neutral Setting"
     type = "BOOLEAN"
     help = "Set to true to static-brake (if Voltage/Duty Cycle) or coast (if Torque Current)  the rotor when output is zero (or within deadband). Set to false to use the NeutralMode configuration setting (default). This flag exists to provide the fundamental behavior of this control when output is zero, which is to provide 0V to the motor."
-
+[LIM_FWD_MOT]
+    name = "Limit Forward Motion"
+    type = "BOOLEAN"
+    help = "Set to true to force forward limiting. This allows users to use other limit switch sensors connected to robot controller. This also allows use of active sensors that require external power."
+[LIM_REV_MOT]
+    name = "Limit Reverse Motion"
+    type = "BOOLEAN"
+    help = "Set to true to force reverse limiting. This allows users to use other limit switch sensors connected to robot controller. This also allows use of active sensors that require external power."
+[GRAPHER_FRAME]
+    name = "Grapher Update Frequency (Hz)"
+    type = "DOUBLE"
+    help = "Input update frequncy for all singals on the grapher in Hz, if this value shows 0 it is using the default update frequency"

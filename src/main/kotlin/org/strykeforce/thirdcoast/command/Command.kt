@@ -41,8 +41,11 @@ interface Command {
         const val DEVICE_KEY = "device"
 
         fun createFromToml(toml: TomlTable, parent: MenuCommand? = null, key: String = "ROOT"): Command {
-            logger.info{"key: $key, toml: ${toml.keySet()}"}
+            //logger.info{"key: $key, toml: ${toml.keySet()}"}
             val type = toml.getString(TYPE_KEY) ?: throw Exception("$key: $TYPE_KEY missing")
+            if(type == "p6.param"){
+                logger.info { "key: $key, toml: ${toml.keySet()}" }
+            }
             logger.info { "type: $type, key: $key" }
 
 
@@ -88,7 +91,7 @@ interface Command {
                 "p6.status" -> P6TalonStatusCommand(parent, key, toml)
                 "p6.modeStatus" -> P6ModeStatusCommand(parent, key, toml)
                 "p6.mode" -> P6SelectModeCommand(parent, key, toml)
-                "p6.param" -> Phoenix6ParameterCommand(parent, key, toml)
+                "p6.param" ->  Phoenix6ParameterCommand(parent, key, toml)
                 "p6.mmType" -> P6SelectMotionMagicTypeCommand(parent, key, toml)
                 "p6.diffType" -> P6SelectDifferentialTypeCommand(parent, key, toml)
                 "p6.followType" -> P6SelectFollowerTypeCommand(parent, key, toml)
@@ -102,6 +105,8 @@ interface Command {
                 "p6.fwdSource" -> P6SelectFwdHardLimitSourceCommand(parent, key, toml)
                 "p6.revNorm" -> P6SelectRevHardLimitNormalCommand(parent, key, toml)
                 "p6.revSource" -> P6SelectRevHardLimitSourceCommand(parent, key, toml)
+                "p6.factory" -> P6FactoryDefaultCommand(parent, key, toml)
+                "p6.graph" -> P6DefaultStatusFrameCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
             }
         }

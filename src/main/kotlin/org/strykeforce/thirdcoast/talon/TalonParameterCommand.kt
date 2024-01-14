@@ -15,6 +15,7 @@ import org.strykeforce.thirdcoast.talon.TalonParameter.Enum.*
 
 private val logger = KotlinLogging.logger {}
 
+
 class TalonParameterCommand(
     parent: Command?,
     key: String,

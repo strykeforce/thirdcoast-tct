@@ -1,10 +1,12 @@
 package org.strykeforce.thirdcoast.talon.phoenix6
 
+import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.strykeforce.thirdcoast.command.AbstractParameter
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.parseResource
 
+private val logger = KotlinLogging.logger {  }
 class Phoenix6Parameter(command: Command, toml: TomlTable, val enum: P6Enum): AbstractParameter(command, toml) {
 
     enum class P6Enum {
@@ -83,7 +85,10 @@ class Phoenix6Parameter(command: Command, toml: TomlTable, val enum: P6Enum): Ab
         DIFFERENTIAL_SLOT,
         DIFFERENTIAL_TARGET,
         FOC,
-        OVERRIDE_NEUTRAL
+        OVERRIDE_NEUTRAL,
+        LIM_FWD_MOT,
+        LIM_REV_MOT,
+        GRAPHER_FRAME
 
     }
 
@@ -91,6 +96,7 @@ class Phoenix6Parameter(command: Command, toml: TomlTable, val enum: P6Enum): Ab
         private val tomlTable by lazy { parseResource("/phoenix6.toml") }
 
         fun create(command: Command, param: String): Phoenix6Parameter {
+            logger.info { "Creating P6 Param: ${param}: ${P6Enum.valueOf(param)}" }
             val toml = tomlTable.getTable(param) ?: throw java.lang.IllegalArgumentException("missing param: $param")
             return Phoenix6Parameter(command, toml, P6Enum.valueOf(param))
         }

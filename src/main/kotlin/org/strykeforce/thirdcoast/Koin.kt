@@ -73,17 +73,17 @@ val swerveModule = module {
 
 private fun getSwerveModules() = Array<SwerveModule>(4) { i -> getSwerveModule(i) }
 
-private val moduleBuilder = TalonSwerveModule.Builder().driveGearRatio(1.0).wheelDiameterInches(1.0)
+private val moduleBuilder = V6TalonSwerveModule.V6Builder().driveGearRatio(1.0).wheelDiameterInches(1.0)
     .driveMaximumMetersPerSecond(1.0)
 
-private fun getSwerveModule(i: Int) : TalonSwerveModule {
+private fun getSwerveModule(i: Int) : V6TalonSwerveModule {
     val location = when (i) {
         0 -> Translation2d(1.0, 1.0)
         1 -> Translation2d(1.0, -1.0)
         2 -> Translation2d(-1.0, 1.0)
         else -> Translation2d(-1.0, -1.0)
     }
-    return moduleBuilder.azimuthTalon(TalonSRX(i)).driveTalon(TalonFX(i + 10))
+    return moduleBuilder.azimuthTalon(TalonSRX(i)).driveTalon(com.ctre.phoenix6.hardware.TalonFX(i + 10))
         .wheelLocationMeters(location).build()
 }
 

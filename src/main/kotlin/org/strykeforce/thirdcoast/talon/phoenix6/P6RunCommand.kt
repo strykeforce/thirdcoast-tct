@@ -18,6 +18,9 @@ import com.ctre.phoenix6.controls.DynamicMotionMagicTorqueCurrentFOC
 import com.ctre.phoenix6.controls.DynamicMotionMagicVoltage
 import com.ctre.phoenix6.controls.Follower
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle
+import com.ctre.phoenix6.controls.MotionMagicExpoDutyCycle
+import com.ctre.phoenix6.controls.MotionMagicExpoTorqueCurrentFOC
+import com.ctre.phoenix6.controls.MotionMagicExpoVoltage
 import com.ctre.phoenix6.controls.MotionMagicTorqueCurrentFOC
 import com.ctre.phoenix6.controls.MotionMagicVelocityDutyCycle
 import com.ctre.phoenix6.controls.MotionMagicVelocityTorqueCurrentFOC
@@ -72,6 +75,8 @@ class P6RunCommand(
                 val followerType = talonFxService.activeFollowerType
                 val enableFOC = talonFxService.activeFOC
                 val overrideNeutral = talonFxService.activeOverrideNeutral
+                val limFwdMotion = talonFxService.limFwdMotion
+                val limRevMotion = talonFxService.limRevMotion
                 val velocity = talonFxService.activeVelocity
                 val acceleration = talonFxService.activeAcceleration
                 val jerk = talonFxService.activeJerk
@@ -79,7 +84,7 @@ class P6RunCommand(
                 val slot = talonFxService.activeSlotIndex
                 val diffSlot = talonFxService.activeDifferentialSlot
                 val diffPos = talonFxService.activeDifferentialTarget
-                var controlRequest: ControlRequest = DutyCycleOut(0.0, false, false)
+                var controlRequest: ControlRequest = DutyCycleOut(0.0, false, false,limFwdMotion,limRevMotion)
 
                 //sanity checks
                 if (units == Units.PERCENT && !(-1.0..1.0).contains(setpoint)) {
@@ -96,13 +101,13 @@ class P6RunCommand(
                 when (setpointType) {
                     SetpointType.OPEN_LOOP -> {
                         when (units) {
-                            Units.PERCENT -> controlRequest = DutyCycleOut(setpoint, enableFOC, overrideNeutral)
-                            Units.VOLTAGE -> controlRequest = VoltageOut(setpoint, enableFOC, overrideNeutral)
+                            Units.PERCENT -> controlRequest = DutyCycleOut(setpoint, enableFOC, overrideNeutral,limFwdMotion, limRevMotion)
+                            Units.VOLTAGE -> controlRequest = VoltageOut(setpoint, enableFOC, overrideNeutral, limFwdMotion, limRevMotion)
                             Units.TORQUE_CURRENT -> controlRequest = TorqueCurrentFOC(
                                 setpoint,
                                 talonFxService.activeTorqueCurrentMaxOut,
                                 talonFxService.activeTorqueCurrentDeadband,
-                                overrideNeutral
+                                overrideNeutral,limFwdMotion,limRevMotion
                             )
                         }
                     }
@@ -110,26 +115,26 @@ class P6RunCommand(
                     SetpointType.POSITION -> {
                         when (units) {
                             Units.PERCENT -> controlRequest =
-                                PositionDutyCycle(setpoint, velocity, enableFOC, feedFwd, slot, overrideNeutral)
+                                PositionDutyCycle(setpoint, velocity, enableFOC, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
 
                             Units.VOLTAGE -> controlRequest =
-                                PositionVoltage(setpoint, velocity, enableFOC, feedFwd, slot, overrideNeutral)
+                                PositionVoltage(setpoint, velocity, enableFOC, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
 
                             Units.TORQUE_CURRENT -> controlRequest =
-                                PositionTorqueCurrentFOC(setpoint, velocity, feedFwd, slot, overrideNeutral)
+                                PositionTorqueCurrentFOC(setpoint, velocity, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
                         }
                     }
 
                     SetpointType.VELOCITY -> {
                         when (units) {
                             Units.PERCENT -> controlRequest =
-                                VelocityDutyCycle(setpoint, acceleration, enableFOC, feedFwd, slot, overrideNeutral)
+                                VelocityDutyCycle(setpoint, acceleration, enableFOC, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
 
                             Units.VOLTAGE -> controlRequest =
-                                VelocityVoltage(setpoint, acceleration, enableFOC, feedFwd, slot, overrideNeutral)
+                                VelocityVoltage(setpoint, acceleration, enableFOC, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
 
                             Units.TORQUE_CURRENT -> controlRequest =
-                                VelocityTorqueCurrentFOC(setpoint, acceleration, feedFwd, slot, overrideNeutral)
+                                VelocityTorqueCurrentFOC(setpoint, acceleration, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
                         }
                     }
 
@@ -138,13 +143,13 @@ class P6RunCommand(
                             MM_Type.STANDARD -> {
                                 when (units) {
                                     Units.PERCENT -> controlRequest =
-                                        MotionMagicDutyCycle(setpoint, enableFOC, feedFwd, slot, overrideNeutral)
+                                        MotionMagicDutyCycle(setpoint, enableFOC, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
 
                                     Units.VOLTAGE -> controlRequest =
-                                        MotionMagicVoltage(setpoint, enableFOC, feedFwd, slot, overrideNeutral)
+                                        MotionMagicVoltage(setpoint, enableFOC, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
 
                                     Units.TORQUE_CURRENT -> controlRequest =
-                                        MotionMagicTorqueCurrentFOC(setpoint, feedFwd, slot, overrideNeutral)
+                                        MotionMagicTorqueCurrentFOC(setpoint, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
                                 }
                             }
 
@@ -156,7 +161,7 @@ class P6RunCommand(
                                         enableFOC,
                                         feedFwd,
                                         slot,
-                                        overrideNeutral
+                                        overrideNeutral,limFwdMotion,limRevMotion
                                     )
 
                                     Units.VOLTAGE -> controlRequest = MotionMagicVelocityVoltage(
@@ -165,7 +170,7 @@ class P6RunCommand(
                                         enableFOC,
                                         feedFwd,
                                         slot,
-                                        overrideNeutral
+                                        overrideNeutral,limFwdMotion,limRevMotion
                                     )
 
                                     Units.TORQUE_CURRENT -> controlRequest = MotionMagicVelocityTorqueCurrentFOC(
@@ -174,7 +179,7 @@ class P6RunCommand(
                                         enableFOC,
                                         feedFwd,
                                         slot,
-                                        overrideNeutral
+                                        overrideNeutral,limFwdMotion,limRevMotion
                                     )
                                 }
                             }
@@ -189,7 +194,7 @@ class P6RunCommand(
                                         enableFOC,
                                         feedFwd,
                                         slot,
-                                        overrideNeutral
+                                        overrideNeutral,limFwdMotion,limRevMotion
                                     )
 
                                     Units.VOLTAGE -> controlRequest = DynamicMotionMagicVoltage(
@@ -200,7 +205,7 @@ class P6RunCommand(
                                         enableFOC,
                                         feedFwd,
                                         slot,
-                                        overrideNeutral
+                                        overrideNeutral,limFwdMotion,limRevMotion
                                     )
 
                                     Units.TORQUE_CURRENT -> controlRequest = DynamicMotionMagicTorqueCurrentFOC(
@@ -210,8 +215,15 @@ class P6RunCommand(
                                         jerk,
                                         feedFwd,
                                         slot,
-                                        overrideNeutral
+                                        overrideNeutral,limFwdMotion,limRevMotion
                                     )
+                                }
+                            }
+                            MM_Type.EXPONENTIAL -> {
+                                when(units) {
+                                    Units.PERCENT -> controlRequest = MotionMagicExpoDutyCycle(setpoint, enableFOC, feedFwd, slot, overrideNeutral, limFwdMotion, limRevMotion)
+                                    Units.VOLTAGE -> controlRequest = MotionMagicExpoVoltage(setpoint, enableFOC, feedFwd, slot, overrideNeutral, limFwdMotion, limRevMotion)
+                                    Units.TORQUE_CURRENT -> controlRequest = MotionMagicExpoTorqueCurrentFOC(setpoint, feedFwd, slot, overrideNeutral, limFwdMotion, limRevMotion)
                                 }
                             }
                         }
@@ -222,10 +234,10 @@ class P6RunCommand(
                             DifferentialType.OPEN_LOOP -> {
                                 when (units) {
                                     Units.PERCENT -> controlRequest =
-                                        DifferentialDutyCycle(setpoint, diffPos, enableFOC, diffSlot, overrideNeutral)
+                                        DifferentialDutyCycle(setpoint, diffPos, enableFOC, diffSlot, overrideNeutral,limFwdMotion,limRevMotion)
 
                                     Units.VOLTAGE -> controlRequest =
-                                        DifferentialVoltage(setpoint, diffPos, enableFOC, diffSlot, overrideNeutral)
+                                        DifferentialVoltage(setpoint, diffPos, enableFOC, diffSlot, overrideNeutral,limFwdMotion,limRevMotion)
 
                                     else -> {
                                         terminal.warn("Units chosen not valid for this control mode")
@@ -242,7 +254,7 @@ class P6RunCommand(
                                         enableFOC,
                                         slot,
                                         diffSlot,
-                                        overrideNeutral
+                                        overrideNeutral,limFwdMotion,limRevMotion
                                     )
 
                                     Units.VOLTAGE -> controlRequest = DifferentialPositionVoltage(
@@ -251,7 +263,7 @@ class P6RunCommand(
                                         enableFOC,
                                         slot,
                                         diffSlot,
-                                        overrideNeutral
+                                        overrideNeutral,limFwdMotion,limRevMotion
                                     )
 
                                     else -> {
@@ -269,7 +281,7 @@ class P6RunCommand(
                                         enableFOC,
                                         slot,
                                         diffSlot,
-                                        overrideNeutral
+                                        overrideNeutral,limFwdMotion,limRevMotion
                                     )
 
                                     Units.VOLTAGE -> controlRequest = DifferentialVelocityVoltage(
@@ -278,7 +290,7 @@ class P6RunCommand(
                                         enableFOC,
                                         slot,
                                         diffSlot,
-                                        overrideNeutral
+                                        overrideNeutral,limFwdMotion,limRevMotion
                                     )
 
                                     else -> {
@@ -296,7 +308,7 @@ class P6RunCommand(
                                         enableFOC,
                                         slot,
                                         diffSlot,
-                                        overrideNeutral
+                                        overrideNeutral,limFwdMotion,limRevMotion
                                     )
 
                                     Units.VOLTAGE -> controlRequest = DifferentialMotionMagicVoltage(
@@ -305,7 +317,7 @@ class P6RunCommand(
                                         enableFOC,
                                         slot,
                                         diffSlot,
-                                        overrideNeutral
+                                        overrideNeutral,limFwdMotion,limRevMotion
                                     )
 
                                     else -> {

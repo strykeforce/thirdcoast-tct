@@ -7,7 +7,7 @@ import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
 import org.strykeforce.swerve.SwerveDrive
-import org.strykeforce.swerve.TalonSwerveModule
+import org.strykeforce.swerve.V6TalonSwerveModule
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.prompt
@@ -29,7 +29,7 @@ class SetAzimuthCommand(
 
     override val menu: String
         get() = formatMenu(swerve.swerveModules.map {
-            (it as TalonSwerveModule).azimuthTalon.getSelectedSensorPosition(0)
+            (it as V6TalonSwerveModule).azimuthTalon.getSelectedSensorPosition(0)
         }.joinToString())
 
     override fun execute(): Command {
@@ -44,17 +44,17 @@ class SetAzimuthCommand(
             try {
                 val setpoint = reader.readInt(prompt()).toDouble()
                 swerve.swerveModules.forEach {
-                    (it as TalonSwerveModule).azimuthTalon.set(
+                    (it as V6TalonSwerveModule).azimuthTalon.set(
                         TalonSRXControlMode.MotionMagic,
                         setpoint
                     )
                 }
-                val swerveModule = swerve.swerveModules[0] as TalonSwerveModule
+                val swerveModule = swerve.swerveModules[0] as V6TalonSwerveModule
                 while (!swerveModule.onTarget(setpoint)) Timer.delay(DELAY)
                 Timer.delay(5 * DELAY)
                 logger.info {
                     swerve.swerveModules.map {
-                        (it as TalonSwerveModule).azimuthTalon.getSelectedSensorPosition(
+                        (it as V6TalonSwerveModule).azimuthTalon.getSelectedSensorPosition(
                             0
                         )
                     }

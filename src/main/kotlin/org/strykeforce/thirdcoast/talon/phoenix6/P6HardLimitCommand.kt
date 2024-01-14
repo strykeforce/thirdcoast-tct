@@ -17,8 +17,8 @@ class P6SelectFwdHardLimitSourceCommand(
     key: String,
     toml: TomlTable
 ): AbstractSelectCommand<ForwardLimitSourceValue>(parent, key, toml,
-    listOf(LimitSwitchPin, RemoteCANifier, RemoteTalonFX),
-    listOf("Talon FX pin", "Remote CANifier", "Remote TalonFx")) {
+    listOf(LimitSwitchPin, RemoteTalonFX, RemoteCANifier),
+    listOf("Talon FX pin", "Remote TalonFx", "Remote CANifier")) {
 
     private val talonFxService: TalonFxService by inject()
 
@@ -37,8 +37,8 @@ class P6SelectRevHardLimitSourceCommand(
     key: String,
     toml: TomlTable
 ): AbstractSelectCommand<ReverseLimitSourceValue>(parent, key, toml,
-    listOf(ReverseLimitSourceValue.LimitSwitchPin, ReverseLimitSourceValue.RemoteCANifier, ReverseLimitSourceValue.RemoteTalonFX),
-    listOf("Talon FX pin", "Remote CANifier", "Remote TalonFX")) {
+    listOf(ReverseLimitSourceValue.LimitSwitchPin, ReverseLimitSourceValue.RemoteTalonFX, ReverseLimitSourceValue.RemoteCANifier),
+    listOf("Talon FX pin", "Remote TalonFX", "Remote CANifier")) {
 
     private val talonFxService: TalonFxService by inject()
 
@@ -58,8 +58,8 @@ class P6SelectFwdHardLimitNormalCommand(
     key: String,
     toml: TomlTable
 ): AbstractSelectCommand<ForwardLimitTypeValue>(parent, key, toml,
-    listOf(NormallyClosed, NormallyOpen),
-    listOf("Normally Closed", "Normally Open")) {
+    listOf(NormallyOpen, NormallyClosed),
+    listOf("Normally Open", "Normally Closed")) {
 
     private val talonFxService: TalonFxService by inject()
 
@@ -78,8 +78,8 @@ class P6SelectRevHardLimitNormalCommand(
     key: String,
     toml: TomlTable
 ): AbstractSelectCommand<ReverseLimitTypeValue>(parent, key, toml,
-    listOf(ReverseLimitTypeValue.NormallyClosed, ReverseLimitTypeValue.NormallyOpen),
-    listOf("Normally Closed", "Normally Open")) {
+    listOf(ReverseLimitTypeValue.NormallyOpen, ReverseLimitTypeValue.NormallyClosed),
+    listOf("Normally Open", "Normally Closed")) {
 
     private val talonFxService: TalonFxService by inject()
 

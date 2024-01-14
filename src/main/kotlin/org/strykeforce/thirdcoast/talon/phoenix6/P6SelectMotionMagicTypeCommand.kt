@@ -12,8 +12,8 @@ class P6SelectMotionMagicTypeCommand(
     key: String,
     toml: TomlTable
 ): AbstractSelectCommand<MM_Type>(parent, key, toml,
-    listOf(MM_Type.STANDARD, MM_Type.VELOCITY, MM_Type.DYNAMIC),
-    listOf("Standard (Position)", "Velocity", "(FD) Dynamic")) {
+    listOf(MM_Type.STANDARD, MM_Type.VELOCITY, MM_Type.DYNAMIC, MM_Type.EXPONENTIAL),
+    listOf("Standard (Position)", "Velocity", "(FD) Dynamic", "Exponential")) {
 
     private val talonFxService: TalonFxService by inject()
 

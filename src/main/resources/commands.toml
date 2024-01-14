@@ -960,7 +960,7 @@ type = "menu"
     type = "menu"
     order = 40
     menu = "config active mode"
-    [FXP6.mode.status]
+    [FxP6.mode.status]
       type = "p6.modeStatus"
       order = 10
       menu = "active mode"
@@ -1046,7 +1046,7 @@ type = "menu"
         order = 20
         menu = "select differential slot"
         param = "DIFFERENTIAL_SLOT"
-      [Fx.P6.mode.diff.target]
+      [FxP6.mode.diff.target]
         type = "p6.param"
         order = 30
         menu = "select differential target (rots)"
@@ -1075,13 +1075,23 @@ type = "menu"
     [FxP6.mode.foc]
       type = "p6.param"
       order = 100
-      menu = "enable FOC"
+      menu = "(pro) enable FOC"
       param = "FOC"
     [FxP6.mode.overrideNeut]
       type = "p6.param"
       order = 110
       menu = "override neutral mode"
       param = "OVERRIDE_NEUTRAL"
+    [FxP6.mode.limFwd]
+      type = "p6.param"
+      order = 120
+      menu = "limit forward motion"
+      param = "LIM_FWD_MOT"
+    [FxP6.mode.limRev]
+      type = "p6.param"
+      order = 130
+      menu = "limit reverse motion"
+      param = "LIM_REV_MOT"
   [FxP6.units]
     type = "p6.units"
     order = 50
@@ -1446,9 +1456,22 @@ type = "menu"
       menu = "beep on config"
       param = "BEEP_ON_CONFIG"
   [FxP6.factory]
-    type = "menu"
+    type = "p6.factory"
     order = 140
     menu = "config factory default"
+  [FxP6.grapher]
+    type = "menu"
+    order = 150
+    menu = "set status frames"
+    [FxP6.grapher.default]
+      type = "p6.graph"
+      order = 10
+      menu = "set to default update rate"
+    [FxP6.grapher.rate]
+      type = "p6.param"
+      order = 20
+      menu = "Grapher Frame Rate (Hz)"
+      param = "GRAPHER_FRAME"
 
 [servo]
   type = "menu"

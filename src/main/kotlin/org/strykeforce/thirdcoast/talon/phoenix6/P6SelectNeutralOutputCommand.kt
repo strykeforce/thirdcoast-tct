@@ -12,8 +12,8 @@ class P6SelectNeutralOutputCommand(
     key: String,
     toml: TomlTable
 ): AbstractSelectCommand<NeutralModeValue>(parent, key, toml,
-    listOf(NeutralModeValue.Brake, NeutralModeValue.Coast),
-    listOf("Brake", "Coast")) {
+    listOf(NeutralModeValue.Coast, NeutralModeValue.Brake),
+    listOf("Coast", "Brake")) {
 
     private val talonFxService: TalonFxService by inject()
 
