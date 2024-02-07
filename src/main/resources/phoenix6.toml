@@ -74,6 +74,16 @@
     type = "DOUBLE"
     help = "This is the target jerk (acceleration derivative) Motion Magic® based control modes are allowed to use. This allows Motion Magic® support of S-Curves. If this is set to zero, then Motion Magic® will not apply a Jerk limit. Units: rot/s^3"
     range = [0.0, 9999.0]
+[MM_EXPO_KA]
+    name = "Motion Magic Expo kA"
+    type = "DOUBLE"
+    help = "This is the target kA used only by Motion Magic® Expo control modes, in units of V/rps². This represents the amount of voltage necessary to achieve an acceleration. In terms of the Motion Magic® Expo profile, a higher kA results in a slower acceleration. A kA of 0 will be promoted to a reasonable default of 0.1."
+    range = [1e-5, 100.0]
+[MM_EXPO_KV]
+    name = "Motion Magic Expo kV"
+    type = "DOUBLE"
+    help = "This is the target kV used only by Motion Magic® Expo control modes, in units of V/rps. This represents the amount of voltage necessary to hold a velocity. In terms of the Motion Magic® Expo profile, a higher kV results in a slower maximum velocity. A kV of 0 will be promoted to a reasonable default of 0.12."
+    range = [0.001, 100]
 
 #Differential Configs
 [PEAK_DIFF_DC]
@@ -284,6 +294,10 @@
     help = "If true, the TalonFX will beep during configuration API calls if device is disabled. This is useful for general debugging, and defaults to true. Note that if the rotor is moving, the beep will not occur regardless of this setting."
 
 #Saved Setpoints
+[POSITION]
+    name = "Position"
+    type = "DOUBLE"
+    help = "Sets the mechanism position of the device in mechanism rotations."
 [VELOCITY]
     name = "Velocity"
     type = "DOUBLE"

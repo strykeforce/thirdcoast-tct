@@ -8,6 +8,7 @@ import org.jline.utils.AttributedString
 import org.jline.utils.AttributedStyle
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
+import org.strykeforce.thirdcoast.cancoder.*
 import org.strykeforce.thirdcoast.canifier.*
 import org.strykeforce.thirdcoast.dio.RunDigitalOutputsCommand
 import org.strykeforce.thirdcoast.dio.SelectDigitalOutputsCommand
@@ -90,6 +91,7 @@ interface Command {
                 "p6.select" -> P6SelectTalonsCommand(parent, key, toml)
                 "p6.status" -> P6TalonStatusCommand(parent, key, toml)
                 "p6.modeStatus" -> P6ModeStatusCommand(parent, key, toml)
+                "p6.modeMenu" -> createModeMenuCommand(parent, key, toml)
                 "p6.mode" -> P6SelectModeCommand(parent, key, toml)
                 "p6.param" ->  Phoenix6ParameterCommand(parent, key, toml)
                 "p6.mmType" -> P6SelectMotionMagicTypeCommand(parent, key, toml)
@@ -107,6 +109,11 @@ interface Command {
                 "p6.revSource" -> P6SelectRevHardLimitSourceCommand(parent, key, toml)
                 "p6.factory" -> P6FactoryDefaultCommand(parent, key, toml)
                 "p6.graph" -> P6DefaultStatusFrameCommand(parent, key, toml)
+                "cancoder.select" -> SelectCancoderCommand(parent, key, toml)
+                "cancoder.status" -> CancoderStatusCommand(parent, key, toml)
+                "cancoder.param" -> CancoderParameterCommand(parent, key, toml)
+                "cancoder.absRange" -> SelectAbsRangeValueCommand(parent, key, toml)
+                "cancoder.sensorDirection" -> SelectCancoderSensorDirectionCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
             }
         }
@@ -115,6 +122,17 @@ interface Command {
             val command = MenuCommand(parent, key, toml)
             toml.keySet().filter(toml::isTable)
                 .forEach { k ->
+                    val child = createFromToml(toml.getTable(k)!!, command, k)
+                    command.children.add(child)
+                    logger.info { "Create Menu: $k, ${command.validMenuChoices}" }
+                }
+            return command
+        }
+
+        private fun createModeMenuCommand(parent: MenuCommand?, key: String, toml: TomlTable): P6ModeStatusMenuCommand {
+            val command = P6ModeStatusMenuCommand(parent, key, toml)
+            toml.keySet().filter(toml::isTable)
+                .forEach{ k ->
                     val child = createFromToml(toml.getTable(k)!!, command, k)
                     command.children.add(child)
                     logger.info { "Create Menu: $k, ${command.validMenuChoices}" }

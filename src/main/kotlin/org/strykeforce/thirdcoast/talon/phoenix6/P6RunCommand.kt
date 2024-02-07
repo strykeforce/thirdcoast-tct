@@ -97,6 +97,8 @@ class P6RunCommand(
                     continue
                 }
 
+                logger.info { "Setpoint: $setpoint" }
+
                 //make control request
                 when (setpointType) {
                     SetpointType.OPEN_LOOP -> {
@@ -141,6 +143,7 @@ class P6RunCommand(
                     SetpointType.MOTION_MAGIC -> {
                         when (motionType) {
                             MM_Type.STANDARD -> {
+                                logger.info { "Motion Magic: $motionType, $units" }
                                 when (units) {
                                     Units.PERCENT -> controlRequest =
                                         MotionMagicDutyCycle(setpoint, enableFOC, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
@@ -364,6 +367,7 @@ class P6RunCommand(
 
                 //run Talon
                 talonFxService.active.forEach {
+                    logger.info { "Control Request: ${controlRequest.name}: ${controlRequest.controlInfo}" }
                     it.setControl(controlRequest)
                 }
 

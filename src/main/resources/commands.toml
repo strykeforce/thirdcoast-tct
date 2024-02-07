@@ -957,7 +957,7 @@ type = "menu"
     order = 30
     menu = "status of active talonFx's"
   [FxP6.mode]
-    type = "menu"
+    type = "p6.modeMenu"
     order = 40
     menu = "config active mode"
     [FxP6.mode.status]
@@ -1100,6 +1100,11 @@ type = "menu"
     type = "menu"
     order = 60
     menu = "setup feedback configs"
+    [FxP6.feedback.position]
+      type = "p6.param"
+      order = 5
+      menu = "set position"
+      param = "POSITION"
     [FxP6.feedback.offset]
       type = "p6.param"
       order = 10
@@ -1186,6 +1191,16 @@ type = "menu"
       order = 30
       menu = "jerk"
       param = "MM_JERK"
+    [FxP6.motion.kA]
+      type = "p6.param"
+      order = 40
+      menu = "Expo kA"
+      param = "MM_EXPO_KA"
+    [FxP6.motion.kV]
+      type = "p6.param"
+      order = 50
+      menu = "Expo kV"
+      param = "MM_EXPO_KV"
   [FxP6.diff]
     type = "menu"
     order = 90
@@ -1755,6 +1770,36 @@ type = "menu"
       order = 30
       menu = "config factory defaults"
       param = "FACTORY_DEFAULT"
+
+[cancoder]
+  type = "menu"
+  order = 70
+  menu = "work with CANcoders"
+  [cancoder.select]
+    type = "cancoder.select"
+    order = 10
+    menu = "select active CANcoders"
+  [cancoder.status]
+    type = "cancoder.status"
+    order = 20
+    menu = "status of active CANcoders"
+  [cancoder.position]
+    type = "cancoder.param"
+    param = "POSITION"
+    order = 30
+    menu = "set CANcoder position"
+  [cancoder.magOffset]
+    type = "cancoder.param"
+    param = "MAG_OFFSET"
+    order = 40
+  [cancoder.absRange]
+    type = "cancoder.absRange"
+    order = 50
+  [cancoder.sensorDirection]
+    type = "cancoder.sensorDirection"
+    order = 60
+
+
 
 # [dio]
 #   type = "menu"

@@ -26,6 +26,8 @@ class Phoenix6Parameter(command: Command, toml: TomlTable, val enum: P6Enum): Ab
         MM_ACCEL,
         MM_CRUISE_VEL,
         MM_JERK,
+        MM_EXPO_KA,
+        MM_EXPO_KV,
 
         PEAK_DIFF_DC,
         PEAK_DIFF_TORQUE,
@@ -75,6 +77,7 @@ class Phoenix6Parameter(command: Command, toml: TomlTable, val enum: P6Enum): Ab
         BEEP_ON_BOOT,
         BEEP_ON_CONFIG,
 
+        POSITION,
         VELOCITY,
         ACCELERATION,
         JERK,

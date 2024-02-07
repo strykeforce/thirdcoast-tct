@@ -4,6 +4,7 @@ import com.ctre.phoenix.CANifier
 import com.ctre.phoenix.motorcontrol.can.TalonFX
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.sensors.PigeonIMU
+import com.ctre.phoenix6.hardware.CANcoder
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.wpilibj.DigitalOutput
 import edu.wpi.first.wpilibj.PneumaticsModuleType
@@ -54,6 +55,8 @@ val tctModule = module {
     single { DigitalOutputService { id -> DigitalOutput(id) } }
 
     single { CanifierService(get()) { id -> CANifier(id) } }
+
+    single { CancoderService(get()) {id -> CANcoder(id)} }
 
     single { PigeonService(get()) { id -> PigeonIMU(id) } }
 

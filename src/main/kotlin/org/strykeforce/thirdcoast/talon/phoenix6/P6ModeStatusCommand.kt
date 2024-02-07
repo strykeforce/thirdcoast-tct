@@ -14,9 +14,12 @@ class P6ModeStatusCommand(
 
     private val talonFxService: TalonFxService by inject()
 
+    override val menu: String
+        get() = formatMenu(talonFxService.controlMode)
+
     override fun execute(): Command {
-        val writer = terminal.writer()
-        writer.println(talonFxService.controlMode)
+        //val writer = terminal.writer()
+        //writer.println(talonFxService.controlMode)
         return super.execute()
     }
 }

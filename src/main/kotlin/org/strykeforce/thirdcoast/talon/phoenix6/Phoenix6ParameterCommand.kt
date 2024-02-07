@@ -98,6 +98,8 @@ class Phoenix6ParameterCommand(
                 MM_CRUISE_VEL -> formatMenu(config.MotionMagic.MotionMagicCruiseVelocity)
                 MM_ACCEL -> formatMenu(config.MotionMagic.MotionMagicAcceleration)
                 MM_JERK -> formatMenu(config.MotionMagic.MotionMagicJerk)
+                MM_EXPO_KA -> formatMenu(config.MotionMagic.MotionMagicExpo_kA)
+                MM_EXPO_KV -> formatMenu(config.MotionMagic.MotionMagicExpo_kV)
 
                 PEAK_DIFF_DC -> formatMenu(config.DifferentialConstants.PeakDifferentialDutyCycle)
                 PEAK_DIFF_VOLT -> formatMenu(config.DifferentialConstants.PeakDifferentialVoltage)
@@ -145,6 +147,7 @@ class Phoenix6ParameterCommand(
                 ALLOW_MUSIC_DIS -> formatMenu(config.Audio.AllowMusicDurDisable)
                 BEEP_ON_BOOT -> formatMenu(config.Audio.BeepOnBoot)
                 BEEP_ON_CONFIG -> formatMenu(config.Audio.BeepOnConfig)
+                POSITION -> formatMenu(talonFxService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0, DOUBLE_FORMAT_4)
                 VELOCITY -> formatMenu(talonFxService.activeVelocity)
                 ACCELERATION -> formatMenu(talonFxService.activeAcceleration)
                 JERK -> formatMenu(talonFxService.activeJerk)
@@ -345,6 +348,16 @@ class Phoenix6ParameterCommand(
             MM_JERK -> configDoubleParam(config.MotionMagic.MotionMagicJerk) {
                 talonFx, value ->
                 config.MotionMagic.MotionMagicJerk = value
+                talonFx.configurator.apply(config.MotionMagic)
+            }
+            MM_EXPO_KA -> configDoubleParam(config.MotionMagic.MotionMagicExpo_kA) {
+                talonFx, value ->
+                config.MotionMagic.MotionMagicExpo_kA = value
+                talonFx.configurator.apply(config.MotionMagic)
+            }
+            MM_EXPO_KV -> configDoubleParam(config.MotionMagic.MotionMagicExpo_kV) {
+                talonFx, value ->
+                config.MotionMagic.MotionMagicExpo_kV = value
                 talonFx.configurator.apply(config.MotionMagic)
             }
 
@@ -562,6 +575,12 @@ class Phoenix6ParameterCommand(
                 talonFx, value ->
                 config.Audio.BeepOnConfig = value
                 talonFx.configurator.apply(config.Audio)
+            }
+            POSITION -> configDoubleParam(talonFxService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0) {
+                talonFx, value ->
+                talonFxService.active.forEach{
+                    talonFx.setPosition(value, timeout)
+                }
             }
             VELOCITY -> configDoubleParam(talonFxService.activeVelocity) {
                 talonFx, value ->
