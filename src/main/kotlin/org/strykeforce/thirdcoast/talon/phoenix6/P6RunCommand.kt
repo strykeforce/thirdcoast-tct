@@ -87,7 +87,7 @@ class P6RunCommand(
                 var controlRequest: ControlRequest = DutyCycleOut(0.0, false, false,limFwdMotion,limRevMotion)
 
                 //sanity checks
-                if (units == Units.PERCENT && !(-1.0..1.0).contains(setpoint)) {
+                if (units == Units.PERCENT && setpointType == SetpointType.OPEN_LOOP && !(-1.0..1.0).contains(setpoint)) {
                     terminal.warn("setpoint must be in range -1.0 to 1.0 for percent modes")
                     continue
                 }
