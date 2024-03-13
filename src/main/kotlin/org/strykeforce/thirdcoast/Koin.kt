@@ -46,7 +46,9 @@ val tctModule = module {
 
     single { LegacyTalonFxService(get()) { id -> TalonFX(id) } }
 
-    single { TalonFxService(get()) { id -> com.ctre.phoenix6.hardware.TalonFX(id)} }
+    single { TalonFxService(get()) { id -> com.ctre.phoenix6.hardware.TalonFX(id, "rio")} }
+
+    single {TalonFxFDService(get()) {id -> com.ctre.phoenix6.hardware.TalonFX(id, "*")} }
 
     single { ServoService { id -> Servo(id) } }
 
@@ -56,7 +58,9 @@ val tctModule = module {
 
     single { CanifierService(get()) { id -> CANifier(id) } }
 
-    single { CancoderService(get()) {id -> CANcoder(id)} }
+    single { CancoderService(get()) {id -> CANcoder(id, "rio")} }
+
+    single { CancoderFDService(get()) {id -> CANcoder(id, "*")} }
 
     single { PigeonService(get()) { id -> PigeonIMU(id) } }
 

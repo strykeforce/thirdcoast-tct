@@ -10,6 +10,7 @@ import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
+import org.strykeforce.thirdcoast.device.TalonFxFDService
 import org.strykeforce.thirdcoast.device.TalonFxService
 
 class P6SelectFwdHardLimitSourceCommand(
@@ -21,14 +22,27 @@ class P6SelectFwdHardLimitSourceCommand(
     listOf("Talon FX pin", "Remote TalonFx", "Remote CANifier")) {
 
     private val talonFxService: TalonFxService by inject()
+    private val talonFxFDService: TalonFxFDService by inject()
+
+    val bus = toml.getString(Command.BUS_KEY) ?: throw Exception("$key: ${Command.BUS_KEY} missing")
+
 
     override val activeIndex: Int
-        get() = talonFxService.activeConfiguration.HardwareLimitSwitch.ForwardLimitSource.ordinal
+        get() {
+            if(bus == "rio") return talonFxService.activeConfiguration.HardwareLimitSwitch.ForwardLimitSource.ordinal
+            else if(bus == "canivore") return talonFxFDService.activeConfiguration.HardwareLimitSwitch.ForwardLimitSource.ordinal
+            else throw IllegalArgumentException()
+        }
 
     override fun setActive(index: Int) {
         val source = values[index]
-        talonFxService.activeConfiguration.HardwareLimitSwitch.ForwardLimitSource = source
-        talonFxService.active.forEach { it.configurator.apply(talonFxService.activeConfiguration) }
+        if(bus == "rio") {
+            talonFxService.activeConfiguration.HardwareLimitSwitch.ForwardLimitSource = source
+            talonFxService.active.forEach { it.configurator.apply(talonFxService.activeConfiguration) }
+        } else if(bus == "canivore") {
+            talonFxFDService.activeConfiguration.HardwareLimitSwitch.ForwardLimitSource = source
+            talonFxFDService.active.forEach{ it.configurator.apply(talonFxFDService.activeConfiguration)}
+        } else throw IllegalArgumentException()
     }
 }
 
@@ -41,14 +55,28 @@ class P6SelectRevHardLimitSourceCommand(
     listOf("Talon FX pin", "Remote TalonFX", "Remote CANifier")) {
 
     private val talonFxService: TalonFxService by inject()
+    private val talonFxFDService: TalonFxFDService by inject()
+
+    val bus = toml.getString(Command.BUS_KEY) ?: throw Exception("$key: ${Command.BUS_KEY} missing")
+
 
     override val activeIndex: Int
-        get() = talonFxService.activeConfiguration.HardwareLimitSwitch.ReverseLimitSource.ordinal
+        get() {
+            if(bus == "rio") return talonFxService.activeConfiguration.HardwareLimitSwitch.ReverseLimitSource.ordinal
+            else if(bus == "canivore") return  talonFxFDService.activeConfiguration.HardwareLimitSwitch.ReverseLimitSource.ordinal
+            else throw IllegalArgumentException()
+
+        }
 
     override fun setActive(index: Int) {
         val source = values[index]
-        talonFxService.activeConfiguration.HardwareLimitSwitch.ReverseLimitSource = source
-        talonFxService.active.forEach { it.configurator.apply(talonFxService.activeConfiguration) }
+        if(bus == "rio") {
+            talonFxService.activeConfiguration.HardwareLimitSwitch.ReverseLimitSource = source
+            talonFxService.active.forEach { it.configurator.apply(talonFxService.activeConfiguration) }
+        } else if(bus == "canivore") {
+            talonFxFDService.activeConfiguration.HardwareLimitSwitch.ReverseLimitSource = source
+            talonFxFDService.active.forEach { it.configurator.apply(talonFxFDService.activeConfiguration) }
+        } else throw IllegalArgumentException()
     }
 
 }
@@ -62,14 +90,27 @@ class P6SelectFwdHardLimitNormalCommand(
     listOf("Normally Open", "Normally Closed")) {
 
     private val talonFxService: TalonFxService by inject()
+    private val talonFxFDService: TalonFxFDService by inject()
+
+    val bus = toml.getString(Command.BUS_KEY) ?: throw Exception("$key: ${Command.BUS_KEY} missing")
+
 
     override val activeIndex: Int
-        get() = talonFxService.activeConfiguration.HardwareLimitSwitch.ForwardLimitType.ordinal
+        get() {
+            if(bus == "rio") return talonFxService.activeConfiguration.HardwareLimitSwitch.ForwardLimitType.ordinal
+            else if(bus == "canivore") return talonFxFDService.activeConfiguration.HardwareLimitSwitch.ForwardLimitType.ordinal
+            else throw IllegalArgumentException()
+        }
 
     override fun setActive(index: Int) {
         val type = values[index]
-        talonFxService.activeConfiguration.HardwareLimitSwitch.ForwardLimitType = type
-        talonFxService.active.forEach { it.configurator.apply(talonFxService.activeConfiguration) }
+        if(bus == "rio") {
+            talonFxService.activeConfiguration.HardwareLimitSwitch.ForwardLimitType = type
+            talonFxService.active.forEach { it.configurator.apply(talonFxService.activeConfiguration) }
+        } else if (bus == "canivore") {
+            talonFxFDService.activeConfiguration.HardwareLimitSwitch.ForwardLimitType = type
+            talonFxFDService.active.forEach { it.configurator.apply(talonFxFDService.activeConfiguration) }
+        } else throw IllegalArgumentException()
     }
 }
 
@@ -82,14 +123,28 @@ class P6SelectRevHardLimitNormalCommand(
     listOf("Normally Open", "Normally Closed")) {
 
     private val talonFxService: TalonFxService by inject()
+    private val talonFxFDService: TalonFxFDService by inject()
+
+    val bus = toml.getString(Command.BUS_KEY) ?: throw Exception("$key: ${Command.BUS_KEY} missing")
+
 
     override val activeIndex: Int
-        get() = talonFxService.activeConfiguration.HardwareLimitSwitch.ReverseLimitType.ordinal
+        get() {
+            if(bus == "rio") return talonFxService.activeConfiguration.HardwareLimitSwitch.ReverseLimitType.ordinal
+            else if(bus == "canivore") return  talonFxFDService.activeConfiguration.HardwareLimitSwitch.ReverseLimitType.ordinal
+            else throw IllegalArgumentException()
+
+        }
 
     override fun setActive(index: Int) {
         val type = values[index]
-        talonFxService.activeConfiguration.HardwareLimitSwitch.ReverseLimitType = type
-        talonFxService.active.forEach { it.configurator.apply(talonFxService.activeConfiguration) }
+        if(bus == "rio") {
+            talonFxService.activeConfiguration.HardwareLimitSwitch.ReverseLimitType = type
+            talonFxService.active.forEach { it.configurator.apply(talonFxService.activeConfiguration) }
+        } else if(bus == "canivore") {
+            talonFxFDService.activeConfiguration.HardwareLimitSwitch.ReverseLimitType = type
+            talonFxFDService.active.forEach{ it.configurator.apply(talonFxFDService.activeConfiguration)}
+        } else throw IllegalArgumentException()
     }
 
 }

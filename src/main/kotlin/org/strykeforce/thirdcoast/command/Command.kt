@@ -40,6 +40,7 @@ interface Command {
         const val TYPE_KEY = "type"
         const val ORDER_KEY = "order"
         const val DEVICE_KEY = "device"
+        const val BUS_KEY = "bus"
 
         fun createFromToml(toml: TomlTable, parent: MenuCommand? = null, key: String = "ROOT"): Command {
             //logger.info{"key: $key, toml: ${toml.keySet()}"}
@@ -94,6 +95,7 @@ interface Command {
                 "p6.modeMenu" -> createModeMenuCommand(parent, key, toml)
                 "p6.mode" -> P6SelectModeCommand(parent, key, toml)
                 "p6.param" ->  Phoenix6ParameterCommand(parent, key, toml)
+                "p6.feedback" -> P6SelectFeedbackSensorCommand(parent, key, toml)
                 "p6.mmType" -> P6SelectMotionMagicTypeCommand(parent, key, toml)
                 "p6.diffType" -> P6SelectDifferentialTypeCommand(parent, key, toml)
                 "p6.followType" -> P6SelectFollowerTypeCommand(parent, key, toml)

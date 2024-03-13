@@ -6,6 +6,7 @@ import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.prompt
+import org.strykeforce.thirdcoast.device.TalonFxFDService
 import org.strykeforce.thirdcoast.device.TalonFxService
 import org.strykeforce.thirdcoast.info
 import org.strykeforce.thirdcoast.readIntList
@@ -18,9 +19,17 @@ class P6SelectTalonsCommand(
 ): AbstractCommand(parent, key, toml) {
 
     private val talonFxService: TalonFxService by inject()
+    private val talonFxFDService: TalonFxFDService by inject()
+
+    val bus = toml.getString(Command.BUS_KEY) ?: throw Exception("$key: ${Command.BUS_KEY} missing")
+
 
     override val menu: String
-        get() = formatMenu(talonFxService.active.map(TalonFX::getDeviceID).joinToString())
+        get() = formatMenu(
+                if(bus == "rio") talonFxService.active.map(TalonFX::getDeviceID).joinToString()
+                else talonFxFDService.active.map(TalonFX::getDeviceID).joinToString()
+        )
+
 
     override fun execute(): Command {
         while(true){
@@ -29,7 +38,11 @@ class P6SelectTalonsCommand(
                 var new: Set<Int>
 
                 ids = reader.readIntList(this.prompt("ids"), talonFxService.active.map(TalonFX::getDeviceID))
-                new = talonFxService.activate(ids)
+
+                new =
+                    if(bus == "rio") talonFxService.activate(ids)
+                    else if(bus == "canivore") talonFxFDService.activate(ids)
+                    else throw IllegalArgumentException()
 
                 if(new.isNotEmpty()) {
                     terminal.info("Activating talons: ${new.joinToString()}")

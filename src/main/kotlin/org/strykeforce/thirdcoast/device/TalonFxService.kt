@@ -39,7 +39,7 @@ enum class DifferentialType {
 }
 
 
-class TalonFxService(
+open class TalonFxService(
     private val telemetryService: TelemetryService, factory: (id:Int) -> TalonFX
 ) : AbstractDeviceService<TalonFX>(factory) {
 
@@ -70,6 +70,7 @@ class TalonFxService(
     var limFwdMotion : Boolean = false;
     var limRevMotion : Boolean = false;
     var grapherStatusFrameHz : Double = 20.0;
+    var isRioBus : Boolean = true;
 
     var controlMode: String = "Duty Cycle Out"
         get() {
@@ -188,15 +189,14 @@ class TalonFxService(
             return field
         }
 
-
-    override fun activate(ids: Collection<Int>): Set<Int> {
+    override fun activate(ids: Collection<Int>, bus: String): Set<Int> {
         dirty = true
         logger.info { "Number Active: ${active.size}" }
         active.forEach{
             logger.info { "Active TalonFX: ${it.deviceID}" }
         }
 
-        val new = super.activate(ids)
+        val new = super.activate(ids, bus)
         logger.info { "Number New: ${new.size}" }
         telemetryService.stop()
         active.filter { new.contains(it.deviceID) }.forEach{

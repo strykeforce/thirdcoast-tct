@@ -8,6 +8,7 @@ import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT_4
+import org.strykeforce.thirdcoast.device.TalonFxFDService
 import org.strykeforce.thirdcoast.device.TalonFxService
 import org.strykeforce.thirdcoast.talon.phoenix6.Phoenix6Parameter.P6Enum.*
 import org.strykeforce.thirdcoast.warn
@@ -23,13 +24,18 @@ class Phoenix6ParameterCommand(
 
 
     private val talonFxService : TalonFxService by inject()
+    private val talonFxFDService: TalonFxFDService by inject()
+
+    val bus = toml.getString(Command.BUS_KEY) ?: throw Exception("$key: ${Command.BUS_KEY} missing")
+
     //val type = toml.getString(Command.DEVICE_KEY) ?: throw  Exception("$key: ${Command.DEVICE_KEY} missing")
     private val timeout = talonFxService.timeout
     private val param = Phoenix6Parameter.create(this, toml.getString("param") ?: "UNKNOWN")
 
     override val menu: String
         get() {
-            val config = talonFxService.activeConfiguration
+            val config = if(bus == "rio") talonFxService.activeConfiguration else talonFxFDService.activeConfiguration
+            val activeSlot = if(bus == "rio") talonFxService.activeSlotIndex else talonFxFDService.activeSlotIndex
             logger.info { "Current Param: ${param.name}, ${param.prompt}" }
 
             return when(param.enum) {
@@ -39,58 +45,58 @@ class Phoenix6ParameterCommand(
                 REMOTE_SENSOR_ID -> formatMenu(config.Feedback.FeedbackRemoteSensorID)
 
                 SLOT_KP -> formatMenu(
-                    when(talonFxService.activeSlotIndex) {
-                        0 -> talonFxService.activeConfiguration.Slot0.kP
-                        1 -> talonFxService.activeConfiguration.Slot1.kP
-                        2 -> talonFxService.activeConfiguration.Slot2.kP
+                    when(activeSlot) {
+                        0 -> if(bus == "rio") talonFxService.activeConfiguration.Slot0.kP else talonFxFDService.activeConfiguration.Slot0.kP
+                        1 -> if(bus == "rio") talonFxService.activeConfiguration.Slot1.kP else talonFxFDService.activeConfiguration.Slot1.kP
+                        2 -> if(bus == "rio") talonFxService.activeConfiguration.Slot2.kP else talonFxFDService.activeConfiguration.Slot2.kP
                         else -> SlotConfigs().kP
                     }
                 )
                 SLOT_KI -> formatMenu(
-                    when(talonFxService.activeSlotIndex) {
-                        0 -> talonFxService.activeConfiguration.Slot0.kI
-                        1 -> talonFxService.activeConfiguration.Slot1.kI
-                        2 -> talonFxService.activeConfiguration.Slot2.kI
+                    when(activeSlot) {
+                        0 -> if(bus == "rio") talonFxService.activeConfiguration.Slot0.kI else talonFxFDService.activeConfiguration.Slot0.kI
+                        1 -> if(bus == "rio") talonFxService.activeConfiguration.Slot1.kI else talonFxFDService.activeConfiguration.Slot1.kI
+                        2 -> if(bus == "rio") talonFxService.activeConfiguration.Slot2.kI else talonFxFDService.activeConfiguration.Slot2.kI
                         else -> SlotConfigs().kI
                     }
                 )
                 SLOT_KD -> formatMenu(
-                    when(talonFxService.activeSlotIndex) {
-                        0 -> talonFxService.activeConfiguration.Slot0.kD
-                        1 -> talonFxService.activeConfiguration.Slot1.kD
-                        2 -> talonFxService.activeConfiguration.Slot2.kD
+                    when(activeSlot) {
+                        0 -> if(bus == "rio") talonFxService.activeConfiguration.Slot0.kD else talonFxFDService.activeConfiguration.Slot0.kD
+                        1 -> if(bus == "rio") talonFxService.activeConfiguration.Slot1.kD else talonFxFDService.activeConfiguration.Slot1.kD
+                        2 -> if(bus == "rio") talonFxService.activeConfiguration.Slot2.kD else talonFxFDService.activeConfiguration.Slot2.kD
                         else -> SlotConfigs().kD
                     }
                 )
                 SLOT_KS -> formatMenu(
-                    when(talonFxService.activeSlotIndex) {
-                        0 -> talonFxService.activeConfiguration.Slot0.kS
-                        1 -> talonFxService.activeConfiguration.Slot1.kS
-                        2 -> talonFxService.activeConfiguration.Slot2.kS
+                    when(activeSlot) {
+                        0 -> if(bus == "rio") talonFxService.activeConfiguration.Slot0.kS else talonFxFDService.activeConfiguration.Slot0.kS
+                        1 -> if(bus == "rio") talonFxService.activeConfiguration.Slot1.kS else talonFxFDService.activeConfiguration.Slot1.kS
+                        2 -> if(bus == "rio") talonFxService.activeConfiguration.Slot2.kS else talonFxFDService.activeConfiguration.Slot2.kS
                         else -> SlotConfigs().kS
                     }
                 )
                 SLOT_KV -> formatMenu(
-                    when(talonFxService.activeSlotIndex) {
-                        0 -> talonFxService.activeConfiguration.Slot0.kV
-                        1 -> talonFxService.activeConfiguration.Slot1.kV
-                        2 -> talonFxService.activeConfiguration.Slot2.kV
+                    when(activeSlot) {
+                        0 -> if(bus == "rio") talonFxService.activeConfiguration.Slot0.kV else talonFxFDService.activeConfiguration.Slot0.kV
+                        1 -> if(bus == "rio") talonFxService.activeConfiguration.Slot1.kV else talonFxFDService.activeConfiguration.Slot1.kV
+                        2 -> if(bus == "rio") talonFxService.activeConfiguration.Slot2.kV else talonFxFDService.activeConfiguration.Slot2.kV
                         else -> SlotConfigs().kV
                     }
                 )
                 SLOT_KA -> formatMenu(
-                    when(talonFxService.activeSlotIndex){
-                        0 -> talonFxService.activeConfiguration.Slot0.kA
-                        1 -> talonFxService.activeConfiguration.Slot1.kA
-                        2 -> talonFxService.activeConfiguration.Slot2.kA
+                    when(activeSlot){
+                        0 -> if(bus == "rio") talonFxService.activeConfiguration.Slot0.kA else talonFxFDService.activeConfiguration.Slot0.kA
+                        1 -> if(bus == "rio") talonFxService.activeConfiguration.Slot1.kA else talonFxFDService.activeConfiguration.Slot1.kA
+                        2 -> if(bus == "rio") talonFxService.activeConfiguration.Slot2.kA else talonFxFDService.activeConfiguration.Slot2.kA
                         else -> SlotConfigs().kA
                     }
                 )
                 SLOT_KG -> formatMenu(
-                    when(talonFxService.activeSlotIndex) {
-                        0 -> talonFxService.activeConfiguration.Slot0.kG
-                        1 -> talonFxService.activeConfiguration.Slot1.kG
-                        2 -> talonFxService.activeConfiguration.Slot2.kG
+                    when(activeSlot) {
+                        0 -> if(bus == "rio") talonFxService.activeConfiguration.Slot0.kG else talonFxFDService.activeConfiguration.Slot0.kG
+                        1 -> if(bus == "rio") talonFxService.activeConfiguration.Slot1.kG else talonFxFDService.activeConfiguration.Slot1.kG
+                        2 -> if(bus == "rio") talonFxService.activeConfiguration.Slot2.kG else talonFxFDService.activeConfiguration.Slot2.kG
                         else -> SlotConfigs().kG
                     }
                 )
@@ -147,29 +153,82 @@ class Phoenix6ParameterCommand(
                 ALLOW_MUSIC_DIS -> formatMenu(config.Audio.AllowMusicDurDisable)
                 BEEP_ON_BOOT -> formatMenu(config.Audio.BeepOnBoot)
                 BEEP_ON_CONFIG -> formatMenu(config.Audio.BeepOnConfig)
-                POSITION -> formatMenu(talonFxService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0, DOUBLE_FORMAT_4)
-                VELOCITY -> formatMenu(talonFxService.activeVelocity)
-                ACCELERATION -> formatMenu(talonFxService.activeAcceleration)
-                JERK -> formatMenu(talonFxService.activeJerk)
-                TORQUE_CURRENT_DEADBAND -> formatMenu(talonFxService.activeTorqueCurrentDeadband)
-                TORQUE_CURRENT_MAX -> formatMenu(talonFxService.activeTorqueCurrentMaxOut)
-                FEED_FORWARD -> formatMenu(talonFxService.activeFeedForward)
-                OPPOSE_MAIN -> formatMenu(talonFxService.activeOpposeMain)
-                DIFFERENTIAL_SLOT -> formatMenu(talonFxService.activeDifferentialSlot)
-                DIFFERENTIAL_TARGET -> formatMenu(talonFxService.activeDifferentialTarget)
-                FOC -> formatMenu(talonFxService.activeFOC)
-                OVERRIDE_NEUTRAL -> formatMenu(talonFxService.activeOverrideNeutral)
-                LIM_FWD_MOT -> formatMenu(talonFxService.limFwdMotion)
-                LIM_REV_MOT -> formatMenu(talonFxService.limRevMotion)
-                GRAPHER_FRAME -> formatMenu(talonFxService.grapherStatusFrameHz)
+                POSITION -> formatMenu(
+                    if(bus == "rio") talonFxService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0
+                    else talonFxFDService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0, DOUBLE_FORMAT_4
+                )
+                VELOCITY -> formatMenu(
+                    if(bus == "rio") talonFxService.activeVelocity
+                    else talonFxFDService.activeVelocity
+                )
+                ACCELERATION -> formatMenu(
+                    if(bus == "rio") talonFxService.activeAcceleration
+                    else talonFxFDService.activeAcceleration
+                )
+                JERK -> formatMenu(
+                    if(bus == "rio") talonFxService.activeJerk
+                    else talonFxFDService.activeJerk
+                )
+                TORQUE_CURRENT_DEADBAND -> formatMenu(
+                    if(bus == "rio") talonFxService.activeTorqueCurrentDeadband
+                    else talonFxFDService.activeTorqueCurrentDeadband
+                )
+                TORQUE_CURRENT_MAX -> formatMenu(
+                    if(bus == "rio") talonFxService.activeTorqueCurrentMaxOut
+                    else talonFxFDService.activeTorqueCurrentMaxOut
+                )
+                FEED_FORWARD -> formatMenu(
+                    if(bus == "rio") talonFxService.activeFeedForward
+                    else talonFxFDService.activeFeedForward
+                )
+                OPPOSE_MAIN -> formatMenu(
+                    if(bus == "rio") talonFxService.activeOpposeMain
+                    else talonFxFDService.activeOpposeMain
+
+                )
+                DIFFERENTIAL_SLOT -> formatMenu(
+                    if(bus == "rio") talonFxService.activeDifferentialSlot
+                    else talonFxFDService.activeDifferentialSlot
+
+                )
+                DIFFERENTIAL_TARGET -> formatMenu(
+                    if(bus == "rio") talonFxService.activeDifferentialTarget
+                    else talonFxFDService.activeDifferentialTarget
+
+                )
+                FOC -> formatMenu(
+                    if(bus == "rio") talonFxService.activeFOC
+                    else talonFxFDService.activeFOC
+
+                )
+                OVERRIDE_NEUTRAL -> formatMenu(
+                    if(bus == "rio") talonFxService.activeOverrideNeutral
+                    else talonFxFDService.activeOverrideNeutral
+
+                )
+                LIM_FWD_MOT -> formatMenu(
+                    if(bus == "rio") talonFxService.limFwdMotion
+                    else talonFxFDService.limFwdMotion
+
+                )
+                LIM_REV_MOT -> formatMenu(
+                    if(bus == "rio") talonFxService.limRevMotion
+                    else talonFxFDService.limRevMotion
+
+                )
+                GRAPHER_FRAME -> formatMenu(
+                    if(bus == "rio") talonFxService.grapherStatusFrameHz
+                    else talonFxFDService.grapherStatusFrameHz
+
+                )
 
                 else -> TODO("${param.enum} not implemented")
             }
         }
 
     override fun execute(): Command {
-        val config = talonFxService.activeConfiguration
-        val activeSlotIndex = talonFxService.activeSlotIndex
+        val config = if(bus == "rio") talonFxService.activeConfiguration else talonFxFDService.activeConfiguration
+        val activeSlotIndex = if(bus == "rio") talonFxService.activeSlotIndex else talonFxFDService.activeSlotIndex
         val timeout = talonFxService.timeout
 
         when(param.enum) {
@@ -692,21 +751,35 @@ class Phoenix6ParameterCommand(
 
     private fun configDoubleParam(default: Double, configure: (TalonFX, Double) -> Unit) {
         val paramValue = param.readDouble(reader, default)
-
-        talonFxService.active.forEach { configure(it, paramValue) }
-        logger.info { "set ${talonFxService.active.size} talonFx's ${param.name}: $paramValue" }
+        if(bus == "rio") {
+            talonFxService.active.forEach { configure(it, paramValue) }
+            logger.info { "set ${talonFxService.active.size} talonFx's ${param.name}: $paramValue" }
+        } else if(bus == "canivore") {
+            talonFxFDService.active.forEach { configure(it, paramValue) }
+            logger.info { "set ${talonFxFDService.active.size} talonFx's ${param.name}: $paramValue" }
+        } else throw  IllegalArgumentException()
     }
 
     private fun configIntParam(default: Int, configure: (TalonFX, Int) -> Unit) {
         val paramValue = param.readInt(reader, default)
-        talonFxService.active.forEach { configure(it, paramValue) }
-        logger.info { "set ${talonFxService.active.size} talonFx's  ${param.name}: $paramValue" }
+        if(bus == "rio") {
+            talonFxService.active.forEach { configure(it, paramValue) }
+            logger.info { "set ${talonFxService.active.size} talonFx's  ${param.name}: $paramValue" }
+        } else if(bus == "canivore") {
+            talonFxFDService.active.forEach { configure(it, paramValue) }
+            logger.info { "set ${talonFxFDService.active.size} talonFx's ${param.name}: $paramValue" }
+        } else throw  IllegalArgumentException()
     }
 
     private fun configBooleanParam(default: Boolean, configure: (TalonFX, Boolean) -> Unit) {
         val paramValue = param.readBoolean(reader, default)
-        talonFxService.active.forEach { configure(it, paramValue) }
-        logger.info { "Set ${talonFxService.active.size} talonFx's ${param.name}: $paramValue" }
+        if(bus == "rio") {
+            talonFxService.active.forEach { configure(it, paramValue) }
+            logger.info { "Set ${talonFxService.active.size} talonFx's ${param.name}: $paramValue" }
+        } else if(bus == "canivore") {
+            talonFxFDService.active.forEach { configure(it, paramValue) }
+            logger.info { "Set ${talonFxFDService.active.size} talonFx's ${param.name}: $paramValue" }
+        } else throw IllegalArgumentException()
     }
 
 

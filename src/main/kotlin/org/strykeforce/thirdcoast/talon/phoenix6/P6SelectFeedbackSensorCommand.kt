@@ -6,6 +6,7 @@ import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue.*
 import org.koin.standalone.inject
+import org.strykeforce.thirdcoast.device.TalonFxFDService
 import org.strykeforce.thirdcoast.device.TalonFxService
 
 private val SENSORS = listOf(
@@ -35,19 +36,35 @@ class P6SelectFeedbackSensorCommand(
 ): AbstractSelectCommand<FeedbackSensorSourceValue>(parent, key, toml, SENSORS, LABELS) {
 
     private val talonFxService: TalonFxService by inject()
+    private val talonFxFDService: TalonFxFDService by inject()
+
+    val bus = toml.getString(Command.BUS_KEY) ?: throw Exception("$key: ${Command.BUS_KEY} missing")
+
 
     override val activeIndex: Int
         get() {
-            val sensor = talonFxService.activeConfiguration.Feedback.FeedbackSensorSource
-            return values.indexOf(sensor)
+            if(bus == "rio") {
+                val sensor = talonFxService.activeConfiguration.Feedback.FeedbackSensorSource
+                return values.indexOf(sensor)
+            } else if(bus == "canivore") {
+                val sensor = talonFxFDService.activeConfiguration.Feedback.FeedbackSensorSource
+                return values.indexOf(sensor)
+            }else throw IllegalArgumentException()
         }
 
     override fun setActive(index: Int) {
         val sensor = values[index]
-        talonFxService.activeConfiguration.Feedback.FeedbackSensorSource = sensor
-        talonFxService.active.forEach {
-            it.configurator.apply(talonFxService.activeConfiguration)
-        }
+        if(bus == "rio") {
+            talonFxService.activeConfiguration.Feedback.FeedbackSensorSource = sensor
+            talonFxService.active.forEach {
+                it.configurator.apply(talonFxService.activeConfiguration)
+            }
+        } else if(bus == "canivore") {
+            talonFxFDService.activeConfiguration.Feedback.FeedbackSensorSource = sensor
+            talonFxService.active.forEach {
+                it.configurator.apply(talonFxFDService.activeConfiguration)
+            }
+        } else throw  IllegalArgumentException()
     }
 
 }

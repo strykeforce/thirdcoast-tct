@@ -58,6 +58,10 @@ class P6RunCommand(
 ): AbstractCommand(parent, key, toml) {
 
     private val talonFxService: TalonFxService by inject()
+    private val talonFxFDService: TalonFxFDService by inject()
+
+    val bus = toml.getString(Command.BUS_KEY) ?: throw Exception("$key: ${Command.BUS_KEY} missing")
+
 
     override fun execute(): Command {
         var done = false
@@ -68,23 +72,25 @@ class P6RunCommand(
                 val setpoints = line.split(',')
                 val setpoint = setpoints[0].toDouble()
                 val duration = if (setpoints.size > 1) setpoints[1].toDouble() else 0.0
-                val setpointType = talonFxService.setpointType
-                val units = talonFxService.activeUnits
-                val motionType = talonFxService.active_MM_type
-                val differentialType = talonFxService.differentialType
-                val followerType = talonFxService.activeFollowerType
-                val enableFOC = talonFxService.activeFOC
-                val overrideNeutral = talonFxService.activeOverrideNeutral
-                val limFwdMotion = talonFxService.limFwdMotion
-                val limRevMotion = talonFxService.limRevMotion
-                val velocity = talonFxService.activeVelocity
-                val acceleration = talonFxService.activeAcceleration
-                val jerk = talonFxService.activeJerk
-                val feedFwd = talonFxService.activeFeedForward
-                val slot = talonFxService.activeSlotIndex
-                val diffSlot = talonFxService.activeDifferentialSlot
-                val diffPos = talonFxService.activeDifferentialTarget
+                val setpointType = if(bus == "rio") talonFxService.setpointType else talonFxFDService.setpointType
+                val units = if(bus == "rio") talonFxService.activeUnits else talonFxFDService.activeUnits
+                val motionType = if(bus == "rio") talonFxService.active_MM_type else talonFxFDService.active_MM_type
+                val differentialType = if(bus == "rio") talonFxService.differentialType else talonFxFDService.differentialType
+                val followerType = if(bus == "rio") talonFxService.activeFollowerType else talonFxFDService.activeFollowerType
+                val enableFOC = if(bus == "rio") talonFxService.activeFOC else talonFxFDService.activeFOC
+                val overrideNeutral = if(bus == "rio") talonFxService.activeOverrideNeutral else talonFxFDService.activeOverrideNeutral
+                val limFwdMotion = if(bus == "rio") talonFxService.limFwdMotion else talonFxFDService.limFwdMotion
+                val limRevMotion = if(bus == "rio") talonFxService.limRevMotion else talonFxFDService.limRevMotion
+                val velocity = if(bus == "rio") talonFxService.activeVelocity else talonFxFDService.activeVelocity
+                val acceleration = if(bus == "rio") talonFxService.activeAcceleration else talonFxFDService.activeAcceleration
+                val jerk = if(bus == "rio") talonFxService.activeJerk else talonFxFDService.activeJerk
+                val feedFwd = if(bus == "rio") talonFxService.activeFeedForward else talonFxFDService.activeFeedForward
+                val slot = if(bus == "rio") talonFxService.activeSlotIndex else talonFxFDService.activeSlotIndex
+                val diffSlot = if(bus == "rio") talonFxService.activeDifferentialSlot else talonFxFDService.activeDifferentialSlot
+                val diffPos = if(bus == "rio") talonFxService.activeDifferentialTarget else talonFxFDService.activeDifferentialTarget
                 var controlRequest: ControlRequest = DutyCycleOut(0.0, false, false,limFwdMotion,limRevMotion)
+                val torqueCurrentMaxOut = if(bus == "rio") talonFxService.activeTorqueCurrentMaxOut else talonFxFDService.activeTorqueCurrentMaxOut
+                val torqueCurrentDeadband = if(bus == "rio") talonFxService.activeTorqueCurrentDeadband else talonFxFDService.activeTorqueCurrentDeadband
 
                 //sanity checks
                 if (units == Units.PERCENT && setpointType == SetpointType.OPEN_LOOP && !(-1.0..1.0).contains(setpoint)) {
@@ -107,8 +113,8 @@ class P6RunCommand(
                             Units.VOLTAGE -> controlRequest = VoltageOut(setpoint, enableFOC, overrideNeutral, limFwdMotion, limRevMotion)
                             Units.TORQUE_CURRENT -> controlRequest = TorqueCurrentFOC(
                                 setpoint,
-                                talonFxService.activeTorqueCurrentMaxOut,
-                                talonFxService.activeTorqueCurrentDeadband,
+                                torqueCurrentMaxOut,
+                                torqueCurrentDeadband,
                                 overrideNeutral,limFwdMotion,limRevMotion
                             )
                         }
@@ -366,17 +372,28 @@ class P6RunCommand(
                 }
 
                 //run Talon
-                talonFxService.active.forEach {
-                    logger.info { "Control Request: ${controlRequest.name}: ${controlRequest.controlInfo}" }
-                    it.setControl(controlRequest)
-                }
+                if(bus == "rio") {
+                    talonFxService.active.forEach {
+                        logger.info { "Control Request: ${controlRequest.name}: ${controlRequest.controlInfo}" }
+                        it.setControl(controlRequest)
+                    }
+                } else if(bus == "canivore") {
+                    talonFxFDService.active.forEach {
+                        logger.info { "Control Request: ${controlRequest.name}: ${controlRequest.controlInfo}" }
+                        it.setControl(controlRequest)
+                    }
+                } else throw  IllegalArgumentException()
 
                 //Check Timeout
                 if (duration > 0.0) {
                     logger.debug { "run duration = $duration seconds" }
                     Timer.delay(duration)
                     logger.debug { "run duration expired, setting output = 0.0" }
-                    talonFxService.active.forEach { it.set(0.0) }
+                    if(bus == "rio") {
+                        talonFxService.active.forEach { it.set(0.0) }
+                    } else if(bus == "canivore") {
+                        talonFxFDService.active.forEach { it.set(0.0) }
+                    } else throw  IllegalArgumentException()
                 }
             } catch (e: Exception) {
                 done = true
