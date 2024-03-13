@@ -10,7 +10,7 @@ import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.prompt
-import org.strykeforce.thirdcoast.device.TalonFxService
+import org.strykeforce.thirdcoast.device.LegacyTalonFxService
 import org.strykeforce.thirdcoast.device.TalonService
 import org.strykeforce.thirdcoast.warn
 import java.lang.IllegalArgumentException
@@ -26,7 +26,7 @@ class RunTalonsCommand(
     val type = toml.getString(Command.DEVICE_KEY) ?: throw Exception("$key: ${Command.DEVICE_KEY} missing")
 
     private val talonService: TalonService by inject()
-    private val talonFxService: TalonFxService by inject()
+    private val legacyTalonFxService: LegacyTalonFxService by inject()
 
 
     override fun execute(): Command {
@@ -43,7 +43,7 @@ class RunTalonsCommand(
                 if (type == "srx") {
                     mode = talonService.controlMode
                 } else if (type == "fx") {
-                    mode = talonFxService.controlMode
+                    mode = legacyTalonFxService.controlMode
                 } else throw IllegalArgumentException()
 
                 // sanity checks
@@ -61,7 +61,7 @@ class RunTalonsCommand(
                 if (type == "srx"){
                     talonService.active.forEach { it.set(mode, setpoint) }
                 } else if(type == "fx"){
-                    talonFxService.active.forEach { it.set(mode, setpoint) }
+                    legacyTalonFxService.active.forEach { it.set(mode, setpoint) }
                 }
 
 
@@ -72,7 +72,7 @@ class RunTalonsCommand(
                     if(type == "srx"){
                         talonService.active.forEach { it.set(mode, 0.0) }
                     } else if(type == "fx"){
-                        talonFxService.active.forEach { it.set(mode, 0.0) }
+                        legacyTalonFxService.active.forEach { it.set(mode, 0.0) }
                     }
 
                 }

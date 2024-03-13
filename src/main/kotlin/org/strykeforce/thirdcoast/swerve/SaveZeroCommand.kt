@@ -4,7 +4,7 @@ import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
 import org.strykeforce.swerve.SwerveDrive
-import org.strykeforce.swerve.TalonSwerveModule
+import org.strykeforce.swerve.V6TalonSwerveModule
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.prompt
@@ -25,7 +25,7 @@ class SaveZeroCommand(
             try {
                 if (reader.readBoolean(prompt(), false)) {
                     swerve.swerveModules.forEach {
-                        val module = it as TalonSwerveModule
+                        val module = it as V6TalonSwerveModule
 
                         logger.debug { "azimuth ${module.azimuthTalon.deviceID}: store zero, before=${module.azimuthTalon.selectedSensorPosition}" }
                         module.storeAzimuthZeroReference()

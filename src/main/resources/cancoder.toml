@@ -1,0 +1,11 @@
+## Params
+[POSITION]
+    name = "Position"
+    help = "Sets cancoder position. Units in rotations."
+    type = "DOUBLE"
+
+[MAG_OFFSET]
+    name = "Magnet Offset"
+    help = "This offset is added to the reported position, allowing the application to trim the zero position. When set to the default value of zero, position reports zero when magnet north pole aligns with the LED. Units in Rotations"
+    type = "DOUBLE"
+    range = [-1.0, 1.0]

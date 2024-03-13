@@ -6,7 +6,7 @@ import org.jline.utils.AttributedStyle
 import org.strykeforce.thirdcoast.*
 import java.util.*
 
-class MenuCommand(
+open class MenuCommand(
     parent: Command?,
     key: String,
     toml: TomlTable

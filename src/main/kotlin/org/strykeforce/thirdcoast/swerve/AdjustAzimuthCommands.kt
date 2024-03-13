@@ -6,7 +6,7 @@ import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
 import org.strykeforce.swerve.SwerveDrive
-import org.strykeforce.swerve.TalonSwerveModule
+import org.strykeforce.swerve.V6TalonSwerveModule
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.prompt
@@ -54,11 +54,11 @@ class AdjustAzimuthCommand(
 
     override val menu: String
         get() = formatMenu(
-            (swerve.swerveModules[active] as TalonSwerveModule).azimuthTalon.getSelectedSensorPosition(0)
+            (swerve.swerveModules[active] as V6TalonSwerveModule).azimuthTalon.getSelectedSensorPosition(0)
         )
 
     override fun execute(): Command {
-        val swerveModule = swerve.swerveModules[active] as TalonSwerveModule
+        val swerveModule = swerve.swerveModules[active] as V6TalonSwerveModule
         var position = swerveModule.azimuthTalon.getSelectedSensorPosition(0).toInt()
         while (true) {
             try {
@@ -78,7 +78,7 @@ class AdjustAzimuthCommand(
     }
 }
 
-private fun TalonSwerveModule.jogAround(position: Double) {
+private fun V6TalonSwerveModule.jogAround(position: Double) {
     val positions = listOf(position - JOG, position + JOG, position)
     positions.forEach {
         this.azimuthTalon.set(TalonSRXControlMode.MotionMagic, it)
@@ -86,5 +86,5 @@ private fun TalonSwerveModule.jogAround(position: Double) {
     }
 }
 
-internal fun TalonSwerveModule.onTarget(target: Double, goodEnough: Int = GOOD_ENOUGH) =
+internal fun V6TalonSwerveModule.onTarget(target: Double, goodEnough: Int = GOOD_ENOUGH) =
     abs(target - this.azimuthTalon.getSelectedSensorPosition(0)) < goodEnough
