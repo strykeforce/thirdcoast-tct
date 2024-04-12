@@ -189,14 +189,14 @@ open class TalonFxService(
             return field
         }
 
-    override fun activate(ids: Collection<Int>, bus: String): Set<Int> {
+    override fun activate(ids: Collection<Int>): Set<Int> {
         dirty = true
         logger.info { "Number Active: ${active.size}" }
         active.forEach{
             logger.info { "Active TalonFX: ${it.deviceID}" }
         }
 
-        val new = super.activate(ids, bus)
+        val new = super.activate(ids)
         logger.info { "Number New: ${new.size}" }
         telemetryService.stop()
         active.filter { new.contains(it.deviceID) }.forEach{

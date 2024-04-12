@@ -10,13 +10,13 @@ import org.strykeforce.thirdcoast.device.CancoderFDService
 import org.strykeforce.thirdcoast.device.CancoderService
 
 private val DIRECTION = listOf(
-    Clockwise_Positive,
-    CounterClockwise_Positive
+    CounterClockwise_Positive,
+    Clockwise_Positive
 )
 
 private val LABELS = listOf(
-    "Clockwise Positive",
-    "Counter-clockwise Positive"
+    "Counter-clockwise Positive",
+    "Clockwise Positive"
 )
 
 class SelectCancoderSensorDirectionCommand(

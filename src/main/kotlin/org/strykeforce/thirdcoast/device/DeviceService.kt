@@ -32,13 +32,13 @@ open class AbstractDeviceService<T>(private val factory: (id: Int) -> T) :
 
     override fun get(id: Int): T {
         val device = _all[id] ?: factory(id)
-        if (_all.put(id, device) == null) logger.debug("_all add: {}", device)
+        if (_all.put(id, device) == null) logger.debug("_all add: {}, id: {}", device, id)
         return device
     }
 
     fun get(id: Int, bus: String): T {
         val device = _all[id] ?: factory(id)
-        if(_all.put(id, device) == null) logger.debug("_all add: {}", device)
+        if(_all.put(id, device) == null) logger.debug("_all add: {}, id: {}", device, id)
         return  device
     }
 

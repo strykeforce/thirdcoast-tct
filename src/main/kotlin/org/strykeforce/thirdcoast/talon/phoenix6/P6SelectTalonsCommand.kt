@@ -1,6 +1,7 @@
 package org.strykeforce.thirdcoast.talon.phoenix6
 
 import com.ctre.phoenix6.hardware.TalonFX
+import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractCommand
@@ -17,6 +18,8 @@ class P6SelectTalonsCommand(
     key: String,
     toml: TomlTable
 ): AbstractCommand(parent, key, toml) {
+
+    private val logger = KotlinLogging.logger {}
 
     private val talonFxService: TalonFxService by inject()
     private val talonFxFDService: TalonFxFDService by inject()
@@ -37,15 +40,25 @@ class P6SelectTalonsCommand(
                 var ids: List<Int>
                 var new: Set<Int>
 
-                ids = reader.readIntList(this.prompt("ids"), talonFxService.active.map(TalonFX::getDeviceID))
+                if(bus == "rio") {
+                    ids = reader.readIntList(this.prompt("ids"), talonFxService.active.map(TalonFX::getDeviceID))
+                    logger.info("IDS: ${ids}")
+                    new = talonFxService.activate(ids)
+                } else if(bus == "canivore") {
+                    ids = reader.readIntList(this.prompt("ids"), talonFxFDService.active.map(TalonFX::getDeviceID))
+                    logger.info("IDS: ${ids}")
+                    new = talonFxFDService.activate(ids)
+                } else throw IllegalArgumentException()
 
-                new =
-                    if(bus == "rio") talonFxService.activate(ids)
-                    else if(bus == "canivore") talonFxFDService.activate(ids)
-                    else throw IllegalArgumentException()
+//                ids = reader.readIntList(this.prompt("ids"), talonFxService.active.map(TalonFX::getDeviceID))
+//
+//                new =
+//                    if(bus == "rio") talonFxService.activate(ids)
+//                    else if(bus == "canivore") talonFxFDService.activate(ids)
+//                    else throw IllegalArgumentException()
 
                 if(new.isNotEmpty()) {
-                    terminal.info("Activating talons: ${new.joinToString()}")
+                    logger.info("Activating talons: ${new.joinToString()}")
                 }
                 return super.execute()
             } catch(e: IllegalArgumentException) {

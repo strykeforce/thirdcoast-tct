@@ -46,7 +46,7 @@ val tctModule = module {
 
     single { LegacyTalonFxService(get()) { id -> TalonFX(id) } }
 
-    single { TalonFxService(get()) { id -> com.ctre.phoenix6.hardware.TalonFX(id, "rio")} }
+    single { TalonFxService(get()) { id -> com.ctre.phoenix6.hardware.TalonFX(id)} }
 
     single {TalonFxFDService(get()) {id -> com.ctre.phoenix6.hardware.TalonFX(id, "*")} }
 

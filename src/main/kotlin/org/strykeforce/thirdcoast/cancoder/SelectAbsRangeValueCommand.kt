@@ -42,7 +42,7 @@ class SelectAbsRangeValueCommand(
         if(bus == "rio") {
             cancoderService.activeConfiguration.MagnetSensor.AbsoluteSensorRange = range
             cancoderService.active.forEach{it.configurator.apply(cancoderService.activeConfiguration)}
-        } else if(bus == "caniover") {
+        } else if(bus == "canivore") {
             cancoderFDService.activeConfiguration.MagnetSensor.AbsoluteSensorRange = range
             cancoderFDService.active.forEach { it.configurator.apply(cancoderFDService.activeConfiguration.MagnetSensor) }
         }
