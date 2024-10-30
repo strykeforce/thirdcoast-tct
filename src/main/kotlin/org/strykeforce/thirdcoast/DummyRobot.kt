@@ -2,7 +2,8 @@ package org.strykeforce.thirdcoast
 
 import edu.wpi.first.wpilibj.TimedRobot
 import mu.KotlinLogging
-import org.koin.standalone.KoinComponent
+import org.koin.core.component.KoinComponent
+//import org.koin.standalone.KoinComponent
 
 private val logger = KotlinLogging.logger {}
 

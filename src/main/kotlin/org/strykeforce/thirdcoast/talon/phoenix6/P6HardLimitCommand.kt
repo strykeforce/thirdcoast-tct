@@ -7,7 +7,7 @@ import com.ctre.phoenix6.signals.ForwardLimitTypeValue.*
 import com.ctre.phoenix6.signals.ReverseLimitSourceValue
 import com.ctre.phoenix6.signals.ReverseLimitTypeValue
 import net.consensys.cava.toml.TomlTable
-import org.koin.standalone.inject
+import org.koin.core.component.inject
 import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.device.TalonFxFDService

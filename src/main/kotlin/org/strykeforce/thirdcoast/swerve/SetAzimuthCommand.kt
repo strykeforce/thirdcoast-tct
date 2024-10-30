@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Preferences
 import edu.wpi.first.wpilibj.Timer
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
-import org.koin.standalone.inject
+import org.koin.core.component.inject
 import org.strykeforce.swerve.SwerveDrive
 import org.strykeforce.swerve.V6TalonSwerveModule
 import org.strykeforce.thirdcoast.command.AbstractCommand

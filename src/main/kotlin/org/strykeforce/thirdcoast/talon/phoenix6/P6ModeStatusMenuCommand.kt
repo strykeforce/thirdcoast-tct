@@ -2,7 +2,7 @@ package org.strykeforce.thirdcoast.talon.phoenix6
 
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
-import org.koin.standalone.inject
+import org.koin.core.component.inject
 import org.strykeforce.thirdcoast.*
 import org.strykeforce.thirdcoast.command.*
 import org.strykeforce.thirdcoast.device.TalonFxFDService

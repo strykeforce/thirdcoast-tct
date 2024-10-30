@@ -2,7 +2,7 @@ package org.strykeforce.thirdcoast.swerve
 
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
-import org.koin.standalone.inject
+import org.koin.core.component.inject
 import org.strykeforce.swerve.SwerveDrive
 import org.strykeforce.swerve.V6TalonSwerveModule
 import org.strykeforce.thirdcoast.command.AbstractCommand

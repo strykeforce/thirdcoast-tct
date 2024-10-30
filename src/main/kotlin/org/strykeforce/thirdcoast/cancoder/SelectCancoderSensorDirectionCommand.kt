@@ -3,7 +3,7 @@ package org.strykeforce.thirdcoast.cancoder
 import com.ctre.phoenix6.signals.SensorDirectionValue
 import com.ctre.phoenix6.signals.SensorDirectionValue.*
 import net.consensys.cava.toml.TomlTable
-import org.koin.standalone.inject
+import org.koin.core.component.inject
 import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.device.CancoderFDService

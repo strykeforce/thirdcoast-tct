@@ -6,8 +6,8 @@ import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
 import org.jline.utils.AttributedString
 import org.jline.utils.AttributedStyle
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.strykeforce.thirdcoast.cancoder.*
 import org.strykeforce.thirdcoast.canifier.*
 import org.strykeforce.thirdcoast.dio.RunDigitalOutputsCommand

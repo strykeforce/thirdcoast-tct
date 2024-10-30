@@ -4,11 +4,15 @@ import edu.wpi.first.wpilibj.TimedRobot
 import mu.KotlinLogging
 import net.consensys.cava.toml.Toml
 import net.consensys.cava.toml.TomlTable
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.core.context.startKoin
 import org.koin.core.parameter.parametersOf
-import org.koin.log.Logger.SLF4JLogger
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.StandAloneContext.startKoin
-import org.koin.standalone.inject
+//import org.koin.log.Logger.SLF4JLogger
+import org.koin.logger.SLF4JLogger
+//import org.koin.standalone.KoinComponent
+//import org.koin.standalone.StandAloneContext.startKoin
+//import org.koin.standalone.inject
 import org.strykeforce.telemetry.TelemetryService
 import org.strykeforce.thirdcoast.command.Command
 import kotlin.concurrent.thread
@@ -19,7 +23,10 @@ private val logger = KotlinLogging.logger {}
 class Robot : TimedRobot(), KoinComponent {
 
     override fun robotInit() {
-        startKoin(listOf(tctModule, swerveModule), logger = SLF4JLogger())
+        startKoin{
+            modules(listOf(tctModule, swerveModule))
+            logger(SLF4JLogger())
+        }
         val telemetryService: TelemetryService by inject()
         thread(name = "tct", start = true) {
             val toml = parseResource("/commands.toml")

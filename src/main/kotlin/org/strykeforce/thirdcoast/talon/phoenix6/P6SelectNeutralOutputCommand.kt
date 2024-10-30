@@ -2,7 +2,7 @@ package org.strykeforce.thirdcoast.talon.phoenix6
 
 import com.ctre.phoenix6.signals.NeutralModeValue
 import net.consensys.cava.toml.TomlTable
-import org.koin.standalone.inject
+import org.koin.core.component.inject
 import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.device.TalonFxFDService

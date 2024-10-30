@@ -1,8 +1,8 @@
 package org.strykeforce.thirdcoast.command
 
 import org.jline.terminal.Terminal
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.system.exitProcess
 
 class QuitCommand : Command, KoinComponent {
