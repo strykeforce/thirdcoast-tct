@@ -1,7 +1,7 @@
 package org.strykeforce.thirdcoast.talon
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
-import com.nhaarman.mockitokotlin2.*
+//import com.nhaarman.mockitokotlin2.*
 import net.consensys.cava.toml.Toml
 import org.assertj.core.api.Assertions.assertThat
 import org.jline.reader.LineReader
@@ -14,6 +14,9 @@ import org.koin.core.component.inject
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.mock.declare
+import org.mockito.Mockito.mock
+import org.mockito.kotlin.*
+import org.mockito.kotlin.mock
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT_4
 import org.strykeforce.thirdcoast.device.TalonService
