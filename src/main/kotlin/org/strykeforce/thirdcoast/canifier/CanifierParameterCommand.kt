@@ -7,7 +7,7 @@ import com.ctre.phoenix.CANifierStatusFrame.*
 import com.ctre.phoenix.motorcontrol.can.SlotConfiguration
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
-import org.koin.standalone.inject
+import org.koin.core.component.inject
 import org.strykeforce.thirdcoast.canifier.CanifierParameter.Enum.*
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command

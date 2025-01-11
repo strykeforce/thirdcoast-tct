@@ -1,6 +1,6 @@
 package org.strykeforce.thirdcoast
 
-import com.nhaarman.mockitokotlin2.*
+//import com.nhaarman.mockitokotlin2.*
 import net.consensys.cava.toml.Toml
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
@@ -10,6 +10,11 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import org.mockito.ArgumentMatchers.*
+import org.mockito.Mockito.reset
+import org.mockito.Mockito.`when`
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT_4
 import org.strykeforce.thirdcoast.command.MenuCommand

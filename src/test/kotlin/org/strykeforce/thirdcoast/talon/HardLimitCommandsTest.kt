@@ -3,17 +3,21 @@ package org.strykeforce.thirdcoast.talon
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal.NormallyOpen
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource.FeedbackConnector
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
+//import com.nhaarman.mockitokotlin2.mock
+//import comom.nhaarman.mockitokotlin2.verify
 import net.consensys.cava.toml.Toml
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.koin.log.Logger.SLF4JLogger
-import org.koin.standalone.StandAloneContext
-import org.koin.standalone.inject
+import org.koin.core.component.inject
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.dsl.module
+import org.koin.logger.SLF4JLogger
 import org.koin.test.KoinTest
-import org.koin.test.declare
+import org.koin.test.mock.declare
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.device.TalonService
 
@@ -46,9 +50,16 @@ internal class HardLimitCommandsTest : KoinTest {
 
     @BeforeEach
     fun setUp() {
-        StandAloneContext.startKoin(listOf(), logger = SLF4JLogger())
+        startKoin{
+            modules(module {
+                single { TalonService(mock()) {talon} }
+            })
+            logger(SLF4JLogger())
+        }
+
         declare {
-            single { TalonService(mock()) { talon } }
+//            module { single { TalonService(mock()) {talon} } }
+            //single { TalonService(mock()) { talon } }
         }
 
     }
@@ -66,7 +77,7 @@ internal class HardLimitCommandsTest : KoinTest {
 
     @AfterEach
     fun tearDown() {
-        StandAloneContext.stopKoin()
+        stopKoin()
     }
 
 }

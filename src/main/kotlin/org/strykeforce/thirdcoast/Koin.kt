@@ -14,7 +14,8 @@ import org.jline.reader.LineReader
 import org.jline.reader.LineReaderBuilder
 import org.jline.terminal.Terminal
 import org.jline.terminal.TerminalBuilder
-import org.koin.dsl.module.module
+import org.koin.dsl.module
+//import org.koin.dsl.module.module
 import org.strykeforce.swerve.*
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.device.*
@@ -68,7 +69,7 @@ val tctModule = module {
 
     single<Terminal> { TerminalBuilder.terminal() }
 
-    single<LineReader>(createOnStart = true) { LineReaderBuilder.builder().terminal(get()).build() }
+    single<LineReader>(createdAtStart = true) { LineReaderBuilder.builder().terminal(get()).build() }
 
 }
 

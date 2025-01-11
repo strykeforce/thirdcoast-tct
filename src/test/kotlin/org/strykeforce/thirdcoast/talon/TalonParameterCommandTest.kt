@@ -1,21 +1,26 @@
 package org.strykeforce.thirdcoast.talon
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
-import com.nhaarman.mockitokotlin2.*
+//import com.nhaarman.mockitokotlin2.*
 import net.consensys.cava.toml.Toml
 import org.assertj.core.api.Assertions.assertThat
 import org.jline.reader.LineReader
 import org.jline.utils.AttributedString
 import org.junit.jupiter.api.*
-import org.koin.log.Logger.SLF4JLogger
-import org.koin.standalone.StandAloneContext.startKoin
-import org.koin.standalone.StandAloneContext.stopKoin
-import org.koin.standalone.inject
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
+import org.koin.logger.SLF4JLogger
+import org.koin.core.component.inject
+import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
-import org.koin.test.declare
+import org.koin.test.mock.declare
+import org.mockito.Mockito.mock
+import org.mockito.kotlin.*
+import org.mockito.kotlin.mock
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT_4
 import org.strykeforce.thirdcoast.device.TalonService
+import kotlin.math.sin
 
 internal class TalonParameterCommandTest : KoinTest {
 
@@ -34,10 +39,19 @@ internal class TalonParameterCommandTest : KoinTest {
 
         @BeforeEach
         fun setUp() {
-            startKoin(listOf(), logger = SLF4JLogger())
+            startKoin{
+//                modules(module{
+//                    single{ TalonService(mock()) {talon} }
+//                    single{ reader}
+//                })
+                logger(SLF4JLogger())
+            }
+
             declare {
-                single { TalonService(mock()) { talon } }
-                single { reader }
+                module {
+                    single { TalonService(mock()) { talon } }
+                    single { reader }
+                }
             }
         }
 
@@ -135,10 +149,19 @@ internal class TalonParameterCommandTest : KoinTest {
 
         @BeforeEach
         fun setUp() {
-            startKoin(listOf(), logger = SLF4JLogger())
+            startKoin{
+//                modules(module {
+//                    single { TalonService(mock()) {talon} }
+//                    single { reader }
+//                })
+                logger(SLF4JLogger())
+            }
+
             declare {
-                single { TalonService(mock()) { talon } }
-                single { reader }
+                module {
+                    single { TalonService(mock()) {talon} }
+                    single { reader }
+                }
             }
         }
 

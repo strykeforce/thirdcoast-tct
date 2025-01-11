@@ -1,9 +1,11 @@
 package org.strykeforce.thirdcoast.device
 
-import com.nhaarman.mockitokotlin2.mock
+//import com.nhaarman.mockitokotlin2.mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
+import org.mockito.Mockito.mock
+import org.strykeforce.telemetry.TelemetryService
 
 internal class DeviceServiceTest {
 
@@ -58,7 +60,10 @@ internal class DeviceServiceTest {
 
     @Test
     fun `service gets same Talon`() {
-        val talonService = TalonService(mock()) { mock() }
+        System.out.println("Before")
+        val telemetryService = mock<TelemetryService>()
+        System.out.println("Between")
+        val talonService = TalonService(telemetryService) { mock() }
         val t1 = talonService.get(1)
         assertThat(talonService.get(1)).isSameAs(t1)
         assertThat(talonService.all).containsOnly(t1)

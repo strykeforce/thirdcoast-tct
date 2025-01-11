@@ -1,11 +1,12 @@
 package org.strykeforce.thirdcoast.command
 
-import com.nhaarman.mockitokotlin2.*
+//import com.nhaarman.mockitokotlin2.*
 import org.assertj.core.api.Assertions.assertThat
 import org.jline.reader.LineReader
 import org.jline.terminal.Terminal
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.contains
+import org.mockito.kotlin.*
 import org.strykeforce.thirdcoast.talon.TalonParameter
 import org.strykeforce.thirdcoast.talon.TalonParameter.Companion.create
 import java.io.PrintWriter
