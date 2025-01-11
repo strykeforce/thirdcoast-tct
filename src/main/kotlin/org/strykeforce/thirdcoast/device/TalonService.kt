@@ -85,10 +85,16 @@ class TalonService(private val telemetryService: TelemetryService, factory: (id:
 
     override fun activate(ids: Collection<Int>): Set<Int> {
         dirty = true
+        logger.info { "Number Active: ${active.size}" }
+        active.forEach{
+            logger.info { "Active TalonFX: ${it.deviceID}" }
+        }
 
         val new = super.activate(ids)
+        logger.info { "Number New: ${new.size}" }
         telemetryService.stop()
         active.filter { new.contains(it.deviceID) }.forEach {
+            logger.info { "New TalonFX: ${it.deviceID}" }
             it.setNeutralMode(neutralMode)
             it.selectProfileSlot(activeSlotIndex, 0)
             it.enableVoltageCompensation(voltageCompensation)

@@ -32,8 +32,14 @@ open class AbstractDeviceService<T>(private val factory: (id: Int) -> T) :
 
     override fun get(id: Int): T {
         val device = _all[id] ?: factory(id)
-        if (_all.put(id, device) == null) logger.debug("_all add: {}", device)
+        if (_all.put(id, device) == null) logger.debug("_all add: {}, id: {}", device, id)
         return device
+    }
+
+    fun get(id: Int, bus: String): T {
+        val device = _all[id] ?: factory(id)
+        if(_all.put(id, device) == null) logger.debug("_all add: {}, id: {}", device, id)
+        return  device
     }
 
     override fun activate(ids: Collection<Int>): Set<Int> {
@@ -41,6 +47,13 @@ open class AbstractDeviceService<T>(private val factory: (id: Int) -> T) :
         _active.clear()
         ids.associateTo(_active) { id -> id to get(id) }
         return new
+    }
+
+    open fun activate(ids: Collection<Int>, bus: String): Set<Int> {
+        val new = ids.toSet().minus(_active.keys)
+        _active.clear()
+        ids.associateTo(_active) { id -> id to get(id,bus)}
+        return  new
     }
 
     fun idsInAll(ids: Collection<Int>): Set<Int> = _all.keys.intersect(ids)

@@ -12,7 +12,7 @@ import net.consensys.cava.toml.TomlTable
 import org.koin.standalone.inject
 import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
-import org.strykeforce.thirdcoast.device.TalonFxService
+import org.strykeforce.thirdcoast.device.LegacyTalonFxService
 import org.strykeforce.thirdcoast.device.TalonService
 
 private val logger = KotlinLogging.logger {}
@@ -30,7 +30,7 @@ class SelectHardLimitSourceCommand(
 ) {
 
     private val talonService: TalonService by inject()
-    private val talonFxService: TalonFxService by inject()
+    private val legacyTalonFxService: LegacyTalonFxService by inject()
 
     val type = toml.getString(Command.DEVICE_KEY) ?: throw Exception("$key: ${Command.DEVICE_KEY} missing")
     val isForward = toml.getBoolean("forward") ?: true
@@ -43,7 +43,7 @@ class SelectHardLimitSourceCommand(
         get() {
             var config: BaseTalonConfiguration = when (type) {
                 "srx" -> talonService.activeConfiguration
-                "fx" -> talonFxService.activeConfiguration
+                "fx" -> legacyTalonFxService.activeConfiguration
                 else -> throw IllegalArgumentException()
             }
             return values.indexOf(
@@ -62,8 +62,8 @@ class SelectHardLimitSourceCommand(
             config = talonService.activeConfiguration
         }
         else if(type == "fx") {
-            active = talonFxService.active
-            config = talonFxService.activeConfiguration
+            active = legacyTalonFxService.active
+            config = legacyTalonFxService.activeConfiguration
         }
         else throw IllegalArgumentException()
         val source = values[index]
@@ -102,7 +102,7 @@ class SelectHardLimitNormalCommand(
 ) {
 
     private val talonService: TalonService by inject()
-    private val talonFxService: TalonFxService by inject()
+    private val legacyTalonFxService: LegacyTalonFxService by inject()
     val type = toml.getString(Command.DEVICE_KEY) ?: throw Exception("$key: ${Command.DEVICE_KEY} missing")
     val isForward = toml.getBoolean("forward") ?: true
 
@@ -114,7 +114,7 @@ class SelectHardLimitNormalCommand(
     override val activeIndex: Int
         get() {
             if(type == "srx") activeConfig = talonService.activeConfiguration
-            else if(type == "fx") activeConfig = talonFxService.activeConfiguration
+            else if(type == "fx") activeConfig = legacyTalonFxService.activeConfiguration
             else throw IllegalArgumentException()
             return values.indexOf(
                     if (isForward)
@@ -130,8 +130,8 @@ class SelectHardLimitNormalCommand(
             activeConfig = talonService.activeConfiguration
             active = talonService.active
         } else if(type == "fx"){
-            activeConfig = talonFxService.activeConfiguration
-            active = talonFxService.active
+            activeConfig = legacyTalonFxService.activeConfiguration
+            active = legacyTalonFxService.active
         } else throw IllegalArgumentException()
         val source = getSource()
         val normal = values[index]

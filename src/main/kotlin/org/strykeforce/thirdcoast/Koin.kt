@@ -1,12 +1,10 @@
 package org.strykeforce.thirdcoast
 
 import com.ctre.phoenix.CANifier
-import com.ctre.phoenix.motorcontrol.FeedbackDevice
-import com.ctre.phoenix.motorcontrol.NeutralMode
 import com.ctre.phoenix.motorcontrol.can.TalonFX
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
-import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration
 import com.ctre.phoenix.sensors.PigeonIMU
+import com.ctre.phoenix6.hardware.CANcoder
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.wpilibj.DigitalOutput
 import edu.wpi.first.wpilibj.PneumaticsModuleType
@@ -46,7 +44,11 @@ val tctModule = module {
 
     single { TalonService(get()) { id -> TalonSRX(id) } }
 
-    single { TalonFxService(get()) { id -> TalonFX(id) } }
+    single { LegacyTalonFxService(get()) { id -> TalonFX(id) } }
+
+    single { TalonFxService(get()) { id -> com.ctre.phoenix6.hardware.TalonFX(id)} }
+
+    single {TalonFxFDService(get()) {id -> com.ctre.phoenix6.hardware.TalonFX(id, "*")} }
 
     single { ServoService { id -> Servo(id) } }
 
@@ -55,6 +57,10 @@ val tctModule = module {
     single { DigitalOutputService { id -> DigitalOutput(id) } }
 
     single { CanifierService(get()) { id -> CANifier(id) } }
+
+    single { CancoderService(get()) {id -> CANcoder(id, "rio")} }
+
+    single { CancoderFDService(get()) {id -> CANcoder(id, "*")} }
 
     single { PigeonService(get()) { id -> PigeonIMU(id) } }
 
@@ -74,17 +80,17 @@ val swerveModule = module {
 
 private fun getSwerveModules() = Array<SwerveModule>(4) { i -> getSwerveModule(i) }
 
-private val moduleBuilder = TalonSwerveModule.Builder().driveGearRatio(1.0).wheelDiameterInches(1.0)
+private val moduleBuilder = V6TalonSwerveModule.V6Builder().driveGearRatio(1.0).wheelDiameterInches(1.0)
     .driveMaximumMetersPerSecond(1.0)
 
-private fun getSwerveModule(i: Int) : TalonSwerveModule {
+private fun getSwerveModule(i: Int) : V6TalonSwerveModule {
     val location = when (i) {
         0 -> Translation2d(1.0, 1.0)
         1 -> Translation2d(1.0, -1.0)
         2 -> Translation2d(-1.0, 1.0)
         else -> Translation2d(-1.0, -1.0)
     }
-    return moduleBuilder.azimuthTalon(TalonSRX(i)).driveTalon(TalonFX(i + 10))
+    return moduleBuilder.azimuthTalon(TalonSRX(i)).driveTalon(com.ctre.phoenix6.hardware.TalonFX(i + 10))
         .wheelLocationMeters(location).build()
 }
 

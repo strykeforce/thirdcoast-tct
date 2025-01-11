@@ -9,7 +9,7 @@ internal class CheckTomlTest {
     @Test
     fun `check commands`() {
         val toml = parseResource("/commands.toml")
-        val table = toml["talon.output.open-loop_ramp"] as TomlTable
+        val table = toml["rio.talon.output.open-loop_ramp"] as TomlTable
         assertThat(table["type"]).isEqualTo("talon.param")
     }
 
