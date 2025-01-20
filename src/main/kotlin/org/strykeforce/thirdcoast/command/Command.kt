@@ -66,9 +66,6 @@ interface Command {
                 "talon.hard.source" -> SelectHardLimitSourceCommand(parent, key, toml)
                 "talon.hard.normal" -> SelectHardLimitNormalCommand(parent, key, toml)
                 "talon.velocity.period" -> SelectVelocityMeasurmentPeriodCommand(parent, key, toml)
-                "talon.commutation" -> SelectMotorCommutationCommand(parent, key, toml)
-                "talon.absoluteRange" -> SelectAbsoluteSensorRange(parent, key, toml)
-                "talon.initStrategy" -> SelectInitializationStrategy(parent, key, toml)
                 "servo.select" -> SelectServosCommand(parent, key, toml)
                 "servo.run" -> RunServosCommand(parent, key, toml)
                 "solenoid.select" -> SelectSolenoidsCommand(parent, key, toml)
@@ -114,7 +111,7 @@ interface Command {
                 "cancoder.select" -> SelectCancoderCommand(parent, key, toml)
                 "cancoder.status" -> CancoderStatusCommand(parent, key, toml)
                 "cancoder.param" -> CancoderParameterCommand(parent, key, toml)
-                "cancoder.absRange" -> SelectAbsRangeValueCommand(parent, key, toml)
+                "cancoder.absRange" -> CancoderParameterCommand(parent, key, toml) //FIXME
                 "cancoder.sensorDirection" -> SelectCancoderSensorDirectionCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
             }

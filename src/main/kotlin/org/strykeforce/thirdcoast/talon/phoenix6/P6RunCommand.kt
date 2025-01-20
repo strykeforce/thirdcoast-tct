@@ -88,7 +88,7 @@ class P6RunCommand(
                 val slot = if(bus == "rio") talonFxService.activeSlotIndex else talonFxFDService.activeSlotIndex
                 val diffSlot = if(bus == "rio") talonFxService.activeDifferentialSlot else talonFxFDService.activeDifferentialSlot
                 val diffPos = if(bus == "rio") talonFxService.activeDifferentialTarget else talonFxFDService.activeDifferentialTarget
-                var controlRequest: ControlRequest = DutyCycleOut(0.0, false, false,limFwdMotion,limRevMotion)
+                var controlRequest: ControlRequest = DutyCycleOut(0.0).withEnableFOC(false).withOverrideBrakeDurNeutral(false).withLimitForwardMotion(limFwdMotion).withLimitReverseMotion(limRevMotion)
                 val torqueCurrentMaxOut = if(bus == "rio") talonFxService.activeTorqueCurrentMaxOut else talonFxFDService.activeTorqueCurrentMaxOut
                 val torqueCurrentDeadband = if(bus == "rio") talonFxService.activeTorqueCurrentDeadband else talonFxFDService.activeTorqueCurrentDeadband
 
@@ -109,40 +109,88 @@ class P6RunCommand(
                 when (setpointType) {
                     SetpointType.OPEN_LOOP -> {
                         when (units) {
-                            Units.PERCENT -> controlRequest = DutyCycleOut(setpoint, enableFOC, overrideNeutral,limFwdMotion, limRevMotion)
-                            Units.VOLTAGE -> controlRequest = VoltageOut(setpoint, enableFOC, overrideNeutral, limFwdMotion, limRevMotion)
-                            Units.TORQUE_CURRENT -> controlRequest = TorqueCurrentFOC(
-                                setpoint,
-                                torqueCurrentMaxOut,
-                                torqueCurrentDeadband,
-                                overrideNeutral,limFwdMotion,limRevMotion
-                            )
+                            Units.PERCENT -> controlRequest = DutyCycleOut(setpoint)
+                                .withEnableFOC(enableFOC)
+                                .withOverrideBrakeDurNeutral(overrideNeutral)
+                                .withLimitForwardMotion(limFwdMotion)
+                                .withLimitReverseMotion(limRevMotion)
+                            Units.VOLTAGE -> controlRequest = VoltageOut(setpoint)
+                                .withEnableFOC(enableFOC)
+                                .withOverrideBrakeDurNeutral(overrideNeutral)
+                                .withLimitForwardMotion(limFwdMotion)
+                                .withLimitReverseMotion(limRevMotion)
+                            Units.TORQUE_CURRENT -> controlRequest = TorqueCurrentFOC(setpoint)
+                                .withMaxAbsDutyCycle(torqueCurrentMaxOut)
+                                .withDeadband(torqueCurrentDeadband)
+                                .withLimitForwardMotion(limFwdMotion)
+                                .withLimitReverseMotion(limRevMotion)
+                                .withOverrideCoastDurNeutral(overrideNeutral)
                         }
                     }
 
                     SetpointType.POSITION -> {
                         when (units) {
                             Units.PERCENT -> controlRequest =
-                                PositionDutyCycle(setpoint, velocity, enableFOC, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
+                                PositionDutyCycle(setpoint)
+                                    .withVelocity(velocity)
+                                    .withEnableFOC(enableFOC)
+                                    .withFeedForward(feedFwd)
+                                    .withSlot(slot)
+                                    .withOverrideBrakeDurNeutral(overrideNeutral)
+                                    .withLimitForwardMotion(limFwdMotion)
+                                    .withLimitReverseMotion(limRevMotion)
 
                             Units.VOLTAGE -> controlRequest =
-                                PositionVoltage(setpoint, velocity, enableFOC, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
+                                PositionVoltage(setpoint)
+                                    .withVelocity(velocity)
+                                    .withEnableFOC(enableFOC)
+                                    .withFeedForward(feedFwd)
+                                    .withSlot(slot)
+                                    .withOverrideBrakeDurNeutral(overrideNeutral)
+                                    .withLimitForwardMotion(limFwdMotion)
+                                    .withLimitReverseMotion(limRevMotion)
 
                             Units.TORQUE_CURRENT -> controlRequest =
-                                PositionTorqueCurrentFOC(setpoint, velocity, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
+                                PositionTorqueCurrentFOC(setpoint)
+                                    .withVelocity(velocity)
+                                    .withFeedForward(feedFwd)
+                                    .withSlot(slot)
+                                    .withOverrideCoastDurNeutral(overrideNeutral)
+                                    .withLimitForwardMotion(limFwdMotion)
+                                    .withLimitReverseMotion(limRevMotion)
                         }
                     }
 
                     SetpointType.VELOCITY -> {
                         when (units) {
                             Units.PERCENT -> controlRequest =
-                                VelocityDutyCycle(setpoint, acceleration, enableFOC, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
+                                VelocityDutyCycle(setpoint)
+                                    .withAcceleration(acceleration)
+                                    .withEnableFOC(enableFOC)
+                                    .withFeedForward(feedFwd)
+                                    .withSlot(slot)
+                                    .withOverrideBrakeDurNeutral(overrideNeutral)
+                                    .withLimitForwardMotion(limFwdMotion)
+                                    .withLimitReverseMotion(limRevMotion)
 
                             Units.VOLTAGE -> controlRequest =
-                                VelocityVoltage(setpoint, acceleration, enableFOC, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
+                                VelocityVoltage(setpoint)
+                                    .withAcceleration(acceleration)
+                                    .withEnableFOC(enableFOC)
+                                    .withFeedForward(feedFwd)
+                                    .withSlot(slot)
+                                    .withOverrideBrakeDurNeutral(overrideNeutral)
+                                    .withLimitForwardMotion(limFwdMotion)
+                                    .withLimitReverseMotion(limRevMotion)
 
                             Units.TORQUE_CURRENT -> controlRequest =
-                                VelocityTorqueCurrentFOC(setpoint, acceleration, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
+                                VelocityTorqueCurrentFOC(setpoint)
+                                    .withAcceleration(acceleration)
+                                    .withFeedForward(feedFwd)
+                                    .withSlot(slot)
+                                    .withOverrideCoastDurNeutral(overrideNeutral)
+                                    .withLimitForwardMotion(limFwdMotion)
+                                    .withLimitReverseMotion(limRevMotion)
                         }
                     }
 
@@ -152,87 +200,112 @@ class P6RunCommand(
                                 logger.info { "Motion Magic: $motionType, $units" }
                                 when (units) {
                                     Units.PERCENT -> controlRequest =
-                                        MotionMagicDutyCycle(setpoint, enableFOC, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
+                                        MotionMagicDutyCycle(setpoint)
+                                            .withEnableFOC(enableFOC)
+                                            .withSlot(slot)
+                                            .withFeedForward(feedFwd)
+                                            .withOverrideBrakeDurNeutral(overrideNeutral)
+                                            .withLimitForwardMotion(limFwdMotion)
+                                            .withLimitReverseMotion(limRevMotion)
 
                                     Units.VOLTAGE -> controlRequest =
-                                        MotionMagicVoltage(setpoint, enableFOC, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
+                                        MotionMagicVoltage(setpoint)
+                                            .withEnableFOC(enableFOC)
+                                            .withFeedForward(feedFwd)
+                                            .withSlot(slot)
+                                            .withOverrideBrakeDurNeutral(overrideNeutral)
+                                            .withLimitForwardMotion(limFwdMotion)
+                                            .withLimitReverseMotion(limRevMotion)
 
                                     Units.TORQUE_CURRENT -> controlRequest =
-                                        MotionMagicTorqueCurrentFOC(setpoint, feedFwd, slot, overrideNeutral,limFwdMotion,limRevMotion)
+                                        MotionMagicTorqueCurrentFOC(setpoint)
+                                            .withFeedForward(feedFwd)
+                                            .withSlot(slot)
+                                            .withOverrideCoastDurNeutral(overrideNeutral)
+                                            .withLimitForwardMotion(limFwdMotion)
+                                            .withLimitReverseMotion(limRevMotion)
                                 }
                             }
 
                             MM_Type.VELOCITY -> {
                                 when (units) {
-                                    Units.PERCENT -> controlRequest = MotionMagicVelocityDutyCycle(
-                                        setpoint,
-                                        acceleration,
-                                        enableFOC,
-                                        feedFwd,
-                                        slot,
-                                        overrideNeutral,limFwdMotion,limRevMotion
-                                    )
+                                    Units.PERCENT -> controlRequest = MotionMagicVelocityDutyCycle(setpoint)
+                                        .withAcceleration(acceleration)
+                                        .withEnableFOC(enableFOC)
+                                        .withFeedForward(feedFwd)
+                                        .withSlot(slot)
+                                        .withOverrideBrakeDurNeutral(overrideNeutral)
+                                        .withLimitForwardMotion(limFwdMotion)
+                                        .withLimitReverseMotion(limRevMotion)
 
-                                    Units.VOLTAGE -> controlRequest = MotionMagicVelocityVoltage(
-                                        setpoint,
-                                        acceleration,
-                                        enableFOC,
-                                        feedFwd,
-                                        slot,
-                                        overrideNeutral,limFwdMotion,limRevMotion
-                                    )
+                                    Units.VOLTAGE -> controlRequest = MotionMagicVelocityVoltage(setpoint)
+                                        .withAcceleration(acceleration)
+                                        .withEnableFOC(enableFOC)
+                                        .withFeedForward(feedFwd)
+                                        .withSlot(slot)
+                                        .withOverrideBrakeDurNeutral(overrideNeutral)
+                                        .withLimitForwardMotion(limFwdMotion)
+                                        .withLimitReverseMotion(limRevMotion)
 
-                                    Units.TORQUE_CURRENT -> controlRequest = MotionMagicVelocityTorqueCurrentFOC(
-                                        setpoint,
-                                        acceleration,
-                                        enableFOC,
-                                        feedFwd,
-                                        slot,
-                                        overrideNeutral,limFwdMotion,limRevMotion
-                                    )
+                                    Units.TORQUE_CURRENT -> controlRequest = MotionMagicVelocityTorqueCurrentFOC(setpoint)
+                                        .withAcceleration(acceleration)
+                                        .withEnableFOC(enableFOC)
+                                        .withFeedForward(feedFwd)
+                                        .withSlot(slot)
+                                        .withOverrideCoastDurNeutral(overrideNeutral)
+                                        .withLimitForwardMotion(limFwdMotion)
+                                        .withLimitReverseMotion(limRevMotion)
                                 }
                             }
 
                             MM_Type.DYNAMIC -> {
                                 when (units) {
-                                    Units.PERCENT -> controlRequest = DynamicMotionMagicDutyCycle(
-                                        setpoint,
-                                        velocity,
-                                        acceleration,
-                                        jerk,
-                                        enableFOC,
-                                        feedFwd,
-                                        slot,
-                                        overrideNeutral,limFwdMotion,limRevMotion
-                                    )
+                                    Units.PERCENT -> controlRequest = DynamicMotionMagicDutyCycle(setpoint, velocity, acceleration, jerk)
+                                        .withEnableFOC(enableFOC)
+                                        .withFeedForward(feedFwd)
+                                        .withSlot(slot)
+                                        .withOverrideBrakeDurNeutral(overrideNeutral)
+                                        .withLimitForwardMotion(limFwdMotion)
+                                        .withLimitReverseMotion(limRevMotion)
 
-                                    Units.VOLTAGE -> controlRequest = DynamicMotionMagicVoltage(
-                                        setpoint,
-                                        velocity,
-                                        acceleration,
-                                        jerk,
-                                        enableFOC,
-                                        feedFwd,
-                                        slot,
-                                        overrideNeutral,limFwdMotion,limRevMotion
-                                    )
+                                    Units.VOLTAGE -> controlRequest = DynamicMotionMagicVoltage(setpoint, velocity, acceleration, jerk)
+                                        .withEnableFOC(enableFOC)
+                                        .withFeedForward(feedFwd)
+                                        .withSlot(slot)
+                                        .withOverrideBrakeDurNeutral(overrideNeutral)
+                                        .withLimitForwardMotion(limFwdMotion)
+                                        .withLimitReverseMotion(limRevMotion)
 
-                                    Units.TORQUE_CURRENT -> controlRequest = DynamicMotionMagicTorqueCurrentFOC(
-                                        setpoint,
-                                        velocity,
-                                        acceleration,
-                                        jerk,
-                                        feedFwd,
-                                        slot,
-                                        overrideNeutral,limFwdMotion,limRevMotion
-                                    )
+                                    Units.TORQUE_CURRENT -> controlRequest = DynamicMotionMagicTorqueCurrentFOC(setpoint, velocity, acceleration, jerk)
+                                        .withFeedForward(feedFwd)
+                                        .withSlot(slot)
+                                        .withOverrideCoastDurNeutral(overrideNeutral)
+                                        .withLimitForwardMotion(limFwdMotion)
+                                        .withLimitReverseMotion(limRevMotion)
                                 }
                             }
                             MM_Type.EXPONENTIAL -> {
                                 when(units) {
-                                    Units.PERCENT -> controlRequest = MotionMagicExpoDutyCycle(setpoint, enableFOC, feedFwd, slot, overrideNeutral, limFwdMotion, limRevMotion)
-                                    Units.VOLTAGE -> controlRequest = MotionMagicExpoVoltage(setpoint, enableFOC, feedFwd, slot, overrideNeutral, limFwdMotion, limRevMotion)
-                                    Units.TORQUE_CURRENT -> controlRequest = MotionMagicExpoTorqueCurrentFOC(setpoint, feedFwd, slot, overrideNeutral, limFwdMotion, limRevMotion)
+                                    Units.PERCENT -> controlRequest = MotionMagicExpoDutyCycle(setpoint)
+                                        .withEnableFOC(enableFOC)
+                                        .withFeedForward(feedFwd)
+                                        .withSlot(slot)
+                                        .withOverrideBrakeDurNeutral(overrideNeutral)
+                                        .withLimitForwardMotion(limFwdMotion)
+                                        .withLimitReverseMotion(limRevMotion)
+                                    Units.VOLTAGE -> controlRequest = MotionMagicExpoVoltage(setpoint)
+                                        .withEnableFOC(enableFOC)
+                                        .withFeedForward(feedFwd)
+                                        .withSlot(slot)
+                                        .withOverrideBrakeDurNeutral(overrideNeutral)
+                                        .withLimitForwardMotion(limFwdMotion)
+                                        .withLimitReverseMotion(limRevMotion)
+                                    Units.TORQUE_CURRENT -> controlRequest = MotionMagicExpoTorqueCurrentFOC(setpoint)
+                                        .withFeedForward(feedFwd)
+                                        .withSlot(slot)
+                                        .withOverrideCoastDurNeutral(overrideNeutral)
+                                        .withLimitForwardMotion(limFwdMotion)
+                                        .withLimitReverseMotion(limRevMotion)
                                 }
                             }
                         }
@@ -243,10 +316,20 @@ class P6RunCommand(
                             DifferentialType.OPEN_LOOP -> {
                                 when (units) {
                                     Units.PERCENT -> controlRequest =
-                                        DifferentialDutyCycle(setpoint, diffPos, enableFOC, diffSlot, overrideNeutral,limFwdMotion,limRevMotion)
+                                        DifferentialDutyCycle(setpoint, diffPos)
+                                            .withEnableFOC(enableFOC)
+                                            .withDifferentialSlot(diffSlot)
+                                            .withOverrideBrakeDurNeutral(overrideNeutral)
+                                            .withLimitForwardMotion(limFwdMotion)
+                                            .withLimitReverseMotion(limRevMotion)
 
                                     Units.VOLTAGE -> controlRequest =
-                                        DifferentialVoltage(setpoint, diffPos, enableFOC, diffSlot, overrideNeutral,limFwdMotion,limRevMotion)
+                                        DifferentialVoltage(setpoint, diffPos)
+                                            .withEnableFOC(enableFOC)
+                                            .withDifferentialSlot(diffSlot)
+                                            .withOverrideBrakeDurNeutral(overrideNeutral)
+                                            .withLimitForwardMotion(limFwdMotion)
+                                            .withLimitReverseMotion(limRevMotion)
 
                                     else -> {
                                         terminal.warn("Units chosen not valid for this control mode")
@@ -257,23 +340,21 @@ class P6RunCommand(
 
                             DifferentialType.POSITION -> {
                                 when (units) {
-                                    Units.PERCENT -> controlRequest = DifferentialPositionDutyCycle(
-                                        setpoint,
-                                        diffPos,
-                                        enableFOC,
-                                        slot,
-                                        diffSlot,
-                                        overrideNeutral,limFwdMotion,limRevMotion
-                                    )
+                                    Units.PERCENT -> controlRequest = DifferentialPositionDutyCycle(setpoint, diffPos)
+                                        .withEnableFOC(enableFOC)
+                                        .withTargetSlot(slot)
+                                        .withDifferentialSlot(diffSlot)
+                                        .withOverrideBrakeDurNeutral(overrideNeutral)
+                                        .withLimitForwardMotion(limFwdMotion)
+                                        .withLimitReverseMotion(limRevMotion)
 
-                                    Units.VOLTAGE -> controlRequest = DifferentialPositionVoltage(
-                                        setpoint,
-                                        diffPos,
-                                        enableFOC,
-                                        slot,
-                                        diffSlot,
-                                        overrideNeutral,limFwdMotion,limRevMotion
-                                    )
+                                    Units.VOLTAGE -> controlRequest = DifferentialPositionVoltage(setpoint, diffPos)
+                                        .withEnableFOC(enableFOC)
+                                        .withTargetSlot(slot)
+                                        .withDifferentialSlot(diffSlot)
+                                        .withOverrideBrakeDurNeutral(overrideNeutral)
+                                        .withLimitForwardMotion(limFwdMotion)
+                                        .withLimitReverseMotion(limRevMotion)
 
                                     else -> {
                                         terminal.warn("Units chosen not valid for this control mode")
@@ -284,23 +365,21 @@ class P6RunCommand(
 
                             DifferentialType.VELOCITY -> {
                                 when (units) {
-                                    Units.PERCENT -> controlRequest = DifferentialVelocityDutyCycle(
-                                        setpoint,
-                                        diffPos,
-                                        enableFOC,
-                                        slot,
-                                        diffSlot,
-                                        overrideNeutral,limFwdMotion,limRevMotion
-                                    )
+                                    Units.PERCENT -> controlRequest = DifferentialVelocityDutyCycle(setpoint, diffPos)
+                                        .withEnableFOC(enableFOC)
+                                        .withTargetSlot(slot)
+                                        .withDifferentialSlot(diffSlot)
+                                        .withOverrideBrakeDurNeutral(overrideNeutral)
+                                        .withLimitForwardMotion(limFwdMotion)
+                                        .withLimitReverseMotion(limRevMotion)
 
-                                    Units.VOLTAGE -> controlRequest = DifferentialVelocityVoltage(
-                                        setpoint,
-                                        diffPos,
-                                        enableFOC,
-                                        slot,
-                                        diffSlot,
-                                        overrideNeutral,limFwdMotion,limRevMotion
-                                    )
+                                    Units.VOLTAGE -> controlRequest = DifferentialVelocityVoltage(setpoint, diffPos)
+                                        .withEnableFOC(enableFOC)
+                                        .withTargetSlot(slot)
+                                        .withDifferentialSlot(diffSlot)
+                                        .withOverrideBrakeDurNeutral(overrideNeutral)
+                                        .withLimitForwardMotion(limFwdMotion)
+                                        .withLimitReverseMotion(limRevMotion)
 
                                     else -> {
                                         terminal.warn("Units chosen not valid for this control mode")
@@ -311,23 +390,21 @@ class P6RunCommand(
 
                             DifferentialType.MOTION_MAGIC -> {
                                 when (units) {
-                                    Units.PERCENT -> controlRequest = DifferentialMotionMagicDutyCycle(
-                                        setpoint,
-                                        diffPos,
-                                        enableFOC,
-                                        slot,
-                                        diffSlot,
-                                        overrideNeutral,limFwdMotion,limRevMotion
-                                    )
+                                    Units.PERCENT -> controlRequest = DifferentialMotionMagicDutyCycle(setpoint, diffPos)
+                                        .withEnableFOC(enableFOC)
+                                        .withTargetSlot(slot)
+                                        .withDifferentialSlot(diffSlot)
+                                        .withOverrideBrakeDurNeutral(overrideNeutral)
+                                        .withLimitForwardMotion(limFwdMotion)
+                                        .withLimitReverseMotion(limRevMotion)
 
-                                    Units.VOLTAGE -> controlRequest = DifferentialMotionMagicVoltage(
-                                        setpoint,
-                                        diffPos,
-                                        enableFOC,
-                                        slot,
-                                        diffSlot,
-                                        overrideNeutral,limFwdMotion,limRevMotion
-                                    )
+                                    Units.VOLTAGE -> controlRequest = DifferentialMotionMagicVoltage(setpoint, diffPos)
+                                        .withEnableFOC(enableFOC)
+                                        .withTargetSlot(slot)
+                                        .withDifferentialSlot(diffSlot)
+                                        .withOverrideBrakeDurNeutral(overrideNeutral)
+                                        .withLimitForwardMotion(limFwdMotion)
+                                        .withLimitReverseMotion(limRevMotion)
 
                                     else -> {
                                         terminal.warn("Units chosen not valid for this control mode")

@@ -116,9 +116,9 @@ class Phoenix6ParameterCommand(
                 STATOR_LIM_EN -> formatMenu(config.CurrentLimits.StatorCurrentLimitEnable)
                 STATOR_LIM -> formatMenu(config.CurrentLimits.StatorCurrentLimit)
                 SUPP_LIM_EN -> formatMenu(config.CurrentLimits.SupplyCurrentLimitEnable)
-                SUPP_LIM -> formatMenu(config.CurrentLimits.SupplyCurrentLimit)
-                SUPP_TRIP_THRES -> formatMenu(config.CurrentLimits.SupplyCurrentThreshold)
-                SUPP_TRIP_TIME -> formatMenu(config.CurrentLimits.SupplyTimeThreshold)
+                SUPP_LIM -> formatMenu(config.CurrentLimits.SupplyCurrentLowerLimit)
+                SUPP_TRIP_THRES -> formatMenu(config.CurrentLimits.SupplyCurrentLimit)
+                SUPP_TRIP_TIME -> formatMenu(config.CurrentLimits.SupplyCurrentLowerTime)
 
                 CLOSED_LOOP_RAMP_DC -> formatMenu(config.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod)
                 PEAK_FWD_DC -> formatMenu(config.MotorOutput.PeakForwardDutyCycle)
@@ -461,19 +461,19 @@ class Phoenix6ParameterCommand(
                 config.CurrentLimits.SupplyCurrentLimitEnable = value
                 talonFx.configurator.apply(config.CurrentLimits)
             }
-            SUPP_LIM -> configDoubleParam(config.CurrentLimits.SupplyCurrentLimit) {
+            SUPP_LIM -> configDoubleParam(config.CurrentLimits.SupplyCurrentLowerLimit) {
+                talonFx, value ->
+                config.CurrentLimits.SupplyCurrentLowerLimit = value
+                talonFx.configurator.apply(config.CurrentLimits)
+            }
+            SUPP_TRIP_THRES -> configDoubleParam(config.CurrentLimits.SupplyCurrentLimit) {
                 talonFx, value ->
                 config.CurrentLimits.SupplyCurrentLimit = value
                 talonFx.configurator.apply(config.CurrentLimits)
             }
-            SUPP_TRIP_THRES -> configDoubleParam(config.CurrentLimits.SupplyCurrentThreshold) {
+            SUPP_TRIP_TIME -> configDoubleParam(config.CurrentLimits.SupplyCurrentLowerTime) {
                 talonFx, value ->
-                config.CurrentLimits.SupplyCurrentThreshold = value
-                talonFx.configurator.apply(config.CurrentLimits)
-            }
-            SUPP_TRIP_TIME -> configDoubleParam(config.CurrentLimits.SupplyTimeThreshold) {
-                talonFx, value ->
-                config.CurrentLimits.SupplyTimeThreshold = value
+                config.CurrentLimits.SupplyCurrentLowerTime = value
                 talonFx.configurator.apply(config.CurrentLimits)
             }
 

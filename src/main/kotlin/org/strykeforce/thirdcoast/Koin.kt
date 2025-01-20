@@ -1,7 +1,6 @@
 package org.strykeforce.thirdcoast
 
 import com.ctre.phoenix.CANifier
-import com.ctre.phoenix.motorcontrol.can.TalonFX
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.sensors.PigeonIMU
 import com.ctre.phoenix6.hardware.CANcoder
@@ -44,8 +43,6 @@ val tctModule = module {
     }
 
     single { TalonService(get()) { id -> TalonSRX(id) } }
-
-    single { LegacyTalonFxService(get()) { id -> TalonFX(id) } }
 
     single { TalonFxService(get()) { id -> com.ctre.phoenix6.hardware.TalonFX(id)} }
 

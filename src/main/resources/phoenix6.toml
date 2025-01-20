@@ -127,20 +127,20 @@
     type = "BOOLEAN"
     help = "Enable motor supply current limiting."
 [SUPP_LIM]
+    name = "Supply Current Lower Limit"
+    type = "DOUBLE"
+    help = "The amount of supply current allowed after the regular SupplyCurrentLimit is active for longer than SupplyCurrentLowerTime. This allows higher current draws for a fixed period of time before reducing the current limit to protect breakers. This has no effect if SupplyCurrentLimit is lower than this value or SupplyCurrentLowerTime is 0. Default = 40A. Units: A"
+    range = [0.0, 500.0]
+[SUPP_TRIP_THRES]
     name = "Supply Current Limit"
     type = "DOUBLE"
-    help = "The amount of supply current allowed. This is only applicable for non-torque current control modes. Note this requires the corresponding enable to be true. Use SupplyCurrentThreshold and SupplyTimeThreshold to allow brief periods of high-current before limiting occurs. Units: A"
+    help = "The absolute maximum amount of supply current allowed. Note this requires SupplyCurrentLimitEnable to be true. Use SupplyCurrentLowerLimit and SupplyCurrentLowerTime to reduce the supply current limit after the time threshold is exceeded. Default Value is 70A. Units: A"
     range = [0.0, 800.0]
-[SUPP_TRIP_THRES]
-    name = "Supply Current Trip Threshold"
-    type = "DOUBLE"
-    help = "Delay supply current limiting until current exceeds this threshold for longer than SupplyTimeThreshold. This allows current draws above SupplyCurrentLimit for a fixed period of time. This has no effect if SupplyCurrentLimit is greater than this value. Units: A"
-    range = [0.0, 511.0]
 [SUPP_TRIP_TIME]
-    name = "Supply Current Trip Time"
+    name = "Supply Current Lower Time"
     type = "DOUBLE"
-    help = "Allows unlimited current for a period of time before current limiting occurs. Current threshold is the maximum of SupplyCurrentThreshold and SupplyCurrentLimit. Units: sec"
-    range = [0.0, 1.275]
+    help = "Reduces supply current to the SupplyCurrentLowerLimit after limiting to SupplyCurrentLimit for this period of time. If this is set to 0, SupplyCurrentLowerLimit will be ignored. Default = 1.0s. Units: sec"
+    range = [0.0, 2.5]
 
 
 #Motor & Ramp Configs
