@@ -10,23 +10,39 @@ import org.strykeforce.thirdcoast.device.TalonFxFDService
 import org.strykeforce.thirdcoast.device.TalonFxService
 
 private val SENSORS = listOf(
-    FusedCANcoder,
+    RotorSensor,
     RemoteCANcoder,
+    RemotePigeon2_Yaw,
     RemotePigeon2_Pitch,
     RemotePigeon2_Roll,
-    RemotePigeon2_Yaw,
-    RotorSensor,
-    SyncCANcoder
+    FusedCANcoder,
+    SyncCANcoder,
+    RemoteCANdiPWM1,
+    RemoteCANdiPWM2,
+    RemoteCANdiQuadrature,
+    FusedCANdiPWM1,
+    FusedCANdiPWM2,
+    FusedCANdiQuadrature,
+    SyncCANdiPWM1,
+    SyncCANdiPWM2
 )
 
 private val LABELS = listOf(
-    "(Pro) Fused CANcoder",
+    "Rotor Sensor",
     "Remote CANcoder",
+    "Remote Pigeon2 Yaw",
     "Remote Pigeon2 Pitch",
     "Remote Pigeon2 Roll",
-    "Remote Pigeon2 Yaw",
-    "Rotor Sensor",
-    "(Pro) Sync CANcoder"
+    "(Pro) Fused CANcoder",
+    "(Pro) Sync CANcoder",
+    "Remote CANdi PWM1",
+    "Remote CANdi PWM2",
+    "Remote CANdi Quadrature",
+    "(Pro) Fused CANdi PWM1",
+    "(Pro) Fused CANdi PWM2",
+    "(Pro) Fused CANdi Quadrature",
+    "(Pro) Sync CANdi PWM1",
+    "(Pro) Sync CANdi PWM2"
 )
 
 class P6SelectFeedbackSensorCommand(

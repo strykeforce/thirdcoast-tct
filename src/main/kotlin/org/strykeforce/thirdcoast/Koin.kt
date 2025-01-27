@@ -4,6 +4,8 @@ import com.ctre.phoenix.CANifier
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.sensors.PigeonIMU
 import com.ctre.phoenix6.hardware.CANcoder
+import com.ctre.phoenix6.hardware.TalonFX
+import com.ctre.phoenix6.hardware.TalonFXS
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.wpilibj.DigitalOutput
 import edu.wpi.first.wpilibj.PneumaticsModuleType
@@ -48,6 +50,10 @@ val tctModule = module {
 
     single {TalonFxFDService(get()) {id -> com.ctre.phoenix6.hardware.TalonFX(id, "*")} }
 
+    single {TalonFxsService(get()) {id -> com.ctre.phoenix6.hardware.TalonFXS(id)} }
+
+    single {TalonFXsFDService(get()) {id -> TalonFXS(id, "*")} }
+
     single { ServoService { id -> Servo(id) } }
 
     single { SolenoidService { id -> Solenoid(PneumaticsModuleType.CTREPCM, id) } }
@@ -72,8 +78,16 @@ val tctModule = module {
 
 val swerveModule = module {
 
-    single { SwerveDrive(*getSwerveModules()) }
+    single/*<SwerveDrive>(named("V6"))*/ { SwerveDrive(*getSwerveModules()) }
 
+}
+
+val fxSwerveModule = module {
+    single/*<SwerveDrive>(named("FX"))*/ {SwerveDrive(*getFXSwerveModules())}
+}
+
+val fxCANivoreSwerveModule = module {
+    single/*<SwerveDrive>(named("FX-CANivore"))*/ {SwerveDrive(*getCANivoreSwerveModules())}
 }
 
 private fun getSwerveModules() = Array<SwerveModule>(4) { i -> getSwerveModule(i) }
@@ -91,6 +105,31 @@ private fun getSwerveModule(i: Int) : V6TalonSwerveModule {
     return moduleBuilder.azimuthTalon(TalonSRX(i)).driveTalon(com.ctre.phoenix6.hardware.TalonFX(i + 10))
         .wheelLocationMeters(location).build()
 }
+
+private fun getFXSwerveModules() = Array<SwerveModule>(4) {i -> getFXSwerveModule(i)}
+private fun getCANivoreSwerveModules() = Array<SwerveModule>(4) {i -> getCANivoreSwerveModule(i) }
+private val fxModuleBuilder = FXSwerveModule.FXBuilder().driveGearRatio(1.0).wheelDiameterInches(1.0).driveMaximumMetersPerSecond(1.0)
+
+private fun getFXSwerveModule(i:Int): FXSwerveModule {
+    val location = when(i) {
+        0 -> Translation2d(1.0, 1.0)
+        1 -> Translation2d(1.0, -1.0)
+        2 -> Translation2d(-1.0, 1.0)
+        else -> Translation2d(-1.0, -1.0)
+    }
+    return fxModuleBuilder.azimuthTalon(TalonFXS(i)).driveTalon(TalonFX(i+10)).wheelLocationMeters(location).build()
+}
+
+private fun getCANivoreSwerveModule(i: Int): FXSwerveModule {
+    val location = when(i) {
+        0 -> Translation2d(1.0, 1.0)
+        1 -> Translation2d(1.0, -1.0)
+        2 -> Translation2d(-1.0, 1.0)
+        else -> Translation2d(-1.0, -1.0)
+    }
+    return fxModuleBuilder.azimuthTalon(TalonFXS(i,"*")).driveTalon(TalonFX(i+10,"*")).wheelLocationMeters(location).build()
+}
+
 
 /*
 private fun getWheels(): Array<Wheel> {
