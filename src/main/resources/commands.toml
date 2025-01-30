@@ -1346,6 +1346,12 @@ type = "menu"
         param = "DIFF_FX_ID"
         bus = "rio"
         device = "fx"
+      [rio.FxP6.diff.source]
+        type = "p6.diffSource"
+        order = 60
+        menu = "differential source"
+        bus = "rio"
+        device = "fx"
     [rio.FxP6.current]
       type = "menu"
       order = 100
@@ -2125,6 +2131,12 @@ type = "menu"
       param = "DIFF_FX_ID"
       bus = "rio"
       device = "fxs"
+    [rio.FxsP6.diff.source]
+      type = "p6.diffSource"
+      order = 60
+      menu = "differential source"
+      bus = "rio"
+      device = "fxs"
     [rio.FxsP6.current]
       type = "menu"
       order = 100
@@ -2661,6 +2673,36 @@ type = "menu"
         order = 30
         menu = "active azimuth adjustment"
 
+  [rio.FXswerve]
+    type = "menu"
+    order = 55
+    menu = "work with FX swerve"
+    [rio.FXswerve.lock]
+      type = "p6.swerve.azimuth"
+      order = 10
+      bus = "rio"
+      menu = "lock azimuth position"
+    [rio.FXswerve.azimuth]
+      type = "menu"
+      order = 20
+      bus = "rio"
+      menu = "update azimuth zero positions"
+    [rio.FXswerve.azimuth.save]
+      type = "p6.swerve.azimuth.save"
+      order = 10
+      bus = "rio"
+      menu = "save azimuth zero positions"
+    [rio.FXswerve.azimuth.select]
+      type = "p6.swerve.azimuth.select"
+      order = 20
+      bus = "rio"
+      menu = "active azimuth"
+    [rio.FXswerve.azimuth.adjust]
+      type = "p6.swerve.azimuth.adjust"
+      order = 30
+      bus = "rio"
+      menu = "active azimuth adjustment"
+
     [rio.gyro]
     type = "menu"
     order = 60
@@ -3195,6 +3237,12 @@ type = "menu"
         order = 50
         menu = "differential fx id"
         param = "DIFF_FX_ID"
+        bus = "canivore"
+        device = "fx"
+      [canivore.FxP6.diff.source]
+        type = "p6.diffSource"
+        order = 60
+        menu = "differential source"
         bus = "canivore"
         device = "fx"
     [canivore.FxP6.current]
@@ -3974,6 +4022,12 @@ type = "menu"
         param = "DIFF_FX_ID"
         bus = "canivore"
         device = "fxs"
+      [canivore.FxsP6.diff.source]
+        type = "p6.diffSource"
+        order = 60
+        menu = "differential source"
+        bus = "canivore"
+        device = "fxs"
     [canivore.FxsP6.current]
       type = "menu"
       order = 100
@@ -4357,6 +4411,36 @@ type = "menu"
       type = "cancoder.sensorDirection"
       order = 60
       bus = "canivore"
+
+  [canivore.FXswerve]
+    type = "menu"
+    order = 25
+    menu = "work with FX swerve"
+    [canivore.FXswerve.lock]
+      type = "p6.swerve.azimuth"
+      order = 10
+      bus = "canivore"
+      menu = "lock azimuth position"
+    [canivore.FXswerve.azimuth]
+      type = "menu"
+      order = 20
+      bus = "canivore"
+      menu = "update azimuth zero positions"
+    [canivore.FXswerve.azimuth.save]
+      type = "p6.swerve.azimuth.save"
+      order = 10
+      bus = "canivore"
+      menu = "save azimuth zero positions"
+    [canivore.FXswerve.azimuth.select]
+      type = "p6.swerve.azimuth.select"
+      order = 20
+      bus = "canivore"
+      menu = "active azimuth"
+    [canivore.FXswerve.azimuth.adjust]
+      type = "p6.swerve.azimuth.adjust"
+      order = 30
+      bus = "canivore"
+      menu = "active azimuth adjustment"
 
 
 

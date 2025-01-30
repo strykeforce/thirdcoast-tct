@@ -15,6 +15,7 @@ import org.jline.reader.LineReader
 import org.jline.reader.LineReaderBuilder
 import org.jline.terminal.Terminal
 import org.jline.terminal.TerminalBuilder
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 //import org.koin.dsl.module.module
 import org.strykeforce.swerve.*
@@ -78,16 +79,16 @@ val tctModule = module {
 
 val swerveModule = module {
 
-    single/*<SwerveDrive>(named("V6"))*/ { SwerveDrive(*getSwerveModules()) }
+    single (named("V6")){ SwerveDrive(*getSwerveModules()) }
 
 }
 
 val fxSwerveModule = module {
-    single/*<SwerveDrive>(named("FX"))*/ {SwerveDrive(*getFXSwerveModules())}
+    single (named("FX")) {SwerveDrive(*getFXSwerveModules())}
 }
 
 val fxCANivoreSwerveModule = module {
-    single/*<SwerveDrive>(named("FX-CANivore"))*/ {SwerveDrive(*getCANivoreSwerveModules())}
+    single (named("FX-CANifier")) {SwerveDrive(*getCANivoreSwerveModules())}
 }
 
 private fun getSwerveModules() = Array<SwerveModule>(4) { i -> getSwerveModule(i) }

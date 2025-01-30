@@ -13,20 +13,20 @@ import org.strykeforce.thirdcoast.device.TalonFxsService
 
 private val SENSOR = listOf(
     Disabled,
-    RemoteCANcoder,
+    RemoteTalonFX_Diff,
+    RemotePigeon2_Yaw,
     RemotePigeon2_Pitch,
     RemotePigeon2_Roll,
-    RemotePigeon2_Yaw,
-    RemoteTalonFX_Diff
+    RemoteCANcoder
 )
 
 private val LABELS = listOf(
     "Disabled",
-    "Remote CANcoder",
+    "Remote TalonFX Differential",
+    "Remote Pigeon2 Yaw",
     "Remote Pigeon2 Pitch",
     "Remote Pigeon2 Roll",
-    "Remote Pigeon2 Yaw",
-    "Remote TalonFX Differential"
+    "Remote CANcoder"
 )
 
 class P6SelectDifferentialSensorSourceCommand(

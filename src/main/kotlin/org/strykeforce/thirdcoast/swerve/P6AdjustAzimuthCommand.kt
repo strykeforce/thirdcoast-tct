@@ -15,6 +15,7 @@ import org.strykeforce.thirdcoast.readInt
 import org.strykeforce.thirdcoast.warn
 import kotlin.math.abs
 import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 
 
 private val logger = KotlinLogging.logger{}
@@ -49,14 +50,23 @@ class P6AdjustAzimuthCommand(
     key: String,
     toml: TomlTable
 ): AbstractCommand(parent, key, toml) {
-    private val swerve: SwerveDrive by inject()
+    private val swerve: SwerveDrive by inject(named("FX"))
+    private val canifierSwerve: SwerveDrive by inject(named("FX-CANifier"))
+    val bus = toml.getString(Command.BUS_KEY) ?: throw Exception("$key: ${Command.BUS_KEY} missing")
 
     override val menu: String
-        get() = formatMenu(
-            (swerve.swerveModules[active] as FXSwerveModule).azimuthTalon.getPosition().valueAsDouble - (swerve.swerveModules[active] as FXSwerveModule).azimuthPositionOffset)
+        get() {
+            if(bus=="rio") return formatMenu(
+                (swerve.swerveModules[active] as FXSwerveModule).azimuthTalon.getPosition().valueAsDouble -
+                        (swerve.swerveModules[active] as FXSwerveModule).azimuthPositionOffset)
+            else return formatMenu((canifierSwerve.swerveModules[active] as FXSwerveModule).azimuthTalon.getPosition().valueAsDouble -
+                    (canifierSwerve.swerveModules[active] as FXSwerveModule).azimuthPositionOffset)
+        }
 
     override fun execute(): Command {
-        val swerveModule = swerve.swerveModules[active] as FXSwerveModule
+        val swerveModule =
+            if(bus== "rio") swerve.swerveModules[active] as FXSwerveModule
+            else canifierSwerve.swerveModules[active] as FXSwerveModule
         var position = swerveModule.azimuthTalon.getPosition().valueAsDouble
         while(true) {
             try {

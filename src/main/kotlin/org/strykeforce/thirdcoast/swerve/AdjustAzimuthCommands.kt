@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Timer
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 import org.strykeforce.swerve.SwerveDrive
 import org.strykeforce.swerve.V6TalonSwerveModule
 import org.strykeforce.thirdcoast.command.AbstractCommand
@@ -50,7 +51,7 @@ class AdjustAzimuthCommand(
     toml: TomlTable
 ) : AbstractCommand(parent, key, toml) {
 
-    private val swerve: SwerveDrive by inject()
+    private val swerve: SwerveDrive by inject((named("V6")))
 
     override val menu: String
         get() = formatMenu(

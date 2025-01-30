@@ -288,7 +288,7 @@ class Phoenix6ParameterCommand(
                 }
                 SUPP_TRIP_TIME -> when(device){
                     "fx" -> formatMenu(fxConfig.CurrentLimits.SupplyCurrentLowerTime)
-                    "fxs" -> formatMenu(fxsConfig.CurrentLimits.SupplyCurrentLowerLimit)
+                    "fxs" -> formatMenu(fxsConfig.CurrentLimits.SupplyCurrentLowerTime)
                     else -> throw IllegalArgumentException()
                 }
 
@@ -388,7 +388,7 @@ class Phoenix6ParameterCommand(
 
                 FWD_HARD_EN -> when(device){
                     "fx" -> formatMenu(fxConfig.HardwareLimitSwitch.ForwardLimitEnable)
-                    "fxs" -> formatMenu(fxsConfig.HardwareLimitSwitch.ReverseLimitEnable)
+                    "fxs" -> formatMenu(fxsConfig.HardwareLimitSwitch.ForwardLimitEnable)
                     else -> throw IllegalArgumentException()
                 }
                 FWD_REMOTE_ID -> when(device){
@@ -1527,19 +1527,19 @@ class Phoenix6ParameterCommand(
                     else talonFxFDService.active.firstOrNull()?.position?.valueAsDouble?: 2767.0) {
                         talonFx, value ->
                     if(bus=="rio") talonFxService.active.forEach{
-                        talonFx.setPosition(value, timeout)
+                        it.setPosition(value, timeout)
                     }
                     else talonFxFDService.active.forEach {
-                        talonFx.setPosition(value, timeout)
+                        it.setPosition(value, timeout)
                     }
                 }
                 "fxs" -> configFXSDoubleParam(
                     if(bus=="rio") talonFxsService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0
                     else talonFxsFDService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0) { talonFXS, value ->
                     if(bus=="rio") talonFxsService.active.forEach {
-                        talonFXS.setPosition(value, timeout)
+                        it.setPosition(value, timeout)
                     } else talonFxsFDService.active.forEach {
-                        talonFXS.setPosition(value, timeout)
+                        it.setPosition(value, timeout)
                     }
                 }
                 else -> throw IllegalArgumentException()

@@ -37,7 +37,7 @@ class P6SelectMotorInvertCommand(
                     else throw IllegalArgumentException()
                 }
                 "fxs" -> {
-                    if(bus == "rio") return talonFxService.activeConfiguration.MotorOutput.Inverted.ordinal
+                    if(bus == "rio") return talonFxsService.activeConfiguration.MotorOutput.Inverted.ordinal
                     else if(bus == "canivore") return talonFxsFDService.activeConfiguration.MotorOutput.Inverted.ordinal
                     else throw IllegalArgumentException()
                 }

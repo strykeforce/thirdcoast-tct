@@ -96,6 +96,7 @@ interface Command {
                 "p6.feedback" -> P6SelectFeedbackSensorCommand(parent, key, toml)
                 "p6.mmType" -> P6SelectMotionMagicTypeCommand(parent, key, toml)
                 "p6.diffType" -> P6SelectDifferentialTypeCommand(parent, key, toml)
+                "p6.diffSource" -> P6SelectDifferentialSensorSourceCommand(parent, key, toml)
                 "p6.followType" -> P6SelectFollowerTypeCommand(parent, key, toml)
                 "p6.neutralOut" -> P6SelectNeutralOutputCommand(parent, key, toml)
                 "p6.units" -> P6SelectUnitCommand(parent, key, toml)

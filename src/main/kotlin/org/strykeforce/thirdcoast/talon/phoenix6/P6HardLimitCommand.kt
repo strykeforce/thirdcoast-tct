@@ -20,8 +20,8 @@ class P6SelectFwdHardLimitSourceCommand(
     key: String,
     toml: TomlTable
 ): AbstractSelectCommand<ForwardLimitSourceValue>(parent, key, toml,
-    listOf(LimitSwitchPin, RemoteTalonFX, RemoteCANifier),
-    listOf("Talon FX pin", "Remote TalonFx", "Remote CANifier")) {
+    listOf(LimitSwitchPin, RemoteTalonFX, RemoteCANifier, RemoteCANcoder, RemoteCANrange, RemoteCANdiS1, RemoteCANdiS2, Disabled),
+    listOf("Talon FXS pin", "Remote TalonFx", "Remote CANifier", "Remote CANcoder", "Remote CANrange", "Remote CANdi S1", "Remote CANdi S2", "Disabled")) {
 
     private val talonFxService: TalonFxService by inject()
     private val talonFxFDService: TalonFxFDService by inject()
@@ -82,8 +82,8 @@ class P6SelectRevHardLimitSourceCommand(
     key: String,
     toml: TomlTable
 ): AbstractSelectCommand<ReverseLimitSourceValue>(parent, key, toml,
-    listOf(ReverseLimitSourceValue.LimitSwitchPin, ReverseLimitSourceValue.RemoteTalonFX, ReverseLimitSourceValue.RemoteCANifier),
-    listOf("Talon FX pin", "Remote TalonFX", "Remote CANifier")) {
+    listOf(ReverseLimitSourceValue.LimitSwitchPin, ReverseLimitSourceValue.RemoteTalonFX, ReverseLimitSourceValue.RemoteCANifier, ReverseLimitSourceValue.RemoteCANcoder, ReverseLimitSourceValue.RemoteCANrange, ReverseLimitSourceValue.RemoteCANdiS1, ReverseLimitSourceValue.RemoteCANdiS2, ReverseLimitSourceValue.Disabled),
+    listOf("Talon FXS pin", "Remote TalonFX", "Remote CANifier", "Remote CANcoder", "Remote CANrange", "Remote CANdi S1", "Remote CANdi S2", "Disabled")) {
 
     private val talonFxService: TalonFxService by inject()
     private val talonFxFDService: TalonFxFDService by inject()
