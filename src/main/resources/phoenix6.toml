@@ -126,21 +126,21 @@
     name = "Supply Current Limit Enable"
     type = "BOOLEAN"
     help = "Enable motor supply current limiting."
+[SUPP_LOWER_LIM]
+    name = "Supply Current Lower Limit"
+    type = "DOUBLE"
+    help = "The amount of supply current allowed after the regular SupplyCurrentLimit is active for longer than SupplyCurrentLowerTime. This allows higher current draws for a fixed period of time before reducing the current limit to protect breakers. This has no effect if SupplyCurrentLimit is lower than this value or SupplyCurrentLowerTime is 0. Default = 40A. Units: A"
+    range = [0.0, 500.0]
 [SUPP_LIM]
     name = "Supply Current Limit"
     type = "DOUBLE"
-    help = "The amount of supply current allowed. This is only applicable for non-torque current control modes. Note this requires the corresponding enable to be true. Use SupplyCurrentThreshold and SupplyTimeThreshold to allow brief periods of high-current before limiting occurs. Units: A"
+    help = "The absolute maximum amount of supply current allowed. Note this requires SupplyCurrentLimitEnable to be true. Use SupplyCurrentLowerLimit and SupplyCurrentLowerTime to reduce the supply current limit after the time threshold is exceeded. Default Value is 70A. Units: A"
     range = [0.0, 800.0]
-[SUPP_TRIP_THRES]
-    name = "Supply Current Trip Threshold"
-    type = "DOUBLE"
-    help = "Delay supply current limiting until current exceeds this threshold for longer than SupplyTimeThreshold. This allows current draws above SupplyCurrentLimit for a fixed period of time. This has no effect if SupplyCurrentLimit is greater than this value. Units: A"
-    range = [0.0, 511.0]
 [SUPP_TRIP_TIME]
-    name = "Supply Current Trip Time"
+    name = "Supply Current Lower Time"
     type = "DOUBLE"
-    help = "Allows unlimited current for a period of time before current limiting occurs. Current threshold is the maximum of SupplyCurrentThreshold and SupplyCurrentLimit. Units: sec"
-    range = [0.0, 1.275]
+    help = "Reduces supply current to the SupplyCurrentLowerLimit after limiting to SupplyCurrentLimit for this period of time. If this is set to 0, SupplyCurrentLowerLimit will be ignored. Default = 1.0s. Units: sec"
+    range = [0.0, 2.5]
 
 
 #Motor & Ramp Configs
@@ -355,3 +355,25 @@
     name = "Grapher Update Frequency (Hz)"
     type = "DOUBLE"
     help = "Input update frequncy for all singals on the grapher in Hz, if this value shows 0 it is using the default update frequency"
+
+# FXS Added External Feedback
+[ABS_SENSOR_DISCONTINUITY]
+    name = "Absolute Sensor Discontinuity Point"
+    type = "DOUBLE"
+    help = "The positive discontinuity point of the absolute sensor in rotations. This determines the point at which the absolute sensor wraps around, keeping the absolute position in the range [x-1, x). Setting this to 1 makes the absolute position unsigned [0, 1) Setting this to 0.5 makes the absolute position signed [-0.5, 0.5) Setting this to 0 makes the absolute position always negative [-1, 0) Many rotational mechanisms such as arms have a region of motion that is unreachable. This should be set to the center of that region of motion, in non-negative rotations. This affects the position of the device at bootup."
+    range = [0.0, 1.0]
+[ABS_SENSOR_OFFSET]
+    name = "Absolute Sensor Offset"
+    type = "DOUBLE"
+    help = "The offset applied to any absolute sensor connected to the Talon data port. This is only supported when using the PulseWidth sensor source. This can be used to zero the sensor position in applications where the sensor is 1:1 with the mechanism."
+    range = [-1.0, 1.0]
+[QUAD_EDGE_PER_ROT]
+    name = "Quadrature Edges Per Rotation"
+    type = "INTEGER"
+    help = "The number of quadrature edges in one rotation for the quadrature sensor connected to the Talon data port. This is the total number of transitions from high-to-low or low-to-high across both channels per rotation of the sensor. This is also equivalent to the Counts Per Revolution when using 4x decoding. For example, the SRX Mag Encoder has 4096 edges per rotation, and a US Digital 1024 CPR (Cycles Per Revolution) quadrature encoder has 4096 edges per rotation. On the Talon FXS, this can be at most 2,000,000,000 / Peak RPM."
+    range = [1.0, 1_000_000.0]
+[VELOCITY_FILTER_TIME_CONST]
+    name = "Velocity Filter Time Constant"
+    type = "DOUBLE"
+    help = "The configurable time constant of the Kalman velocity filter in seconds. The velocity Kalman filter will adjust to act as a low-pass with this value as its time constant. If the user is aiming for an expected cutoff frequency, the frequency is calculated as 1 / (2 * π * τ) with τ being the time constant."
+    range = [0.0, 1.0]

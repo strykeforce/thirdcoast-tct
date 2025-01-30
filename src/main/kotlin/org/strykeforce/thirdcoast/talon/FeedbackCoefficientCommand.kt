@@ -6,7 +6,6 @@ import net.consensys.cava.toml.TomlTable
 import org.koin.core.component.inject
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
-import org.strykeforce.thirdcoast.device.LegacyTalonFxService
 import org.strykeforce.thirdcoast.device.TalonService
 
 private val logger = KotlinLogging.logger {}
@@ -18,7 +17,6 @@ class FeedbackCoefficientCommand(
 ) : AbstractCommand(parent, key, toml) {
 
     private val talonService: TalonService by inject()
-    private val legacyTalonFxService: LegacyTalonFxService by inject()
 
     val type = toml.getString(Command.DEVICE_KEY) ?: throw Exception("$key: ${Command.DEVICE_KEY} missing")
     private val timeout = talonService.timeout
@@ -29,23 +27,17 @@ class FeedbackCoefficientCommand(
         get() = formatMenu(
             when (pidIndex) {
                 0 -> {
-                    if(type == "srx") talonService.activeConfiguration.primaryPID.selectedFeedbackCoefficient
-                    else if(type == "fx") legacyTalonFxService.activeConfiguration.primaryPID.selectedFeedbackCoefficient
-                    else throw IllegalArgumentException()
+                    talonService.activeConfiguration.primaryPID.selectedFeedbackCoefficient
                 }
                 else -> {
-                    if(type == "srx") talonService.activeConfiguration.auxiliaryPID.selectedFeedbackCoefficient
-                    else if(type == "fx") legacyTalonFxService.activeConfiguration.auxiliaryPID.selectedFeedbackCoefficient
-                    else throw IllegalArgumentException()
+                    talonService.activeConfiguration.auxiliaryPID.selectedFeedbackCoefficient
                 }
             }
         )
 
     override fun execute(): Command {
         var config: BaseTalonConfiguration
-        if(type == "srx") config = talonService.activeConfiguration
-        else if(type == "fx") config = legacyTalonFxService.activeConfiguration
-        else throw IllegalArgumentException()
+        config = talonService.activeConfiguration
 
         val default = when (pidIndex) {
             0 -> config.primaryPID.selectedFeedbackCoefficient
@@ -53,8 +45,7 @@ class FeedbackCoefficientCommand(
         }
 
         val paramValue = param.readDouble(reader, default)
-        if(type == "srx") talonService.active.forEach { it.configSelectedFeedbackCoefficient(paramValue, pidIndex, talonService.timeout) }
-        else if(type == "fx") legacyTalonFxService.active.forEach { it.configSelectedFeedbackCoefficient(paramValue, pidIndex, legacyTalonFxService.timeout) }
+        talonService.active.forEach { it.configSelectedFeedbackCoefficient(paramValue, pidIndex, talonService.timeout) }
         logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
 
         return super.execute()

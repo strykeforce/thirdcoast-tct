@@ -12,7 +12,8 @@ class CancoderParameter(
 ): AbstractParameter(command, toml) {
     enum class Enum {
         POSITION,
-        MAG_OFFSET
+        MAG_OFFSET,
+        DISCONTINUITY_POINT
     }
 
     companion object {

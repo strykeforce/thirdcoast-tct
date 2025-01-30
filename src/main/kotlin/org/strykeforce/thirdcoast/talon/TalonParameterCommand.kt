@@ -9,7 +9,6 @@ import org.koin.core.component.inject
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.DOUBLE_FORMAT_4
-import org.strykeforce.thirdcoast.device.LegacyTalonFxService
 import org.strykeforce.thirdcoast.device.TalonService
 import org.strykeforce.thirdcoast.talon.TalonParameter.Enum.*
 
@@ -23,7 +22,6 @@ class TalonParameterCommand(
 ) : AbstractCommand(parent, key, toml) {
 
     private val talonService: TalonService by inject()
-    private val legacyTalonFxService: LegacyTalonFxService by inject()
     val type = toml.getString(Command.DEVICE_KEY) ?: throw Exception("$key: ${Command.DEVICE_KEY} missing")
     private val timeout = talonService.timeout
     private val param = TalonParameter.create(this, toml.getString("param") ?: "UNKNOWN")
@@ -32,19 +30,9 @@ class TalonParameterCommand(
         get() {
             val baseConfig: BaseTalonConfiguration
             val slot: SlotConfiguration
-            when (type) {
-                "srx" -> {
-                    baseConfig = talonService.activeConfiguration
-                    slot = talonService.activeSlot
-                }
-                "fx" -> {
-                    baseConfig = legacyTalonFxService.activeConfiguration
-                    slot = legacyTalonFxService.activeSlot
-                }
-                else -> throw IllegalArgumentException()
-            }
+            baseConfig = talonService.activeConfiguration
+            slot = talonService.activeSlot
             val srxConfig = talonService.activeConfiguration
-            val fxConfig = legacyTalonFxService.activeConfiguration
             return when (param.enum) {
                 SLOT_P -> formatMenu(slot.kP, DOUBLE_FORMAT_4)
                 SLOT_I -> formatMenu(slot.kI, DOUBLE_FORMAT_4)
@@ -54,11 +42,7 @@ class TalonParameterCommand(
                 SLOT_ALLOWABLE_ERR -> formatMenu(slot.allowableClosedloopError)
                 SLOT_MAX_I_ACCUM -> formatMenu(slot.maxIntegralAccumulator)
                 SLOT_PEAK_OUTPUT -> formatMenu(slot.closedLoopPeakOutput)
-                OUTPUT_REVERSED -> when(type){
-                    "srx" -> formatMenu(talonService.outputInverted)
-                    "fx" -> formatMenu(legacyTalonFxService.outputInverted)
-                    else -> throw IllegalArgumentException()
-                }
+                OUTPUT_REVERSED -> formatMenu(talonService.outputInverted)
                 OPEN_LOOP_RAMP -> formatMenu(baseConfig.openloopRamp)
                 CLOSED_LOOP_RAMP -> formatMenu(baseConfig.closedloopRamp)
                 PEAK_OUTPUT_FORWARD -> formatMenu(baseConfig.peakOutputForward)
@@ -66,48 +50,20 @@ class TalonParameterCommand(
                 NOMINAL_OUTPUT_FORWARD -> formatMenu(baseConfig.nominalOutputForward)
                 NOMINAL_OUTPUT_REVERSE -> formatMenu(baseConfig.nominalOutputReverse)
                 NEUTRAL_DEADBAND -> formatMenu(baseConfig.neutralDeadband)
-                VOLTAGE_COMP_ENABLE -> when (type) {
-                    "srx" -> formatMenu(talonService.voltageCompensation)
-                    "fx" -> formatMenu(legacyTalonFxService.voltageCompensation)
-                    else -> throw IllegalArgumentException()
-                }
+                VOLTAGE_COMP_ENABLE -> formatMenu(talonService.voltageCompensation)
                 VOLTAGE_COMP_SATURATION -> formatMenu(baseConfig.voltageCompSaturation)
                 VOLTAGE_MEASUREMENT_FILTER -> formatMenu(baseConfig.voltageMeasurementFilter)
                 MOTION_CRUISE_VELOCITY -> formatMenu(baseConfig.motionCruiseVelocity)
                 MOTION_ACCELERATION -> formatMenu(baseConfig.motionAcceleration)
-                SENSOR_PHASE -> when (type) {
-                    "srx" -> formatMenu(talonService.sensorPhase)
-                    "fx" -> formatMenu(legacyTalonFxService.sensorPhase)
-                    else -> throw IllegalArgumentException()
-                }
+                SENSOR_PHASE -> formatMenu(talonService.sensorPhase)
                 CURRENT_LIMIT_ENABLE -> formatMenu(talonService.currentLimit)
                 CURRENT_LIMIT_CONT -> formatMenu(srxConfig.continuousCurrentLimit)
                 CURRENT_LIMIT_PEAK -> formatMenu(srxConfig.peakCurrentLimit)
                 CURRENT_LIMIT_PEAK_DURATION -> formatMenu(srxConfig.peakCurrentDuration)
-                STATOR_CURRENT_LIMIT_ENABLE -> formatMenu(fxConfig.statorCurrLimit.enable)
-                STATOR_CURRENT_LIMIT -> formatMenu(fxConfig.statorCurrLimit.currentLimit)
-                STATOR_CURRENT_LIMIT_THRES_CURRENT -> formatMenu(fxConfig.statorCurrLimit.triggerThresholdCurrent)
-                STATOR_CURRENT_LIMIT_THRES_TIME -> formatMenu(fxConfig.statorCurrLimit.triggerThresholdTime)
-                SUPPLY_CURRENT_LIMIT_ENABLE -> when (type) {
-                    "srx" -> formatMenu(talonService.supplyCurrentLimit.enable)
-                    "fx" -> formatMenu(fxConfig.supplyCurrLimit.enable)
-                    else -> throw  IllegalArgumentException()
-                }
-                SUPPLY_CURRENT_LIMIT -> when (type) {
-                    "srx" -> formatMenu(talonService.supplyCurrentLimit.currentLimit)
-                    "fx" -> formatMenu(fxConfig.supplyCurrLimit.currentLimit)
-                    else -> throw IllegalArgumentException()
-                }
-                SUPPLY_CURRENT_LIMIT_THRES_CURRENT -> when (type) {
-                    "srx" -> formatMenu(talonService.supplyCurrentLimit.triggerThresholdCurrent)
-                    "fx" -> formatMenu(fxConfig.supplyCurrLimit.triggerThresholdCurrent)
-                    else -> throw IllegalArgumentException()
-                }
-                SUPPLY_CURRENT_LIMIT_THRES_TIME -> when (type) {
-                    "srx" -> formatMenu(talonService.supplyCurrentLimit.triggerThresholdTime)
-                    "fx" -> formatMenu(fxConfig.supplyCurrLimit.triggerThresholdTime)
-                    else -> throw IllegalArgumentException()
-                }
+                SUPPLY_CURRENT_LIMIT_ENABLE -> formatMenu(talonService.supplyCurrentLimit.enable)
+                SUPPLY_CURRENT_LIMIT -> formatMenu(talonService.supplyCurrentLimit.currentLimit)
+                SUPPLY_CURRENT_LIMIT_THRES_CURRENT -> formatMenu(talonService.supplyCurrentLimit.triggerThresholdCurrent)
+                SUPPLY_CURRENT_LIMIT_THRES_TIME -> formatMenu(talonService.supplyCurrentLimit.triggerThresholdTime)
                 STATUS_GENERAL -> formatMenu(defaultFor(Status_1_General))
                 STATUS_FEEDBACK0 -> formatMenu(defaultFor(Status_2_Feedback0))
                 STATUS_QUAD_ENCODER -> formatMenu(defaultFor(Status_3_Quadrature))
@@ -127,7 +83,6 @@ class TalonParameterCommand(
                 SOFT_LIMIT_THRESHOLD_FORWARD -> formatMenu(baseConfig.forwardSoftLimitThreshold)
                 SOFT_LIMIT_THRESHOLD_REVERSE -> formatMenu(baseConfig.reverseSoftLimitThreshold)
                 VELOCITY_MEASUREMENT_WINDOW -> formatMenu(baseConfig.velocityMeasurementWindow)
-                INTEGRATED_SENSOR_OFFSET_DEGREES -> formatMenu(fxConfig.integratedSensorOffsetDegrees)
                 FACTORY_DEFAULTS -> tomlMenu
                 else -> TODO("${param.enum} not implemented")
             }
@@ -138,23 +93,11 @@ class TalonParameterCommand(
         val slot: SlotConfiguration
         val activeSlotIndex: Int
         val timeout: Int
-        when (type) {
-            "srx" -> {
-                config = talonService.activeConfiguration
-                slot = talonService.activeSlot
-                activeSlotIndex = talonService.activeSlotIndex
-                timeout = talonService.timeout
-            }
-            "fx" -> {
-                config = legacyTalonFxService.activeConfiguration
-                slot = legacyTalonFxService.activeSlot
-                activeSlotIndex = legacyTalonFxService.activeSlotIndex
-                timeout = legacyTalonFxService.timeout
-            }
-            else -> throw IllegalArgumentException()
-        }
+        config = talonService.activeConfiguration
+        slot = talonService.activeSlot
+        activeSlotIndex = talonService.activeSlotIndex
+        timeout = talonService.timeout
         val srxConfig = talonService.activeConfiguration
-        val fxConfig = legacyTalonFxService.activeConfiguration
 
         when (param.enum) {
             SLOT_P -> configDoubleParam(slot.kP) { baseTalon, value ->
@@ -223,11 +166,7 @@ class TalonParameterCommand(
             }
             VOLTAGE_COMP_ENABLE -> configBooleanParam(talonService.voltageCompensation) { baseTalon, value ->
                 baseTalon.enableVoltageCompensation(value)
-                when (type) {
-                    "srx" -> talonService.voltageCompensation = value
-                    "fx" -> legacyTalonFxService.voltageCompensation = value
-                    else -> throw IllegalArgumentException()
-                }
+                talonService.voltageCompensation = value
             }
             VOLTAGE_COMP_SATURATION -> configDoubleParam(config.voltageCompSaturation) { baseTalon, value ->
                 baseTalon.configVoltageCompSaturation(value, timeout)
@@ -247,11 +186,7 @@ class TalonParameterCommand(
             }
             SENSOR_PHASE -> configBooleanParam(talonService.sensorPhase) { baseTalon, value ->
                 baseTalon.setSensorPhase(value)
-                when (type) {
-                    "srx" -> talonService.sensorPhase = value
-                    "fx" -> legacyTalonFxService.sensorPhase = value
-                    else -> throw IllegalArgumentException()
-                }
+                talonService.sensorPhase = value
             }
             CURRENT_LIMIT_ENABLE -> configBooleanSrxParam(talonService.currentLimit) { talon, value ->
                 talon.enableCurrentLimit(value)
@@ -269,72 +204,28 @@ class TalonParameterCommand(
                 talon.configPeakCurrentDuration(value, timeout)
                 srxConfig.peakCurrentDuration = value
             }
-            STATOR_CURRENT_LIMIT_ENABLE -> configBooleanFxParam(fxConfig.statorCurrLimit.enable) { talonFx, value ->
-                fxConfig.statorCurrLimit.enable = value
-                talonFx.configStatorCurrentLimit(fxConfig.statorCurrLimit, timeout)
-            }
-            STATOR_CURRENT_LIMIT -> configDoubleFxParam(fxConfig.statorCurrLimit.currentLimit) { talonFx, value ->
-                fxConfig.statorCurrLimit.currentLimit = value
-                talonFx.configStatorCurrentLimit(fxConfig.statorCurrLimit, timeout)
-            }
-            STATOR_CURRENT_LIMIT_THRES_CURRENT -> configDoubleFxParam(fxConfig.statorCurrLimit.triggerThresholdCurrent) { talonFx, value ->
-                fxConfig.statorCurrLimit.triggerThresholdCurrent = value
-                talonFx.configStatorCurrentLimit(fxConfig.statorCurrLimit, timeout)
-            }
-            STATOR_CURRENT_LIMIT_THRES_TIME -> configDoubleFxParam(fxConfig.statorCurrLimit.triggerThresholdTime) { talonFx, value ->
-                fxConfig.statorCurrLimit.triggerThresholdTime = value
-                talonFx.configStatorCurrentLimit(fxConfig.statorCurrLimit, timeout)
-            }
             SUPPLY_CURRENT_LIMIT_ENABLE -> {
-                when (type) {
-                    "srx" -> configBooleanSrxParam(talonService.supplyCurrentLimit.enable) { talon, value ->
-                        talonService.supplyCurrentLimit.enable = value
-                        talon.configSupplyCurrentLimit(talonService.supplyCurrentLimit, timeout)
-                    }
-                    "fx" -> configBooleanFxParam(fxConfig.supplyCurrLimit.enable) { talonFx, value ->
-                        fxConfig.supplyCurrLimit.enable = value
-                        talonFx.configSupplyCurrentLimit(fxConfig.supplyCurrLimit, timeout)
-                    }
-                    else -> throw IllegalArgumentException()
+                configBooleanSrxParam(talonService.supplyCurrentLimit.enable) { talon, value ->
+                    talonService.supplyCurrentLimit.enable = value
+                    talon.configSupplyCurrentLimit(talonService.supplyCurrentLimit, timeout)
                 }
             }
             SUPPLY_CURRENT_LIMIT -> {
-                when (type) {
-                    "srx" -> configDoubleSrxParam(talonService.supplyCurrentLimit.currentLimit) { talon, value ->
-                        talonService.supplyCurrentLimit.currentLimit = value
-                        talon.configSupplyCurrentLimit(talonService.supplyCurrentLimit, timeout)
-                    }
-                    "fx" -> configDoubleFxParam(fxConfig.supplyCurrLimit.currentLimit) { talonFx, value ->
-                        fxConfig.supplyCurrLimit.currentLimit = value
-                        talonFx.configSupplyCurrentLimit(fxConfig.supplyCurrLimit, timeout)
-                    }
-                    else -> throw IllegalArgumentException()
+                configDoubleSrxParam(talonService.supplyCurrentLimit.currentLimit) { talon, value ->
+                    talonService.supplyCurrentLimit.currentLimit = value
+                    talon.configSupplyCurrentLimit(talonService.supplyCurrentLimit, timeout)
                 }
             }
             SUPPLY_CURRENT_LIMIT_THRES_CURRENT -> {
-                when(type){
-                    "srx" -> configDoubleSrxParam(talonService.supplyCurrentLimit.triggerThresholdCurrent) { talon, value ->
-                        talonService.supplyCurrentLimit.triggerThresholdCurrent = value
-                        talon.configSupplyCurrentLimit(talonService.supplyCurrentLimit, timeout)
-                    }
-                    "fx" -> configDoubleFxParam(fxConfig.supplyCurrLimit.triggerThresholdCurrent) { talonFx, value ->
-                        fxConfig.supplyCurrLimit.triggerThresholdCurrent = value
-                        talonFx.configSupplyCurrentLimit(fxConfig.supplyCurrLimit, timeout)
-                    }
-                    else -> throw IllegalArgumentException()
+                configDoubleSrxParam(talonService.supplyCurrentLimit.triggerThresholdCurrent) { talon, value ->
+                    talonService.supplyCurrentLimit.triggerThresholdCurrent = value
+                    talon.configSupplyCurrentLimit(talonService.supplyCurrentLimit, timeout)
                 }
             }
             SUPPLY_CURRENT_LIMIT_THRES_TIME -> {
-                when(type){
-                    "srx" -> configDoubleSrxParam(talonService.supplyCurrentLimit.triggerThresholdTime) { talon, value ->
-                        talonService.supplyCurrentLimit.triggerThresholdTime = value
-                        talon.configSupplyCurrentLimit(talonService.supplyCurrentLimit, timeout)
-                    }
-                    "fx" -> configDoubleFxParam(fxConfig.supplyCurrLimit.triggerThresholdTime) { talonFx, value ->
-                        fxConfig.supplyCurrLimit.triggerThresholdTime = value
-                        talonFx.configSupplyCurrentLimit(fxConfig.supplyCurrLimit, timeout)
-                    }
-                    else -> throw IllegalArgumentException()
+                configDoubleSrxParam(talonService.supplyCurrentLimit.triggerThresholdTime) { talon, value ->
+                    talonService.supplyCurrentLimit.triggerThresholdTime = value
+                    talon.configSupplyCurrentLimit(talonService.supplyCurrentLimit, timeout)
                 }
             }
             STATUS_GENERAL -> configIntParam(defaultFor(Status_1_General)) { baseTalon, value ->
@@ -398,15 +289,7 @@ class TalonParameterCommand(
             VELOCITY_MEASUREMENT_WINDOW -> configIntParam(config.velocityMeasurementWindow) { baseTalon, value ->
                 baseTalon.configVelocityMeasurementWindow(value, timeout)
                 // Let the Talon round down then number to a legal value
-                when (type) {
-                    "srx" -> talonService.dirty = true
-                    "fx" -> legacyTalonFxService.dirty = true
-                    else -> throw IllegalArgumentException()
-                }
-            }
-            INTEGRATED_SENSOR_OFFSET_DEGREES -> configDoubleFxParam(fxConfig.integratedSensorOffsetDegrees) { talonFx, value ->
-                talonFx.configIntegratedSensorOffset(value, timeout)
-                fxConfig.integratedSensorOffsetDegrees = value
+                talonService.dirty = true
             }
             FACTORY_DEFAULTS -> configBooleanParam(false) { baseTalon, value ->
                 if (value) baseTalon.configFactoryDefault(timeout)
@@ -418,17 +301,8 @@ class TalonParameterCommand(
 
     private fun configBooleanParam(default: Boolean, config: (BaseTalon, Boolean) -> Unit) {
         val paramValue = param.readBoolean(reader, default)
-        when (type) {
-            "srx" -> {
-                talonService.active.forEach { config(it, paramValue) }
-                logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
-            }
-            "fx" -> {
-                legacyTalonFxService.active.forEach { config(it, paramValue) }
-                logger.debug { "set ${legacyTalonFxService.active.size} talonfx ${param.name}: $paramValue" }
-            }
-            else -> throw IllegalArgumentException()
-        }
+        talonService.active.forEach { config(it, paramValue) }
+        logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
     }
 
     private fun configBooleanSrxParam(default: Boolean, config: (TalonSRX, Boolean) -> Unit) {
@@ -437,25 +311,11 @@ class TalonParameterCommand(
         logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
     }
 
-    private fun configBooleanFxParam(default: Boolean, config: (TalonFX, Boolean) -> Unit) {
-        val paramValue = param.readBoolean(reader, default)
-        legacyTalonFxService.active.forEach { config(it, paramValue) }
-        logger.debug { "set ${legacyTalonFxService.active.size} talonfx ${param.name}: $paramValue" }
-    }
 
     private fun configIntParam(default: Int, config: (BaseTalon, Int) -> Unit) {
         val paramValue = param.readInt(reader, default)
-        when (type) {
-            "srx" -> {
-                talonService.active.forEach { config(it, paramValue) }
-                logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
-            }
-            "fx" -> {
-                legacyTalonFxService.active.forEach { config(it, paramValue) }
-                logger.debug { "set ${legacyTalonFxService.active.size} talonfx ${param.name}: $paramValue" }
-            }
-            else -> throw IllegalArgumentException()
-        }
+        talonService.active.forEach { config(it, paramValue) }
+        logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
     }
 
     private fun configIntSrxParam(default: Int, config: (TalonSRX, Int) -> Unit) {
@@ -466,17 +326,8 @@ class TalonParameterCommand(
 
     private fun configDoubleParam(default: Double, config: (BaseTalon, Double) -> Unit) {
         val paramValue = param.readDouble(reader, default)
-        when (type) {
-            "srx" -> {
-                talonService.active.forEach { config(it, paramValue) }
-                logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
-            }
-            "fx" -> {
-                legacyTalonFxService.active.forEach { config(it, paramValue) }
-                logger.debug { "set ${legacyTalonFxService.active.size} talonfx ${param.name}: $paramValue" }
-            }
-            else -> throw IllegalArgumentException()
-        }
+        talonService.active.forEach { config(it, paramValue) }
+        logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
     }
 
     private fun configDoubleSrxParam(default: Double, config: (TalonSRX, Double) -> Unit) {
@@ -485,18 +336,8 @@ class TalonParameterCommand(
         logger.debug { "set ${talonService.active.size} talon ${param.name}: $paramValue" }
     }
 
-    private fun configDoubleFxParam(default: Double, config: (TalonFX, Double) -> Unit) {
-        val paramValue = param.readDouble(reader, default)
-        legacyTalonFxService.active.forEach { config(it, paramValue) }
-        logger.debug { "set ${legacyTalonFxService.active.size} talonfx ${param.name}: $paramValue" }
-    }
-
     private fun defaultFor(frame: StatusFrameEnhanced): Int {
-        when (type) {
-            "srx" -> return talonService.active.first().getStatusFramePeriod(frame)
-            "fx" -> return legacyTalonFxService.active.first().getStatusFramePeriod(frame)
-            else -> throw IllegalArgumentException()
-        }
+        return talonService.active.first().getStatusFramePeriod(frame)
     }
 
 }
