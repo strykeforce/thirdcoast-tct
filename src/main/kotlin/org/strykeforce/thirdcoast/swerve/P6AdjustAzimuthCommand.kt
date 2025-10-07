@@ -57,10 +57,8 @@ class P6AdjustAzimuthCommand(
     override val menu: String
         get() {
             if(bus=="rio") return formatMenu(
-                (swerve.swerveModules[active] as FXSwerveModule).azimuthTalon.getPosition().valueAsDouble -
-                        (swerve.swerveModules[active] as FXSwerveModule).azimuthPositionOffset)
-            else return formatMenu((canifierSwerve.swerveModules[active] as FXSwerveModule).azimuthTalon.getPosition().valueAsDouble -
-                    (canifierSwerve.swerveModules[active] as FXSwerveModule).azimuthPositionOffset)
+                (swerve.swerveModules[active] as FXSwerveModule).azimuthTalon.getPosition().valueAsDouble)
+            else return formatMenu((canifierSwerve.swerveModules[active] as FXSwerveModule).azimuthTalon.getPosition().valueAsDouble)
         }
 
     override fun execute(): Command {
@@ -71,7 +69,7 @@ class P6AdjustAzimuthCommand(
         while(true) {
             try {
                 position = reader.readDouble(prompt(), position)
-                swerveModule.jogAround(position.toDouble(), swerveModule.azimuthPositionOffset)
+                swerveModule.jogAround(position.toDouble())
                 logger.info { "positioned wheel $active to $position" }
                 return super.execute()
             } catch (e: java.lang.IllegalArgumentException) {
@@ -84,13 +82,13 @@ class P6AdjustAzimuthCommand(
     }
 }
 
-private fun FXSwerveModule.jogAround(position: Double, offset: Double) {
+private fun FXSwerveModule.jogAround(position: Double) {
     val positions = listOf(position - JOG, position + JOG, position)
     positions.forEach {
-        this.azimuthTalon.setControl(MotionMagicVoltage(it + offset))
-        while (!this.onTarget(it, offset)) Timer.delay(DELAY)
+        this.azimuthTalon.setControl(MotionMagicVoltage(it))
+        while (!this.onTarget(it)) Timer.delay(DELAY)
     }
 }
 
-internal fun FXSwerveModule.onTarget(target: Double, offset: Double, goodEnough: Double = GOOD_ENOUGH) =
-    abs((target+offset) - (this.azimuthTalon.getPosition().valueAsDouble-offset)) < goodEnough
+internal fun FXSwerveModule.onTarget(target: Double, goodEnough: Double = GOOD_ENOUGH) =
+    abs((target) - (this.azimuthTalon.getPosition().valueAsDouble)) < goodEnough

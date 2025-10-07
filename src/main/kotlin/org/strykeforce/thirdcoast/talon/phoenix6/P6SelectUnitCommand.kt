@@ -32,8 +32,8 @@ class P6SelectUnitCommand(
                     else throw IllegalArgumentException()
                 }
                 "fxs" -> {
-                    if(bus =="rio") return talonFxService.activeUnits.ordinal
-                    else if(bus=="canivore") return talonFxFDService.activeUnits.ordinal
+                    if(bus =="rio") return talonFxsService.activeUnits.ordinal
+                    else if(bus=="canivore") return talonFxsFDService.activeUnits.ordinal
                     else throw IllegalArgumentException()
                 }
                 else -> throw IllegalArgumentException()

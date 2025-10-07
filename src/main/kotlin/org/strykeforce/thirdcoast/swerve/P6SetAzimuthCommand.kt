@@ -29,12 +29,10 @@ class P6SetAzimuthCommand(
     override val menu: String
         get() {
             if (bus == "rio") return formatMenu(swerve.swerveModules.map {
-                var offset = (it as FXSwerveModule).azimuthPositionOffset
-                (it as FXSwerveModule).azimuthTalon.getPosition().valueAsDouble - offset
+                (it as FXSwerveModule).azimuthTalon.getPosition().valueAsDouble
             }.joinToString())
             else return formatMenu(canifierSwerve.swerveModules.map {
-                var offset = (it as FXSwerveModule).azimuthPositionOffset
-                (it as FXSwerveModule).azimuthTalon.getPosition().valueAsDouble - offset
+                (it as FXSwerveModule).azimuthTalon.getPosition().valueAsDouble
             }.joinToString())
         }
 
@@ -52,11 +50,10 @@ class P6SetAzimuthCommand(
                 val setpoint = reader.readDouble(prompt())
                 if(bus=="rio") {
                     swerve.swerveModules.forEach {
-                        var offset = (it as FXSwerveModule).azimuthPositionOffset
-                        (it as FXSwerveModule).azimuthTalon.setControl(MotionMagicVoltage(setpoint + offset))
+                        (it as FXSwerveModule).azimuthTalon.setControl(MotionMagicVoltage(setpoint))
                     }
                     val swerveModule = swerve.swerveModules[0] as FXSwerveModule
-                    while (!swerveModule.onTarget(setpoint, swerveModule.azimuthPositionOffset)) Timer.delay(DELAY)
+                    while (!swerveModule.onTarget(setpoint)) Timer.delay(DELAY)
                     Timer.delay(5* DELAY)
                     logger.info {
                         swerve.swerveModules.map {
@@ -65,11 +62,10 @@ class P6SetAzimuthCommand(
                     }
                 } else {
                     canifierSwerve.swerveModules.forEach {
-                        var offset = (it as FXSwerveModule).azimuthPositionOffset
-                        (it as FXSwerveModule).azimuthTalon.setControl(MotionMagicVoltage(setpoint + offset))
+                        (it as FXSwerveModule).azimuthTalon.setControl(MotionMagicVoltage(setpoint))
                     }
                     val swerveModule = canifierSwerve.swerveModules[0] as FXSwerveModule
-                    while (!swerveModule.onTarget(setpoint, swerveModule.azimuthPositionOffset)) Timer.delay(DELAY)
+                    while (!swerveModule.onTarget(setpoint)) Timer.delay(DELAY)
                     Timer.delay(5* DELAY)
                     logger.info {
                         canifierSwerve.swerveModules.map {

@@ -125,7 +125,7 @@ class P6DefaultStatusFrameCommand(
             "fxs" -> {
                 if (bus == "rio") {
                     talonFxsService.active.forEach {
-                        talonFxService.grapherStatusFrameHz = 0.0;
+                        talonFxsService.grapherStatusFrameHz = 0.0;
                         it.acceleration.setUpdateFrequency(50.0, timeout)
                         it.bridgeOutput.setUpdateFrequency(100.0, timeout)
                         it.deviceTemp.setUpdateFrequency(4.0, timeout)
@@ -167,6 +167,13 @@ class P6DefaultStatusFrameCommand(
                         it.differentialClosedLoopReference.setUpdateFrequency(100.0, timeout)
                         it.differentialClosedLoopReferenceSlope.setUpdateFrequency(100.0, timeout)
                         it.differentialClosedLoopSlot.setUpdateFrequency(4.0, timeout)
+
+                        it.ancillaryDeviceTemp.setUpdateFrequency(4.0, timeout)
+                        it.externalMotorTemp.setUpdateFrequency(4.0, timeout)
+                        it.rawPulseWidthPosition.setUpdateFrequency(0.0,timeout)
+                        it.rawQuadraturePosition.setUpdateFrequency(0.0, timeout)
+                        it.rawPulseWidthVelocity.setUpdateFrequency(0.0, timeout)
+                        it.rawQuadratureVelocity.setUpdateFrequency(0.0, timeout)
                     }
                 } else if (bus == "canivore") {
                     talonFxsFDService.active.forEach {
@@ -211,6 +218,13 @@ class P6DefaultStatusFrameCommand(
                         it.differentialClosedLoopProportionalOutput.setUpdateFrequency(100.0, timeout)
                         it.differentialClosedLoopReference.setUpdateFrequency(100.0, timeout)
                         it.differentialClosedLoopReferenceSlope.setUpdateFrequency(100.0, timeout)
+
+                        it.ancillaryDeviceTemp.setUpdateFrequency(4.0, timeout)
+                        it.externalMotorTemp.setUpdateFrequency(4.0, timeout)
+                        it.rawPulseWidthPosition.setUpdateFrequency(0.0,timeout)
+                        it.rawQuadraturePosition.setUpdateFrequency(0.0, timeout)
+                        it.rawPulseWidthVelocity.setUpdateFrequency(0.0, timeout)
+                        it.rawQuadratureVelocity.setUpdateFrequency(0.0, timeout)
                     }
                 }
 

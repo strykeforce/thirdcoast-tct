@@ -1795,11 +1795,12 @@ class Phoenix6ParameterCommand(
                 }
 
                 "fxs" -> configFXSDoubleParam(
-                    if (bus == "rio") talonFxService.grapherStatusFrameHz
+                    if (bus == "rio") talonFxsService.grapherStatusFrameHz
                     else talonFxsFDService.grapherStatusFrameHz
                 ) { talonFXS, value ->
-                    if (bus == "rio") talonFxService.grapherStatusFrameHz = value
-                    else talonFxFDService.grapherStatusFrameHz = value
+                    if (bus == "rio") talonFxsService.grapherStatusFrameHz = value
+                    else talonFxsFDService.grapherStatusFrameHz = value
+                    logger.info { "Grapher Frame Value: " + value }
 
                     talonFXS.acceleration.setUpdateFrequency(value, timeout)
                     talonFXS.bridgeOutput.setUpdateFrequency(value, timeout)
@@ -1842,6 +1843,16 @@ class Phoenix6ParameterCommand(
                     talonFXS.differentialClosedLoopReference.setUpdateFrequency(value, timeout)
                     talonFXS.differentialClosedLoopReferenceSlope.setUpdateFrequency(value, timeout)
                     talonFXS.differentialClosedLoopSlot.setUpdateFrequency(value, timeout)
+
+                    talonFXS.ancillaryDeviceTemp.setUpdateFrequency(value, timeout)
+                    talonFXS.externalMotorTemp.setUpdateFrequency(value, timeout)
+
+
+                    talonFXS.rawPulseWidthPosition.setUpdateFrequency(value,timeout)
+                    logger.info { "Before new frames" }
+                    talonFXS.rawQuadraturePosition.setUpdateFrequency(value, timeout)
+                    talonFXS.rawPulseWidthVelocity.setUpdateFrequency(value, timeout)
+                    talonFXS.rawQuadratureVelocity.setUpdateFrequency(value, timeout)
                 }
 
                 else -> throw IllegalArgumentException()

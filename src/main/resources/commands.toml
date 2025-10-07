@@ -2483,7 +2483,7 @@ type = "menu"
       menu = "Grapher Frame Rate (Hz)"
       param = "GRAPHER_FRAME"
       bus = "rio"
-      device = "fx"
+      device = "fxs"
 
 
     [rio.servo]
@@ -4373,7 +4373,7 @@ type = "menu"
         menu = "Grapher Frame Rate (Hz)"
         param = "GRAPHER_FRAME"
         bus = "canivore"
-        device = "fx"
+        device = "fxs"
 
 
 

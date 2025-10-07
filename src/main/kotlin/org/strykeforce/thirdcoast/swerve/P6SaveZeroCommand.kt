@@ -29,16 +29,16 @@ class P6SaveZeroCommand(
                     if(bus=="rio") {
                         swerve.swerveModules.forEach {
                             val module = it as FXSwerveModule
-                            logger.debug { "azimuth ${module.azimuthTalon.deviceID}: store zero, before=${module.azimuthTalon.position.valueAsDouble}, offset: ${module.azimuthPositionOffset}" }
-                            module.loadAndSetAzimuthZeroReference()
-                            logger.debug { "azimuth ${module.azimuthTalon.deviceID} store zero, after=${module.azimuthTalon.position.valueAsDouble}, offset: ${module.azimuthPositionOffset}" }
+                            logger.debug { "azimuth ${module.azimuthTalon.deviceID}: store zero, before=${module.azimuthTalon.position.valueAsDouble}" }
+                            module.storeAzimuthZeroReference()
+                            logger.debug { "azimuth ${module.azimuthTalon.deviceID} store zero, after=${module.azimuthTalon.position.valueAsDouble}" }
                         }
                     } else {
                         canifierSwerve.swerveModules.forEach {
                             val module = it as FXSwerveModule
-                            logger.debug { "azimuth ${module.azimuthTalon.deviceID}: store zero, before=${module.azimuthTalon.position.valueAsDouble}, offset: ${module.azimuthPositionOffset}" }
-                            module.loadAndSetAzimuthZeroReference()
-                            logger.debug { "azimuth ${module.azimuthTalon.deviceID} store zero, after=${module.azimuthTalon.position.valueAsDouble}, offset: ${module.azimuthPositionOffset}" }
+                            logger.debug { "azimuth ${module.azimuthTalon.deviceID}: store zero, before=${module.azimuthTalon.position.valueAsDouble}" }
+                            module.storeAzimuthZeroReference()
+                            logger.debug { "azimuth ${module.azimuthTalon.deviceID} store zero, after=${module.azimuthTalon.position.valueAsDouble}" }
                         }
                     }
 

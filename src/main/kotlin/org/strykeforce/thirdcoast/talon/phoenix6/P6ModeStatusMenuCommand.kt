@@ -33,6 +33,7 @@ class P6ModeStatusMenuCommand(
     override val menu: String
         get() {
             logger.info { "Getting Menu Option..." }
+            logger.info { "Device = " + device }
             when(device) {
                 "fx" -> {
                     if(bus == "rio") return formatMenu(talonFxService.controlMode)
