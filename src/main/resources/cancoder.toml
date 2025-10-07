@@ -9,3 +9,8 @@
     help = "This offset is added to the reported position, allowing the application to trim the zero position. When set to the default value of zero, position reports zero when magnet north pole aligns with the LED. Units in Rotations"
     type = "DOUBLE"
     range = [-1.0, 1.0]
+
+[GRAPHER_FRAME]
+    name = "Grapher Update Frequency (Hz)"
+    type = "DOUBLE"
+    help = "Input update frequncy for all singals on the grapher in Hz, if this value shows 0 it is using the default update frequency"

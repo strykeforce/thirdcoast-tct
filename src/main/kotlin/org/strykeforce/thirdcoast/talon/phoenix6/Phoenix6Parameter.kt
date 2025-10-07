@@ -92,6 +92,7 @@ class Phoenix6Parameter(command: Command, toml: TomlTable, val enum: P6Enum): Ab
         LIM_FWD_MOT,
         LIM_REV_MOT,
         GRAPHER_FRAME,
+        CONTROL_REQ_FREQ,
 
         ABS_SENSOR_DISCONTINUITY,
         ABS_SENSOR_OFFSET,

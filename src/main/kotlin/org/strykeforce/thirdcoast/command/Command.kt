@@ -119,6 +119,7 @@ interface Command {
                 "cancoder.status" -> CancoderStatusCommand(parent, key, toml)
                 "cancoder.param" -> CancoderParameterCommand(parent, key, toml)
                 "cancoder.sensorDirection" -> SelectCancoderSensorDirectionCommand(parent, key, toml)
+                "cancoder.graph" -> CancoderDefaultStatusFrameCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
             }
         }

@@ -13,7 +13,8 @@ class CancoderParameter(
     enum class Enum {
         POSITION,
         MAG_OFFSET,
-        DISCONTINUITY_POINT
+        DISCONTINUITY_POINT,
+        GRAPHER_FRAME
     }
 
     companion object {

@@ -13,6 +13,7 @@ class CancoderService(
 
     val timeout = 10.0
     var dirty = true
+    var grapherStatusFrameHz : Double = 20.0;
 
     var activeConfiguration = CANcoderConfiguration()
         get() {
