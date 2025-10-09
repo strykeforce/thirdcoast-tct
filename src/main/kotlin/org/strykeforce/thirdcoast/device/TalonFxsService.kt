@@ -34,7 +34,7 @@ class TalonFxsService(
     var activeOverrideNeutral: Boolean = false
     var limFwdMotion: Boolean = false;
     var limRevMotion: Boolean  = false;
-    var grapherStatusFrameHz: Double = 20.0;
+    var grapherStatusFrameHz: Double = 0.0;
     var controlRequestUpdateFreq: Double = 100.0;
 
     var controlMode: String = "Duty Cycle Out"

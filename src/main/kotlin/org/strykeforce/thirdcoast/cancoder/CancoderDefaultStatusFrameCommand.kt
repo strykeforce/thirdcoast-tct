@@ -29,7 +29,7 @@ class CancoderDefaultStatusFrameCommand(parent: Command?, key: String, toml: Tom
 
         } else if(bus == "canivore") {
             cancoderFDService.active.forEach {
-                cancoderService.grapherStatusFrameHz = 0.0;
+                cancoderFDService.grapherStatusFrameHz = 0.0;
                 it.magnetHealth.setUpdateFrequency(100.0, timeout)
                 it.position.setUpdateFrequency(100.0, timeout)
                 it.positionSinceBoot.setUpdateFrequency(100.0, timeout)

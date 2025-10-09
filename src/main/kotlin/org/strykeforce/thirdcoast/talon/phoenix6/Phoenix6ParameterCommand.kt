@@ -1873,7 +1873,7 @@ class Phoenix6ParameterCommand(
                     if(bus == "rio") talonFxsService.controlRequestUpdateFreq = value
                     else talonFxsFDService.controlRequestUpdateFreq = value
                 }
-                "fx" -> configFXSDoubleParam(if(bus == "rio") talonFxService.controlRequestUpdateFreq else talonFxFDService.controlRequestUpdateFreq) { talonFx, value ->
+                "fx" -> configFXDoubleParam(if(bus == "rio") talonFxService.controlRequestUpdateFreq else talonFxFDService.controlRequestUpdateFreq) { talonFx, value ->
                     if(bus == "rio") talonFxService.controlRequestUpdateFreq = value
                     else talonFxFDService.controlRequestUpdateFreq = value
                 }
