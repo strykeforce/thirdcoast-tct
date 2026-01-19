@@ -61,19 +61,19 @@ class P6SelectNeutralModeCommand(
             "fx" -> {
                 if(bus == "rio") {
                     talonFxService.activeConfiguration.MotorOutput.NeutralMode = neutral
-                    talonFxService.active.forEach { it.configurator.apply(talonFxService.activeConfiguration.MotorOutput) }
+                    talonFxService.active.forEach { it.talonFX.configurator.apply(talonFxService.activeConfiguration.MotorOutput) }
                 } else if(bus == "canivore") {
                     talonFxFDService.activeConfiguration.MotorOutput.NeutralMode = neutral
-                    talonFxFDService.active.forEach { it.configurator.apply(talonFxFDService.activeConfiguration.MotorOutput) }
+                    talonFxFDService.active.forEach { it.talonFX.configurator.apply(talonFxFDService.activeConfiguration.MotorOutput) }
                 } else throw IllegalArgumentException()
             }
             "fxs" -> {
                 if(bus == "rio") {
                     talonFxsService.activeConfiguration.MotorOutput.NeutralMode = neutral
-                    talonFxsService.active.forEach { it.configurator.apply(talonFxsService.activeConfiguration.MotorOutput) }
+                    talonFxsService.active.forEach { it.talonFXS.configurator.apply(talonFxsService.activeConfiguration.MotorOutput) }
                 } else if(bus == "canivore") {
                     talonFxsFDService.activeConfiguration.MotorOutput.NeutralMode = neutral
-                    talonFxsFDService.active.forEach { it.configurator.apply(talonFxsFDService.activeConfiguration.MotorOutput) }
+                    talonFxsFDService.active.forEach { it.talonFXS.configurator.apply(talonFxsFDService.activeConfiguration.MotorOutput) }
                 } else throw IllegalArgumentException()
             }
             else -> throw IllegalArgumentException()

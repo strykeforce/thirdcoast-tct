@@ -39,10 +39,10 @@ class P6SelectSensorPhaseCommand(
         val phase = values[index]
         if(bus=="rio") {
             talonFxsService.activeConfiguration.ExternalFeedback.SensorPhase = phase
-            talonFxsService.active.forEach { it.configurator.apply(talonFxsService.activeConfiguration.ExternalFeedback) }
+            talonFxsService.active.forEach { it.talonFXS.configurator.apply(talonFxsService.activeConfiguration.ExternalFeedback) }
         } else {
             talonFxsFDService.activeConfiguration.ExternalFeedback.SensorPhase = phase
-            talonFxsFDService.active.forEach { it.configurator.apply(talonFxsFDService.activeConfiguration.ExternalFeedback) }
+            talonFxsFDService.active.forEach { it.talonFXS.configurator.apply(talonFxsFDService.activeConfiguration.ExternalFeedback) }
         }
     }
 }

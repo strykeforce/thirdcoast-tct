@@ -41,10 +41,10 @@ class P6SelectBrushedWiringCommand(
         val wiring = values[index]
         if(bus=="rio") {
             talonFxsService.activeConfiguration.Commutation.BrushedMotorWiring = wiring
-            talonFxsService.active.forEach { it.configurator.apply(talonFxsService.activeConfiguration.Commutation) }
+            talonFxsService.active.forEach { it.talonFXS.configurator.apply(talonFxsService.activeConfiguration.Commutation) }
         } else {
             talonFxsFDService.activeConfiguration.Commutation.BrushedMotorWiring = wiring
-            talonFxsFDService.active.forEach { it.configurator.apply(talonFxsFDService.activeConfiguration.Commutation) }
+            talonFxsFDService.active.forEach { it.talonFXS.configurator.apply(talonFxsFDService.activeConfiguration.Commutation) }
         }
     }
 

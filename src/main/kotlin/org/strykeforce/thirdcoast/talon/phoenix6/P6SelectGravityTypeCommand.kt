@@ -107,7 +107,7 @@ class P6SelectGravityTypeCommand(
                         else -> terminal.warn("slot value ${slot} is invalid")
                     }
                     talonFxService.active.forEach {
-                        it.configurator.apply(talonFxService.activeConfiguration)
+                        it.talonFX.configurator.apply(talonFxService.activeConfiguration)
                     }
                 } else if(bus == "canivore") {
                     val slot = talonFxFDService.activeSlotIndex
@@ -117,7 +117,7 @@ class P6SelectGravityTypeCommand(
                         2 -> talonFxFDService.activeConfiguration.Slot2.GravityType = gravity
                         else -> terminal.warn("slot value ${slot} is invalid")
                     }
-                    talonFxFDService.active.forEach { it.configurator.apply(talonFxFDService.activeConfiguration) }
+                    talonFxFDService.active.forEach { it.talonFX.configurator.apply(talonFxFDService.activeConfiguration) }
                 }
             }
             "fxs" -> {
@@ -130,7 +130,7 @@ class P6SelectGravityTypeCommand(
                         else -> terminal.warn("slot value ${slot} is invalid")
                     }
                     talonFxsService.active.forEach {
-                        it.configurator.apply(talonFxsService.activeConfiguration)
+                        it.talonFXS.configurator.apply(talonFxsService.activeConfiguration)
                     }
                 } else if(bus == "canivore") {
                     val slot = talonFxsFDService.activeSlotIndex
@@ -140,7 +140,7 @@ class P6SelectGravityTypeCommand(
                         2 -> talonFxsFDService.activeConfiguration.Slot2.GravityType = gravity
                         else -> terminal.warn("slot value ${slot} is invalid")
                     }
-                    talonFxsFDService.active.forEach { it.configurator.apply(talonFxsFDService.activeConfiguration) }
+                    talonFxsFDService.active.forEach { it.talonFXS.configurator.apply(talonFxsFDService.activeConfiguration) }
                 }
             }
             else -> throw IllegalArgumentException()

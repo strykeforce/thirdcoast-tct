@@ -1,17 +1,21 @@
 package org.strykeforce.thirdcoast.talon.phoenix6
 
 import net.consensys.cava.toml.TomlTable
-import org.koin.core.component.inject
+import org.strykeforce.controller.CTRE_Units
 import org.strykeforce.thirdcoast.command.AbstractSelectCommand
 import org.strykeforce.thirdcoast.command.Command
-import org.strykeforce.thirdcoast.device.*
+import org.strykeforce.thirdcoast.device.TalonFXsFDService
+import org.strykeforce.thirdcoast.device.TalonFxFDService
+import org.strykeforce.thirdcoast.device.TalonFxService
+import org.strykeforce.thirdcoast.device.TalonFxsService
+import org.koin.core.component.inject
 
-class P6SelectUnitCommand(
+class P6SelectClosedLoopUnitsCommand(
     parent: Command?,
     key: String,
     toml: TomlTable
-): AbstractSelectCommand<Units>(parent, key, toml,
-    listOf(Units.PERCENT, Units.VOLTAGE, Units.TORQUE_CURRENT),
+): AbstractSelectCommand<CTRE_Units>(parent, key, toml,
+    listOf(CTRE_Units.Percent, CTRE_Units.Voltage, CTRE_Units.Torque_Current),
     listOf("Percent", "Voltage", "(Pro) TorqueCurrent")) {
 
     private val talonFxService: TalonFxService by inject()
@@ -27,13 +31,13 @@ class P6SelectUnitCommand(
         get() {
             when(device) {
                 "fx" -> {
-                    if(bus == "rio") return talonFxService.activeUnits.ordinal
-                    else if(bus == "canivore") return talonFxFDService.activeUnits.ordinal
+                    if(bus == "rio") return talonFxService.active.firstOrNull()?.getClosedLoopUnits()?.ordinal?:0
+                    else if(bus == "canivore") return talonFxFDService.active.firstOrNull()?.getClosedLoopUnits()?.ordinal?:0
                     else throw IllegalArgumentException()
                 }
                 "fxs" -> {
-                    if(bus =="rio") return talonFxsService.activeUnits.ordinal
-                    else if(bus=="canivore") return talonFxsFDService.activeUnits.ordinal
+                    if(bus =="rio") return talonFxsService.active.firstOrNull()?.getClosedLoopUnits()?.ordinal?:0
+                    else if(bus=="canivore") return talonFxsFDService.active.firstOrNull()?.getClosedLoopUnits()?.ordinal?:0
                     else throw IllegalArgumentException()
                 }
                 else -> throw IllegalArgumentException()
@@ -46,13 +50,13 @@ class P6SelectUnitCommand(
         val units = values[index]
         when(device) {
             "fx" -> {
-                if(bus == "rio") talonFxService.activeUnits = units
-                else if(bus == "canivore") talonFxFDService.activeUnits = units
+                if(bus == "rio") talonFxService.active.forEach { it.setClosedLoopUnits(units)}
+                else if(bus == "canivore") talonFxFDService.active.forEach { it.setClosedLoopUnits(units) }
                 else throw IllegalArgumentException()
             }
             "fxs" -> {
-                if(bus=="rio") talonFxsService.activeUnits = units
-                else if(bus=="canivore") talonFxsFDService.activeUnits = units
+                if(bus=="rio") talonFxsService.active.forEach { it.setClosedLoopUnits(units) }
+                else if(bus=="canivore") talonFxsFDService.active.forEach { it.setClosedLoopUnits(units) }
                 else throw IllegalArgumentException()
             }
             else -> throw IllegalArgumentException()

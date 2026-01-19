@@ -3,6 +3,7 @@ package org.strykeforce.thirdcoast
 import com.ctre.phoenix.CANifier
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.sensors.PigeonIMU
+import com.ctre.phoenix6.CANBus
 import com.ctre.phoenix6.hardware.CANcoder
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.hardware.TalonFXS
@@ -17,6 +18,8 @@ import org.jline.terminal.Terminal
 import org.jline.terminal.TerminalBuilder
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import org.strykeforce.controller.SF_TalonFX
+import org.strykeforce.controller.SF_TalonFXS
 //import org.koin.dsl.module.module
 import org.strykeforce.swerve.*
 import org.strykeforce.thirdcoast.command.Command
@@ -47,13 +50,13 @@ val tctModule = module {
 
     single { TalonService(get()) { id -> TalonSRX(id) } }
 
-    single { TalonFxService(get()) { id -> com.ctre.phoenix6.hardware.TalonFX(id)} }
+    single { TalonFxService(get()) { id -> SF_TalonFX(id, CANBus("rio")) } }
 
-    single {TalonFxFDService(get()) {id -> com.ctre.phoenix6.hardware.TalonFX(id, "*")} }
+    single {TalonFxFDService(get()) {id -> SF_TalonFX(id, CANBus("*")) } }
 
-    single {TalonFxsService(get()) {id -> com.ctre.phoenix6.hardware.TalonFXS(id)} }
+    single {TalonFxsService(get()) {id -> SF_TalonFXS(id, CANBus("rio")) } }
 
-    single {TalonFXsFDService(get()) {id -> TalonFXS(id, "*")} }
+    single {TalonFXsFDService(get()) {id -> SF_TalonFXS(id, CANBus("*")) } }
 
     single { ServoService { id -> Servo(id) } }
 
@@ -63,9 +66,9 @@ val tctModule = module {
 
     single { CanifierService(get()) { id -> CANifier(id) } }
 
-    single { CancoderService(get()) {id -> CANcoder(id, "rio")} }
+    single { CancoderService(get()) {id -> CANcoder(id, CANBus("rio"))} }
 
-    single { CancoderFDService(get()) {id -> CANcoder(id, "*")} }
+    single { CancoderFDService(get()) {id -> CANcoder(id, CANBus("*"))} }
 
     single { PigeonService(get()) { id -> PigeonIMU(id) } }
 

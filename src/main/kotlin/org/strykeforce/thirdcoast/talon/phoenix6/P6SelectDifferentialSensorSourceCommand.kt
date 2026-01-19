@@ -13,16 +13,16 @@ import org.strykeforce.thirdcoast.device.TalonFxsService
 
 private val SENSOR = listOf(
     Disabled,
-    RemoteTalonFX_Diff,
-    RemotePigeon2_Yaw,
-    RemotePigeon2_Pitch,
-    RemotePigeon2_Roll,
+    RemoteTalonFX_HalfDiff,
+    RemotePigeon2Yaw,
+    RemotePigeon2Pitch,
+    RemotePigeon2Roll,
     RemoteCANcoder
 )
 
 private val LABELS = listOf(
     "Disabled",
-    "Remote TalonFX Differential",
+    "Remote TalonFX Half Differential",
     "Remote Pigeon2 Yaw",
     "Remote Pigeon2 Pitch",
     "Remote Pigeon2 Roll",
@@ -68,19 +68,19 @@ class P6SelectDifferentialSensorSourceCommand(
             "fx" -> {
                 if(bus == "rio") {
                     talonFxService.activeConfiguration.DifferentialSensors.DifferentialSensorSource = sensor
-                    talonFxService.active.forEach { it.configurator.apply(talonFxService.activeConfiguration) }
+                    talonFxService.active.forEach { it.talonFX.configurator.apply(talonFxService.activeConfiguration) }
                 } else if(bus == "canivoer") {
                     talonFxFDService.activeConfiguration.DifferentialSensors.DifferentialSensorSource = sensor
-                    talonFxFDService.active.forEach { it.configurator.apply(talonFxFDService.activeConfiguration) }
+                    talonFxFDService.active.forEach { it.talonFX.configurator.apply(talonFxFDService.activeConfiguration) }
                 }
             }
             "fxs" -> {
                 if(bus == "rio") {
                     talonFxsService.activeConfiguration.DifferentialSensors.DifferentialSensorSource = sensor
-                    talonFxsService.active.forEach { it.configurator.apply(talonFxsService.activeConfiguration) }
+                    talonFxsService.active.forEach { it.talonFXS.configurator.apply(talonFxsService.activeConfiguration) }
                 } else if(bus == "canivoer") {
                     talonFxsFDService.activeConfiguration.DifferentialSensors.DifferentialSensorSource = sensor
-                    talonFxsFDService.active.forEach { it.configurator.apply(talonFxsFDService.activeConfiguration) }
+                    talonFxsFDService.active.forEach { it.talonFXS.configurator.apply(talonFxsFDService.activeConfiguration) }
                 }
             }
             else -> throw IllegalArgumentException()

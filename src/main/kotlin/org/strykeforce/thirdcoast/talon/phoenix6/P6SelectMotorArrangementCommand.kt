@@ -47,10 +47,10 @@ class P6SelectMotorArrangementCommand(
         val type = values[index]
         if(bus=="rio") {
             talonFxsService.activeConfiguration.Commutation.MotorArrangement = type
-            talonFxsService.active.forEach { it.configurator.apply(talonFxsService.activeConfiguration.Commutation) }
+            talonFxsService.active.forEach { it.talonFXS.configurator.apply(talonFxsService.activeConfiguration.Commutation) }
         } else {
             talonFxsFDService.activeConfiguration.Commutation.MotorArrangement = type
-            talonFxsFDService.active.forEach { it.configurator.apply(talonFxsFDService.activeConfiguration.Commutation) }
+            talonFxsFDService.active.forEach { it.talonFXS.configurator.apply(talonFxsFDService.activeConfiguration.Commutation) }
         }
     }
 }

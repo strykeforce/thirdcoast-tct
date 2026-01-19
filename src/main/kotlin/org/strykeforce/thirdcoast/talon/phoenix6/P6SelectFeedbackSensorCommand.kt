@@ -12,9 +12,9 @@ import org.strykeforce.thirdcoast.device.TalonFxService
 private val SENSORS = listOf(
     RotorSensor,
     RemoteCANcoder,
-    RemotePigeon2_Yaw,
-    RemotePigeon2_Pitch,
-    RemotePigeon2_Roll,
+    RemotePigeon2Yaw,
+    RemotePigeon2Pitch,
+    RemotePigeon2Roll,
     FusedCANcoder,
     SyncCANcoder,
     RemoteCANdiPWM1,
@@ -73,12 +73,12 @@ class P6SelectFeedbackSensorCommand(
         if(bus == "rio") {
             talonFxService.activeConfiguration.Feedback.FeedbackSensorSource = sensor
             talonFxService.active.forEach {
-                it.configurator.apply(talonFxService.activeConfiguration)
+                it.talonFX.configurator.apply(talonFxService.activeConfiguration)
             }
         } else if(bus == "canivore") {
             talonFxFDService.activeConfiguration.Feedback.FeedbackSensorSource = sensor
             talonFxService.active.forEach {
-                it.configurator.apply(talonFxFDService.activeConfiguration)
+                it.talonFX.configurator.apply(talonFxFDService.activeConfiguration)
             }
         } else throw  IllegalArgumentException()
     }

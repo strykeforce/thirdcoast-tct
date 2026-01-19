@@ -53,19 +53,19 @@ class P6SelectMotorInvertCommand(
             "fx" -> {
                 if(bus == "rio") {
                     talonFxService.activeConfiguration.MotorOutput.Inverted = invert
-                    talonFxService.active.forEach { it.configurator.apply(talonFxService.activeConfiguration.MotorOutput) }
+                    talonFxService.active.forEach { it.talonFX.configurator.apply(talonFxService.activeConfiguration.MotorOutput) }
                 } else if(bus == "canivore") {
                     talonFxFDService.activeConfiguration.MotorOutput.Inverted = invert
-                    talonFxFDService.active.forEach { it.configurator.apply(talonFxFDService.activeConfiguration.MotorOutput) }
+                    talonFxFDService.active.forEach { it.talonFX.configurator.apply(talonFxFDService.activeConfiguration.MotorOutput) }
                 } else throw IllegalArgumentException()
             }
             "fxs" -> {
                 if(bus == "rio") {
                     talonFxsService.activeConfiguration.MotorOutput.Inverted = invert
-                    talonFxsService.active.forEach { it.configurator.apply(talonFxsService.activeConfiguration.MotorOutput) }
+                    talonFxsService.active.forEach { it.talonFXS.configurator.apply(talonFxsService.activeConfiguration.MotorOutput) }
                 } else if(bus == "canivore") {
                     talonFxsFDService.activeConfiguration.MotorOutput.Inverted = invert
-                    talonFxsFDService.active.forEach { it.configurator.apply(talonFxsFDService.activeConfiguration.MotorOutput) }
+                    talonFxsFDService.active.forEach { it.talonFXS.configurator.apply(talonFxsFDService.activeConfiguration.MotorOutput) }
                 } else throw IllegalArgumentException()
             }
             else -> throw IllegalArgumentException()

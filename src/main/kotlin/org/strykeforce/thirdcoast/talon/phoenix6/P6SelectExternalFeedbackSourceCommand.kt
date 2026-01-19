@@ -12,9 +12,9 @@ import org.koin.core.component.inject
 private val FEEDBACK = listOf(
     Commutation,
     RemoteCANcoder,
-    RemotePigeon2_Yaw,
-    RemotePigeon2_Pitch,
-    RemotePigeon2_Roll,
+    RemotePigeon2Yaw,
+    RemotePigeon2Pitch,
+    RemotePigeon2Roll,
     FusedCANcoder,
     SyncCANcoder,
     Quadrature,
@@ -69,10 +69,10 @@ class P6SelectExternalFeedbackSourceCommand(
         val source = values[index]
         if(bus=="rio") {
             talonFxsService.activeConfiguration.ExternalFeedback.ExternalFeedbackSensorSource = source
-            talonFxsService.active.forEach { it.configurator.apply(talonFxsService.activeConfiguration.ExternalFeedback) }
+            talonFxsService.active.forEach { it.talonFXS.configurator.apply(talonFxsService.activeConfiguration.ExternalFeedback) }
         } else {
             talonFxsFDService.activeConfiguration.ExternalFeedback.ExternalFeedbackSensorSource = source
-            talonFxsFDService.active.forEach { it.configurator.apply(talonFxsFDService.activeConfiguration.ExternalFeedback) }
+            talonFxsFDService.active.forEach { it.talonFXS.configurator.apply(talonFxsFDService.activeConfiguration.ExternalFeedback) }
         }
     }
 }

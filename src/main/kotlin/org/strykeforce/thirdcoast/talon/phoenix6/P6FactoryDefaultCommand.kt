@@ -31,20 +31,20 @@ class P6FactoryDefaultCommand(
                 val config = TalonFXConfiguration()
                 if(bus == "rio") {
                     talonFxService.activeConfiguration = config
-                    talonFxService.active.forEach { it.configurator.apply(config) }
+                    talonFxService.active.forEach { it.talonFX.configurator.apply(config) }
                 } else if(bus == "canivore") {
                     talonFxFdService.activeConfiguration = config
-                    talonFxFdService.active.forEach { it.configurator.apply(config)}
+                    talonFxFdService.active.forEach { it.talonFX.configurator.apply(config)}
                 } else throw IllegalArgumentException()
             }
             "fxs" -> {
                 val config = TalonFXSConfiguration()
                 if(bus == "rio") {
                     talonFxsService.activeConfiguration = config
-                    talonFxsService.active.forEach { it.configurator.apply(config) }
+                    talonFxsService.active.forEach { it.talonFXS.configurator.apply(config) }
                 } else if(bus == "canivore") {
                     talonFxsFDService.activeConfiguration = config
-                    talonFxsFDService.active.forEach { it.configurator.apply(config)}
+                    talonFxsFDService.active.forEach { it.talonFXS.configurator.apply(config)}
                 } else throw IllegalArgumentException()
             }
         }

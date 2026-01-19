@@ -949,15 +949,57 @@ type = "menu"
     order = 17
     menu = "work with talonFX's"
     [rio.FxP6.run]
-      type = "p6.run"
+      type = "menu"
       order = 10
       menu = "run active talon fx's"
       bus = "rio"
       device = "fx"
+      [rio.FxP6.run.open]
+        type = "p6.runOpen"
+        bus = "rio"
+        device = "fx"
+        menu = "run open loop"
+        order = 10
+      [rio.FxP6.run.closed]
+        type = "p6.runClosed"
+        bus = "rio"
+        device = "fx"
+        menu = "run closed loop"
+        order = 20
+      [rio.FxP6.run.closed2]
+        type = "p6.runClosed2"
+        bus = "rio"
+        device = "fx"
+        menu = "run closed loop (pos/vel 2 arguments)"
+        order = 30
+      [rio.FxP6.run.dynamic]
+        type = "p6.runDyn"
+        bus = "rio"
+        device = "fx"
+        menu = "run dynamic motion magic"
+        order = 40
+      [rio.FxP6.run.diff]
+        type = "p6.runDiff"
+        bus = "rio"
+        device = "fx"
+        menu = "run differential"
+        order = 50
+      [rio.FxP6.run.follow]
+        type = "p6.runFollow"
+        bus = "rio"
+        device = "fx"
+        menu = "setup follower"
+        order = 60
     [rio.FxP6.select]
       type = "p6.select"
       order = 20
       menu = "active fx's"
+      bus = "rio"
+      device = "fx"
+    [rio.FxP6.json]
+      type = "p6.loadJson"
+      order = 25
+      menu = "load from JSON"
       bus = "rio"
       device = "fx"
     [rio.FxP6.status]
@@ -967,21 +1009,27 @@ type = "menu"
       bus = "rio"
       device = "fx"
     [rio.FxP6.mode]
-      type = "p6.modeMenu"
+      type = "menu"
       order = 40
       menu = "config active mode"
       bus = "rio"
       device = "fx"
-      [rio.FxP6.mode.status]
-        type = "p6.modeStatus"
-        order = 10
-        menu = "active mode"
-        bus = "rio"
-        device = "fx"
-      [rio.FxP6.mode.select]
-        type = "p6.mode"
-        order = 15
-        menu = "select mode type"
+    #  [rio.FxP6.mode.status]
+    #    type = "p6.modeStatus"
+    #    order = 10
+    #    menu = "active mode"
+    #    bus = "rio"
+    #    device = "fx"
+    #  [rio.FxP6.mode.select]
+    #    type = "p6.mode"
+    #    order = 15
+    #    menu = "select mode type"
+    #    bus = "rio"
+    #    device = "fx"
+      [rio.FxP6.mode.closedLoop]
+        type = "p6.closedLoopType"
+        order = 17
+        menu = "select closed-loop type"
         bus = "rio"
         device = "fx"
       [rio.FxP6.mode.openLoop]
@@ -1105,6 +1153,12 @@ type = "menu"
           menu = "select follower type"
           bus = "rio"
           device = "fx"
+        [rio.FxP6.mode.follow.followConfig]
+          type = "p6.followConfig"
+          order = 15
+          menu = "select follower config"
+          bus = "rio"
+          device = "fx"
         [rio.FxP6.mode.follow.oppose]
           type = "p6.param"
           order = 20
@@ -1153,7 +1207,13 @@ type = "menu"
     [rio.FxP6.units]
       type = "p6.units"
       order = 50
-      menu = "select active units"
+      menu = "select open loop units"
+      bus = "rio"
+      device = "fx"
+    [rio.FxP6.closeUnits]
+      type = "p6.closeUnits"
+      order = 55
+      menu = "select closed-loop units"
       bus = "rio"
       device = "fx"
     [rio.FxP6.feedback]
@@ -1714,15 +1774,57 @@ type = "menu"
   order = 18
   menu = "work with talonFXS's"
   [rio.FxsP6.run]
-    type = "p6.run"
+    type = "menu"
     order = 10
     menu = "run active talon fxs's"
     bus = "rio"
     device = "fxs"
+    [rio.FxsP6.run.open]
+      type = "p6.runOpen"
+      bus = "rio"
+      device = "fxs"
+      menu = "run open loop"
+      order = 10
+    [rio.FxsP6.run.closed]
+      type = "p6.runClosed"
+      bus = "rio"
+      device = "fxs"
+      menu = "run closed loop"
+      order = 20
+    [rio.FxsP6.run.closed2]
+      type = "p6.runClosed2"
+      bus = "rio"
+      device = "fxs"
+      menu = "run closed loop (pos/vel 2 arguments)"
+      order = 30
+    [rio.FxsP6.run.dynamic]
+      type = "p6.runDyn"
+      bus = "rio"
+      device = "fxs"
+      menu = "run dynamic motion magic"
+      order = 40
+    [rio.FxsP6.run.diff]
+      type = "p6.runDiff"
+      bus = "rio"
+      device = "fxs"
+      menu = "run differential"
+      order = 50
+    [rio.FxsP6.run.follow]
+      type = "p6.runFollow"
+      bus = "rio"
+      device = "fxs"
+      menu = "setup follower"
+      order = 60
   [rio.FxsP6.select]
     type = "p6.select"
     order = 20
     menu = "active fxs's"
+    bus = "rio"
+    device = "fxs"
+  [rio.FxsP6.json]
+    type = "p6.loadJson"
+    order = 25
+    menu = "load from JSON"
     bus = "rio"
     device = "fxs"
   [rio.FxsP6.status]
@@ -1732,21 +1834,27 @@ type = "menu"
     bus = "rio"
     device = "fxs"
   [rio.FxsP6.mode]
-    type = "p6.modeMenu"
+    type = "menu"
     order = 40
     menu = "config active mode"
     bus = "rio"
     device = "fxs"
-    [rio.FxsP6.mode.status]
-      type = "p6.modeStatus"
-      order = 10
-      menu = "active mode"
-      bus = "rio"
-      device = "fxs"
-    [rio.FxsP6.mode.select]
-      type = "p6.mode"
-      order = 15
-      menu = "select mode type"
+  #  [rio.FxsP6.mode.status]
+  #    type = "p6.modeStatus"
+  #    order = 10
+  #    menu = "active mode"
+  #    bus = "rio"
+  #    device = "fxs"
+  #  [rio.FxsP6.mode.select]
+  #    type = "p6.mode"
+  #    order = 15
+  #    menu = "select mode type"
+  #    bus = "rio"
+  #    device = "fxs"
+    [rio.FxsP6.mode.closedLoop]
+      type = "p6.closedLoopType"
+      order = 17
+      menu = "select closed-loop type"
       bus = "rio"
       device = "fxs"
     [rio.FxsP6.mode.openLoop]
@@ -1870,6 +1978,12 @@ type = "menu"
         menu = "select follower type"
         bus = "rio"
         device = "fxs"
+      [rio.FxsP6.mode.follow.followConfig]
+        type = "p6.followConfig"
+        order = 15
+        menu = "select follower config"
+        bus = "rio"
+        device = "fxs"
       [rio.FxsP6.mode.follow.oppose]
         type = "p6.param"
         order = 20
@@ -1918,7 +2032,13 @@ type = "menu"
   [rio.FxsP6.units]
     type = "p6.units"
     order = 50
-    menu = "select active units"
+    menu = "select open-loop units"
+    bus = "rio"
+    device = "fxs"
+  [rio.FxsP6.closeUnits]
+    type = "p6.closeUnits"
+    order = 55
+    menu = "select closed-loop units"
     bus = "rio"
     device = "fxs"
   [rio.FxsP6.feedback]
@@ -2874,15 +2994,57 @@ type = "menu"
     order = 17
     menu = "work with talonFX's"
     [canivore.FxP6.run]
-      type = "p6.run"
+      type = "menu"
       order = 10
       menu = "run active talon fx's"
       bus = "canivore"
       device = "fx"
+      [canivore.FxP6.run.open]
+        type = "p6.runOpen"
+        bus = "canivore"
+        device = "fx"
+        menu = "run open loop"
+        order = 10
+      [canivore.FxP6.run.closed]
+        type = "p6.runClosed"
+        bus = "canivore"
+        device = "fx"
+        menu = "run closed loop"
+        order = 20
+      [canivore.FxP6.run.closed2]
+        type = "p6.runClosed2"
+        bus = "canivore"
+        device = "fx"
+        menu = "run closed loop (pos/vel 2 arguments)"
+        order = 30
+      [canivore.FxP6.run.dynamic]
+        type = "p6.runDyn"
+        bus = "canivore"
+        device = "fx"
+        menu = "run dynamic motion magic"
+        order = 40
+      [canivore.FxP6.run.diff]
+        type = "p6.runDiff"
+        bus = "canivore"
+        device = "fx"
+        menu = "run differential"
+        order = 50
+      [canivore.FxP6.run.follow]
+        type = "p6.runFollow"
+        bus = "canivore"
+        device = "fx"
+        menu = "setup follower"
+        order = 60
     [canivore.FxP6.select]
       type = "p6.select"
       order = 20
       menu = "active fx's"
+      bus = "canivore"
+      device = "fx"
+    [canivore.FxP6.json]
+      type = "p6.loadJson"
+      order = 25
+      menu = "load from JSON"
       bus = "canivore"
       device = "fx"
     [canivore.FxP6.status]
@@ -2892,21 +3054,27 @@ type = "menu"
       bus = "canivore"
       device = "fx"
     [canivore.FxP6.mode]
-      type = "p6.modeMenu"
+      type = "menu"
       order = 40
       menu = "config active mode"
       bus = "canivore"
       device = "fx"
-      [canivore.FxP6.mode.status]
-        type = "p6.modeStatus"
-        order = 10
-        menu = "active mode"
-        bus = "canivore"
-        device = "fx"
-      [canivore.FxP6.mode.select]
-        type = "p6.mode"
-        order = 15
-        menu = "select mode type"
+  #    [canivore.FxP6.mode.status]
+  #      type = "p6.modeStatus"
+  #      order = 10
+  #      menu = "active mode"
+  #      bus = "canivore"
+  #      device = "fx"
+  #    [canivore.FxP6.mode.select]
+  #      type = "p6.mode"
+  #      order = 15
+  #      menu = "select mode type"
+  #      bus = "canivore"
+  #      device = "fx"
+      [canivore.FxP6.mode.closedLoop]
+        type = "p6.closedLoopType"
+        order = 17
+        menu = "select closed-loop type"
         bus = "canivore"
         device = "fx"
       [canivore.FxP6.mode.openLoop]
@@ -3030,6 +3198,12 @@ type = "menu"
           menu = "select follower type"
           bus = "canivore"
           device = "fx"
+        [canivore.FxP6.mode.follow.followConfig]
+          type = "p6.followConfig"
+          order = 15
+          menu = "select follower config"
+          bus = "canivore"
+          device = "fx"
         [canivore.FxP6.mode.follow.oppose]
           type = "p6.param"
           order = 20
@@ -3078,7 +3252,13 @@ type = "menu"
     [canivore.FxP6.units]
       type = "p6.units"
       order = 50
-      menu = "select active units"
+      menu = "select open loop units"
+      bus = "canivore"
+      device = "fx"
+    [canivore.FxP6.closeUnits]
+      type = "p6.closeUnits"
+      order = 55
+      menu = "select closed-loop units"
       bus = "canivore"
       device = "fx"
     [canivore.FxP6.feedback]
@@ -3640,10 +3820,52 @@ type = "menu"
       menu = "run active talon fxs's"
       bus = "canivore"
       device = "fxs"
+      [canivore.FxsP6.run.open]
+        type = "p6.runOpen"
+        bus = "canivore"
+        device = "fxs"
+        menu = "run open loop"
+        order = 10
+      [canivore.FxsP6.run.closed]
+        type = "p6.runClosed"
+        bus = "canivore"
+        device = "fxs"
+        menu = "run closed loop"
+        order = 20
+      [canivore.FxsP6.run.closed2]
+        type = "p6.runClosed2"
+        bus = "canivore"
+        device = "fxs"
+        menu = "run closed loop (pos/vel 2 arguments)"
+        order = 30
+      [canivore.FxsP6.run.dynamic]
+        type = "p6.runDyn"
+        bus = "canivore"
+        device = "fxs"
+        menu = "run dynamic motion magic"
+        order = 40
+      [canivore.FxsP6.run.diff]
+        type = "p6.runDiff"
+        bus = "canivore"
+        device = "fxs"
+        menu = "run differential"
+        order = 50
+      [canivore.FxsP6.run.follow]
+        type = "p6.runFollow"
+        bus = "canivore"
+        device = "fxs"
+        menu = "setup follower"
+        order = 60
     [canivore.FxsP6.select]
       type = "p6.select"
       order = 20
       menu = "active fxs's"
+      bus = "canivore"
+      device = "fxs"
+    [canivore.FxsP6.json]
+      type = "p6.loadJson"
+      order = 25
+      menu = "load from JSON"
       bus = "canivore"
       device = "fxs"
     [canivore.FxsP6.status]
@@ -3653,21 +3875,27 @@ type = "menu"
       bus = "canivore"
       device = "fxs"
     [canivore.FxsP6.mode]
-      type = "p6.modeMenu"
+      type = "menu"
       order = 40
       menu = "config active mode"
       bus = "canivore"
       device = "fxs"
-      [canivore.FxsP6.mode.status]
-        type = "p6.modeStatus"
-        order = 10
-        menu = "active mode"
-        bus = "canivore"
-        device = "fxs"
-      [canivore.FxsP6.mode.select]
-        type = "p6.mode"
-        order = 15
-        menu = "select mode type"
+  #    [canivore.FxsP6.mode.status]
+  #      type = "p6.modeStatus"
+  #      order = 10
+  #      menu = "active mode"
+  #      bus = "canivore"
+  #      device = "fxs"
+  #    [canivore.FxsP6.mode.select]
+  #      type = "p6.mode"
+  #      order = 15
+  #      menu = "select mode type"
+  #      bus = "canivore"
+  #      device = "fxs"
+      [canivore.FxsP6.mode.closedLoop]
+        type = "p6.closedLoopType"
+        order = 17
+        menu = "select closed-loop type"
         bus = "canivore"
         device = "fxs"
       [canivore.FxsP6.mode.openLoop]
@@ -3791,6 +4019,12 @@ type = "menu"
           menu = "select follower type"
           bus = "canivore"
           device = "fxs"
+        [canivore.FxsP6.mode.follow.followConfig]
+          type = "p6.followConfig"
+          order = 15
+          menu = "select follower config"
+          bus = "canivore"
+          device = "fxs"
         [canivore.FxsP6.mode.follow.oppose]
           type = "p6.param"
           order = 20
@@ -3839,7 +4073,13 @@ type = "menu"
     [canivore.FxsP6.units]
       type = "p6.units"
       order = 50
-      menu = "select active units"
+      menu = "select open loop units"
+      bus = "canivore"
+      device = "fxs"
+    [canivore.FxsP6.closeUnits]
+      type = "p6.closeUnits"
+      order = 55
+      menu = "select closed-loop units"
       bus = "canivore"
       device = "fxs"
     [canivore.FxsP6.feedback]

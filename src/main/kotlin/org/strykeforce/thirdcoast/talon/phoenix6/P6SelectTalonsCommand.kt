@@ -5,6 +5,8 @@ import com.ctre.phoenix6.hardware.TalonFXS
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.koin.core.component.inject
+import org.strykeforce.controller.SF_TalonFX
+import org.strykeforce.controller.SF_TalonFXS
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.prompt
@@ -37,12 +39,12 @@ class P6SelectTalonsCommand(
         get() = formatMenu(
             when(device) {
                 "fx" -> {
-                    if(bus == "rio") talonFxService.active.map(TalonFX::getDeviceID).joinToString()
-                    else talonFxFDService.active.map(TalonFX::getDeviceID).joinToString()
+                    if(bus == "rio") talonFxService.active.map(SF_TalonFX::getDeviceId).joinToString()
+                    else talonFxFDService.active.map(SF_TalonFX::getDeviceId).joinToString()
                 }
                 "fxs" -> {
-                    if(bus=="rio") talonFxsService.active.map(TalonFXS::getDeviceID).joinToString()
-                    else talonFxsFDService.active.map(TalonFXS::getDeviceID).joinToString()
+                    if(bus=="rio") talonFxsService.active.map(SF_TalonFXS::getDeviceID).joinToString()
+                    else talonFxsFDService.active.map(SF_TalonFXS::getDeviceID).joinToString()
                 }
                 else -> throw IllegalArgumentException()
             }
@@ -58,22 +60,22 @@ class P6SelectTalonsCommand(
                 when(device) {
                     "fx" -> {
                         if(bus == "rio") {
-                            ids = reader.readIntList(this.prompt("ids"), talonFxService.active.map(TalonFX::getDeviceID))
+                            ids = reader.readIntList(this.prompt("ids"), talonFxService.active.map(SF_TalonFX::getDeviceId))
                             logger.info("IDS: ${ids}")
                             new = talonFxService.activate(ids)
                         } else if(bus == "canivore") {
-                            ids = reader.readIntList(this.prompt("ids"), talonFxFDService.active.map(TalonFX::getDeviceID))
+                            ids = reader.readIntList(this.prompt("ids"), talonFxFDService.active.map(SF_TalonFX::getDeviceId))
                             logger.info("IDS: ${ids}")
                             new = talonFxFDService.activate(ids)
                         } else throw IllegalArgumentException()
                     }
                     "fxs" -> {
                         if(bus=="rio") {
-                            ids = reader.readIntList(this.prompt("ids"), talonFxsService.active.map(TalonFXS::getDeviceID))
+                            ids = reader.readIntList(this.prompt("ids"), talonFxsService.active.map(SF_TalonFXS::getDeviceID))
                             logger.info("IDS: ${ids}")
                             new = talonFxsService.activate(ids)
                         } else if(bus=="canivore") {
-                            ids = reader.readIntList(this.prompt("ids"), talonFxsFDService.active.map(TalonFXS::getDeviceID))
+                            ids = reader.readIntList(this.prompt("ids"), talonFxsFDService.active.map(SF_TalonFXS::getDeviceID))
                             logger.info("IDS: ${ids}")
                             new = talonFxsFDService.activate(ids)
                         } else throw IllegalArgumentException()

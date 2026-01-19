@@ -32,13 +32,13 @@ class P6TalonStatusCommand(
             if(bus == "rio") {
                 talonFxService.active.forEach {
                     var config = TalonFXConfiguration()
-                    it.configurator.refresh(config)
+                    it.talonFX.configurator.refresh(config)
                     writer.println(config.toString())
                 }
             }else if(bus == "canivore") {
                 talonFxFDService.active.forEach {
                     var config = TalonFXConfiguration()
-                    it.configurator.refresh(config)
+                    it.talonFX.configurator.refresh(config)
                     writer.println(config.toString())
                 }
             }else throw IllegalArgumentException()
@@ -46,13 +46,13 @@ class P6TalonStatusCommand(
             if(bus == "rio") {
                 talonFxsService.active.forEach {
                     var config = TalonFXSConfiguration()
-                    it.configurator.refresh(config)
+                    it.talonFXS.configurator.refresh(config)
                     writer.println(config.toString())
                 }
             }else if(bus == "canivore") {
                 talonFxsFDService.active.forEach {
                     var config = TalonFXSConfiguration()
-                    it.configurator.refresh(config)
+                    it.talonFXS.configurator.refresh(config)
                     writer.println(config.toString())
                 }
             }else throw IllegalArgumentException()

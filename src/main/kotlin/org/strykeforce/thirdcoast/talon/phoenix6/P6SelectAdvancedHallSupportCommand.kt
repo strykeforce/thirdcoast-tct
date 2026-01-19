@@ -39,10 +39,10 @@ class P6SelectAdvancedHallSupportCommand(
         val support = values[index]
         if(bus=="rio") {
             talonFxsService.activeConfiguration.Commutation.AdvancedHallSupport = support
-            talonFxsService.active.forEach { it.configurator.apply(talonFxsService.activeConfiguration.Commutation) }
+            talonFxsService.active.forEach { it.talonFXS.configurator.apply(talonFxsService.activeConfiguration.Commutation) }
         } else {
             talonFxsFDService.activeConfiguration.Commutation.AdvancedHallSupport = support
-            talonFxsFDService.active.forEach { it.configurator.apply(talonFxsFDService.activeConfiguration.Commutation) }
+            talonFxsFDService.active.forEach { it.talonFXS.configurator.apply(talonFxsFDService.activeConfiguration.Commutation) }
         }
     }
 }

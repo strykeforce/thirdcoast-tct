@@ -21,6 +21,7 @@ import org.strykeforce.thirdcoast.solenoid.SelectSolenoidsCommand
 import org.strykeforce.thirdcoast.swerve.*
 import org.strykeforce.thirdcoast.talon.*
 import org.strykeforce.thirdcoast.talon.phoenix6.*
+import org.strykeforce.thirdcoast.talon.phoenix6.run.*
 
 private val logger = KotlinLogging.logger {}
 
@@ -86,7 +87,12 @@ interface Command {
                 "p6.swerve.azimuth.adjust" -> P6AdjustAzimuthCommand(parent, key, toml)
                 "pigeon.select" -> SelectPigeonCommand(parent, key, toml)
                 "pigeon.param" -> PigeonParameterCommand(parent, key, toml)
-                "p6.run" -> P6RunCommand(parent, key, toml)
+                "p6.runOpen" -> P6RunOpenLoopCommand(parent, key, toml)
+                "p6.runClosed" -> P6RunClosedLoopCommand(parent, key, toml)
+                "p6.runClosed2" -> P6RunClosedLoopTwoArgsCommand(parent, key, toml)
+                "p6.runDiff" -> P6RunDifferentialCommand(parent, key, toml)
+                "p6.runDyn" -> P6RunDynamicMotionMagicCommand(parent, key, toml)
+                "p6.runFollow" -> P6SetupFollowerCommand(parent, key, toml)
                 "p6.select" -> P6SelectTalonsCommand(parent, key, toml)
                 "p6.status" -> P6TalonStatusCommand(parent, key, toml)
                 "p6.modeStatus" -> P6ModeStatusCommand(parent, key, toml)
@@ -98,8 +104,11 @@ interface Command {
                 "p6.diffType" -> P6SelectDifferentialTypeCommand(parent, key, toml)
                 "p6.diffSource" -> P6SelectDifferentialSensorSourceCommand(parent, key, toml)
                 "p6.followType" -> P6SelectFollowerTypeCommand(parent, key, toml)
+                "p6.followConfig" -> P6SelectFollowerConfigCommand(parent, key, toml)
+                "p6.closedLoopType" -> P6SelectClosedLoopTypeCommand(parent, key, toml)
                 "p6.neutralOut" -> P6SelectNeutralOutputCommand(parent, key, toml)
-                "p6.units" -> P6SelectUnitCommand(parent, key, toml)
+                "p6.units" -> P6SelectOpenLoopUnitCommand(parent, key, toml)
+                "p6.closeUnits" -> P6SelectClosedLoopUnitsCommand(parent, key, toml)
                 "p6.slot" -> P6SelectSlotCommand(parent, key, toml)
                 "p6.gravity" -> P6SelectGravityTypeCommand(parent, key, toml)
                 "p6.invert" -> P6SelectMotorInvertCommand(parent, key, toml)
@@ -115,6 +124,7 @@ interface Command {
                 "p6.motorArrange" -> P6SelectMotorArrangementCommand(parent, key, toml)
                 "p6.wiring" -> P6SelectBrushedWiringCommand(parent, key, toml)
                 "p6.advHall" -> P6SelectAdvancedHallSupportCommand(parent, key, toml)
+                "p6.loadJson" -> P6LoadFromJsonCommand(parent, key, toml)
                 "cancoder.select" -> SelectCancoderCommand(parent, key, toml)
                 "cancoder.status" -> CancoderStatusCommand(parent, key, toml)
                 "cancoder.param" -> CancoderParameterCommand(parent, key, toml)

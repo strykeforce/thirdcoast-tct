@@ -444,12 +444,12 @@ class Phoenix6ParameterCommand(
                 }
                 POSITION -> when(device){
                     "fx" -> formatMenu(
-                        if(bus == "rio") talonFxService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0
-                        else talonFxFDService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0, DOUBLE_FORMAT_4
+                        if(bus == "rio") talonFxService.active.firstOrNull()?.position ?: 2767.0
+                        else talonFxFDService.active.firstOrNull()?.position ?: 2767.0, DOUBLE_FORMAT_4
                     )
                     "fxs" -> formatMenu(
-                        if(bus=="rio") talonFxsService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0
-                        else talonFxsFDService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0, DOUBLE_FORMAT_4
+                        if(bus=="rio") talonFxsService.active.firstOrNull()?.position ?: 2767.0
+                        else talonFxsFDService.active.firstOrNull()?.position ?: 2767.0, DOUBLE_FORMAT_4
                     )
                     else -> throw IllegalArgumentException()
                 }
@@ -459,8 +459,8 @@ class Phoenix6ParameterCommand(
                         else talonFxFDService.activeVelocity
                     )
                     "fxs" -> formatMenu(
-                        if(bus=="rio") talonFxsService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0
-                        else talonFxsFDService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0, DOUBLE_FORMAT_4
+                        if(bus=="rio") talonFxsService.active.firstOrNull()?.velocity ?: 2767.0
+                        else talonFxsFDService.active.firstOrNull()?.velocity ?: 2767.0, DOUBLE_FORMAT_4
                     )
                     else -> throw IllegalArgumentException()
                 }
@@ -470,8 +470,8 @@ class Phoenix6ParameterCommand(
                         else talonFxFDService.activeAcceleration
                     )
                     "fxs" -> formatMenu(
-                        if(bus =="rio") talonFxsService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0
-                        else talonFxsFDService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0, DOUBLE_FORMAT_4
+                        if(bus =="rio") talonFxsService.active.firstOrNull()?.acceleration ?: 2767.0
+                        else talonFxsFDService.active.firstOrNull()?.acceleration ?: 2767.0, DOUBLE_FORMAT_4
                     )
                     else -> throw IllegalArgumentException()
                 }
@@ -1534,23 +1534,23 @@ class Phoenix6ParameterCommand(
             }
             POSITION -> when(device){
                 "fx" -> configFXDoubleParam(
-                    if(bus=="rio") talonFxService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0
-                    else talonFxFDService.active.firstOrNull()?.position?.valueAsDouble?: 2767.0) {
+                    if(bus=="rio") talonFxService.active.firstOrNull()?.position ?: 2767.0
+                    else talonFxFDService.active.firstOrNull()?.position?: 2767.0) {
                         talonFx, value ->
                     if(bus=="rio") talonFxService.active.forEach{
-                        it.setPosition(value, timeout)
+                        it.setPosition(value)
                     }
                     else talonFxFDService.active.forEach {
-                        it.setPosition(value, timeout)
+                        it.setPosition(value)
                     }
                 }
                 "fxs" -> configFXSDoubleParam(
-                    if(bus=="rio") talonFxsService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0
-                    else talonFxsFDService.active.firstOrNull()?.position?.valueAsDouble ?: 2767.0) { talonFXS, value ->
+                    if(bus=="rio") talonFxsService.active.firstOrNull()?.position ?: 2767.0
+                    else talonFxsFDService.active.firstOrNull()?.position ?: 2767.0) { talonFXS, value ->
                     if(bus=="rio") talonFxsService.active.forEach {
-                        it.setPosition(value, timeout)
+                        it.setPosition(value)
                     } else talonFxsFDService.active.forEach {
-                        it.setPosition(value, timeout)
+                        it.setPosition(value)
                     }
                 }
                 else -> throw IllegalArgumentException()
@@ -1917,10 +1917,10 @@ class Phoenix6ParameterCommand(
     private fun configFXDoubleParam(default: Double, configure: (TalonFX, Double) -> Unit) {
         val paramValue = param.readDouble(reader, default)
         if(bus == "rio") {
-            talonFxService.active.forEach { configure(it, paramValue) }
+            talonFxService.active.forEach { configure(it.talonFX, paramValue) }
             logger.info { "set ${talonFxService.active.size} talonFx's ${param.name}: $paramValue" }
         } else if(bus == "canivore") {
-            talonFxFDService.active.forEach { configure(it, paramValue) }
+            talonFxFDService.active.forEach { configure(it.talonFX, paramValue) }
             logger.info { "set ${talonFxFDService.active.size} talonFx's ${param.name}: $paramValue" }
         } else throw  IllegalArgumentException()
     }
@@ -1928,10 +1928,10 @@ class Phoenix6ParameterCommand(
     private fun configFXSDoubleParam(default: Double, configure: (TalonFXS, Double) -> Unit) {
         val paramValue = param.readDouble(reader, default)
         if(bus == "rio") {
-            talonFxsService.active.forEach { configure(it, paramValue) }
+            talonFxsService.active.forEach { configure(it.talonFXS, paramValue) }
             logger.info { "set ${talonFxsService.active.size} talonFXS's ${param.name}: $paramValue" }
         } else if(bus == "canivore") {
-            talonFxsFDService.active.forEach { configure(it, paramValue) }
+            talonFxsFDService.active.forEach { configure(it.talonFXS, paramValue) }
             logger.info { "set ${talonFxsFDService.active.size} talonFXS's ${param.name}: $paramValue" }
         } else throw  IllegalArgumentException()
     }
@@ -1940,10 +1940,10 @@ class Phoenix6ParameterCommand(
     private fun configFXIntParam(default: Int, configure: (TalonFX, Int) -> Unit) {
         val paramValue = param.readInt(reader, default)
         if(bus == "rio") {
-            talonFxService.active.forEach { configure(it, paramValue) }
+            talonFxService.active.forEach { configure(it.talonFX, paramValue) }
             logger.info { "set ${talonFxService.active.size} talonFx's  ${param.name}: $paramValue" }
         } else if(bus == "canivore") {
-            talonFxFDService.active.forEach { configure(it, paramValue) }
+            talonFxFDService.active.forEach { configure(it.talonFX, paramValue) }
             logger.info { "set ${talonFxFDService.active.size} talonFx's ${param.name}: $paramValue" }
         } else throw  IllegalArgumentException()
     }
@@ -1951,10 +1951,10 @@ class Phoenix6ParameterCommand(
     private fun configFXSIntParam(default: Int, configure: (TalonFXS, Int) -> Unit) {
         val paramValue = param.readInt(reader, default)
         if(bus == "rio") {
-            talonFxsService.active.forEach { configure(it, paramValue) }
+            talonFxsService.active.forEach { configure(it.talonFXS, paramValue) }
             logger.info { "set ${talonFxsService.active.size} talonFXS's  ${param.name}: $paramValue" }
         } else if(bus == "canivore") {
-            talonFxsFDService.active.forEach { configure(it, paramValue) }
+            talonFxsFDService.active.forEach { configure(it.talonFXS, paramValue) }
             logger.info { "set ${talonFxsFDService.active.size} talonFXS's ${param.name}: $paramValue" }
         } else throw  IllegalArgumentException()
     }
@@ -1962,10 +1962,10 @@ class Phoenix6ParameterCommand(
     private fun configFXBooleanParam(default: Boolean, configure: (TalonFX, Boolean) -> Unit) {
         val paramValue = param.readBoolean(reader, default)
         if(bus == "rio") {
-            talonFxService.active.forEach { configure(it, paramValue) }
+            talonFxService.active.forEach { configure(it.talonFX, paramValue) }
             logger.info { "Set ${talonFxService.active.size} talonFx's ${param.name}: $paramValue" }
         } else if(bus == "canivore") {
-            talonFxFDService.active.forEach { configure(it, paramValue) }
+            talonFxFDService.active.forEach { configure(it.talonFX, paramValue) }
             logger.info { "Set ${talonFxFDService.active.size} talonFx's ${param.name}: $paramValue" }
         } else throw IllegalArgumentException()
     }
@@ -1973,10 +1973,10 @@ class Phoenix6ParameterCommand(
     private fun configFXSBooleanParam(default: Boolean, configure: (TalonFXS, Boolean) -> Unit) {
         val paramValue = param.readBoolean(reader, default)
         if(bus == "rio") {
-            talonFxsService.active.forEach { configure(it, paramValue) }
+            talonFxsService.active.forEach { configure(it.talonFXS, paramValue) }
             logger.info { "Set ${talonFxsService.active.size} talonFXS's ${param.name}: $paramValue" }
         } else if(bus == "canivore") {
-            talonFxsFDService.active.forEach { configure(it, paramValue) }
+            talonFxsFDService.active.forEach { configure(it.talonFXS, paramValue) }
             logger.info { "Set ${talonFxsFDService.active.size} XS's ${param.name}: $paramValue" }
         } else throw IllegalArgumentException()
     }

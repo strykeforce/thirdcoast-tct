@@ -7,6 +7,10 @@ import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.ControlModeValue
 import com.ctre.phoenix6.signals.NeutralModeValue
 import mu.KotlinLogging
+import org.strykeforce.controller.CTRE_DifferentialType
+import org.strykeforce.controller.CTRE_FollowerType
+import org.strykeforce.controller.MotionMagicType
+import org.strykeforce.controller.SF_TalonFX
 import org.strykeforce.telemetry.TelemetryService
 
 private val logger = KotlinLogging.logger {}
@@ -40,8 +44,8 @@ enum class DifferentialType {
 
 
 open class TalonFxService(
-    private val telemetryService: TelemetryService, factory: (id:Int) -> TalonFX
-) : AbstractDeviceService<TalonFX>(factory) {
+    private val telemetryService: TelemetryService, factory: (id:Int) -> SF_TalonFX
+) : AbstractDeviceService<SF_TalonFX>(factory) {
 
     val timeout = 10.0
     var dirty = true
@@ -51,7 +55,7 @@ open class TalonFxService(
     //var sensorPhase  = SENSOR_PHASE_INVERTED_DEFAULT
     var activeSlotIndex: Int = ACTIVE_SLOT_DEFAULT
     var activeUnits: Units = Units.PERCENT
-    var active_MM_type: MM_Type = MM_Type.STANDARD
+    var active_MM_type: MotionMagicType = MotionMagicType.Standard
     var activeFeedForward: Double = 0.0
     var activeTorqueCurrentDeadband: Double = 0.0
     var activeTorqueCurrentMaxOut: Double = 1.0
@@ -59,12 +63,12 @@ open class TalonFxService(
     var activeAcceleration: Double = 0.0
     var activeJerk: Double = 0.0
     var activeDifferentialTarget: Double = 0.0
-    var activeFollowerType: FollowerType = FollowerType.STRICT
+    var activeFollowerType: CTRE_FollowerType = CTRE_FollowerType.Strict
     var activeOpposeMain: Boolean = false
     var activeDifferentialSlot: Int = 0
     var activeFOC: Boolean = false
     var setpointType: SetpointType = SetpointType.OPEN_LOOP
-    var differentialType: DifferentialType = DifferentialType.OPEN_LOOP
+    var differentialType: CTRE_DifferentialType = CTRE_DifferentialType.Open_Loop
     var activeNeutralOut: NeutralModeValue = NeutralModeValue.Coast
     var activeOverrideNeutral: Boolean = false
     var limFwdMotion : Boolean = false;
@@ -99,71 +103,77 @@ open class TalonFxService(
                 }
                 SetpointType.MOTION_MAGIC -> {
                     when(active_MM_type) {
-                        MM_Type.STANDARD -> {
+                        MotionMagicType.Standard -> {
                             when(activeUnits) {
                                 Units.PERCENT -> return "Motion Magic: Duty Cycle"
                                 Units.VOLTAGE -> return "Motion Magic: Voltage"
                                 Units.TORQUE_CURRENT -> return "(pro) Motion Magic: Torque Current FOC"
                             }
-                        } MM_Type.VELOCITY -> {
+                        } MotionMagicType.Velocity -> {
                             when(activeUnits) {
                                 Units.PERCENT -> return "Motion Magic Velocity: Duty Cycle"
                                 Units.VOLTAGE -> return "Motion Magic Velocity: Voltage"
                                 Units.TORQUE_CURRENT -> return "(pro) Motion Magic Velocity: Torque Current FOC"
                             }
-                        } MM_Type.DYNAMIC -> {
+                        } MotionMagicType.Dynamic -> {
                             when(activeUnits) {
                                 Units.PERCENT -> return "Dynamic Motion Magic: Duty Cycle"
                                 Units.VOLTAGE -> return "Dynamic Motion Magic: Voltage"
                                 Units.TORQUE_CURRENT -> return "(pro) Dynamic Motion Magic: Torque Current FOC"
                             }
-                        } MM_Type.EXPONENTIAL -> {
+                        } MotionMagicType.Exponential -> {
                             when(activeUnits) {
                                 Units.PERCENT -> return "Motion Magic Exponential: Duty Cycle"
                                 Units.VOLTAGE -> return "Motion Magic Exponential: Voltage"
                                 Units.TORQUE_CURRENT -> return "(pro) Motion Magic Exponential: Torque Current FOC"
                             }
+                        } MotionMagicType.DynamicExponential -> {
+                        when(activeUnits) {
+                            Units.PERCENT -> return "Dynamic Motion Magic Exponential: Duty Cycle"
+                            Units.VOLTAGE -> return "Dynamic Motion Magic Exponential: Voltage"
+                            Units.TORQUE_CURRENT -> return "Dynamic Motion Magic Exponential: Torque Current FOC"
                         }
+                    }
                     }
                 }
                 SetpointType.DIFFERENTIAL -> {
                     when(differentialType) {
-                        DifferentialType.OPEN_LOOP -> {
+                        CTRE_DifferentialType.Open_Loop -> {
                             when(activeUnits) {
                                 Units.PERCENT -> return "Differential: Duty Cycle"
                                 Units.VOLTAGE -> return "Differential: Voltage"
                                 else -> return "INVALID COMBO: No Differenital Torque Current"
                             }
-                        } DifferentialType.POSITION -> {
+                        } CTRE_DifferentialType.Position -> {
                             when(activeUnits) {
                                 Units.PERCENT -> return "Differential Position: Duty Cycle"
                                 Units.VOLTAGE -> return "Differential Position: Voltage"
                                 else -> return "INVALID COMBO: No Differenital Torque Current"
                             }
-                        } DifferentialType.VELOCITY -> {
+                        } CTRE_DifferentialType.Velocity -> {
                             when(activeUnits){
                                 Units.PERCENT -> return "Differential Velocity: Duty Cycle"
                                 Units.VOLTAGE -> return "Differential Velocity: Voltage"
                                 else -> return "INVALID COMBO: No Differenital Torque Current"
                             }
-                        } DifferentialType.MOTION_MAGIC -> {
+                        } CTRE_DifferentialType.Motion_Magic -> {
                             when(activeUnits) {
                                 Units.PERCENT -> return "Differential Motion Magic: Duty Cycle"
                                 Units.VOLTAGE -> return "Differential Motion Magic: Voltage"
                                 else -> return "INVALID COMBO: No Differenital Torque Current"
                             }
-                        } DifferentialType.FOLLOWER -> {
+                        } CTRE_DifferentialType.Follower -> {
                             when(activeFollowerType){
-                                FollowerType.STANDARD -> return "Differential Follower: Non-Strict"
-                                FollowerType.STRICT -> return "Differential Follower: Strict"
+                                CTRE_FollowerType.Standard -> return "Differential Follower: Non-Strict"
+                                CTRE_FollowerType.Strict -> return "Differential Follower: Strict"
                             }
                         }
                     }
                 }
                 SetpointType.FOLLOWER -> {
                     when(activeFollowerType){
-                        FollowerType.STANDARD -> return "Follower: Non-Strict"
-                        FollowerType.STRICT -> return "Follower: Strict"
+                        CTRE_FollowerType.Standard -> return "Follower: Non-Strict"
+                        CTRE_FollowerType.Strict -> return "Follower: Strict"
                     }
                 }
                 SetpointType.NEUTRAL -> {
@@ -184,7 +194,7 @@ open class TalonFxService(
     var activeConfiguration = TalonFXConfiguration()
         get() {
             if(!dirty) return field
-            active.firstOrNull()?.configurator?.refresh(field)
+            active.firstOrNull()?.talonFX?.configurator?.refresh(field)
                 ?:logger.debug("no active talon fx's, returning default config")
             dirty = false
             return field
@@ -194,15 +204,16 @@ open class TalonFxService(
         dirty = true
         logger.info { "Number Active: ${active.size}" }
         active.forEach{
-            logger.info { "Active TalonFX: ${it.deviceID}" }
+            logger.info { "Active SF_TalonFX: ${it.deviceId}" }
         }
 
         val new = super.activate(ids)
+
         logger.info { "Number New: ${new.size}" }
         telemetryService.stop()
-        active.filter { new.contains(it.deviceID) }.forEach{
-            logger.info { "New TalonFX: ${it.deviceID}" }
-            activeSlotIndex = it.closedLoopSlot.value
+        active.filter { new.contains(it.deviceId) }.forEach{
+            logger.info { "New SF_TalonFX: ${it.deviceId}" }
+            activeSlotIndex = it.talonFX.closedLoopSlot.value
             telemetryService.register(it,true)
 
             //Update Freq Log

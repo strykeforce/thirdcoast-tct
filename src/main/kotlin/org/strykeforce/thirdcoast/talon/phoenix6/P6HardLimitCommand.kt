@@ -56,19 +56,19 @@ class P6SelectFwdHardLimitSourceCommand(
             "fx" -> {
                 if(bus == "rio") {
                     talonFxService.activeConfiguration.HardwareLimitSwitch.ForwardLimitSource = source
-                    talonFxService.active.forEach { it.configurator.apply(talonFxService.activeConfiguration) }
+                    talonFxService.active.forEach { it.talonFX.configurator.apply(talonFxService.activeConfiguration) }
                 } else if(bus == "canivore") {
                     talonFxFDService.activeConfiguration.HardwareLimitSwitch.ForwardLimitSource = source
-                    talonFxFDService.active.forEach{ it.configurator.apply(talonFxFDService.activeConfiguration)}
+                    talonFxFDService.active.forEach{ it.talonFX.configurator.apply(talonFxFDService.activeConfiguration)}
                 } else throw IllegalArgumentException()
             }
             "fxs" -> {
                 if(bus == "rio") {
                     talonFxsService.activeConfiguration.HardwareLimitSwitch.ForwardLimitSource = source
-                    talonFxsService.active.forEach { it.configurator.apply(talonFxsService.activeConfiguration) }
+                    talonFxsService.active.forEach { it.talonFXS.configurator.apply(talonFxsService.activeConfiguration) }
                 } else if(bus == "canivore") {
                     talonFxsFDService.activeConfiguration.HardwareLimitSwitch.ForwardLimitSource = source
-                    talonFxsFDService.active.forEach{ it.configurator.apply(talonFxsFDService.activeConfiguration)}
+                    talonFxsFDService.active.forEach{ it.talonFXS.configurator.apply(talonFxsFDService.activeConfiguration)}
                 } else throw IllegalArgumentException()
             }
             else -> throw IllegalArgumentException()
@@ -119,19 +119,19 @@ class P6SelectRevHardLimitSourceCommand(
             "fx" -> {
                 if(bus == "rio") {
                     talonFxService.activeConfiguration.HardwareLimitSwitch.ReverseLimitSource = source
-                    talonFxService.active.forEach { it.configurator.apply(talonFxService.activeConfiguration) }
+                    talonFxService.active.forEach { it.talonFX.configurator.apply(talonFxService.activeConfiguration) }
                 } else if(bus == "canivore") {
                     talonFxFDService.activeConfiguration.HardwareLimitSwitch.ReverseLimitSource = source
-                    talonFxFDService.active.forEach { it.configurator.apply(talonFxFDService.activeConfiguration) }
+                    talonFxFDService.active.forEach { it.talonFX.configurator.apply(talonFxFDService.activeConfiguration) }
                 } else throw IllegalArgumentException()
             }
             "fxs" -> {
                 if(bus == "rio") {
                     talonFxsService.activeConfiguration.HardwareLimitSwitch.ReverseLimitSource = source
-                    talonFxsService.active.forEach { it.configurator.apply(talonFxsService.activeConfiguration) }
+                    talonFxsService.active.forEach { it.talonFXS.configurator.apply(talonFxsService.activeConfiguration) }
                 } else if(bus == "canivore") {
                     talonFxsFDService.activeConfiguration.HardwareLimitSwitch.ReverseLimitSource = source
-                    talonFxsFDService.active.forEach { it.configurator.apply(talonFxsFDService.activeConfiguration) }
+                    talonFxsFDService.active.forEach { it.talonFXS.configurator.apply(talonFxsFDService.activeConfiguration) }
                 } else throw IllegalArgumentException()
             }
             else -> throw IllegalArgumentException()
@@ -182,19 +182,19 @@ class P6SelectFwdHardLimitNormalCommand(
             "fx" -> {
                 if(bus == "rio") {
                     talonFxService.activeConfiguration.HardwareLimitSwitch.ForwardLimitType = type
-                    talonFxService.active.forEach { it.configurator.apply(talonFxService.activeConfiguration) }
+                    talonFxService.active.forEach { it.talonFX.configurator.apply(talonFxService.activeConfiguration) }
                 } else if (bus == "canivore") {
                     talonFxFDService.activeConfiguration.HardwareLimitSwitch.ForwardLimitType = type
-                    talonFxFDService.active.forEach { it.configurator.apply(talonFxFDService.activeConfiguration) }
+                    talonFxFDService.active.forEach { it.talonFX.configurator.apply(talonFxFDService.activeConfiguration) }
                 } else throw IllegalArgumentException()
             }
             "fxs" -> {
                 if(bus == "rio") {
                     talonFxsService.activeConfiguration.HardwareLimitSwitch.ForwardLimitType = type
-                    talonFxsService.active.forEach { it.configurator.apply(talonFxsService.activeConfiguration) }
+                    talonFxsService.active.forEach { it.talonFXS.configurator.apply(talonFxsService.activeConfiguration) }
                 } else if (bus == "canivore") {
                     talonFxsFDService.activeConfiguration.HardwareLimitSwitch.ForwardLimitType = type
-                    talonFxsFDService.active.forEach { it.configurator.apply(talonFxsFDService.activeConfiguration) }
+                    talonFxsFDService.active.forEach { it.talonFXS.configurator.apply(talonFxsFDService.activeConfiguration) }
                 } else throw IllegalArgumentException()
             }
             else -> throw IllegalArgumentException()
@@ -245,19 +245,19 @@ class P6SelectRevHardLimitNormalCommand(
             "fx" -> {
                 if(bus == "rio") {
                     talonFxService.activeConfiguration.HardwareLimitSwitch.ReverseLimitType = type
-                    talonFxService.active.forEach { it.configurator.apply(talonFxService.activeConfiguration) }
+                    talonFxService.active.forEach { it.talonFX.configurator.apply(talonFxService.activeConfiguration) }
                 } else if(bus == "canivore") {
                     talonFxFDService.activeConfiguration.HardwareLimitSwitch.ReverseLimitType = type
-                    talonFxFDService.active.forEach{ it.configurator.apply(talonFxFDService.activeConfiguration)}
+                    talonFxFDService.active.forEach{ it.talonFX.configurator.apply(talonFxFDService.activeConfiguration)}
                 } else throw IllegalArgumentException()
             }
             "fxs" -> {
                 if(bus == "rio") {
                     talonFxsService.activeConfiguration.HardwareLimitSwitch.ReverseLimitType = type
-                    talonFxsService.active.forEach { it.configurator.apply(talonFxsService.activeConfiguration) }
+                    talonFxsService.active.forEach { it.talonFXS.configurator.apply(talonFxsService.activeConfiguration) }
                 } else if(bus == "canivore") {
                     talonFxsFDService.activeConfiguration.HardwareLimitSwitch.ReverseLimitType = type
-                    talonFxsFDService.active.forEach{ it.configurator.apply(talonFxsFDService.activeConfiguration)}
+                    talonFxsFDService.active.forEach{ it.talonFXS.configurator.apply(talonFxsFDService.activeConfiguration)}
                 } else throw IllegalArgumentException()
             }
             else -> throw IllegalArgumentException()
