@@ -45,6 +45,10 @@ class CancoderParameterCommand(
                     if(bus == "rio") cancoderService.activeConfiguration.MagnetSensor.AbsoluteSensorDiscontinuityPoint
                     else cancoderFDService.activeConfiguration.MagnetSensor.AbsoluteSensorDiscontinuityPoint
                 )
+                GRAPHER_FRAME -> formatMenu(
+                    if(bus == "rio") cancoderService.grapherStatusFrameHz
+                    else cancoderFDService.grapherStatusFrameHz
+                )
             }
         }
 
@@ -65,6 +69,19 @@ class CancoderParameterCommand(
                 caNcoder, value ->
                 activeConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = value
                 caNcoder.configurator.apply(activeConfig)
+            }
+            GRAPHER_FRAME -> configDoubleParam(if(bus == "rio") cancoderService.grapherStatusFrameHz else cancoderFDService.grapherStatusFrameHz) {
+                cancoder, value -> 
+                if(bus == "rio") cancoderService.grapherStatusFrameHz = value
+                else cancoderFDService.grapherStatusFrameHz = value
+                
+                cancoder.magnetHealth.setUpdateFrequency(value, timeout)
+                cancoder.position.setUpdateFrequency(value, timeout)
+                cancoder.positionSinceBoot.setUpdateFrequency(value, timeout)
+                cancoder.absolutePosition.setUpdateFrequency(value, timeout)
+                cancoder.supplyVoltage.setUpdateFrequency(value, timeout)
+                cancoder.unfilteredVelocity.setUpdateFrequency(value, timeout)
+                cancoder.velocity.setUpdateFrequency(value, timeout)
             }
             else -> TODO("${param.name} not implemented")
         }

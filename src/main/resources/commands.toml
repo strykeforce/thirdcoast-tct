@@ -1701,6 +1701,13 @@ type = "menu"
         param = "GRAPHER_FRAME"
         bus = "rio"
         device = "fx"
+      [rio.FxP6.grapher.controlReq]
+        type = "p6.param"
+        order = 30
+        menu = "Control Request Update Freq (Hz)"
+        param = "CONTROL_REQ_FREQ"
+        bus = "rio"
+        device = "fx"
 
 [rio.FxsP6]
   type = "menu"
@@ -2484,6 +2491,13 @@ type = "menu"
       param = "GRAPHER_FRAME"
       bus = "rio"
       device = "fxs"
+    [rio.FxsP6.grapher.controlReq]
+      type = "p6.param"
+      order = 30
+      menu = "Control Request Update Freq (Hz)"
+      param = "CONTROL_REQ_FREQ"
+      bus = "rio"
+      device = "fxs"
 
 
     [rio.servo]
@@ -2832,6 +2846,22 @@ type = "menu"
       type = "cancoder.sensorDirection"
       order = 60
       bus = "rio"
+    [rio.cancoder.grapher]
+      type = "menu"
+      order = 70
+      menu = "set status frames"
+      [rio.cancoder.grapher.default]
+        type = "cancoder.graph"
+        order = 10
+        menu = "set to default update rate"
+        bus = "rio"
+      [rio.cancoder.grapher.rate]
+        type = "cancoder.param"
+        order = 20
+        menu = "Grapher Frame Rate (Hz)"
+        param = "GRAPHER_FRAME"
+        bus = "rio"
+
 
 
 
@@ -3590,6 +3620,13 @@ type = "menu"
         order = 20
         menu = "Grapher Frame Rate (Hz)"
         param = "GRAPHER_FRAME"
+        bus = "canivore"
+        device = "fx"
+      [canivore.FxP6.grapher.controlReq]
+        type = "p6.param"
+        order = 30
+        menu = "Control Request Update Freq (Hz)"
+        param = "CONTROL_REQ_FREQ"
         bus = "canivore"
         device = "fx"
 
@@ -4374,6 +4411,13 @@ type = "menu"
         param = "GRAPHER_FRAME"
         bus = "canivore"
         device = "fxs"
+      [canivore.FxsP6.grapher.controlReq]
+        type = "p6.param"
+        order = 30
+        menu = "Control Request Update Freq (Hz)"
+        param = "CONTROL_REQ_FREQ"
+        bus = "canivore"
+        device = "fxs"
 
 
 
@@ -4411,6 +4455,21 @@ type = "menu"
       type = "cancoder.sensorDirection"
       order = 60
       bus = "canivore"
+    [canivore.cancoder.grapher]
+      type = "menu"
+      order = 70
+      menu = "set status frames"
+      [canivore.cancoder.grapher.default]
+        type = "cancoder.graph"
+        order = 10
+        menu = "set to default update rate"
+        bus = "canivore"
+      [canivore.cancoder.grapher.rate]
+        type = "cancoder.param"
+        order = 20
+        menu = "Grapher Frame Rate (Hz)"
+        param = "GRAPHER_FRAME"
+        bus = "canivore"
 
   [canivore.FXswerve]
     type = "menu"

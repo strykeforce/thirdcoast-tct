@@ -607,6 +607,17 @@ class Phoenix6ParameterCommand(
                     )
                     else -> throw IllegalArgumentException()
                 }
+                CONTROL_REQ_FREQ -> when(device) {
+                    "fx" -> formatMenu(
+                        if(bus == "rio") talonFxService.controlRequestUpdateFreq
+                        else talonFxFDService.controlRequestUpdateFreq
+                    )
+                    "fxs" -> formatMenu(
+                        if(bus == "rio") talonFxsService.controlRequestUpdateFreq
+                        else talonFxsFDService.controlRequestUpdateFreq
+                    )
+                    else -> throw IllegalArgumentException()
+                }
 
                 ABS_SENSOR_DISCONTINUITY -> when(device) {
                     "fxs" -> formatMenu(
@@ -1855,6 +1866,17 @@ class Phoenix6ParameterCommand(
                     talonFXS.rawQuadratureVelocity.setUpdateFrequency(value, timeout)
                 }
 
+                else -> throw IllegalArgumentException()
+            }
+            CONTROL_REQ_FREQ -> when(device) {
+                "fxs" -> configFXSDoubleParam(if(bus == "rio") talonFxsService.controlRequestUpdateFreq else talonFxsFDService.controlRequestUpdateFreq) { talonFxs, value ->
+                    if(bus == "rio") talonFxsService.controlRequestUpdateFreq = value
+                    else talonFxsFDService.controlRequestUpdateFreq = value
+                }
+                "fx" -> configFXDoubleParam(if(bus == "rio") talonFxService.controlRequestUpdateFreq else talonFxFDService.controlRequestUpdateFreq) { talonFx, value ->
+                    if(bus == "rio") talonFxService.controlRequestUpdateFreq = value
+                    else talonFxFDService.controlRequestUpdateFreq = value
+                }
                 else -> throw IllegalArgumentException()
             }
             ABS_SENSOR_DISCONTINUITY -> when(device) {

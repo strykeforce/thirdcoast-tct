@@ -93,6 +93,7 @@ class P6RunCommand(
                 var diffPos: Double
                 var torqueCurrentMaxOut: Double
                 var torqueCurrentDeadband: Double
+                var controlReqUpdateFreq: Double
                 when(device) {
                     "fx" -> {
                         setpointType = if(bus == "rio") talonFxService.setpointType else talonFxFDService.setpointType
@@ -113,6 +114,7 @@ class P6RunCommand(
                         diffPos = if(bus == "rio") talonFxService.activeDifferentialTarget else talonFxFDService.activeDifferentialTarget
                         torqueCurrentMaxOut = if(bus == "rio") talonFxService.activeTorqueCurrentMaxOut else talonFxFDService.activeTorqueCurrentMaxOut
                         torqueCurrentDeadband = if(bus == "rio") talonFxService.activeTorqueCurrentDeadband else talonFxFDService.activeTorqueCurrentDeadband
+                        controlReqUpdateFreq = if(bus == "rio") talonFxService.controlRequestUpdateFreq else talonFxFDService.controlRequestUpdateFreq
                     }
                     "fxs" -> {
                         setpointType = if(bus == "rio") talonFxsService.setpointType else talonFxsFDService.setpointType
@@ -133,10 +135,16 @@ class P6RunCommand(
                         diffPos = if(bus == "rio") talonFxsService.activeDifferentialTarget else talonFxsFDService.activeDifferentialTarget
                         torqueCurrentMaxOut = if(bus == "rio") talonFxsService.activeTorqueCurrentMaxOut else talonFxsFDService.activeTorqueCurrentMaxOut
                         torqueCurrentDeadband = if(bus == "rio") talonFxsService.activeTorqueCurrentDeadband else talonFxsFDService.activeTorqueCurrentDeadband
+                        controlReqUpdateFreq = if(bus == "rio") talonFxsService.controlRequestUpdateFreq else talonFxsFDService.controlRequestUpdateFreq
                     }
                     else -> throw IllegalArgumentException()
                 }
-                var controlRequest: ControlRequest = DutyCycleOut(0.0).withEnableFOC(false).withOverrideBrakeDurNeutral(false).withLimitForwardMotion(limFwdMotion).withLimitReverseMotion(limRevMotion)
+                var controlRequest: ControlRequest =
+                    DutyCycleOut(0.0)
+                        .withEnableFOC(false)
+                        .withOverrideBrakeDurNeutral(false)
+                        .withLimitForwardMotion(limFwdMotion).withLimitReverseMotion(limRevMotion)
+                        .withUpdateFreqHz(controlReqUpdateFreq);
 
 
                 //sanity checks
@@ -161,17 +169,20 @@ class P6RunCommand(
                                 .withOverrideBrakeDurNeutral(overrideNeutral)
                                 .withLimitForwardMotion(limFwdMotion)
                                 .withLimitReverseMotion(limRevMotion)
+                                .withUpdateFreqHz(controlReqUpdateFreq)
                             Units.VOLTAGE -> controlRequest = VoltageOut(setpoint)
                                 .withEnableFOC(enableFOC)
                                 .withOverrideBrakeDurNeutral(overrideNeutral)
                                 .withLimitForwardMotion(limFwdMotion)
                                 .withLimitReverseMotion(limRevMotion)
+                                .withUpdateFreqHz(controlReqUpdateFreq)
                             Units.TORQUE_CURRENT -> controlRequest = TorqueCurrentFOC(setpoint)
                                 .withMaxAbsDutyCycle(torqueCurrentMaxOut)
                                 .withDeadband(torqueCurrentDeadband)
                                 .withLimitForwardMotion(limFwdMotion)
                                 .withLimitReverseMotion(limRevMotion)
                                 .withOverrideCoastDurNeutral(overrideNeutral)
+                                .withUpdateFreqHz(controlReqUpdateFreq)
                         }
                     }
 
@@ -186,6 +197,7 @@ class P6RunCommand(
                                     .withOverrideBrakeDurNeutral(overrideNeutral)
                                     .withLimitForwardMotion(limFwdMotion)
                                     .withLimitReverseMotion(limRevMotion)
+                                    .withUpdateFreqHz(controlReqUpdateFreq)
 
                             Units.VOLTAGE -> controlRequest =
                                 PositionVoltage(setpoint)
@@ -196,6 +208,7 @@ class P6RunCommand(
                                     .withOverrideBrakeDurNeutral(overrideNeutral)
                                     .withLimitForwardMotion(limFwdMotion)
                                     .withLimitReverseMotion(limRevMotion)
+                                    .withUpdateFreqHz(controlReqUpdateFreq)
 
                             Units.TORQUE_CURRENT -> controlRequest =
                                 PositionTorqueCurrentFOC(setpoint)
@@ -205,6 +218,7 @@ class P6RunCommand(
                                     .withOverrideCoastDurNeutral(overrideNeutral)
                                     .withLimitForwardMotion(limFwdMotion)
                                     .withLimitReverseMotion(limRevMotion)
+                                    .withUpdateFreqHz(controlReqUpdateFreq)
                         }
                     }
 
@@ -219,6 +233,7 @@ class P6RunCommand(
                                     .withOverrideBrakeDurNeutral(overrideNeutral)
                                     .withLimitForwardMotion(limFwdMotion)
                                     .withLimitReverseMotion(limRevMotion)
+                                    .withUpdateFreqHz(controlReqUpdateFreq)
 
                             Units.VOLTAGE -> controlRequest =
                                 VelocityVoltage(setpoint)
@@ -229,6 +244,7 @@ class P6RunCommand(
                                     .withOverrideBrakeDurNeutral(overrideNeutral)
                                     .withLimitForwardMotion(limFwdMotion)
                                     .withLimitReverseMotion(limRevMotion)
+                                    .withUpdateFreqHz(controlReqUpdateFreq)
 
                             Units.TORQUE_CURRENT -> controlRequest =
                                 VelocityTorqueCurrentFOC(setpoint)
@@ -238,6 +254,7 @@ class P6RunCommand(
                                     .withOverrideCoastDurNeutral(overrideNeutral)
                                     .withLimitForwardMotion(limFwdMotion)
                                     .withLimitReverseMotion(limRevMotion)
+                                    .withUpdateFreqHz(controlReqUpdateFreq)
                         }
                     }
 
@@ -254,6 +271,7 @@ class P6RunCommand(
                                             .withOverrideBrakeDurNeutral(overrideNeutral)
                                             .withLimitForwardMotion(limFwdMotion)
                                             .withLimitReverseMotion(limRevMotion)
+                                            .withUpdateFreqHz(controlReqUpdateFreq)
 
                                     Units.VOLTAGE -> controlRequest =
                                         MotionMagicVoltage(setpoint)
@@ -263,6 +281,7 @@ class P6RunCommand(
                                             .withOverrideBrakeDurNeutral(overrideNeutral)
                                             .withLimitForwardMotion(limFwdMotion)
                                             .withLimitReverseMotion(limRevMotion)
+                                            .withUpdateFreqHz(controlReqUpdateFreq)
 
                                     Units.TORQUE_CURRENT -> controlRequest =
                                         MotionMagicTorqueCurrentFOC(setpoint)
@@ -271,6 +290,7 @@ class P6RunCommand(
                                             .withOverrideCoastDurNeutral(overrideNeutral)
                                             .withLimitForwardMotion(limFwdMotion)
                                             .withLimitReverseMotion(limRevMotion)
+                                            .withUpdateFreqHz(controlReqUpdateFreq)
                                 }
                             }
 
@@ -284,6 +304,7 @@ class P6RunCommand(
                                         .withOverrideBrakeDurNeutral(overrideNeutral)
                                         .withLimitForwardMotion(limFwdMotion)
                                         .withLimitReverseMotion(limRevMotion)
+                                        .withUpdateFreqHz(controlReqUpdateFreq)
 
                                     Units.VOLTAGE -> controlRequest = MotionMagicVelocityVoltage(setpoint)
                                         .withAcceleration(acceleration)
@@ -293,6 +314,7 @@ class P6RunCommand(
                                         .withOverrideBrakeDurNeutral(overrideNeutral)
                                         .withLimitForwardMotion(limFwdMotion)
                                         .withLimitReverseMotion(limRevMotion)
+                                        .withUpdateFreqHz(controlReqUpdateFreq)
 
                                     Units.TORQUE_CURRENT -> controlRequest = MotionMagicVelocityTorqueCurrentFOC(setpoint)
                                         .withAcceleration(acceleration)
@@ -302,6 +324,7 @@ class P6RunCommand(
                                         .withOverrideCoastDurNeutral(overrideNeutral)
                                         .withLimitForwardMotion(limFwdMotion)
                                         .withLimitReverseMotion(limRevMotion)
+                                        .withUpdateFreqHz(controlReqUpdateFreq)
                                 }
                             }
 
@@ -314,6 +337,7 @@ class P6RunCommand(
                                         .withOverrideBrakeDurNeutral(overrideNeutral)
                                         .withLimitForwardMotion(limFwdMotion)
                                         .withLimitReverseMotion(limRevMotion)
+                                        .withUpdateFreqHz(controlReqUpdateFreq)
 
                                     Units.VOLTAGE -> controlRequest = DynamicMotionMagicVoltage(setpoint, velocity, acceleration, jerk)
                                         .withEnableFOC(enableFOC)
@@ -322,6 +346,7 @@ class P6RunCommand(
                                         .withOverrideBrakeDurNeutral(overrideNeutral)
                                         .withLimitForwardMotion(limFwdMotion)
                                         .withLimitReverseMotion(limRevMotion)
+                                        .withUpdateFreqHz(controlReqUpdateFreq)
 
                                     Units.TORQUE_CURRENT -> controlRequest = DynamicMotionMagicTorqueCurrentFOC(setpoint, velocity, acceleration, jerk)
                                         .withFeedForward(feedFwd)
@@ -329,6 +354,7 @@ class P6RunCommand(
                                         .withOverrideCoastDurNeutral(overrideNeutral)
                                         .withLimitForwardMotion(limFwdMotion)
                                         .withLimitReverseMotion(limRevMotion)
+                                        .withUpdateFreqHz(controlReqUpdateFreq)
                                 }
                             }
                             MM_Type.EXPONENTIAL -> {
@@ -340,6 +366,7 @@ class P6RunCommand(
                                         .withOverrideBrakeDurNeutral(overrideNeutral)
                                         .withLimitForwardMotion(limFwdMotion)
                                         .withLimitReverseMotion(limRevMotion)
+                                        .withUpdateFreqHz(controlReqUpdateFreq)
                                     Units.VOLTAGE -> controlRequest = MotionMagicExpoVoltage(setpoint)
                                         .withEnableFOC(enableFOC)
                                         .withFeedForward(feedFwd)
@@ -347,12 +374,14 @@ class P6RunCommand(
                                         .withOverrideBrakeDurNeutral(overrideNeutral)
                                         .withLimitForwardMotion(limFwdMotion)
                                         .withLimitReverseMotion(limRevMotion)
+                                        .withUpdateFreqHz(controlReqUpdateFreq)
                                     Units.TORQUE_CURRENT -> controlRequest = MotionMagicExpoTorqueCurrentFOC(setpoint)
                                         .withFeedForward(feedFwd)
                                         .withSlot(slot)
                                         .withOverrideCoastDurNeutral(overrideNeutral)
                                         .withLimitForwardMotion(limFwdMotion)
                                         .withLimitReverseMotion(limRevMotion)
+                                        .withUpdateFreqHz(controlReqUpdateFreq)
                                 }
                             }
                         }
@@ -369,6 +398,7 @@ class P6RunCommand(
                                             .withOverrideBrakeDurNeutral(overrideNeutral)
                                             .withLimitForwardMotion(limFwdMotion)
                                             .withLimitReverseMotion(limRevMotion)
+                                            .withUpdateFreqHz(controlReqUpdateFreq)
 
                                     Units.VOLTAGE -> controlRequest =
                                         DifferentialVoltage(setpoint, diffPos)
@@ -377,6 +407,7 @@ class P6RunCommand(
                                             .withOverrideBrakeDurNeutral(overrideNeutral)
                                             .withLimitForwardMotion(limFwdMotion)
                                             .withLimitReverseMotion(limRevMotion)
+                                            .withUpdateFreqHz(controlReqUpdateFreq)
 
                                     else -> {
                                         terminal.warn("Units chosen not valid for this control mode")
@@ -394,6 +425,7 @@ class P6RunCommand(
                                         .withOverrideBrakeDurNeutral(overrideNeutral)
                                         .withLimitForwardMotion(limFwdMotion)
                                         .withLimitReverseMotion(limRevMotion)
+                                        .withUpdateFreqHz(controlReqUpdateFreq)
 
                                     Units.VOLTAGE -> controlRequest = DifferentialPositionVoltage(setpoint, diffPos)
                                         .withEnableFOC(enableFOC)
@@ -402,6 +434,7 @@ class P6RunCommand(
                                         .withOverrideBrakeDurNeutral(overrideNeutral)
                                         .withLimitForwardMotion(limFwdMotion)
                                         .withLimitReverseMotion(limRevMotion)
+                                        .withUpdateFreqHz(controlReqUpdateFreq)
 
                                     else -> {
                                         terminal.warn("Units chosen not valid for this control mode")
@@ -419,6 +452,7 @@ class P6RunCommand(
                                         .withOverrideBrakeDurNeutral(overrideNeutral)
                                         .withLimitForwardMotion(limFwdMotion)
                                         .withLimitReverseMotion(limRevMotion)
+                                        .withUpdateFreqHz(controlReqUpdateFreq)
 
                                     Units.VOLTAGE -> controlRequest = DifferentialVelocityVoltage(setpoint, diffPos)
                                         .withEnableFOC(enableFOC)
@@ -427,6 +461,7 @@ class P6RunCommand(
                                         .withOverrideBrakeDurNeutral(overrideNeutral)
                                         .withLimitForwardMotion(limFwdMotion)
                                         .withLimitReverseMotion(limRevMotion)
+                                        .withUpdateFreqHz(controlReqUpdateFreq)
 
                                     else -> {
                                         terminal.warn("Units chosen not valid for this control mode")
@@ -444,6 +479,7 @@ class P6RunCommand(
                                         .withOverrideBrakeDurNeutral(overrideNeutral)
                                         .withLimitForwardMotion(limFwdMotion)
                                         .withLimitReverseMotion(limRevMotion)
+                                        .withUpdateFreqHz(controlReqUpdateFreq)
 
                                     Units.VOLTAGE -> controlRequest = DifferentialMotionMagicVoltage(setpoint, diffPos)
                                         .withEnableFOC(enableFOC)
@@ -452,6 +488,7 @@ class P6RunCommand(
                                         .withOverrideBrakeDurNeutral(overrideNeutral)
                                         .withLimitForwardMotion(limFwdMotion)
                                         .withLimitReverseMotion(limRevMotion)
+                                        .withUpdateFreqHz(controlReqUpdateFreq)
 
                                     else -> {
                                         terminal.warn("Units chosen not valid for this control mode")
@@ -465,7 +502,8 @@ class P6RunCommand(
                                     FollowerType.STANDARD -> controlRequest =
                                         DifferentialFollower(setpoint.toInt(), talonFxService.activeOpposeMain)
 
-                                    FollowerType.STRICT -> controlRequest = DifferentialStrictFollower(setpoint.toInt())
+                                    FollowerType.STRICT -> controlRequest =
+                                        DifferentialStrictFollower(setpoint.toInt()).withUpdateFreqHz(controlReqUpdateFreq)
                                 }
                             }
 
@@ -478,19 +516,19 @@ class P6RunCommand(
                             FollowerType.STANDARD -> controlRequest =
                                 Follower(setpoint.toInt(), talonFxService.activeOpposeMain)
 
-                            FollowerType.STRICT -> controlRequest = StrictFollower(setpoint.toInt())
+                            FollowerType.STRICT -> controlRequest = StrictFollower(setpoint.toInt()).withUpdateFreqHz(controlReqUpdateFreq)
                         }
                     }
 
                     SetpointType.NEUTRAL -> {
                         when (talonFxService.activeNeutralOut) {
-                            NeutralModeValue.Coast -> controlRequest = CoastOut()
-                            NeutralModeValue.Brake -> controlRequest = StaticBrake()
+                            NeutralModeValue.Coast -> controlRequest = CoastOut().withUpdateFreqHz(controlReqUpdateFreq)
+                            NeutralModeValue.Brake -> controlRequest = StaticBrake().withUpdateFreqHz(controlReqUpdateFreq)
                         }
                     }
 
                     SetpointType.MUSIC -> {
-                        controlRequest = MusicTone(setpoint)
+                        controlRequest = MusicTone(setpoint).withUpdateFreqHz(controlReqUpdateFreq)
                     }
 
                 }

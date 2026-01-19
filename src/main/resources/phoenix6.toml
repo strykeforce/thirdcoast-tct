@@ -355,6 +355,11 @@
     name = "Grapher Update Frequency (Hz)"
     type = "DOUBLE"
     help = "Input update frequncy for all singals on the grapher in Hz, if this value shows 0 it is using the default update frequency"
+[CONTROL_REQ_FREQ]
+    name = "Control Request Update Frequency (Hz)"
+    type = "DOUBLE"
+    help = "Input update frequency for control request in Hz"
+    range = [20.0,1000.0]
 
 # FXS Added External Feedback
 [ABS_SENSOR_DISCONTINUITY]
