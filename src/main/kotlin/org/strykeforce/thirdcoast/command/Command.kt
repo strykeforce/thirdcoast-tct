@@ -18,10 +18,7 @@ import org.strykeforce.thirdcoast.servo.RunServosCommand
 import org.strykeforce.thirdcoast.servo.SelectServosCommand
 import org.strykeforce.thirdcoast.solenoid.RunSolenoidsCommand
 import org.strykeforce.thirdcoast.solenoid.SelectSolenoidsCommand
-import org.strykeforce.thirdcoast.swerve.AdjustAzimuthCommand
-import org.strykeforce.thirdcoast.swerve.SaveZeroCommand
-import org.strykeforce.thirdcoast.swerve.SelectAzimuthCommand
-import org.strykeforce.thirdcoast.swerve.SetAzimuthCommand
+import org.strykeforce.thirdcoast.swerve.*
 import org.strykeforce.thirdcoast.talon.*
 import org.strykeforce.thirdcoast.talon.phoenix6.*
 
@@ -66,9 +63,6 @@ interface Command {
                 "talon.hard.source" -> SelectHardLimitSourceCommand(parent, key, toml)
                 "talon.hard.normal" -> SelectHardLimitNormalCommand(parent, key, toml)
                 "talon.velocity.period" -> SelectVelocityMeasurmentPeriodCommand(parent, key, toml)
-                "talon.commutation" -> SelectMotorCommutationCommand(parent, key, toml)
-                "talon.absoluteRange" -> SelectAbsoluteSensorRange(parent, key, toml)
-                "talon.initStrategy" -> SelectInitializationStrategy(parent, key, toml)
                 "servo.select" -> SelectServosCommand(parent, key, toml)
                 "servo.run" -> RunServosCommand(parent, key, toml)
                 "solenoid.select" -> SelectSolenoidsCommand(parent, key, toml)
@@ -86,6 +80,10 @@ interface Command {
                 "swerve.azimuth.save" -> SaveZeroCommand(parent, key, toml)
                 "swerve.azimuth.select" -> SelectAzimuthCommand(parent, key, toml)
                 "swerve.azimuth.adjust" -> AdjustAzimuthCommand(parent, key, toml)
+                "p6.swerve.azimuth" -> P6SetAzimuthCommand(parent, key, toml)
+                "p6.swerve.azimuth.save" -> P6SaveZeroCommand(parent, key, toml)
+                "p6.swerve.azimuth.select" -> P6SelectAzimuthCommand(parent, key, toml)
+                "p6.swerve.azimuth.adjust" -> P6AdjustAzimuthCommand(parent, key, toml)
                 "pigeon.select" -> SelectPigeonCommand(parent, key, toml)
                 "pigeon.param" -> PigeonParameterCommand(parent, key, toml)
                 "p6.run" -> P6RunCommand(parent, key, toml)
@@ -98,6 +96,7 @@ interface Command {
                 "p6.feedback" -> P6SelectFeedbackSensorCommand(parent, key, toml)
                 "p6.mmType" -> P6SelectMotionMagicTypeCommand(parent, key, toml)
                 "p6.diffType" -> P6SelectDifferentialTypeCommand(parent, key, toml)
+                "p6.diffSource" -> P6SelectDifferentialSensorSourceCommand(parent, key, toml)
                 "p6.followType" -> P6SelectFollowerTypeCommand(parent, key, toml)
                 "p6.neutralOut" -> P6SelectNeutralOutputCommand(parent, key, toml)
                 "p6.units" -> P6SelectUnitCommand(parent, key, toml)
@@ -111,10 +110,14 @@ interface Command {
                 "p6.revSource" -> P6SelectRevHardLimitSourceCommand(parent, key, toml)
                 "p6.factory" -> P6FactoryDefaultCommand(parent, key, toml)
                 "p6.graph" -> P6DefaultStatusFrameCommand(parent, key, toml)
+                "p6.extFeedback" -> P6SelectExternalFeedbackSourceCommand(parent, key, toml)
+                "p6.phase" -> P6SelectSensorPhaseCommand(parent, key, toml)
+                "p6.motorArrange" -> P6SelectMotorArrangementCommand(parent, key, toml)
+                "p6.wiring" -> P6SelectBrushedWiringCommand(parent, key, toml)
+                "p6.advHall" -> P6SelectAdvancedHallSupportCommand(parent, key, toml)
                 "cancoder.select" -> SelectCancoderCommand(parent, key, toml)
                 "cancoder.status" -> CancoderStatusCommand(parent, key, toml)
                 "cancoder.param" -> CancoderParameterCommand(parent, key, toml)
-                "cancoder.absRange" -> SelectAbsRangeValueCommand(parent, key, toml)
                 "cancoder.sensorDirection" -> SelectCancoderSensorDirectionCommand(parent, key, toml)
                 else -> DefaultCommand(parent, key, toml)
             }

@@ -1,13 +1,11 @@
 package org.strykeforce.thirdcoast.talon
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import net.consensys.cava.toml.TomlTable
 import org.koin.core.component.inject
 import org.strykeforce.thirdcoast.command.AbstractCommand
 import org.strykeforce.thirdcoast.command.Command
 import org.strykeforce.thirdcoast.command.prompt
-import org.strykeforce.thirdcoast.device.LegacyTalonFxService
 import org.strykeforce.thirdcoast.device.TalonService
 import org.strykeforce.thirdcoast.info
 import org.strykeforce.thirdcoast.readIntList
@@ -19,21 +17,12 @@ class SelectTalonsCommand(
     toml: TomlTable
 ) : AbstractCommand(parent, key, toml) {
     private val talonService: TalonService by inject()
-    private val legacyTalonFxService: LegacyTalonFxService by inject()
 
     val type = toml.getString(Command.DEVICE_KEY) ?: throw Exception("$key: ${Command.DEVICE_KEY} missing")
 
     override val menu: String
         get() {
-            when (type) {
-                "srx" -> {
-                    return formatMenu(talonService.active.map(TalonSRX::getDeviceID).joinToString())
-                }
-                "fx" -> {
-                    return formatMenu(legacyTalonFxService.active.map(TalonFX::getDeviceID).joinToString())
-                }
-                else -> throw IllegalArgumentException()
-            }
+            return formatMenu(talonService.active.map(TalonSRX::getDeviceID).joinToString())
         }
 
     override fun execute(): Command {
@@ -42,14 +31,8 @@ class SelectTalonsCommand(
                 var ids: List<Int>
                 var new: Set<Int>
 
-                if (type == "srx") {
-                    ids = reader.readIntList(this.prompt("ids"), talonService.active.map(TalonSRX::getDeviceID))
-                    new = talonService.activate(ids)
-                } else if (type == "fx") {
-                    ids = reader.readIntList(this.prompt("ids"), legacyTalonFxService.active.map(TalonFX::getDeviceID))
-                    new = legacyTalonFxService.activate(ids)
-
-                } else throw IllegalArgumentException()
+                ids = reader.readIntList(this.prompt("ids"), talonService.active.map(TalonSRX::getDeviceID))
+                new = talonService.activate(ids)
 
                 if (new.isNotEmpty())
                     terminal.info(

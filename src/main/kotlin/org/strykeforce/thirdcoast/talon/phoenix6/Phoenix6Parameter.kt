@@ -38,8 +38,8 @@ class Phoenix6Parameter(command: Command, toml: TomlTable, val enum: P6Enum): Ab
         STATOR_LIM_EN,
         STATOR_LIM,
         SUPP_LIM_EN,
+        SUPP_LOWER_LIM,
         SUPP_LIM,
-        SUPP_TRIP_THRES,
         SUPP_TRIP_TIME,
 
         CLOSED_LOOP_RAMP_DC,
@@ -91,16 +91,21 @@ class Phoenix6Parameter(command: Command, toml: TomlTable, val enum: P6Enum): Ab
         OVERRIDE_NEUTRAL,
         LIM_FWD_MOT,
         LIM_REV_MOT,
-        GRAPHER_FRAME
+        GRAPHER_FRAME,
 
+        ABS_SENSOR_DISCONTINUITY,
+        ABS_SENSOR_OFFSET,
+        QUAD_EDGE_PER_ROT,
+        VELOCITY_FILTER_TIME_CONST
     }
 
     companion object {
         private val tomlTable by lazy { parseResource("/phoenix6.toml") }
 
-        fun create(command: Command, param: String): Phoenix6Parameter {
-            logger.info { "Creating P6 Param: ${param}: ${P6Enum.valueOf(param)}" }
+        fun create(command: Command, param: String, bus: String, device: String): Phoenix6Parameter {
+            logger.info { "Creating P6 Param: ${param}: ${P6Enum.valueOf(param)}, ${bus}, ${device}" }
             val toml = tomlTable.getTable(param) ?: throw java.lang.IllegalArgumentException("missing param: $param")
+            logger.info { "Finished creating: ${param}" }
             return Phoenix6Parameter(command, toml, P6Enum.valueOf(param))
         }
     }

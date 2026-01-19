@@ -2,6 +2,9 @@ package org.strykeforce.thirdcoast.cancoder
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration
 import com.ctre.phoenix6.hardware.CANcoder
+import edu.wpi.first.units.Units
+import edu.wpi.first.units.Units.Rotations
+import edu.wpi.first.units.measure.Angle
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 //import org.koin.standalone.inject
@@ -38,6 +41,10 @@ class CancoderParameterCommand(
                 MAG_OFFSET -> formatMenu(
                     if(bus == "rio") cancoderService.activeConfiguration.MagnetSensor.MagnetOffset
                     else cancoderFDService.activeConfiguration.MagnetSensor.MagnetOffset)
+                DISCONTINUITY_POINT -> formatMenu(
+                    if(bus == "rio") cancoderService.activeConfiguration.MagnetSensor.AbsoluteSensorDiscontinuityPoint
+                    else cancoderFDService.activeConfiguration.MagnetSensor.AbsoluteSensorDiscontinuityPoint
+                )
             }
         }
 
@@ -52,6 +59,12 @@ class CancoderParameterCommand(
                 cancoder, value ->
                 activeConfig.MagnetSensor.MagnetOffset = value
                 cancoder.configurator.apply(activeConfig)
+            }
+            DISCONTINUITY_POINT -> configDoubleParam(activeConfig.MagnetSensor.absoluteSensorDiscontinuityPointMeasure.`in`(
+                Rotations)) {
+                caNcoder, value ->
+                activeConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = value
+                caNcoder.configurator.apply(activeConfig)
             }
             else -> TODO("${param.name} not implemented")
         }
@@ -72,6 +85,22 @@ class CancoderParameterCommand(
             logger.info { "set ${cancoderFDService.active.size} CANcoder's ${param.name}: $paramValue" }}
         } else throw IllegalArgumentException()
     }
+
+    private fun configAngleParameter(default: Angle, config: (CANcoder, Angle) -> Unit) {
+        val paramValue = param.readDouble(reader, default.`in`(Units.Rotations))
+        if(bus == "rio") {
+            cancoderService.active.forEach {
+                config(it, Rotations.of(paramValue))
+                logger.info { "set ${cancoderService.active.size} CANcoder's ${param.name}: $paramValue" }
+            }
+        } else if(bus == "canivore") {
+            cancoderFDService.active.forEach {
+                config(it, Rotations.of(paramValue))
+                logger.info { "set ${cancoderFDService.active.size} CANcoder's ${param.name}: $paramValue" }
+            }
+        } else throw IllegalArgumentException()
+    }
+
 
     private fun configIntParameter(default: Int, config: (CANcoder, Int) -> Unit) {
         val paramValue = param.readInt(reader, default)

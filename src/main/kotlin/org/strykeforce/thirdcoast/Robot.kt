@@ -24,7 +24,7 @@ class Robot : TimedRobot(), KoinComponent {
 
     override fun robotInit() {
         startKoin{
-            modules(listOf(tctModule, swerveModule))
+            modules(listOf(tctModule, swerveModule, fxSwerveModule, fxCANivoreSwerveModule))
             logger(SLF4JLogger())
         }
         val telemetryService: TelemetryService by inject()

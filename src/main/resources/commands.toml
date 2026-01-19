@@ -466,483 +466,483 @@ type = "menu"
       param = "FACTORY_DEFAULTS"
       device = "srx"
 
-    [rio.talonFx]
-    type = "menu"
-    order = 15
-    menu = "work with legacy talonFXs"
-    [rio.talonFx.run]
-      type = "talon.run"
-      order = 5
-      menu = "run active talonFXs"
-      device = "fx"
-    [rio.talonFx.select]
-      type = "talon.select"
-      order = 10
-      menu = "active talonFXs"
-      device = "fx"
-    [rio.talonFx.status]
-      type = "talon.status"
-      order = 12
-      menu = "status of active talonFXs"
-      device = "fx"
-    [rio.talonFx.mode]
-      type = "talon.mode"
-      order = 15
-      menu = "control mode"
-      device = "fx"
-      help = "The output mode to apply. In PercentOutput, the output is between -1.0 and 1.0, with 0.0 as stopped. In Current mode, output value is in amperes. In Velocity mode, output value is in position change / 100ms. In Position mode, output value is in encoder ticks or an analog value, depending on the sensor. In Follower mode, the output value is the integer device ID of the talon to duplicate."
-    [rio.talonFx.sensor]
-      type = "menu"
-      order = 17
-      menu = "configure feedback sensors"
-      device = "fx"
-      [rio.talonFx.sensor.primary]
-        type = "talon.sensor"
-        order = 10
-        menu = "primary closed-loop sensor"
-        pid = 0
-        device = "fx"
-        help = "Sensors for motor controllers provide feedback about the position, velocity, and acceleration of the system using that motor controller."
-      [rio.talonFx.sensor.auxiliary]
-        type = "talon.sensor"
-        order = 20
-        menu = "auxiliary closed-loop sensor"
-        pid = 1
-        device = "fx"
-        help = "Sensors for motor controllers provide feedback about the position, velocity, and acceleration of the system using that motor controller."
-      [rio.talonFx.sensor.primary_position]
-        type = "talon.sensor.position"
-        order = 30
-        menu = "primary sensor feedback position"
-        param = "SENSOR_POSITION"
-        pid = 0
-        device = "fx"
-      [rio.talonFx.sensor.auxiliary_position]
-        type = "talon.sensor.position"
-        order = 40
-        menu = "auxiliary sensor feedback position"
-        param = "SENSOR_POSITION"
-        pid = 1
-        device = "fx"
-      [rio.talonFx.sensor.primary_coefficient]
-        type = "talon.sensor.coefficient"
-        order = 50
-        menu = "primary sensor feedback coefficient"
-        param = "FEEDBACK_COEFFICIENT"
-        pid = 0
-        device = "fx"
-      [rio.talonFx.sensor.auxiliary_coefficient]
-        type = "talon.sensor.coefficient"
-        order = 60
-        menu = "auxiliary sensor feedback coefficient"
-        param = "FEEDBACK_COEFFICIENT"
-        pid = 1
-        device = "fx"
-      [rio.talonFx.sensor.phase]
-        type = "talon.param"
-        order = 70
-        menu = "sensor phase reversed"
-        param = "SENSOR_PHASE"
-        device = "fx"
-      [rio.talonFx.sensor.offset]
-        type = "talon.param"
-        order = 80
-        menu = "integrated sensor offset degrees"
-        param = "INTEGRATED_SENSOR_OFFSET_DEGREES"
-        device = "fx"
-      [rio.talonFx.sensor.absolute_range]
-        type = "talon.absoluteRange"
-        order = 90
-        menu = "absolute sensor range"
-        device = "fx"
-      [rio.talonFx.sensor.initialization_strategy]
-        type = "talon.initStrategy"
-        order = 100
-        menu = "integrated sensor initialization strategy"
-        device = "fx"
-    [rio.talonFx.slot]
-      type = "menu"
-      order = 20
-      menu = "configure PID slots"
-      device = "fx"
-      [rio.talonFx.slot.select]
-        type = "talon.slot.select"
-        order = 10
-        menu = "active slot"
-        device = "fx"
-        help = "The Talon FX supports up to 4 PIDF Slots, each with a unique set of gains that are stored persistently across power cycles. "
-      [rio.talonFx.slot.P]
-        type ="talon.param"
-        order = 20
-        param = "SLOT_P"
-        device = "fx"
-      [rio.talonFx.slot.I]
-        type ="talon.param"
-        order = 30
-        param = "SLOT_I"
-        device = "fx"
-      [rio.talonFx.slot.D]
-        type ="talon.param"
-        order = 40
-        param = "SLOT_D"
-        device = "fx"
-      [rio.talonFx.slot.F]
-        type ="talon.param"
-        order = 50
-        param = "SLOT_F"
-        device = "fx"
-      [rio.talonFx.slot.IZone]
-        type ="talon.param"
-        menu = "I Zone"
-        order = 60
-        param = "SLOT_I_ZONE"
-        device = "fx"
-      [rio.talonFx.slot.AllowableErr]
-        type ="talon.param"
-        menu = "Allowable Error"
-        order = 70
-        param = "SLOT_ALLOWABLE_ERR"
-        device = "fx"
-      [rio.talonFx.slot.MaxIAccum]
-        type ="talon.param"
-        menu = "Max I Accum"
-        order = 80
-        param = "SLOT_MAX_I_ACCUM"
-        device = "fx"
-      [rio.talonFx.slot.PeakOutput]
-        type = "talon.param"
-        menu = "Peak output"
-        order = 90
-        param = "SLOT_PEAK_OUTPUT"
-        device = "fx"
-    [rio.talonFx.motion_magic]
-      type = "menu"
-      order = 22
-      menu = "configure motion magic"
-      device = "fx"
-      [rio.talonFx.motion_magic.cruise_velocity]
-        type = "talon.param"
-        order = 10
-        menu = "motion magic cruise velocity"
-        param = "MOTION_CRUISE_VELOCITY"
-        device = "fx"
-      [rio.talonFx.motion_magic.acceleration]
-        type = "talon.param"
-        order = 20
-        menu = "motion magic acceleration"
-        param = "MOTION_ACCELERATION"
-        device = "fx"
-    [rio.talonFx.current]
-      type = "menu"
-      order = 23
-      menu = "configure current limits"
-      [rio.talonFx.current.stator_enabled]
-        type = "talon.param"
-        order = 10
-        menu = "stator current: limit enabled"
-        param = "STATOR_CURRENT_LIMIT_ENABLE"
-        device = "fx"
-      [rio.talonFx.current.stator_limit]
-        type = "talon.param"
-        order = 20
-        menu = "stator current: current limit (A)"
-        param = "STATOR_CURRENT_LIMIT"
-        device = "fx"
-      [rio.talonFx.current.stator_triggerCurrent]
-        type = "talon.param"
-        order = 30
-        menu = "stator current: trigger current (A)"
-        param = "STATOR_CURRENT_LIMIT_THRES_CURRENT"
-        device = "fx"
-        help = "current must exceed this threshold before current limiting occurs. If this number is less than currentLimit than that limit is used as the threshold"
-      [rio.talonFx.current.stator_triggerTime]
-        type = "talon.param"
-        order = 40
-        menu = "stator current: trigger time (s)"
-        param = "STATOR_CURRENT_LIMIT_THRES_TIME"
-        device = "fx"
-        help = "current must exceed the threshold for this long before limiting occurs"
-      [rio.talonFx.current.supply_enabled]
-        type = "talon.param"
-        order = 50
-        menu = "supply current: limit enabled"
-        param = "SUPPLY_CURRENT_LIMIT_ENABLE"
-        device = "fx"
-      [rio.talonFx.current.supply_limit]
-        type = "talon.param"
-        order = 60
-        menu = "supply current: current limit (A)"
-        param = "SUPPLY_CURRENT_LIMIT"
-        device = "fx"
-      [rio.talonFx.current.supply_triggerCurrent]
-        type = "talon.param"
-        order = 70
-        menu = "supply current: trigger current (A)"
-        param = "SUPPLY_CURRENT_LIMIT_THRES_CURRENT"
-        device = "fx"
-        help = "current must exceed this threshold before limiting occurs. If this number is less than currentLimit, currentLimit is used as the threshold"
-      [rio.talonFx.current.supply_triggerTime]
-        type = "talon.param"
-        order = 80
-        menu = "supply current: trigger time (s)"
-        param = "SUPPLY_CURRENT_LIMIT_THRES_TIME"
-        device = "fx"
-        help = "current must exceed the threshold for this long before limiting occurs"
-    [rio.talonFx.output]
-      type = "menu"
-      order = 25
-      menu = "configure motor output"
-      [rio.talonFx.output.brake]
-        type = "talon.brake"
-        order = 10
-        menu = "brake mode"
-        help = "Mode of operation during Neutral output, brake or coast."
-        device = "fx"
-      [rio.talonFx.output.reversed]
-        type = "talon.param"
-        order = 20
-        menu = "motor output reversed"
-        param = "OUTPUT_REVERSED"
-        device = "fx"
-      [rio.talonFx.output.open-loop_ramp]
-        type = "talon.param"
-        order = 30
-        menu = "open-loop ramp rate"
-        param = "OPEN_LOOP_RAMP"
-        device = "fx"
-      [rio.talonFx.output.closed-loop_ramp]
-        type = "talon.param"
-        order = 40
-        menu = "closed-loop ramp rate"
-        param = "CLOSED_LOOP_RAMP"
-        device = "fx"
-      [rio.talonFx.output.forward_peak_output]
-        type = "talon.param"
-        order = 50
-        menu = "forward peak output"
-        param = "PEAK_OUTPUT_FORWARD"
-        device = "fx"
-      [rio.talonFx.output.reverse_peak_output]
-        type = "talon.param"
-        order = 60
-        menu = "reverse peak output"
-        param = "PEAK_OUTPUT_REVERSE"
-        device = "fx"
-      [rio.talonFx.output.forward_nominal_output]
-        type = "talon.param"
-        order = 70
-        menu = "forward nominal output"
-        param = "NOMINAL_OUTPUT_FORWARD"
-        device = "fx"
-      [rio.talonFx.output.reverse_nominal_output]
-        type = "talon.param"
-        order = 80
-        menu = "reverse nominal output"
-        param = "NOMINAL_OUTPUT_REVERSE"
-        device = "fx"
-      [rio.talonFx.output.neutral_deadband]
-        type = "talon.param"
-        order = 90
-        menu = "neutral deadband"
-        param = "NEUTRAL_DEADBAND"
-        device = "fx"
-      [rio.talonFx.output.motor_commutation]
-        type = "talon.commutation"
-        order = 100
-        menu = "motor commutation"
-        device = "fx"
-    [rio.talonFx.velocity_measurement]
-      type = "menu"
-      order = 26
-      menu = "configure velocity measurement"
-      [rio.talonFx.velocity_measurement.period]
-        type = "talon.velocity.period"
-       order = 10
-        menu = "velocity measurement period"
-        device = "fx"
-      [rio.talonFx.velocity_measurement.window]
-        type = "talon.param"
-        order = 20
-        menu = "velocity measurement window"
-        param = "VELOCITY_MEASUREMENT_WINDOW"
-        device = "fx"
-    [rio.talonFx.voltage_compensation]
-      type = "menu"
-      order = 27
-      menu = "configure voltage compensation"
-      [rio.talonFx.voltage_compensation.enabled]
-        type = "talon.param"
-        order = 10
-        menu = "voltage compensation enabled"
-        param = "VOLTAGE_COMP_ENABLE"
-        device = "fx"
-      [rio.talonFx.voltage_compensation.saturation_voltage]
-        type = "talon.param"
-        order = 20
-        menu = "voltage compensation saturation voltage"
-        param = "VOLTAGE_COMP_SATURATION"
-        device = "fx"
-      [rio.talonFx.voltage_compensation.filter]
-        type = "talon.param"
-        order = 30
-        menu = "voltage compensation measurement filter"
-        param = "VOLTAGE_MEASUREMENT_FILTER"
-        device = "fx"
-    [rio.talonFx.frame]
-      type = "menu"
-      order = 60
-      menu = "configure CAN bus frames"
-      [rio.talonFx.frame.grapher]
-        type = "default"
-        order = 10
-        menu = "set grapher defaults"
-        device = "fx"
-      [rio.talonFx.frame.general]
-        type = "talon.param"
-        order = 20
-        menu = "general status frame"
-        param = "STATUS_GENERAL"
-        device = "fx"
-      [rio.talonFx.frame.feedback_0]
-        type = "talon.param"
-        order = 30
-        menu = "feedback 0 status frame"
-        param = "STATUS_FEEDBACK0"
-        device = "fx"
-      [rio.talonFx.frame.quad_encoder]
-        type = "talon.param"
-        order = 40
-        menu = "quad encoder status frame"
-        param = "STATUS_QUAD_ENCODER"
-        device = "fx"
-      [rio.talonFx.frame.ain_temp_vbat]
-        type = "talon.param"
-        order = 50
-        menu = "ain/temp/vbat status frame"
-        param = "STATUS_AIN_TEMP_VBAT"
-        device = "fx"
-      [rio.talonFx.frame.pulse_width]
-        type = "talon.param"
-        order = 60
-        menu = "pulse width status frame"
-        param = "STATUS_PULSE_WIDTH"
-        device = "fx"
-      [rio.talonFx.frame.motion]
-        type = "talon.param"
-        order = 70
-        menu = "motion status frame"
-        param = "STATUS_MOTION"
-        device = "fx"
-      [rio.talonFx.frame.pidf_0]
-        type = "talon.param"
-        order = 80
-        menu = "PIDF 0 status frame"
-        param = "STATUS_PIDF0"
-        device = "fx"
-      [rio.talonFx.frame.misc]
-        type = "talon.param"
-        order = 90
-        menu = "Misc. status frame"
-        param = "STATUS_MISC"
-        device = "fx"
-      [rio.talonFx.frame.comm]
-        type = "talon.param"
-        order = 100
-        menu = "Communication status frame"
-        param = "STATUS_COMM"
-        device = "fx"
-      [rio.talonFx.frame.motionBuff]
-        type = "talon.param"
-        order = 110
-        menu = "Motion Profile Buffer status frame"
-        param = "STATUS_MOTION_BUFF"
-        device = "fx"
-      [rio.talonFx.frame.feedback1]
-        type = "talon.param"
-        order = 120
-        menu = "Feedback1 status frame"
-        param = "STATUS_FEEDBACK1"
-        device = "fx"
-      [rio.talonFx.frame.pidf1]
-        type = "talon.param"
-        order = 130
-        menu = "PIDF1 status frame"
-        param = "STATUS_PIDF1"
-        device = "fx"
-      [rio.talonFx.frame.firmware]
-        type = "talon.param"
-        order = 140
-        menu = "Firmware and API status frame"
-        param = "STATUS_FIRMWARE_API"
-        device = "fx"
-      [rio.talonFx.frame.gadgeteer]
-        type = "talon.param"
-        order = 150
-        menu = "UART Gadgeteer status frame"
-        param = "STATUS_UART_GADGETEER"
-        device = "fx"
-    [rio.talonFx.limit]
-      type = "menu"
-      order = 70
-      menu = "configure soft and hard limits"
-      [rio.talonFx.limit.forward_hard_source]
-        type = "talon.hard.source"
-        order = 10
-        forward = true
-        menu = "forward hard limit source"
-        device = "fx"
-        help = "Select a limit switch source from the feedback connector, remote Talon SRX, CANifier, or deactivate the feature."
-      [rio.talonFx.limit.forward_hard_normal]
-        type = "talon.hard.normal"
-        order = 20
-        forward = true
-        menu = "forward hard limit normal"
-        device = "fx"
-       help = "Select whether this limit switch is normally open, normally closed, or disabled, which overrides the setting from the web-based configuration page."
-      [rio.talonFx.limit.reverse_hard_source]
-        type = "talon.hard.source"
-        order = 30
-        forward = false
-        menu = "reverse hard limit source"
-        device = "fx"
-        help = "Select a limit switch source from the feedback connector, remote Talon SRX, CANifier, or deactivate the feature."
-      [rio.talonFx.limit.reverse_hard_normal]
-        type = "talon.hard.normal"
-        order = 40
-        forward = false
-        menu = "reverse hard limit normal"
-        device = "fx"
-        help = "Select whether this limit switch is normally open, normally closed, or disabled, which overrides the setting from the web-based configuration page."
-      [rio.talonFx.limit.forward_soft_enabled]
-        type = "talon.param"
-        order = 50
-        menu = "forward soft limit enabled"
-        param = "SOFT_LIMIT_ENABLE_FORWARD"
-        device = "fx"
-      [rio.talonFx.limit.forward_soft_threshold]
-        type = "talon.param"
-        order = 60
-        menu = "forward soft limit threshold"
-        param = "SOFT_LIMIT_THRESHOLD_FORWARD"
-        device = "fx"
-      [rio.talonFx.limit.reverse_soft_enabled]
-        type = "talon.param"
-        order = 70
-        menu = "reverse soft limit enabled"
-        param = "SOFT_LIMIT_ENABLE_REVERSE"
-        device = "fx"
-      [rio.talonFx.limit.reverse_soft_threshold]
-        type = "talon.param"
-        order = 80
-        menu = "reverse soft limit threshold"
-        param = "SOFT_LIMIT_THRESHOLD_REVERSE"
-        device = "fx"
-    [rio.talonFx.factory_default]
-      type = "talon.param"
-      order = 80
-      menu = "configure factory defaults"
-      param = "FACTORY_DEFAULTS"
-      device = "fx"
+#    [rio.talonFx]
+#    type = "menu"
+#    order = 15
+#    menu = "work with legacy talonFXs"
+#    [rio.talonFx.run]
+#      type = "talon.run"
+#      order = 5
+#      menu = "run active talonFXs"
+#      device = "fx"
+#    [rio.talonFx.select]
+#      type = "talon.select"
+#      order = 10
+#      menu = "active talonFXs"
+#      device = "fx"
+#    [rio.talonFx.status]
+#      type = "talon.status"
+#      order = 12
+#      menu = "status of active talonFXs"
+#      device = "fx"
+#    [rio.talonFx.mode]
+#      type = "talon.mode"
+#      order = 15
+#      menu = "control mode"
+#      device = "fx"
+#      help = "The output mode to apply. In PercentOutput, the output is between -1.0 and 1.0, with 0.0 as stopped. In Current mode, output value is in amperes. In Velocity mode, output value is in position change / 100ms. In Position mode, output value is in encoder ticks or an analog value, depending on the sensor. In Follower mode, the output value is the integer device ID of the talon to duplicate."
+#    [rio.talonFx.sensor]
+#      type = "menu"
+#      order = 17
+#      menu = "configure feedback sensors"
+#      device = "fx"
+#      [rio.talonFx.sensor.primary]
+#        type = "talon.sensor"
+#        order = 10
+#        menu = "primary closed-loop sensor"
+#        pid = 0
+#        device = "fx"
+#        help = "Sensors for motor controllers provide feedback about the position, velocity, and acceleration of the system using that motor controller."
+#      [rio.talonFx.sensor.auxiliary]
+#        type = "talon.sensor"
+#        order = 20
+#        menu = "auxiliary closed-loop sensor"
+#        pid = 1
+#        device = "fx"
+#        help = "Sensors for motor controllers provide feedback about the position, velocity, and acceleration of the system using that motor controller."
+#      [rio.talonFx.sensor.primary_position]
+#        type = "talon.sensor.position"
+#        order = 30
+#        menu = "primary sensor feedback position"
+#        param = "SENSOR_POSITION"
+#        pid = 0
+#        device = "fx"
+#      [rio.talonFx.sensor.auxiliary_position]
+#        type = "talon.sensor.position"
+#        order = 40
+#        menu = "auxiliary sensor feedback position"
+#        param = "SENSOR_POSITION"
+#        pid = 1
+#        device = "fx"
+#      [rio.talonFx.sensor.primary_coefficient]
+#        type = "talon.sensor.coefficient"
+#        order = 50
+#        menu = "primary sensor feedback coefficient"
+#        param = "FEEDBACK_COEFFICIENT"
+#        pid = 0
+#        device = "fx"
+#      [rio.talonFx.sensor.auxiliary_coefficient]
+#        type = "talon.sensor.coefficient"
+#        order = 60
+#        menu = "auxiliary sensor feedback coefficient"
+#        param = "FEEDBACK_COEFFICIENT"
+#        pid = 1
+#        device = "fx"
+#      [rio.talonFx.sensor.phase]
+#        type = "talon.param"
+#        order = 70
+#        menu = "sensor phase reversed"
+#        param = "SENSOR_PHASE"
+#        device = "fx"
+#      [rio.talonFx.sensor.offset]
+#        type = "talon.param"
+#        order = 80
+#        menu = "integrated sensor offset degrees"
+#        param = "INTEGRATED_SENSOR_OFFSET_DEGREES"
+#        device = "fx"
+#      [rio.talonFx.sensor.absolute_range]
+#        type = "talon.absoluteRange"
+#        order = 90
+#        menu = "absolute sensor range"
+#        device = "fx"
+#      [rio.talonFx.sensor.initialization_strategy]
+#        type = "talon.initStrategy"
+#        order = 100
+#        menu = "integrated sensor initialization strategy"
+#        device = "fx"
+#    [rio.talonFx.slot]
+#      type = "menu"
+#      order = 20
+#      menu = "configure PID slots"
+#      device = "fx"
+#      [rio.talonFx.slot.select]
+#        type = "talon.slot.select"
+#        order = 10
+#        menu = "active slot"
+#        device = "fx"
+#        help = "The Talon FX supports up to 4 PIDF Slots, each with a unique set of gains that are stored persistently across power cycles. "
+#      [rio.talonFx.slot.P]
+#        type ="talon.param"
+#        order = 20
+#        param = "SLOT_P"
+#        device = "fx"
+#      [rio.talonFx.slot.I]
+#        type ="talon.param"
+#        order = 30
+#        param = "SLOT_I"
+#        device = "fx"
+#      [rio.talonFx.slot.D]
+#        type ="talon.param"
+#        order = 40
+#        param = "SLOT_D"
+#        device = "fx"
+#      [rio.talonFx.slot.F]
+#        type ="talon.param"
+#        order = 50
+#        param = "SLOT_F"
+#        device = "fx"
+#      [rio.talonFx.slot.IZone]
+#        type ="talon.param"
+#        menu = "I Zone"
+#        order = 60
+#        param = "SLOT_I_ZONE"
+#        device = "fx"
+#      [rio.talonFx.slot.AllowableErr]
+#        type ="talon.param"
+#        menu = "Allowable Error"
+#        order = 70
+#        param = "SLOT_ALLOWABLE_ERR"
+#        device = "fx"
+#      [rio.talonFx.slot.MaxIAccum]
+#        type ="talon.param"
+#        menu = "Max I Accum"
+#        order = 80
+#        param = "SLOT_MAX_I_ACCUM"
+#        device = "fx"
+#      [rio.talonFx.slot.PeakOutput]
+#        type = "talon.param"
+#        menu = "Peak output"
+#        order = 90
+#        param = "SLOT_PEAK_OUTPUT"
+#        device = "fx"
+#    [rio.talonFx.motion_magic]
+#      type = "menu"
+#      order = 22
+#      menu = "configure motion magic"
+#      device = "fx"
+#      [rio.talonFx.motion_magic.cruise_velocity]
+#        type = "talon.param"
+#        order = 10
+#        menu = "motion magic cruise velocity"
+#        param = "MOTION_CRUISE_VELOCITY"
+#        device = "fx"
+#      [rio.talonFx.motion_magic.acceleration]
+#        type = "talon.param"
+#        order = 20
+#        menu = "motion magic acceleration"
+#        param = "MOTION_ACCELERATION"
+#        device = "fx"
+#    [rio.talonFx.current]
+#      type = "menu"
+#      order = 23
+#      menu = "configure current limits"
+#      [rio.talonFx.current.stator_enabled]
+#        type = "talon.param"
+#        order = 10
+#        menu = "stator current: limit enabled"
+#        param = "STATOR_CURRENT_LIMIT_ENABLE"
+#        device = "fx"
+#      [rio.talonFx.current.stator_limit]
+#        type = "talon.param"
+#        order = 20
+#        menu = "stator current: current limit (A)"
+#        param = "STATOR_CURRENT_LIMIT"
+#        device = "fx"
+#      [rio.talonFx.current.stator_triggerCurrent]
+#        type = "talon.param"
+#        order = 30
+#        menu = "stator current: trigger current (A)"
+#        param = "STATOR_CURRENT_LIMIT_THRES_CURRENT"
+#        device = "fx"
+#        help = "current must exceed this threshold before current limiting occurs. If this number is less than currentLimit than that limit is used as the threshold"
+#      [rio.talonFx.current.stator_triggerTime]
+#        type = "talon.param"
+#        order = 40
+#        menu = "stator current: trigger time (s)"
+#        param = "STATOR_CURRENT_LIMIT_THRES_TIME"
+#        device = "fx"
+#        help = "current must exceed the threshold for this long before limiting occurs"
+#      [rio.talonFx.current.supply_enabled]
+#        type = "talon.param"
+#        order = 50
+#        menu = "supply current: limit enabled"
+#        param = "SUPPLY_CURRENT_LIMIT_ENABLE"
+#        device = "fx"
+#      [rio.talonFx.current.supply_limit]
+#        type = "talon.param"
+#        order = 60
+#        menu = "supply current: current limit (A)"
+#        param = "SUPPLY_CURRENT_LIMIT"
+#        device = "fx"
+#      [rio.talonFx.current.supply_triggerCurrent]
+#        type = "talon.param"
+#        order = 70
+#        menu = "supply current: trigger current (A)"
+#        param = "SUPPLY_CURRENT_LIMIT_THRES_CURRENT"
+#        device = "fx"
+#        help = "current must exceed this threshold before limiting occurs. If this number is less than currentLimit, currentLimit is used as the threshold"
+#      [rio.talonFx.current.supply_triggerTime]
+#        type = "talon.param"
+#        order = 80
+#        menu = "supply current: trigger time (s)"
+#        param = "SUPPLY_CURRENT_LIMIT_THRES_TIME"
+#        device = "fx"
+#        help = "current must exceed the threshold for this long before limiting occurs"
+#    [rio.talonFx.output]
+#      type = "menu"
+#      order = 25
+#      menu = "configure motor output"
+#      [rio.talonFx.output.brake]
+#        type = "talon.brake"
+#        order = 10
+#        menu = "brake mode"
+#        help = "Mode of operation during Neutral output, brake or coast."
+#        device = "fx"
+#      [rio.talonFx.output.reversed]
+#        type = "talon.param"
+#        order = 20
+#        menu = "motor output reversed"
+#        param = "OUTPUT_REVERSED"
+#        device = "fx"
+#      [rio.talonFx.output.open-loop_ramp]
+#        type = "talon.param"
+#        order = 30
+#        menu = "open-loop ramp rate"
+#        param = "OPEN_LOOP_RAMP"
+#        device = "fx"
+#      [rio.talonFx.output.closed-loop_ramp]
+#        type = "talon.param"
+#        order = 40
+#        menu = "closed-loop ramp rate"
+#        param = "CLOSED_LOOP_RAMP"
+#        device = "fx"
+#      [rio.talonFx.output.forward_peak_output]
+#        type = "talon.param"
+#        order = 50
+#        menu = "forward peak output"
+#        param = "PEAK_OUTPUT_FORWARD"
+#        device = "fx"
+#      [rio.talonFx.output.reverse_peak_output]
+#        type = "talon.param"
+#        order = 60
+#        menu = "reverse peak output"
+#        param = "PEAK_OUTPUT_REVERSE"
+#        device = "fx"
+#      [rio.talonFx.output.forward_nominal_output]
+#        type = "talon.param"
+#        order = 70
+#        menu = "forward nominal output"
+#        param = "NOMINAL_OUTPUT_FORWARD"
+#        device = "fx"
+#      [rio.talonFx.output.reverse_nominal_output]
+#        type = "talon.param"
+#        order = 80
+#        menu = "reverse nominal output"
+#        param = "NOMINAL_OUTPUT_REVERSE"
+#        device = "fx"
+#      [rio.talonFx.output.neutral_deadband]
+#        type = "talon.param"
+#        order = 90
+#        menu = "neutral deadband"
+#        param = "NEUTRAL_DEADBAND"
+#        device = "fx"
+#      [rio.talonFx.output.motor_commutation]
+#        type = "talon.commutation"
+#        order = 100
+#        menu = "motor commutation"
+#        device = "fx"
+#    [rio.talonFx.velocity_measurement]
+#      type = "menu"
+#      order = 26
+#      menu = "configure velocity measurement"
+#      [rio.talonFx.velocity_measurement.period]
+#        type = "talon.velocity.period"
+#       order = 10
+#        menu = "velocity measurement period"
+#        device = "fx"
+#      [rio.talonFx.velocity_measurement.window]
+#        type = "talon.param"
+#        order = 20
+#        menu = "velocity measurement window"
+#        param = "VELOCITY_MEASUREMENT_WINDOW"
+#        device = "fx"
+#    [rio.talonFx.voltage_compensation]
+#      type = "menu"
+#      order = 27
+#      menu = "configure voltage compensation"
+#      [rio.talonFx.voltage_compensation.enabled]
+#        type = "talon.param"
+#        order = 10
+#        menu = "voltage compensation enabled"
+#        param = "VOLTAGE_COMP_ENABLE"
+#        device = "fx"
+#      [rio.talonFx.voltage_compensation.saturation_voltage]
+#        type = "talon.param"
+#        order = 20
+#        menu = "voltage compensation saturation voltage"
+#        param = "VOLTAGE_COMP_SATURATION"
+#        device = "fx"
+#      [rio.talonFx.voltage_compensation.filter]
+#        type = "talon.param"
+#        order = 30
+#        menu = "voltage compensation measurement filter"
+#        param = "VOLTAGE_MEASUREMENT_FILTER"
+#        device = "fx"
+#    [rio.talonFx.frame]
+#      type = "menu"
+#      order = 60
+#      menu = "configure CAN bus frames"
+#      [rio.talonFx.frame.grapher]
+#        type = "default"
+#        order = 10
+#        menu = "set grapher defaults"
+#        device = "fx"
+#      [rio.talonFx.frame.general]
+#        type = "talon.param"
+#        order = 20
+#        menu = "general status frame"
+#        param = "STATUS_GENERAL"
+#        device = "fx"
+#      [rio.talonFx.frame.feedback_0]
+#        type = "talon.param"
+#        order = 30
+#        menu = "feedback 0 status frame"
+#        param = "STATUS_FEEDBACK0"
+#        device = "fx"
+#      [rio.talonFx.frame.quad_encoder]
+#        type = "talon.param"
+#        order = 40
+#        menu = "quad encoder status frame"
+#        param = "STATUS_QUAD_ENCODER"
+#        device = "fx"
+#      [rio.talonFx.frame.ain_temp_vbat]
+#        type = "talon.param"
+#        order = 50
+#        menu = "ain/temp/vbat status frame"
+#        param = "STATUS_AIN_TEMP_VBAT"
+#        device = "fx"
+#      [rio.talonFx.frame.pulse_width]
+#        type = "talon.param"
+#        order = 60
+#        menu = "pulse width status frame"
+#        param = "STATUS_PULSE_WIDTH"
+#        device = "fx"
+#      [rio.talonFx.frame.motion]
+#        type = "talon.param"
+#        order = 70
+#        menu = "motion status frame"
+#        param = "STATUS_MOTION"
+#        device = "fx"
+#      [rio.talonFx.frame.pidf_0]
+#        type = "talon.param"
+#        order = 80
+#        menu = "PIDF 0 status frame"
+#        param = "STATUS_PIDF0"
+#        device = "fx"
+#      [rio.talonFx.frame.misc]
+#        type = "talon.param"
+#        order = 90
+#        menu = "Misc. status frame"
+#        param = "STATUS_MISC"
+#        device = "fx"
+#      [rio.talonFx.frame.comm]
+#        type = "talon.param"
+#        order = 100
+#        menu = "Communication status frame"
+#        param = "STATUS_COMM"
+#        device = "fx"
+#      [rio.talonFx.frame.motionBuff]
+#        type = "talon.param"
+#        order = 110
+#        menu = "Motion Profile Buffer status frame"
+#        param = "STATUS_MOTION_BUFF"
+#        device = "fx"
+#      [rio.talonFx.frame.feedback1]
+#        type = "talon.param"
+#        order = 120
+#        menu = "Feedback1 status frame"
+#        param = "STATUS_FEEDBACK1"
+#        device = "fx"
+#      [rio.talonFx.frame.pidf1]
+#        type = "talon.param"
+#        order = 130
+#        menu = "PIDF1 status frame"
+#        param = "STATUS_PIDF1"
+#        device = "fx"
+#      [rio.talonFx.frame.firmware]
+#        type = "talon.param"
+#        order = 140
+#        menu = "Firmware and API status frame"
+#        param = "STATUS_FIRMWARE_API"
+#        device = "fx"
+#      [rio.talonFx.frame.gadgeteer]
+#        type = "talon.param"
+#        order = 150
+#        menu = "UART Gadgeteer status frame"
+#        param = "STATUS_UART_GADGETEER"
+#        device = "fx"
+#    [rio.talonFx.limit]
+#      type = "menu"
+#      order = 70
+#      menu = "configure soft and hard limits"
+#      [rio.talonFx.limit.forward_hard_source]
+#        type = "talon.hard.source"
+#        order = 10
+#        forward = true
+#        menu = "forward hard limit source"
+#        device = "fx"
+#        help = "Select a limit switch source from the feedback connector, remote Talon SRX, CANifier, or deactivate the feature."
+#      [rio.talonFx.limit.forward_hard_normal]
+#        type = "talon.hard.normal"
+#        order = 20
+#        forward = true
+#        menu = "forward hard limit normal"
+#        device = "fx"
+#       help = "Select whether this limit switch is normally open, normally closed, or disabled, which overrides the setting from the web-based configuration page."
+#      [rio.talonFx.limit.reverse_hard_source]
+#        type = "talon.hard.source"
+#        order = 30
+#        forward = false
+#        menu = "reverse hard limit source"
+#        device = "fx"
+#        help = "Select a limit switch source from the feedback connector, remote Talon SRX, CANifier, or deactivate the feature."
+#      [rio.talonFx.limit.reverse_hard_normal]
+#        type = "talon.hard.normal"
+#        order = 40
+#        forward = false
+#        menu = "reverse hard limit normal"
+#        device = "fx"
+#        help = "Select whether this limit switch is normally open, normally closed, or disabled, which overrides the setting from the web-based configuration page."
+#      [rio.talonFx.limit.forward_soft_enabled]
+#        type = "talon.param"
+#        order = 50
+#        menu = "forward soft limit enabled"
+#        param = "SOFT_LIMIT_ENABLE_FORWARD"
+#        device = "fx"
+#      [rio.talonFx.limit.forward_soft_threshold]
+#        type = "talon.param"
+#        order = 60
+#        menu = "forward soft limit threshold"
+#        param = "SOFT_LIMIT_THRESHOLD_FORWARD"
+#        device = "fx"
+#      [rio.talonFx.limit.reverse_soft_enabled]
+#        type = "talon.param"
+#        order = 70
+#        menu = "reverse soft limit enabled"
+#        param = "SOFT_LIMIT_ENABLE_REVERSE"
+#        device = "fx"
+#      [rio.talonFx.limit.reverse_soft_threshold]
+#        type = "talon.param"
+#        order = 80
+#        menu = "reverse soft limit threshold"
+#        param = "SOFT_LIMIT_THRESHOLD_REVERSE"
+#        device = "fx"
+#    [rio.talonFx.factory_default]
+#      type = "talon.param"
+#      order = 80
+#      menu = "configure factory defaults"
+#      param = "FACTORY_DEFAULTS"
+#      device = "fx"
 
     [rio.FxP6]
     type = "menu"
@@ -953,42 +953,50 @@ type = "menu"
       order = 10
       menu = "run active talon fx's"
       bus = "rio"
+      device = "fx"
     [rio.FxP6.select]
       type = "p6.select"
       order = 20
       menu = "active fx's"
       bus = "rio"
+      device = "fx"
     [rio.FxP6.status]
       type = "p6.status"
       order = 30
       menu = "status of active talonFx's"
       bus = "rio"
+      device = "fx"
     [rio.FxP6.mode]
       type = "p6.modeMenu"
       order = 40
       menu = "config active mode"
       bus = "rio"
+      device = "fx"
       [rio.FxP6.mode.status]
         type = "p6.modeStatus"
         order = 10
         menu = "active mode"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.mode.select]
         type = "p6.mode"
         order = 15
         menu = "select mode type"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.mode.openLoop]
         type = "menu"
         order = 20
         menu = "open loop modes"
         bus = "rio"
+        device = "fx"
         [rio.FxP6.mode.openLoop.deadband]
           type = "p6.param"
           order = 20
           menu = "set torque current deadband (A)"
           param = "TORQUE_CURRENT_DEADBAND"
           bus = "rio"
+          device = "fx"
       [rio.FxP6.mode.position]
         type = "menu"
         order = 30
@@ -999,12 +1007,14 @@ type = "menu"
           menu = "velocity target"
           param = "VELOCITY"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.mode.position.feedFwd]
           type = "p6.param"
           order = 30
           menu = "velocity feed forward"
           param = "FEED_FORWARD"
           bus = "rio"
+          device = "fx"
       [rio.FxP6.mode.velocity]
         type = "menu"
         order = 40
@@ -1015,12 +1025,14 @@ type = "menu"
           menu = "select acceleration target"
           param = "ACCELERATION"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.mode.velocity.feedFwd]
           type = "p6.param"
           order = 30
           menu = "feed forward"
           param = "FEED_FORWARD"
           bus = "rio"
+          device = "fx"
       [rio.FxP6.mode.motion]
         type = "menu"
         order = 50
@@ -1030,30 +1042,35 @@ type = "menu"
           order = 10
           menu = "select motion magic type"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.mode.motion.feedFwd]
           type = "p6.param"
           order = 20
           menu = "select feed forward (sel unit)"
           param = "FEED_FORWARD"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.mode.motion.velocity]
           type = "p6.param"
           order = 30
           menu = "select velocity target (rot/s)"
           param = "VELOCITY"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.mode.motion.acceleration]
           type = "p6.param"
           order = 40
           menu = "select acceleration target (rot/s^2)"
           param = "ACCELERATION"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.mode.motion.jerk]
           type = "p6.param"
           order = 50
           menu = "select jerk target (rot/s^3)"
           param = "JERK"
           bus = "rio"
+          device = "fx"
       [rio.FxP6.mode.diff]
         type = "menu"
         order = 60
@@ -1063,18 +1080,21 @@ type = "menu"
           order = 10
           menu = "select differential type"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.mode.diff.slot]
           type = "p6.param"
           order = 20
           menu = "select differential slot"
           param = "DIFFERENTIAL_SLOT"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.mode.diff.target]
           type = "p6.param"
           order = 30
           menu = "select differential target (rots)"
           param = "DIFFERENTIAL_TARGET"
           bus = "rio"
+          device = "fx"
       [rio.FxP6.mode.follow]
         type = "menu"
         order = 70
@@ -1084,90 +1104,105 @@ type = "menu"
           order = 10
           menu = "select follower type"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.mode.follow.oppose]
           type = "p6.param"
           order = 20
           menu = "oppose leader direction"
           param = "OPPOSE_MAIN"
           bus = "rio"
+          device = "fx"
       [rio.FxP6.mode.neutral]
         type = "menu"
         order = 80
-        memnu = "neutral modes"
+        menu = "neutral modes"
         [rio.FxP6.mode.neutral.select]
           type = "p6.neutralOut"
           order = 10
           menu = "select neutral output"
           bus = "rio"
+          device = "fx"
       [rio.FxP6.mode.foc]
         type = "p6.param"
         order = 100
         menu = "(pro) enable FOC"
         param = "FOC"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.mode.overrideNeut]
         type = "p6.param"
         order = 110
         menu = "override neutral mode"
         param = "OVERRIDE_NEUTRAL"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.mode.limFwd]
         type = "p6.param"
         order = 120
         menu = "limit forward motion"
         param = "LIM_FWD_MOT"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.mode.limRev]
         type = "p6.param"
         order = 130
         menu = "limit reverse motion"
         param = "LIM_REV_MOT"
         bus = "rio"
+        device = "fx"
     [rio.FxP6.units]
       type = "p6.units"
       order = 50
       menu = "select active units"
       bus = "rio"
+      device = "fx"
     [rio.FxP6.feedback]
       type = "menu"
       order = 60
       menu = "setup feedback configs"
       bus = "rio"
+      device = "fx"
       [rio.FxP6.feedback.position]
         type = "p6.param"
         order = 5
         menu = "set position"
         param = "POSITION"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.feedback.offset]
         type = "p6.param"
         order = 10
         menu = "set rotor offset"
         param = "ROTOR_OFFSET"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.feedback.sense2mech]
         type = "p6.param"
         order = 20
         menu = "set sensor to mechanism ratio"
         param = "SENSOR_TO_MECH_RATIO"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.feedback.rotor2sense]
         type = "p6.param"
         order = 30
         menu = "set rotor to sensor ratio"
         param = "ROTOR_TO_SENSOR_RATIO"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.feedback.source]
         type = "p6.feedback"
         order = 35
         menu = "set feedback source"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.feedback.remoteId]
         type = "p6.param"
         order = 40
         menu = "set remote sensor id"
         param = "REMOTE_SENSOR_ID"
         bus = "rio"
+        device = "fx"
     [rio.FxP6.slot]
       type = "menu"
       order = 70
@@ -1177,53 +1212,62 @@ type = "menu"
         order = 10
         menu = "active slot"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.slot.kP]
         type = "p6.param"
         order = 20
         menu = "kP"
         param = "SLOT_KP"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.slot.kI]
         type = "p6.param"
         order = 30
         menu = "kI"
         param = "SLOT_KI"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.slot.kD]
         type = "p6.param"
         order = 40
         menu = "kD"
         param = "SLOT_KD"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.slot.kS]
         type = "p6.param"
         order = 50
         menu = "kS"
         param = "SLOT_KS"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.slot.kV]
         type = "p6.param"
         order = 60
         menu = "kV"
         param = "SLOT_KV"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.slot.kA]
         type = "p6.param"
         order = 65
         menu = "kA"
         param = "SLOT_KA"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.slot.kG]
         type = "p6.param"
         order = 70
         menu = "kG"
         param = "SLOT_KG"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.slot.gravity]
         type = "p6.gravity"
         order = 80
         menu = "gravity type"
         bus = "rio"
+        device = "fx"
     [rio.FxP6.motion]
       type = "menu"
       order = 80
@@ -1234,30 +1278,35 @@ type = "menu"
         menu = "acceleration"
         param = "MM_ACCEL"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.motion.cruise]
         type = "p6.param"
         order = 20
         menu = "cruise velocity"
         param = "MM_CRUISE_VEL"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.motion.jerk]
         type = "p6.param"
         order = 30
         menu = "jerk"
         param = "MM_JERK"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.motion.kA]
         type = "p6.param"
         order = 40
         menu = "Expo kA"
         param = "MM_EXPO_KA"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.motion.kV]
         type = "p6.param"
         order = 50
         menu = "Expo kV"
         param = "MM_EXPO_KV"
         bus = "rio"
+        device = "fx"
     [rio.FxP6.diff]
       type = "menu"
       order = 90
@@ -1268,30 +1317,41 @@ type = "menu"
         menu = "peak differential duty cycle"
         param = "PEAK_DIFF_DC"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.diff.torque]
         type = "p6.param"
         order = 20
         menu = "peak differential torque current"
         param = "PEAK_DIFF_TORQUE"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.diff.volt]
         type = "p6.param"
         order = 30
         menu = "peak differential voltage"
         param = "PEAK_DIFF_VOLT"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.diff.remote]
         type = "p6.param"
         order = 40
         menu = "differential remote id"
         param = "DIFF_SENSOR_REMOTE_ID"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.diff.fx]
         type = "p6.param"
         order = 50
         menu = "differential fx id"
         param = "DIFF_FX_ID"
         bus = "rio"
+        device = "fx"
+      [rio.FxP6.diff.source]
+        type = "p6.diffSource"
+        order = 60
+        menu = "differential source"
+        bus = "rio"
+        device = "fx"
     [rio.FxP6.current]
       type = "menu"
       order = 100
@@ -1302,36 +1362,42 @@ type = "menu"
         menu = "stator limit enable"
         param = "STATOR_LIM_EN"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.current.statorLim]
         type = "p6.param"
         order = 20
         menu = "stator current limit"
         param = "STATOR_LIM"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.current.suppEn]
         type = "p6.param"
         order = 30
         menu = "supply limit enable"
         param = "SUPP_LIM_EN"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.current.suppLim]
         type = "p6.param"
         order = 40
-        menu = "supply current limit"
-        param = "SUPP_LIM"
+        menu = "supply current lower limit"
+        param = "SUPP_LOWER_LIM"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.current.tripI]
         type = "p6.param"
         order = 50
-        menu = "supply current trip threshold (A)"
-        param = "SUPP_TRIP_THRES"
+        menu = "supply current limit (A)"
+        param = "SUPP_LIM"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.current.tripT]
         type = "p6.param"
         order = 60
         menu = "supply current trip time (s)"
         param = "SUPP_TRIP_TIME"
         bus = "rio"
+        device = "fx"
     [rio.FxP6.motor]
       type = "menu"
       order = 110
@@ -1341,46 +1407,54 @@ type = "menu"
         order = 10
         menu = "motor inversion"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.motor.neutral]
         type = "p6.neutral"
         order = 20
         menu = "neutral mode"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.motor.duty]
         type = "menu"
         order = 30
         menu = "duty cycle configs"
         bus = "rio"
+        device = "fx"
         [rio.FxP6.motor.duty.peakFwd]
           type= "p6.param"
           order = 20
           menu = "peak forward %"
           param = "PEAK_FWD_DC"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.motor.duty.peakRev]
           type = "p6.param"
           order = 30
           menu = "peak reverse %"
           param = "PEAK_REV_DC"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.motor.duty.dead]
           type = "p6.param"
           order = 40
           menu = "neutral deadband (%)"
           param = "NEUTRAL_DEADBAND_DC"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.motor.duty.openRamp]
           type = "p6.param"
           order = 50
           menu = "open loop ramp (%)"
           param = "OPEN_LOOP_RAMP_DC"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.motor.duty.closedRamp]
           type = "p6.param"
           order = 60
           menu = "closed loop ramp (%)"
           param = "CLOSED_LOOP_RAMP_DC"
           bus = "rio"
+          device = "fx"
       [rio.FxP6.motor.volt]
         type = "menu"
         order = 40
@@ -1391,30 +1465,35 @@ type = "menu"
           menu = "peak forward (V)"
           param = "PEAK_FWD_V"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.motor.volt.peakRev]
           type = "p6.param"
           order = 20
           menu = "peak reverse (V)"
           param = "PEAK_REV_V"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.motor.volt.supplyConst]
           type = "p6.param"
           order = 30
           menu = "supply voltage time const"
           param = "SUPPLY_V_TIME_CONST"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.motor.volt.openRamp]
           type = "p6.param"
           order = 40
           menu = "open loop ramp (V)"
           param = "OPEN_LOOP_RAMP_V"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.motor.volt.closedRamp]
           type = "p6.param"
           order = 50
           menu = "closed loop ramp (V)"
           param = "CLOSED_LOOP_RAMP_V"
           bus = "rio"
+          device = "fx"
       [rio.FxP6.motor.torque]
         type = "menu"
         order = 50
@@ -1425,30 +1504,35 @@ type = "menu"
           menu = "peak forward (A)"
           param = "PEAK_FWD_I"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.motor.torque.peakRev]
           type = "p6.param"
           order = 20
           menu = "peak reverse (A)"
           param = "PEAK_REV_I"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.motor.torque.dead]
           type = "p6.param"
           order = 30
           menu = "neutral deadband (A)"
           param = "TORQUE_NEUTRAL_DEADBAND"
           bus = "rio"
-        [rio.FxP6.motor.openRamp]
+          device = "fx"
+        [rio.FxP6.motor.torque.openRamp]
           type = "p6.param"
           order = 40
           menu = "open loop ramp (A)"
           param = "OPEN_LOOP_RAMP_I"
           bus = "rio"
-        [rio.FxP6.motor.closedRamp]
+          device = "fx"
+        [rio.FxP6.motor.torque.closedRamp]
           type = "p6.param"
           order = 50
-          menuu = "closed loop ramp (A)"
+          menu = "closed loop ramp (A)"
           param = "CLOSED_LOOP_RAMP_I"
           bus = "rio"
+          device = "fx"
     [rio.FxP6.limits]
       type = "menu"
       order = 120
@@ -1463,68 +1547,80 @@ type = "menu"
           menu = "FWD limit enable"
           param = "FWD_HARD_EN"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.limits.hard.fwdNormal]
           type = "p6.fwdNorm"
-          order = 10
+          order = 15
           menu = "FWD limit normal"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.limits.hard.fwdSource]
           type = "p6.fwdSource"
           order = 20
           menu = "FWD limit source"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.limits.hard.fwdRemote]
           type = "p6.param"
           order = 30
           menu = "FWD limit remote id"
           param = "FWD_REMOTE_ID"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.limits.hard.fwdAutoSet]
           type = "p6.param"
           order = 40
           menu = "Autoset Position on FWD limit"
           param = "FWD_AUTOSET_POS"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.limits.hard.fwdAutoSetValue]
           type = "p6.param"
           order = 50
           menu = "FWD autoset position value"
           param = "FWD_AUTOSET_POS_VALUE"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.limits.hard.revEn]
           type = "p6.param"
           order = 60
           menu = "REV limit enable"
           param = "REV_HARD_EN"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.limits.hard.revNormal]
           type = "p6.revNorm"
           order = 70
           menu = "REV limit normal"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.limits.hard.revSource]
           type = "p6.revSource"
           order = 80
           menu = "REV limit source"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.limits.hard.revRemote]
           type = "p6.param"
           order = 90
           menu = "REV limit remote id"
           param = "REV_REMOTE_ID"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.limits.hard.revAutoSet]
           type = "p6.param"
           order = 100
           menu = "Autoset position on REV limit"
           param = "REV_AUTOSET_POS"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.limits.hard.revAutoSetValue]
           type = "p6.param"
           order = 110
           menu = "REV autoset position value"
           param = "REV_AUTOSET_POS_VALUE"
           bus = "rio"
+          device = "fx"
       [rio.FxP6.limits.soft]
         type = "menu"
         order = 20
@@ -1535,24 +1631,28 @@ type = "menu"
           menu = "FWD limit enable"
           param = "FWD_SOFT_EN"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.limits.soft.fwdThres]
           type = "p6.param"
           order = 20
           menu = "FWD soft limit"
           param = "FWD_SOFT_THRES"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.limits.soft.revEn]
           type = "p6.param"
           order = 30
           menu = "REV limit enable"
           param = "REV_SOFT_EN"
           bus = "rio"
+          device = "fx"
         [rio.FxP6.limits.soft.revThres]
           type = "p6.param"
           order = 40
           menu = "REV soft limit"
           param = "REV_SOFT_THRES"
           bus = "rio"
+          device = "fx"
     [rio.FxP6.audio]
       type = "menu"
       order = 130
@@ -1563,23 +1663,27 @@ type = "menu"
         menu = "allow music on disable"
         param = "ALLOW_MUSIC_DIS"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.audio.beepBoot]
         type = "p6.param"
         order = 20
         menu = "beep on boot"
         param = "BEEP_ON_BOOT"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.audio.beepConfig]
         type = "p6.param"
         order = 30
         menu = "beep on config"
         param = "BEEP_ON_CONFIG"
         bus = "rio"
+        device = "fx"
     [rio.FxP6.factory]
       type = "p6.factory"
       order = 140
       menu = "config factory default"
       bus = "rio"
+      device = "fx"
     [rio.FxP6.grapher]
       type = "menu"
       order = 150
@@ -1589,12 +1693,798 @@ type = "menu"
         order = 10
         menu = "set to default update rate"
         bus = "rio"
+        device = "fx"
       [rio.FxP6.grapher.rate]
         type = "p6.param"
         order = 20
         menu = "Grapher Frame Rate (Hz)"
         param = "GRAPHER_FRAME"
         bus = "rio"
+        device = "fx"
+
+[rio.FxsP6]
+  type = "menu"
+  order = 18
+  menu = "work with talonFXS's"
+  [rio.FxsP6.run]
+    type = "p6.run"
+    order = 10
+    menu = "run active talon fxs's"
+    bus = "rio"
+    device = "fxs"
+  [rio.FxsP6.select]
+    type = "p6.select"
+    order = 20
+    menu = "active fxs's"
+    bus = "rio"
+    device = "fxs"
+  [rio.FxsP6.status]
+    type = "p6.status"
+    order = 30
+    menu = "status of active talonfxs's"
+    bus = "rio"
+    device = "fxs"
+  [rio.FxsP6.mode]
+    type = "p6.modeMenu"
+    order = 40
+    menu = "config active mode"
+    bus = "rio"
+    device = "fxs"
+    [rio.FxsP6.mode.status]
+      type = "p6.modeStatus"
+      order = 10
+      menu = "active mode"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.mode.select]
+      type = "p6.mode"
+      order = 15
+      menu = "select mode type"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.mode.openLoop]
+      type = "menu"
+      order = 20
+      menu = "open loop modes"
+      bus = "rio"
+      device = "fxs"
+      [rio.FxsP6.mode.openLoop.deadband]
+        type = "p6.param"
+        order = 20
+        menu = "set torque current deadband (A)"
+        param = "TORQUE_CURRENT_DEADBAND"
+        bus = "rio"
+        device = "fxs"
+    [rio.FxsP6.mode.position]
+      type = "menu"
+      order = 30
+      menu = "position modes"
+      [rio.FxsP6.mode.position.velocity]
+        type = "p6.param"
+        order = 20
+        menu = "velocity target"
+        param = "VELOCITY"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.mode.position.feedFwd]
+        type = "p6.param"
+        order = 30
+        menu = "velocity feed forward"
+        param = "FEED_FORWARD"
+        bus = "rio"
+        device = "fxs"
+    [rio.FxsP6.mode.velocity]
+        type = "menu"
+        order = 40
+        menu = "velocity modes"
+        [rio.FxsP6.mode.velocity.acceleration]
+          type = "p6.param"
+          order = 20
+          menu = "select acceleration target"
+          param = "ACCELERATION"
+          bus = "rio"
+          device = "fxs"
+        [rio.FxsP6.mode.velocity.feedFwd]
+          type = "p6.param"
+          order = 30
+          menu = "feed forward"
+          param = "FEED_FORWARD"
+          bus = "rio"
+          device = "fxs"
+    [rio.FxsP6.mode.motion]
+      type = "menu"
+      order = 50
+      menu = "motion magic modes"
+      [rio.FxsP6.mode.motion.motionType]
+        type = "p6.mmType"
+        order = 10
+        menu = "select motion magic type"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.mode.motion.feedFwd]
+        type = "p6.param"
+        order = 20
+        menu = "select feed forward (sel unit)"
+        param = "FEED_FORWARD"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.mode.motion.velocity]
+        type = "p6.param"
+        order = 30
+        menu = "select velocity target (rot/s)"
+        param = "VELOCITY"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.mode.motion.acceleration]
+        type = "p6.param"
+        order = 40
+        menu = "select acceleration target (rot/s^2)"
+        param = "ACCELERATION"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.mode.motion.jerk]
+        type = "p6.param"
+        order = 50
+        menu = "select jerk target (rot/s^3)"
+        param = "JERK"
+        bus = "rio"
+        device = "fxs"
+    [rio.FxsP6.mode.diff]
+      type = "menu"
+      order = 60
+      menu = "differential modes"
+      [rio.FxsP6.mode.diff.diffType]
+        type = "p6.diffType"
+        order = 10
+        menu = "select differential type"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.mode.diff.slot]
+        type = "p6.param"
+        order = 20
+        menu = "select differential slot"
+        param = "DIFFERENTIAL_SLOT"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.mode.diff.target]
+        type = "p6.param"
+        order = 30
+        menu = "select differential target (rots)"
+        param = "DIFFERENTIAL_TARGET"
+        bus = "rio"
+        device = "fxs"
+    [rio.FxsP6.mode.follow]
+      type = "menu"
+      order = 70
+      menu = "follower modes"
+      [rio.FxsP6.mode.follow.followType]
+        type = "p6.followType"
+        order = 10
+        menu = "select follower type"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.mode.follow.oppose]
+        type = "p6.param"
+        order = 20
+        menu = "oppose leader direction"
+        param = "OPPOSE_MAIN"
+        bus = "rio"
+        device = "fxs"
+    [rio.FxsP6.mode.neutral]
+      type = "menu"
+      order = 80
+      menu = "neutral modes"
+      [rio.FxsP6.mode.neutral.select]
+        type = "p6.neutralOut"
+        order = 10
+        menu = "select neutral output"
+        bus = "rio"
+        device = "fxs"
+    [rio.FxsP6.mode.foc]
+      type = "p6.param"
+      order = 100
+      menu = "(pro) enable FOC"
+      param = "FOC"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.mode.overrideNeut]
+      type = "p6.param"
+      order = 110
+      menu = "override neutral mode"
+      param = "OVERRIDE_NEUTRAL"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.mode.limFwd]
+      type = "p6.param"
+      order = 120
+      menu = "limit forward motion"
+      param = "LIM_FWD_MOT"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.mode.limRev]
+      type = "p6.param"
+      order = 130
+      menu = "limit reverse motion"
+      param = "LIM_REV_MOT"
+      bus = "rio"
+      device = "fxs"
+  [rio.FxsP6.units]
+    type = "p6.units"
+    order = 50
+    menu = "select active units"
+    bus = "rio"
+    device = "fxs"
+  [rio.FxsP6.feedback]
+    type = "menu"
+    order = 60
+    menu = "setup feedback configs"
+    bus = "rio"
+    device = "fxs"
+    [rio.FxsP6.feedback.position]
+      type = "p6.param"
+      order = 5
+      menu = "set position"
+      param = "POSITION"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.feedback.offset]
+      type = "p6.param"
+      order = 10
+      menu = "set absolute sensor offset"
+      param = "ABS_SENSOR_OFFSET"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.feedback.discontinuity]
+      type = "p6.param"
+      order = 15
+      menu = "set absolute sensor discontinuity point"
+      param = "ABS_SENSOR_DISCONTINUITY"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.feedback.edge]
+      type = "p6.param"
+      order = 17
+      menu = "set quadrature edges per rotation"
+      param = "QUAD_EDGE_PER_ROT"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.feedback.sense2mech]
+      type = "p6.param"
+      order = 20
+      menu = "set sensor to mechanism ratio"
+      param = "SENSOR_TO_MECH_RATIO"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.feedback.rotor2sense]
+      type = "p6.param"
+      order = 30
+      menu = "set rotor to sensor ratio"
+      param = "ROTOR_TO_SENSOR_RATIO"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.feedback.source]
+      type = "p6.extFeedback"
+      order = 35
+      menu = "set external feedback source"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.feedback.phase]
+      type = "p6.phase"
+      order = 37
+      menu = "set sensor phase"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.feedback.remoteId]
+      type = "p6.param"
+      order = 40
+      menu = "set remote sensor id"
+      param = "REMOTE_SENSOR_ID"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.feedback.vFiltTC]
+      type = "p6.param"
+      order = 45
+      menu = "set velocity filter time constant"
+      param = "VELOCITY_FILTER_TIME_CONST"
+      bus = "rio"
+      device = "fxs"
+  [rio.FxsP6.slot]
+    type = "menu"
+    order = 70
+    menu = "setup slot configs"
+    [rio.FxsP6.slot.active]
+      type = "p6.slot"
+      order = 10
+      menu = "active slot"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.slot.kP]
+      type = "p6.param"
+      order = 20
+      menu = "kP"
+      param = "SLOT_KP"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.slot.kI]
+      type = "p6.param"
+      order = 30
+      menu = "kI"
+      param = "SLOT_KI"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.slot.kD]
+      type = "p6.param"
+      order = 40
+      menu = "kD"
+      param = "SLOT_KD"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.slot.kS]
+      type = "p6.param"
+      order = 50
+      menu = "kS"
+      param = "SLOT_KS"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.slot.kV]
+      type = "p6.param"
+      order = 60
+      menu = "kV"
+      param = "SLOT_KV"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.slot.kA]
+      type = "p6.param"
+      order = 65
+      menu = "kA"
+      param = "SLOT_KA"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.slot.kG]
+      type = "p6.param"
+      order = 70
+      menu = "kG"
+      param = "SLOT_KG"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.slot.gravity]
+      type = "p6.gravity"
+      order = 80
+      menu = "gravity type"
+      bus = "rio"
+      device = "fxs"
+  [rio.FxsP6.motion]
+    type = "menu"
+    order = 80
+    menu = "setup motion magic configs"
+    [rio.FxsP6.motion.accel]
+      type = "p6.param"
+      order = 10
+      menu = "acceleration"
+      param = "MM_ACCEL"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.motion.cruise]
+      type = "p6.param"
+      order = 20
+      menu = "cruise velocity"
+      param = "MM_CRUISE_VEL"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.motion.jerk]
+      type = "p6.param"
+      order = 30
+      menu = "jerk"
+      param = "MM_JERK"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.motion.kA]
+      type = "p6.param"
+      order = 40
+      menu = "Expo kA"
+      param = "MM_EXPO_KA"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.motion.kV]
+      type = "p6.param"
+      order = 50
+      menu = "Expo kV"
+      param = "MM_EXPO_KV"
+      bus = "rio"
+      device = "fxs"
+  [rio.FxsP6.diff]
+    type = "menu"
+    order = 90
+    menu = "setup differential configs"
+    [rio.FxsP6.diff.duty]
+      type = "p6.param"
+      order = 10
+      menu = "peak differential duty cycle"
+      param = "PEAK_DIFF_DC"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.diff.torque]
+      type = "p6.param"
+      order = 20
+      menu = "peak differential torque current"
+      param = "PEAK_DIFF_TORQUE"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.diff.volt]
+      type = "p6.param"
+      order = 30
+      menu = "peak differential voltage"
+      param = "PEAK_DIFF_VOLT"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.diff.remote]
+      type = "p6.param"
+      order = 40
+      menu = "differential remote id"
+      param = "DIFF_SENSOR_REMOTE_ID"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.diff.fx]
+      type = "p6.param"
+      order = 50
+      menu = "differential fx id"
+      param = "DIFF_FX_ID"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.diff.source]
+      type = "p6.diffSource"
+      order = 60
+      menu = "differential source"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.current]
+      type = "menu"
+      order = 100
+      menu = "setup current limit configs"
+      [rio.FxsP6.current.statorEn]
+        type = "p6.param"
+        order = 10
+        menu = "stator limit enable"
+        param = "STATOR_LIM_EN"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.current.statorLim]
+        type = "p6.param"
+        order = 20
+        menu = "stator current limit"
+        param = "STATOR_LIM"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.current.suppEn]
+        type = "p6.param"
+        order = 30
+        menu = "supply limit enable"
+        param = "SUPP_LIM_EN"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.current.suppLim]
+        type = "p6.param"
+        order = 40
+        menu = "supply current lower limit"
+        param = "SUPP_LOWER_LIM"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.current.tripI]
+        type = "p6.param"
+        order = 50
+        menu = "supply current limit (A)"
+        param = "SUPP_LIM"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.current.tripT]
+        type = "p6.param"
+        order = 60
+        menu = "supply current trip time (s)"
+        param = "SUPP_TRIP_TIME"
+        bus = "rio"
+        device = "fxs"
+  [rio.FxsP6.motor]
+    type = "menu"
+    order = 110
+    menu = "setup motor output and ramp configs"
+    [rio.FxsP6.motor.invert]
+      type = "p6.invert"
+      order = 10
+      menu = "motor inversion"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.motor.neutral]
+      type = "p6.neutral"
+      order = 20
+      menu = "neutral mode"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.motor.duty]
+      type = "menu"
+      order = 30
+      menu = "duty cycle configs"
+      bus = "rio"
+      device = "fxs"
+      [rio.FxsP6.motor.duty.peakFwd]
+        type= "p6.param"
+        order = 20
+        menu = "peak forward %"
+        param = "PEAK_FWD_DC"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.motor.duty.peakRev]
+        type = "p6.param"
+        order = 30
+        menu = "peak reverse %"
+        param = "PEAK_REV_DC"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.motor.duty.dead]
+        type = "p6.param"
+        order = 40
+        menu = "neutral deadband (%)"
+        param = "NEUTRAL_DEADBAND_DC"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.motor.duty.openRamp]
+        type = "p6.param"
+        order = 50
+        menu = "open loop ramp (%)"
+        param = "OPEN_LOOP_RAMP_DC"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.motor.duty.closedRamp]
+        type = "p6.param"
+        order = 60
+        menu = "closed loop ramp (%)"
+        param = "CLOSED_LOOP_RAMP_DC"
+        bus = "rio"
+        device = "fxs"
+    [rio.FxsP6.motor.volt]
+      type = "menu"
+      order = 40
+      menu = "voltage configs"
+      [rio.FxsP6.motor.volt.peakFwd]
+        type = "p6.param"
+        order = 10
+        menu = "peak forward (V)"
+        param = "PEAK_FWD_V"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.motor.volt.peakRev]
+        type = "p6.param"
+        order = 20
+        menu = "peak reverse (V)"
+        param = "PEAK_REV_V"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.motor.volt.supplyConst]
+        type = "p6.param"
+        order = 30
+        menu = "supply voltage time const"
+        param = "SUPPLY_V_TIME_CONST"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.motor.volt.openRamp]
+        type = "p6.param"
+        order = 40
+        menu = "open loop ramp (V)"
+        param = "OPEN_LOOP_RAMP_V"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.motor.volt.closedRamp]
+        type = "p6.param"
+        order = 50
+        menu = "closed loop ramp (V)"
+        param = "CLOSED_LOOP_RAMP_V"
+        bus = "rio"
+        device = "fxs"
+    [rio.FxsP6.motor.torque]
+      type = "menu"
+      order = 50
+      menu = "torque current configs"
+      [rio.FxsP6.motor.torque.openRamp]
+        type = "p6.param"
+        order = 40
+        menu = "open loop ramp (A)"
+        param = "OPEN_LOOP_RAMP_I"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.motor.torque.closedRamp]
+        type = "p6.param"
+        order = 50
+        menu = "closed loop ramp (A)"
+        param = "CLOSED_LOOP_RAMP_I"
+        bus = "rio"
+        device = "fxs"
+    [rio.FxsP6.motor.arrange]
+      type = "p6.motorArrange"
+      order = 60
+      menu = "set attached motor"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.motor.wire]
+      type = "p6.wiring"
+      order = 70
+      menu = "set brushed motor wiring config"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.motor.advHall]
+      type = "p6.advHall"
+      order = 80
+      menu = "enable advanced hall support"
+      bus = "rio"
+      device = "fxs"
+
+  [rio.FxsP6.limits]
+    type = "menu"
+    order = 120
+    menu = "setup hard/soft limits"
+    [rio.FxsP6.limits.hard]
+      type = "menu"
+      order = 10
+      menu = "hard limits"
+      [rio.FxsP6.limits.hard.fwdEn]
+        type = "p6.param"
+        order = 10
+        menu = "FWD limit enable"
+        param = "FWD_HARD_EN"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.limits.hard.fwdNormal]
+        type = "p6.fwdNorm"
+        order = 15
+        menu = "FWD limit normal"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.limits.hard.fwdSource]
+        type = "p6.fwdSource"
+        order = 20
+        menu = "FWD limit source"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.limits.hard.fwdRemote]
+        type = "p6.param"
+        order = 30
+        menu = "FWD limit remote id"
+        param = "FWD_REMOTE_ID"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.limits.hard.fwdAutoSet]
+        type = "p6.param"
+        order = 40
+        menu = "Autoset Position on FWD limit"
+        param = "FWD_AUTOSET_POS"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.limits.hard.fwdAutoSetValue]
+        type = "p6.param"
+        order = 50
+        menu = "FWD autoset position value"
+        param = "FWD_AUTOSET_POS_VALUE"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.limits.hard.revEn]
+        type = "p6.param"
+        order = 60
+        menu = "REV limit enable"
+        param = "REV_HARD_EN"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.limits.hard.revNormal]
+        type = "p6.revNorm"
+        order = 70
+        menu = "REV limit normal"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.limits.hard.revSource]
+        type = "p6.revSource"
+        order = 80
+        menu = "REV limit source"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.limits.hard.revRemote]
+        type = "p6.param"
+        order = 90
+        menu = "REV limit remote id"
+        param = "REV_REMOTE_ID"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.limits.hard.revAutoSet]
+        type = "p6.param"
+        order = 100
+        menu = "Autoset position on REV limit"
+        param = "REV_AUTOSET_POS"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.limits.hard.revAutoSetValue]
+        type = "p6.param"
+        order = 110
+        menu = "REV autoset position value"
+        param = "REV_AUTOSET_POS_VALUE"
+        bus = "rio"
+        device = "fxs"
+    [rio.FxsP6.limits.soft]
+      type = "menu"
+      order = 20
+      menu = "soft limits"
+      [rio.FxsP6.limits.soft.fwdEn]
+        type = "p6.param"
+        order = 10
+        menu = "FWD limit enable"
+        param = "FWD_SOFT_EN"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.limits.soft.fwdThres]
+        type = "p6.param"
+        order = 20
+        menu = "FWD soft limit"
+        param = "FWD_SOFT_THRES"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.limits.soft.revEn]
+        type = "p6.param"
+        order = 30
+        menu = "REV limit enable"
+        param = "REV_SOFT_EN"
+        bus = "rio"
+        device = "fxs"
+      [rio.FxsP6.limits.soft.revThres]
+        type = "p6.param"
+        order = 40
+        menu = "REV soft limit"
+        param = "REV_SOFT_THRES"
+        bus = "rio"
+        device = "fxs"
+  [rio.FxsP6.audio]
+    type = "menu"
+    order = 130
+    menu = "setup audio configs"
+    [rio.FxsP6.audio.disable]
+      type = "p6.param"
+      order = 10
+      menu = "allow music on disable"
+      param = "ALLOW_MUSIC_DIS"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.audio.beepBoot]
+      type = "p6.param"
+      order = 20
+      menu = "beep on boot"
+      param = "BEEP_ON_BOOT"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.audio.beepConfig]
+      type = "p6.param"
+      order = 30
+      menu = "beep on config"
+      param = "BEEP_ON_CONFIG"
+      bus = "rio"
+      device = "fxs"
+  [rio.FxsP6.factory]
+    type = "p6.factory"
+    order = 140
+    menu = "config factory default"
+    bus = "rio"
+    device = "fxs"
+  [rio.FxsP6.grapher]
+    type = "menu"
+    order = 150
+    menu = "set status frames"
+    [rio.FxsP6.grapher.default]
+      type = "p6.graph"
+      order = 10
+      menu = "set to default update rate"
+      bus = "rio"
+      device = "fxs"
+    [rio.FxsP6.grapher.rate]
+      type = "p6.param"
+      order = 20
+      menu = "Grapher Frame Rate (Hz)"
+      param = "GRAPHER_FRAME"
+      bus = "rio"
+      device = "fxs"
+
 
     [rio.servo]
     type = "menu"
@@ -1783,6 +2673,36 @@ type = "menu"
         order = 30
         menu = "active azimuth adjustment"
 
+  [rio.FXswerve]
+    type = "menu"
+    order = 55
+    menu = "work with FX swerve"
+    [rio.FXswerve.lock]
+      type = "p6.swerve.azimuth"
+      order = 10
+      bus = "rio"
+      menu = "lock azimuth position"
+    [rio.FXswerve.azimuth]
+      type = "menu"
+      order = 20
+      bus = "rio"
+      menu = "update azimuth zero positions"
+    [rio.FXswerve.azimuth.save]
+      type = "p6.swerve.azimuth.save"
+      order = 10
+      bus = "rio"
+      menu = "save azimuth zero positions"
+    [rio.FXswerve.azimuth.select]
+      type = "p6.swerve.azimuth.select"
+      order = 20
+      bus = "rio"
+      menu = "active azimuth"
+    [rio.FXswerve.azimuth.adjust]
+      type = "p6.swerve.azimuth.adjust"
+      order = 30
+      bus = "rio"
+      menu = "active azimuth adjustment"
+
     [rio.gyro]
     type = "menu"
     order = 60
@@ -1904,10 +2824,10 @@ type = "menu"
       param = "MAG_OFFSET"
       order = 40
       bus = "rio"
-    [rio.cancoder.absRange]
-      type = "cancoder.absRange"
-      order = 50
-      bus = "rio"
+#    [rio.cancoder.absRange]
+#      type = "cancoder.absRange"
+#      order = 50
+#      bus = "rio"
     [rio.cancoder.sensorDirection]
       type = "cancoder.sensorDirection"
       order = 60
@@ -1928,31 +2848,37 @@ type = "menu"
       order = 10
       menu = "run active talon fx's"
       bus = "canivore"
+      device = "fx"
     [canivore.FxP6.select]
       type = "p6.select"
       order = 20
       menu = "active fx's"
       bus = "canivore"
+      device = "fx"
     [canivore.FxP6.status]
       type = "p6.status"
       order = 30
       menu = "status of active talonFx's"
       bus = "canivore"
+      device = "fx"
     [canivore.FxP6.mode]
       type = "p6.modeMenu"
       order = 40
       menu = "config active mode"
       bus = "canivore"
+      device = "fx"
       [canivore.FxP6.mode.status]
         type = "p6.modeStatus"
         order = 10
         menu = "active mode"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.mode.select]
         type = "p6.mode"
         order = 15
         menu = "select mode type"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.mode.openLoop]
         type = "menu"
         order = 20
@@ -1963,6 +2889,7 @@ type = "menu"
           menu = "set torque current deadband (A)"
           param = "TORQUE_CURRENT_DEADBAND"
           bus = "canivore"
+          device = "fx"
       [canivore.FxP6.mode.position]
         type = "menu"
         order = 30
@@ -1973,12 +2900,14 @@ type = "menu"
           menu = "velocity target"
           param = "VELOCITY"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.mode.position.feedFwd]
           type = "p6.param"
           order = 30
           menu = "velocity feed forward"
           param = "FEED_FORWARD"
           bus = "canivore"
+          device = "fx"
       [canivore.FxP6.mode.velocity]
         type = "menu"
         order = 40
@@ -1989,46 +2918,54 @@ type = "menu"
           menu = "select acceleration target"
           param = "ACCELERATION"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.mode.velocity.feedFwd]
           type = "p6.param"
           order = 30
           menu = "feed forward"
           param = "FEED_FORWARD"
           bus = "canivore"
+          device = "fx"
       [canivore.FxP6.mode.motion]
         type = "menu"
         order = 50
         menu = "motion magic modes"
         bus = "canivore"
+        device = "fx"
         [canivore.FxP6.mode.motion.motionType]
           type = "p6.mmType"
           order = 10
           menu = "select motion magic type"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.mode.motion.feedFwd]
           type = "p6.param"
           order = 20
           menu = "select feed forward (sel unit)"
           param = "FEED_FORWARD"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.mode.motion.velocity]
           type = "p6.param"
           order = 30
           menu = "select velocity target (rot/s)"
           param = "VELOCITY"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.mode.motion.acceleration]
           type = "p6.param"
           order = 40
           menu = "select acceleration target (rot/s^2)"
           param = "ACCELERATION"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.mode.motion.jerk]
           type = "p6.param"
           order = 50
           menu = "select jerk target (rot/s^3)"
           param = "JERK"
           bus = "canivore"
+          device = "fx"
       [canivore.FxP6.mode.diff]
         type = "menu"
         order = 60
@@ -2038,18 +2975,21 @@ type = "menu"
           order = 10
           menu = "select differential type"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.mode.diff.slot]
           type = "p6.param"
           order = 20
           menu = "select differential slot"
           param = "DIFFERENTIAL_SLOT"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.mode.diff.target]
           type = "p6.param"
           order = 30
           menu = "select differential target (rots)"
           param = "DIFFERENTIAL_TARGET"
           bus = "canivore"
+          device = "fx"
       [canivore.FxP6.mode.follow]
         type = "menu"
         order = 70
@@ -2059,12 +2999,14 @@ type = "menu"
           order = 10
           menu = "select follower type"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.mode.follow.oppose]
           type = "p6.param"
           order = 20
           menu = "oppose leader direction"
           param = "OPPOSE_MAIN"
           bus = "canivore"
+          device = "fx"
       [canivore.FxP6.mode.neutral]
         type = "menu"
         order = 80
@@ -2074,35 +3016,41 @@ type = "menu"
           order = 10
           menu = "select neutral output"
           bus = "canivore"
+          device = "fx"
       [canivore.FxP6.mode.foc]
         type = "p6.param"
         order = 100
         menu = "(pro) enable FOC"
         param = "FOC"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.mode.overrideNeut]
         type = "p6.param"
         order = 110
         menu = "override neutral mode"
         param = "OVERRIDE_NEUTRAL"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.mode.limFwd]
         type = "p6.param"
         order = 120
         menu = "limit forward motion"
         param = "LIM_FWD_MOT"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.mode.limRev]
         type = "p6.param"
         order = 130
         menu = "limit reverse motion"
         param = "LIM_REV_MOT"
         bus = "canivore"
+        device = "fx"
     [canivore.FxP6.units]
       type = "p6.units"
       order = 50
       menu = "select active units"
       bus = "canivore"
+      device = "fx"
     [canivore.FxP6.feedback]
       type = "menu"
       order = 60
@@ -2113,35 +3061,41 @@ type = "menu"
         menu = "set position"
         param = "POSITION"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.feedback.offset]
         type = "p6.param"
         order = 10
         menu = "set rotor offset"
         param = "ROTOR_OFFSET"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.feedback.sense2mech]
         type = "p6.param"
         order = 20
         menu = "set sensor to mechanism ratio"
         param = "SENSOR_TO_MECH_RATIO"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.feedback.rotor2sense]
         type = "p6.param"
         order = 30
         menu = "set rotor to sensor ratio"
         param = "ROTOR_TO_SENSOR_RATIO"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.feedback.source]
         type = "p6.feedback"
         order = 35
         menu = "set feedback source"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.feedback.remoteId]
         type = "p6.param"
         order = 40
         menu = "set remote sensor id"
         param = "REMOTE_SENSOR_ID"
         bus = "canivore"
+        device = "fx"
     [canivore.FxP6.slot]
       type = "menu"
       order = 70
@@ -2151,53 +3105,62 @@ type = "menu"
         order = 10
         menu = "active slot"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.slot.kP]
         type = "p6.param"
         order = 20
         menu = "kP"
         param = "SLOT_KP"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.slot.kI]
         type = "p6.param"
         order = 30
         menu = "kI"
         param = "SLOT_KI"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.slot.kD]
         type = "p6.param"
         order = 40
         menu = "kD"
         param = "SLOT_KD"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.slot.kS]
         type = "p6.param"
         order = 50
         menu = "kS"
         param = "SLOT_KS"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.slot.kV]
         type = "p6.param"
         order = 60
         menu = "kV"
         param = "SLOT_KV"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.slot.kA]
         type = "p6.param"
         order = 65
         menu = "kA"
         param = "SLOT_KA"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.slot.kG]
         type = "p6.param"
         order = 70
         menu = "kG"
         param = "SLOT_KG"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.slot.gravity]
         type = "p6.gravity"
         order = 80
         menu = "gravity type"
         bus = "canivore"
+        device = "fx"
     [canivore.FxP6.motion]
       type = "menu"
       order = 80
@@ -2208,30 +3171,35 @@ type = "menu"
         menu = "acceleration"
         param = "MM_ACCEL"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.motion.cruise]
         type = "p6.param"
         order = 20
         menu = "cruise velocity"
         param = "MM_CRUISE_VEL"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.motion.jerk]
         type = "p6.param"
         order = 30
         menu = "jerk"
         param = "MM_JERK"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.motion.kA]
         type = "p6.param"
         order = 40
         menu = "Expo kA"
         param = "MM_EXPO_KA"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.motion.kV]
         type = "p6.param"
         order = 50
         menu = "Expo kV"
         param = "MM_EXPO_KV"
         bus = "canivore"
+        device = "fx"
     [canivore.FxP6.diff]
       type = "menu"
       order = 90
@@ -2242,30 +3210,41 @@ type = "menu"
         menu = "peak differential duty cycle"
         param = "PEAK_DIFF_DC"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.diff.torque]
         type = "p6.param"
         order = 20
         menu = "peak differential torque current"
         param = "PEAK_DIFF_TORQUE"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.diff.volt]
         type = "p6.param"
         order = 30
         menu = "peak differential voltage"
         param = "PEAK_DIFF_VOLT"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.diff.remote]
         type = "p6.param"
         order = 40
         menu = "differential remote id"
         param = "DIFF_SENSOR_REMOTE_ID"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.diff.fx]
         type = "p6.param"
         order = 50
         menu = "differential fx id"
         param = "DIFF_FX_ID"
         bus = "canivore"
+        device = "fx"
+      [canivore.FxP6.diff.source]
+        type = "p6.diffSource"
+        order = 60
+        menu = "differential source"
+        bus = "canivore"
+        device = "fx"
     [canivore.FxP6.current]
       type = "menu"
       order = 100
@@ -2276,36 +3255,42 @@ type = "menu"
         menu = "stator limit enable"
         param = "STATOR_LIM_EN"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.current.statorLim]
         type = "p6.param"
         order = 20
         menu = "stator current limit"
         param = "STATOR_LIM"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.current.suppEn]
         type = "p6.param"
         order = 30
         menu = "supply limit enable"
         param = "SUPP_LIM_EN"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.current.suppLim]
         type = "p6.param"
         order = 40
-        menu = "supply current limit"
-        param = "SUPP_LIM"
+        menu = "supply current lower limit"
+        param = "SUPP_LOWER_LIM"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.current.tripI]
         type = "p6.param"
         order = 50
-        menu = "supply current trip threshold (A)"
-        param = "SUPP_TRIP_THRES"
+        menu = "supply current limit (A)"
+        param = "SUPP_LIM"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.current.tripT]
         type = "p6.param"
         order = 60
         menu = "supply current trip time (s)"
         param = "SUPP_TRIP_TIME"
         bus = "canivore"
+        device = "fx"
     [canivore.FxP6.motor]
       type = "menu"
       order = 110
@@ -2315,11 +3300,13 @@ type = "menu"
         order = 10
         menu = "motor inversion"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.motor.neutral]
         type = "p6.neutral"
         order = 20
         menu = "neutral mode"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.motor.duty]
         type = "menu"
         order = 30
@@ -2330,30 +3317,35 @@ type = "menu"
           menu = "peak forward %"
           param = "PEAK_FWD_DC"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.motor.duty.peakRev]
           type = "p6.param"
           order = 30
           menu = "peak reverse %"
           param = "PEAK_REV_DC"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.motor.duty.dead]
           type = "p6.param"
           order = 40
           menu = "neutral deadband (%)"
           param = "NEUTRAL_DEADBAND_DC"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.motor.duty.openRamp]
           type = "p6.param"
           order = 50
           menu = "open loop ramp (%)"
           param = "OPEN_LOOP_RAMP_DC"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.motor.duty.closedRamp]
           type = "p6.param"
           order = 60
           menu = "closed loop ramp (%)"
           param = "CLOSED_LOOP_RAMP_DC"
           bus = "canivore"
+          device = "fx"
       [canivore.FxP6.motor.volt]
         type = "menu"
         order = 40
@@ -2364,30 +3356,35 @@ type = "menu"
           menu = "peak forward (V)"
           param = "PEAK_FWD_V"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.motor.volt.peakRev]
           type = "p6.param"
           order = 20
           menu = "peak reverse (V)"
           param = "PEAK_REV_V"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.motor.volt.supplyConst]
           type = "p6.param"
           order = 30
           menu = "supply voltage time const"
           param = "SUPPLY_V_TIME_CONST"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.motor.volt.openRamp]
           type = "p6.param"
           order = 40
           menu = "open loop ramp (V)"
           param = "OPEN_LOOP_RAMP_V"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.motor.volt.closedRamp]
           type = "p6.param"
           order = 50
           menu = "closed loop ramp (V)"
           param = "CLOSED_LOOP_RAMP_V"
           bus = "canivore"
+          device = "fx"
       [canivore.FxP6.motor.torque]
         type = "menu"
         order = 50
@@ -2398,30 +3395,35 @@ type = "menu"
           menu = "peak forward (A)"
           param = "PEAK_FWD_I"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.motor.torque.peakRev]
           type = "p6.param"
           order = 20
           menu = "peak reverse (A)"
           param = "PEAK_REV_I"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.motor.torque.dead]
           type = "p6.param"
           order = 30
           menu = "neutral deadband (A)"
           param = "TORQUE_NEUTRAL_DEADBAND"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.motor.openRamp]
           type = "p6.param"
           order = 40
           menu = "open loop ramp (A)"
           param = "OPEN_LOOP_RAMP_I"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.motor.closedRamp]
           type = "p6.param"
           order = 50
           menu = "closed loop ramp (A)"
           param = "CLOSED_LOOP_RAMP_I"
           bus = "canivore"
+          device = "fx"
     [canivore.FxP6.limits]
       type = "menu"
       order = 120
@@ -2436,68 +3438,80 @@ type = "menu"
           menu = "FWD limit enable"
           param = "FWD_HARD_EN"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.limits.hard.fwdNormal]
           type = "p6.fwdNorm"
           order = 10
           menu = "FWD limit normal"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.limits.hard.fwdSource]
           type = "p6.fwdSource"
           order = 20
           menu = "FWD limit source"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.limits.hard.fwdRemote]
           type = "p6.param"
           order = 30
           menu = "FWD limit remote id"
           param = "FWD_REMOTE_ID"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.limits.hard.fwdAutoSet]
           type = "p6.param"
           order = 40
           menu = "Autoset Position on FWD limit"
           param = "FWD_AUTOSET_POS"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.limits.hard.fwdAutoSetValue]
           type = "p6.param"
           order = 50
           menu = "FWD autoset position value"
           param = "FWD_AUTOSET_POS_VALUE"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.limits.hard.revEn]
           type = "p6.param"
           order = 60
           menu = "REV limit enable"
           param = "REV_HARD_EN"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.limits.hard.revNormal]
           type = "p6.revNorm"
           order = 70
           menu = "REV limit normal"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.limits.hard.revSource]
           type = "p6.revSource"
           order = 80
           menu = "REV limit source"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.limits.hard.revRemote]
           type = "p6.param"
           order = 90
           menu = "REV limit remote id"
           param = "REV_REMOTE_ID"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.limits.hard.revAutoSet]
           type = "p6.param"
           order = 100
           menu = "Autoset position on REV limit"
           param = "REV_AUTOSET_POS"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.limits.hard.revAutoSetValue]
           type = "p6.param"
           order = 110
           menu = "REV autoset position value"
           param = "REV_AUTOSET_POS_VALUE"
           bus = "canivore"
+          device = "fx"
       [canivore.FxP6.limits.soft]
         type = "menu"
         order = 20
@@ -2508,24 +3522,28 @@ type = "menu"
           menu = "FWD limit enable"
           param = "FWD_SOFT_EN"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.limits.soft.fwdThres]
           type = "p6.param"
           order = 20
           menu = "FWD soft limit"
           param = "FWD_SOFT_THRES"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.limits.soft.revEn]
           type = "p6.param"
           order = 30
           menu = "REV limit enable"
           param = "REV_SOFT_EN"
           bus = "canivore"
+          device = "fx"
         [canivore.FxP6.limits.soft.revThres]
           type = "p6.param"
           order = 40
           menu = "REV soft limit"
           param = "REV_SOFT_THRES"
           bus = "canivore"
+          device = "fx"
     [canivore.FxP6.audio]
       type = "menu"
       order = 130
@@ -2536,23 +3554,27 @@ type = "menu"
         menu = "allow music on disable"
         param = "ALLOW_MUSIC_DIS"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.audio.beepBoot]
         type = "p6.param"
         order = 20
         menu = "beep on boot"
         param = "BEEP_ON_BOOT"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.audio.beepConfig]
         type = "p6.param"
         order = 30
         menu = "beep on config"
         param = "BEEP_ON_CONFIG"
         bus = "canivore"
+        device = "fx"
     [canivore.FxP6.factory]
       type = "p6.factory"
       order = 140
       menu = "config factory default"
       bus = "canivore"
+      device = "fx"
     [canivore.FxP6.grapher]
       type = "menu"
       order = 150
@@ -2562,12 +3584,799 @@ type = "menu"
         order = 10
         menu = "set to default update rate"
         bus = "canivore"
+        device = "fx"
       [canivore.FxP6.grapher.rate]
         type = "p6.param"
         order = 20
         menu = "Grapher Frame Rate (Hz)"
         param = "GRAPHER_FRAME"
         bus = "canivore"
+        device = "fx"
+
+  [canivore.FxsP6]
+    type = "menu"
+    order = 18
+    menu = "work with talonFXS's"
+    [canivore.FxsP6.run]
+      type = "p6.run"
+      order = 10
+      menu = "run active talon fxs's"
+      bus = "canivore"
+      device = "fxs"
+    [canivore.FxsP6.select]
+      type = "p6.select"
+      order = 20
+      menu = "active fxs's"
+      bus = "canivore"
+      device = "fxs"
+    [canivore.FxsP6.status]
+      type = "p6.status"
+      order = 30
+      menu = "status of active talonfxs's"
+      bus = "canivore"
+      device = "fxs"
+    [canivore.FxsP6.mode]
+      type = "p6.modeMenu"
+      order = 40
+      menu = "config active mode"
+      bus = "canivore"
+      device = "fxs"
+      [canivore.FxsP6.mode.status]
+        type = "p6.modeStatus"
+        order = 10
+        menu = "active mode"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.mode.select]
+        type = "p6.mode"
+        order = 15
+        menu = "select mode type"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.mode.openLoop]
+        type = "menu"
+        order = 20
+        menu = "open loop modes"
+        bus = "canivore"
+        device = "fxs"
+        [canivore.FxsP6.mode.openLoop.deadband]
+          type = "p6.param"
+          order = 20
+          menu = "set torque current deadband (A)"
+          param = "TORQUE_CURRENT_DEADBAND"
+          bus = "canivore"
+          device = "fxs"
+      [canivore.FxsP6.mode.position]
+        type = "menu"
+        order = 30
+        menu = "position modes"
+        [canivore.FxsP6.mode.position.velocity]
+          type = "p6.param"
+          order = 20
+          menu = "velocity target"
+          param = "VELOCITY"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.mode.position.feedFwd]
+          type = "p6.param"
+          order = 30
+          menu = "velocity feed forward"
+          param = "FEED_FORWARD"
+          bus = "canivore"
+          device = "fxs"
+      [canivore.FxsP6.mode.velocity]
+        type = "menu"
+        order = 40
+        menu = "velocity modes"
+        [canivore.FxsP6.mode.velocity.acceleration]
+          type = "p6.param"
+          order = 20
+          menu = "select acceleration target"
+          param = "ACCELERATION"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.mode.velocity.feedFwd]
+          type = "p6.param"
+          order = 30
+          menu = "feed forward"
+          param = "FEED_FORWARD"
+          bus = "canivore"
+          device = "fxs"
+      [canivore.FxsP6.mode.motion]
+        type = "menu"
+        order = 50
+        menu = "motion magic modes"
+        [canivore.FxsP6.mode.motion.motionType]
+          type = "p6.mmType"
+          order = 10
+          menu = "select motion magic type"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.mode.motion.feedFwd]
+          type = "p6.param"
+          order = 20
+          menu = "select feed forward (sel unit)"
+          param = "FEED_FORWARD"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.mode.motion.velocity]
+          type = "p6.param"
+          order = 30
+          menu = "select velocity target (rot/s)"
+          param = "VELOCITY"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.mode.motion.acceleration]
+          type = "p6.param"
+          order = 40
+          menu = "select acceleration target (rot/s^2)"
+          param = "ACCELERATION"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.mode.motion.jerk]
+          type = "p6.param"
+          order = 50
+          menu = "select jerk target (rot/s^3)"
+          param = "JERK"
+          bus = "canivore"
+          device = "fxs"
+      [canivore.FxsP6.mode.diff]
+        type = "menu"
+        order = 60
+        menu = "differential modes"
+        [canivore.FxsP6.mode.diff.diffType]
+          type = "p6.diffType"
+          order = 10
+          menu = "select differential type"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.mode.diff.slot]
+          type = "p6.param"
+          order = 20
+          menu = "select differential slot"
+          param = "DIFFERENTIAL_SLOT"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.mode.diff.target]
+          type = "p6.param"
+          order = 30
+          menu = "select differential target (rots)"
+          param = "DIFFERENTIAL_TARGET"
+          bus = "canivore"
+          device = "fxs"
+      [canivore.FxsP6.mode.follow]
+        type = "menu"
+        order = 70
+        menu = "follower modes"
+        [canivore.FxsP6.mode.follow.followType]
+          type = "p6.followType"
+          order = 10
+          menu = "select follower type"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.mode.follow.oppose]
+          type = "p6.param"
+          order = 20
+          menu = "oppose leader direction"
+          param = "OPPOSE_MAIN"
+          bus = "canivore"
+          device = "fxs"
+      [canivore.FxsP6.mode.neutral]
+        type = "menu"
+        order = 80
+        menu = "neutral modes"
+        [canivore.FxsP6.mode.neutral.select]
+          type = "p6.neutralOut"
+          order = 10
+          menu = "select neutral output"
+          bus = "canivore"
+          device = "fxs"
+      [canivore.FxsP6.mode.foc]
+        type = "p6.param"
+        order = 100
+        menu = "(pro) enable FOC"
+        param = "FOC"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.mode.overrideNeut]
+        type = "p6.param"
+        order = 110
+        menu = "override neutral mode"
+        param = "OVERRIDE_NEUTRAL"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.mode.limFwd]
+        type = "p6.param"
+        order = 120
+        menu = "limit forward motion"
+        param = "LIM_FWD_MOT"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.mode.limRev]
+        type = "p6.param"
+        order = 130
+        menu = "limit reverse motion"
+        param = "LIM_REV_MOT"
+        bus = "canivore"
+        device = "fxs"
+    [canivore.FxsP6.units]
+      type = "p6.units"
+      order = 50
+      menu = "select active units"
+      bus = "canivore"
+      device = "fxs"
+    [canivore.FxsP6.feedback]
+      type = "menu"
+      order = 60
+      menu = "setup feedback configs"
+      bus = "canivore"
+      device = "fxs"
+      [canivore.FxsP6.feedback.position]
+        type = "p6.param"
+        order = 5
+        menu = "set position"
+        param = "POSITION"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.feedback.offset]
+        type = "p6.param"
+        order = 10
+        menu = "set absolute sensor offset"
+        param = "ABS_SENSOR_OFFSET"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.feedback.discontinuity]
+        type = "p6.param"
+        order = 15
+        menu = "set absolute sensor discontinuity point"
+        param = "ABS_SENSOR_DISCONTINUITY"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.feedback.edge]
+        type = "p6.param"
+        order = 17
+        menu = "set quadrature edges per rotation"
+        param = "QUAD_EDGE_PER_ROT"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.feedback.sense2mech]
+        type = "p6.param"
+        order = 20
+        menu = "set sensor to mechanism ratio"
+        param = "SENSOR_TO_MECH_RATIO"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.feedback.rotor2sense]
+        type = "p6.param"
+        order = 30
+        menu = "set rotor to sensor ratio"
+        param = "ROTOR_TO_SENSOR_RATIO"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.feedback.source]
+        type = "p6.extFeedback"
+        order = 35
+        menu = "set external feedback source"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.feedback.phase]
+        type = "p6.phase"
+        order = 37
+        menu = "set sensor phase"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.feedback.remoteId]
+        type = "p6.param"
+        order = 40
+        menu = "set remote sensor id"
+        param = "REMOTE_SENSOR_ID"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.feedback.vFiltTC]
+        type = "p6.param"
+        order = 45
+        menu = "set velocity filter time constant"
+        param = "VELOCITY_FILTER_TIME_CONST"
+        bus = "canivore"
+        device = "fxs"
+    [canivore.FxsP6.slot]
+      type = "menu"
+      order = 70
+      menu = "setup slot configs"
+      [canivore.FxsP6.slot.active]
+        type = "p6.slot"
+        order = 10
+        menu = "active slot"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.slot.kP]
+        type = "p6.param"
+        order = 20
+        menu = "kP"
+        param = "SLOT_KP"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.slot.kI]
+        type = "p6.param"
+        order = 30
+        menu = "kI"
+        param = "SLOT_KI"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.slot.kD]
+        type = "p6.param"
+        order = 40
+        menu = "kD"
+        param = "SLOT_KD"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.slot.kS]
+        type = "p6.param"
+        order = 50
+        menu = "kS"
+        param = "SLOT_KS"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.slot.kV]
+        type = "p6.param"
+        order = 60
+        menu = "kV"
+        param = "SLOT_KV"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.slot.kA]
+        type = "p6.param"
+        order = 65
+        menu = "kA"
+        param = "SLOT_KA"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.slot.kG]
+        type = "p6.param"
+        order = 70
+        menu = "kG"
+        param = "SLOT_KG"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.slot.gravity]
+        type = "p6.gravity"
+        order = 80
+        menu = "gravity type"
+        bus = "canivore"
+        device = "fxs"
+    [canivore.FxsP6.motion]
+      type = "menu"
+      order = 80
+      menu = "setup motion magic configs"
+      [canivore.FxsP6.motion.accel]
+        type = "p6.param"
+        order = 10
+        menu = "acceleration"
+        param = "MM_ACCEL"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.motion.cruise]
+        type = "p6.param"
+        order = 20
+        menu = "cruise velocity"
+        param = "MM_CRUISE_VEL"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.motion.jerk]
+        type = "p6.param"
+        order = 30
+        menu = "jerk"
+        param = "MM_JERK"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.motion.kA]
+        type = "p6.param"
+        order = 40
+        menu = "Expo kA"
+        param = "MM_EXPO_KA"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.motion.kV]
+        type = "p6.param"
+        order = 50
+        menu = "Expo kV"
+        param = "MM_EXPO_KV"
+        bus = "canivore"
+        device = "fxs"
+    [canivore.FxsP6.diff]
+      type = "menu"
+      order = 90
+      menu = "setup differential configs"
+      [canivore.FxsP6.diff.duty]
+        type = "p6.param"
+        order = 10
+        menu = "peak differential duty cycle"
+        param = "PEAK_DIFF_DC"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.diff.torque]
+        type = "p6.param"
+        order = 20
+        menu = "peak differential torque current"
+        param = "PEAK_DIFF_TORQUE"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.diff.volt]
+        type = "p6.param"
+        order = 30
+        menu = "peak differential voltage"
+        param = "PEAK_DIFF_VOLT"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.diff.remote]
+        type = "p6.param"
+        order = 40
+        menu = "differential remote id"
+        param = "DIFF_SENSOR_REMOTE_ID"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.diff.fx]
+        type = "p6.param"
+        order = 50
+        menu = "differential fx id"
+        param = "DIFF_FX_ID"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.diff.source]
+        type = "p6.diffSource"
+        order = 60
+        menu = "differential source"
+        bus = "canivore"
+        device = "fxs"
+    [canivore.FxsP6.current]
+      type = "menu"
+      order = 100
+      menu = "setup current limit configs"
+      [canivore.FxsP6.current.statorEn]
+        type = "p6.param"
+        order = 10
+        menu = "stator limit enable"
+        param = "STATOR_LIM_EN"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.current.statorLim]
+        type = "p6.param"
+        order = 20
+        menu = "stator current limit"
+        param = "STATOR_LIM"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.current.suppEn]
+        type = "p6.param"
+        order = 30
+        menu = "supply limit enable"
+        param = "SUPP_LIM_EN"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.current.suppLim]
+        type = "p6.param"
+        order = 40
+        menu = "supply current lower limit"
+        param = "SUPP_LOWER_LIM"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.current.tripI]
+        type = "p6.param"
+        order = 50
+        menu = "supply current limit (A)"
+        param = "SUPP_LIM"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.current.tripT]
+        type = "p6.param"
+        order = 60
+        menu = "supply current trip time (s)"
+        param = "SUPP_TRIP_TIME"
+        bus = "canivore"
+        device = "fxs"
+    [canivore.FxsP6.motor]
+      type = "menu"
+      order = 110
+      menu = "setup motor output and ramp configs"
+      [canivore.FxsP6.motor.invert]
+        type = "p6.invert"
+        order = 10
+        menu = "motor inversion"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.motor.neutral]
+        type = "p6.neutral"
+        order = 20
+        menu = "neutral mode"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.motor.duty]
+        type = "menu"
+        order = 30
+        menu = "duty cycle configs"
+        bus = "canivore"
+        device = "fxs"
+        [canivore.FxsP6.motor.duty.peakFwd]
+          type= "p6.param"
+          order = 20
+          menu = "peak forward %"
+          param = "PEAK_FWD_DC"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.motor.duty.peakRev]
+          type = "p6.param"
+          order = 30
+          menu = "peak reverse %"
+          param = "PEAK_REV_DC"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.motor.duty.dead]
+          type = "p6.param"
+          order = 40
+          menu = "neutral deadband (%)"
+          param = "NEUTRAL_DEADBAND_DC"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.motor.duty.openRamp]
+          type = "p6.param"
+          order = 50
+          menu = "open loop ramp (%)"
+          param = "OPEN_LOOP_RAMP_DC"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.motor.duty.closedRamp]
+          type = "p6.param"
+          order = 60
+          menu = "closed loop ramp (%)"
+          param = "CLOSED_LOOP_RAMP_DC"
+          bus = "canivore"
+          device = "fxs"
+      [canivore.FxsP6.motor.volt]
+        type = "menu"
+        order = 40
+        menu = "voltage configs"
+        [canivore.FxsP6.motor.volt.peakFwd]
+          type = "p6.param"
+          order = 10
+          menu = "peak forward (V)"
+          param = "PEAK_FWD_V"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.motor.volt.peakRev]
+          type = "p6.param"
+          order = 20
+          menu = "peak reverse (V)"
+          param = "PEAK_REV_V"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.motor.volt.supplyConst]
+          type = "p6.param"
+          order = 30
+          menu = "supply voltage time const"
+          param = "SUPPLY_V_TIME_CONST"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.motor.volt.openRamp]
+          type = "p6.param"
+          order = 40
+          menu = "open loop ramp (V)"
+          param = "OPEN_LOOP_RAMP_V"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.motor.volt.closedRamp]
+          type = "p6.param"
+          order = 50
+          menu = "closed loop ramp (V)"
+          param = "CLOSED_LOOP_RAMP_V"
+          bus = "canivore"
+          device = "fxs"
+      [canivore.FxsP6.motor.torque]
+        type = "menu"
+        order = 50
+        menu = "torque current configs"
+        [canivore.FxsP6.motor.torque.openRamp]
+          type = "p6.param"
+          order = 40
+          menu = "open loop ramp (A)"
+          param = "OPEN_LOOP_RAMP_I"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.motor.torque.closedRamp]
+          type = "p6.param"
+          order = 50
+          menu = "closed loop ramp (A)"
+          param = "CLOSED_LOOP_RAMP_I"
+          bus = "canivore"
+          device = "fxs"
+      [canivore.FxsP6.motor.arrange]
+        type = "p6.motorArrange"
+        order = 60
+        menu = "set attached motor"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.motor.wire]
+        type = "p6.wiring"
+        order = 70
+        menu = "set brushed motor wiring config"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.motor.advHall]
+        type = "p6.advHall"
+        order = 80
+        menu = "enable advanced hall support"
+        bus = "canivore"
+        device = "fxs"
+    [canivore.FxsP6.limits]
+      type = "menu"
+      order = 120
+      menu = "setup hard/soft limits"
+      [canivore.FxsP6.limits.hard]
+        type = "menu"
+        order = 10
+        menu = "hard limits"
+        [canivore.FxsP6.limits.hard.fwdEn]
+          type = "p6.param"
+          order = 10
+          menu = "FWD limit enable"
+          param = "FWD_HARD_EN"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.limits.hard.fwdNormal]
+          type = "p6.fwdNorm"
+          order = 15
+          menu = "FWD limit normal"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.limits.hard.fwdSource]
+          type = "p6.fwdSource"
+          order = 20
+          menu = "FWD limit source"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.limits.hard.fwdRemote]
+          type = "p6.param"
+          order = 30
+          menu = "FWD limit remote id"
+          param = "FWD_REMOTE_ID"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.limits.hard.fwdAutoSet]
+          type = "p6.param"
+          order = 40
+          menu = "Autoset Position on FWD limit"
+          param = "FWD_AUTOSET_POS"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.limits.hard.fwdAutoSetValue]
+          type = "p6.param"
+          order = 50
+          menu = "FWD autoset position value"
+          param = "FWD_AUTOSET_POS_VALUE"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.limits.hard.revEn]
+          type = "p6.param"
+          order = 60
+          menu = "REV limit enable"
+          param = "REV_HARD_EN"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.limits.hard.revNormal]
+          type = "p6.revNorm"
+          order = 70
+          menu = "REV limit normal"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.limits.hard.revSource]
+          type = "p6.revSource"
+          order = 80
+          menu = "REV limit source"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.limits.hard.revRemote]
+          type = "p6.param"
+          order = 90
+          menu = "REV limit remote id"
+          param = "REV_REMOTE_ID"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.limits.hard.revAutoSet]
+          type = "p6.param"
+          order = 100
+          menu = "Autoset position on REV limit"
+          param = "REV_AUTOSET_POS"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.limits.hard.revAutoSetValue]
+          type = "p6.param"
+          order = 110
+          menu = "REV autoset position value"
+          param = "REV_AUTOSET_POS_VALUE"
+          bus = "canivore"
+          device = "fxs"
+      [canivore.FxsP6.limits.soft]
+        type = "menu"
+        order = 20
+        menu = "soft limits"
+        [canivore.FxsP6.limits.soft.fwdEn]
+          type = "p6.param"
+          order = 10
+          menu = "FWD limit enable"
+          param = "FWD_SOFT_EN"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.limits.soft.fwdThres]
+          type = "p6.param"
+          order = 20
+          menu = "FWD soft limit"
+          param = "FWD_SOFT_THRES"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.limits.soft.revEn]
+          type = "p6.param"
+          order = 30
+          menu = "REV limit enable"
+          param = "REV_SOFT_EN"
+          bus = "canivore"
+          device = "fxs"
+        [canivore.FxsP6.limits.soft.revThres]
+          type = "p6.param"
+          order = 40
+          menu = "REV soft limit"
+          param = "REV_SOFT_THRES"
+          bus = "canivore"
+          device = "fxs"
+    [canivore.FxsP6.audio]
+      type = "menu"
+      order = 130
+      menu = "setup audio configs"
+      [canivore.FxsP6.audio.disable]
+        type = "p6.param"
+        order = 10
+        menu = "allow music on disable"
+        param = "ALLOW_MUSIC_DIS"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.audio.beepBoot]
+        type = "p6.param"
+        order = 20
+        menu = "beep on boot"
+        param = "BEEP_ON_BOOT"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.audio.beepConfig]
+        type = "p6.param"
+        order = 30
+        menu = "beep on config"
+        param = "BEEP_ON_CONFIG"
+        bus = "canivore"
+        device = "fxs"
+    [canivore.FxsP6.factory]
+      type = "p6.factory"
+      order = 140
+      menu = "config factory default"
+      bus = "canivore"
+      device = "fxs"
+    [canivore.FxsP6.grapher]
+      type = "menu"
+      order = 150
+      menu = "set status frames"
+      [canivore.FxsP6.grapher.default]
+        type = "p6.graph"
+        order = 10
+        menu = "set to default update rate"
+        bus = "canivore"
+        device = "fxs"
+      [canivore.FxsP6.grapher.rate]
+        type = "p6.param"
+        order = 20
+        menu = "Grapher Frame Rate (Hz)"
+        param = "GRAPHER_FRAME"
+        bus = "canivore"
+        device = "fxs"
+
+
+
 
   [canivore.cancoder]
     type = "menu"
@@ -2594,14 +4403,44 @@ type = "menu"
       param = "MAG_OFFSET"
       order = 40
       bus = "canivore"
-    [canivore.cancoder.absRange]
-      type = "cancoder.absRange"
-      order = 50
-      bus = "canivore"
+#    [canivore.cancoder.absRange]
+#      type = "cancoder.absRange"
+#      order = 50
+#      bus = "canivore"
     [canivore.cancoder.sensorDirection]
       type = "cancoder.sensorDirection"
       order = 60
       bus = "canivore"
+
+  [canivore.FXswerve]
+    type = "menu"
+    order = 25
+    menu = "work with FX swerve"
+    [canivore.FXswerve.lock]
+      type = "p6.swerve.azimuth"
+      order = 10
+      bus = "canivore"
+      menu = "lock azimuth position"
+    [canivore.FXswerve.azimuth]
+      type = "menu"
+      order = 20
+      bus = "canivore"
+      menu = "update azimuth zero positions"
+    [canivore.FXswerve.azimuth.save]
+      type = "p6.swerve.azimuth.save"
+      order = 10
+      bus = "canivore"
+      menu = "save azimuth zero positions"
+    [canivore.FXswerve.azimuth.select]
+      type = "p6.swerve.azimuth.select"
+      order = 20
+      bus = "canivore"
+      menu = "active azimuth"
+    [canivore.FXswerve.azimuth.adjust]
+      type = "p6.swerve.azimuth.adjust"
+      order = 30
+      bus = "canivore"
+      menu = "active azimuth adjustment"
 
 
 

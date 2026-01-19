@@ -3,6 +3,7 @@ package org.strykeforce.thirdcoast.swerve
 import mu.KotlinLogging
 import net.consensys.cava.toml.TomlTable
 import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 import org.strykeforce.swerve.SwerveDrive
 import org.strykeforce.swerve.V6TalonSwerveModule
 import org.strykeforce.thirdcoast.command.AbstractCommand
@@ -18,7 +19,7 @@ class SaveZeroCommand(
     parent: Command?, key: String, toml: TomlTable
 ) : AbstractCommand(parent, key, toml) {
 
-    val swerve: SwerveDrive by inject()
+    val swerve: SwerveDrive by inject(named("V6"))
 
     override fun execute(): Command {
         while (true) {
