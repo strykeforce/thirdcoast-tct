@@ -44,10 +44,20 @@ class P6LoadFromJsonCommand(
                         if(bus == "rio"){
                             talonFxService.active.forEach { it.loadFromJSON(suffix) }
                             talonFxService.dirty = true
+                            talonFxService.dirty1 = true
+                            talonFxService.dirty2 = true
+                            talonFxService.dirty3 = true
+                            talonFxService.dirty4 = true
+                            talonFxService.dirty5 = true
                         }
                         else if(bus == "canivore"){
                             talonFxFDService.active.forEach { it.loadFromJSON(suffix) }
                             talonFxFDService.dirty = true
+                            talonFxFDService.dirty1 = true
+                            talonFxFDService.dirty2 = true
+                            talonFxFDService.dirty3 = true
+                            talonFxFDService.dirty4 = true
+                            talonFxFDService.dirty5 = true
                         }
                         else throw IllegalArgumentException()
                     }
@@ -55,10 +65,20 @@ class P6LoadFromJsonCommand(
                         if(bus == "rio"){
                             talonFxsService.active.forEach { it.loadFromJSON(suffix) }
                             talonFxsService.dirty = true
+                            talonFxsService.dirty1 = true
+                            talonFxsService.dirty2 = true
+                            talonFxsService.dirty3 = true
+                            talonFxsService.dirty4 = true
+                            talonFxsService.dirty5 = true
                         }
                         else if(bus == "canivore"){
                             talonFxsFDService.active.forEach { it.loadFromJSON(suffix) }
                             talonFxsFDService.dirty = true
+                            talonFxsFDService.dirty1 = true
+                            talonFxsFDService.dirty2 = true
+                            talonFxsFDService.dirty3 = true
+                            talonFxsFDService.dirty4 = true
+                            talonFxsFDService.dirty5 = true
                         }
                         else throw IllegalArgumentException()
                     }

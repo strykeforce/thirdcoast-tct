@@ -49,11 +49,23 @@ open class TalonFxService(
 
     val timeout = 10.0
     var dirty = true
+    var dirty1 = true
+    var dirty2 = true
+    var dirty3 = true
+    var dirty4 = true
+    var dirty5 = true
+    var dirty6 = true
     //var neutralMode = NEUTRAL_MODE_DEFAULT
     //var controlMode = CONTROL_MODE_DEFAULT
     // var voltageCompensation = VOLTAGE_COMPENSATION_ENABLED_DEFAULT
     //var sensorPhase  = SENSOR_PHASE_INVERTED_DEFAULT
-    var activeSlotIndex: Int = ACTIVE_SLOT_DEFAULT
+    var activeSlotIndex =  ACTIVE_SLOT_DEFAULT
+        get() {
+            if(!dirty1) return field
+            active.firstOrNull()?.activeSlot?: logger.debug("no active talonFX's")
+            dirty1 =false
+            return field
+        }
     var activeUnits: Units = Units.PERCENT
     var active_MM_type: MotionMagicType = MotionMagicType.Standard
     var activeFeedForward: Double = 0.0
@@ -64,15 +76,45 @@ open class TalonFxService(
     var activeJerk: Double = 0.0
     var activeDifferentialTarget: Double = 0.0
     var activeFollowerType: CTRE_FollowerType = CTRE_FollowerType.Strict
-    var activeOpposeMain: Boolean = false
-    var activeDifferentialSlot: Int = 0
+    var activeOpposeMain = false
+        get() {
+            if(!dirty5) return field
+            active.firstOrNull()?.opposeMain?: logger.debug("no active talonFX's")
+            dirty5 = false
+            return field
+        }
+    var activeDifferentialSlot = 0
+        get() {
+            if(!dirty6) return field
+            active.firstOrNull()?.differentialSlot?: logger.debug("no active talonFX's")
+            dirty6 =false
+            return field
+        }
     var activeFOC: Boolean = false
     var setpointType: SetpointType = SetpointType.OPEN_LOOP
     var differentialType: CTRE_DifferentialType = CTRE_DifferentialType.Open_Loop
     var activeNeutralOut: NeutralModeValue = NeutralModeValue.Coast
-    var activeOverrideNeutral: Boolean = false
-    var limFwdMotion : Boolean = false;
-    var limRevMotion : Boolean = false;
+    var activeOverrideNeutral = false
+        get() {
+            if(!dirty4) return field
+            active.firstOrNull()?.overrideNeutral?: logger.debug("no active talonFX's")
+            dirty4 = false
+            return field
+        }
+    var limFwdMotion = false
+        get() {
+            if(!dirty2) return field
+            active.firstOrNull()?.limitFwdMotion?: logger.debug("no active talonFX's")
+            dirty2 = false
+            return field
+        }
+    var limRevMotion = false
+        get() {
+            if(!dirty3) return field
+            active.firstOrNull()?.limitFwdMotion?: logger.debug("no active talonFX's")
+            dirty3 = false
+            return field
+        }
     var grapherStatusFrameHz : Double = 0.0;
     var isRioBus : Boolean = true;
     var controlRequestUpdateFreq: Double = 100.0;
@@ -213,7 +255,11 @@ open class TalonFxService(
         telemetryService.stop()
         active.filter { new.contains(it.deviceId) }.forEach{
             logger.info { "New SF_TalonFX: ${it.deviceId}" }
-            activeSlotIndex = it.talonFX.closedLoopSlot.value
+            activeSlotIndex = it.activeSlot
+            activeDifferentialSlot = it.differentialSlot
+            it.registerPosition()
+            it.registerVelocity()
+            it.registerAcceleration()
             telemetryService.register(it,true)
 
             //Update Freq Log

@@ -1649,14 +1649,26 @@ class Phoenix6ParameterCommand(
                 "fx" -> configFXBooleanParam(
                     if(bus=="rio") talonFxService.activeOpposeMain
                     else talonFxFDService.activeOpposeMain){ talonFx, value ->
-                    if(bus=="rio") talonFxService.activeOpposeMain = value
-                    else talonFxFDService.activeOpposeMain = value
+                    if(bus=="rio") {
+                        talonFxService.activeOpposeMain = value
+                        talonFxService.active.forEach { it.opposeMain = value }
+                    }
+                    else {
+                        talonFxFDService.activeOpposeMain = value
+                        talonFxFDService.active.forEach { it.opposeMain = value }
+                    }
                 }
                 "fxs" -> configFXSBooleanParam(
                     if(bus=="rio") talonFxsService.activeOpposeMain
                     else talonFxsFDService.activeOpposeMain) { talonFXS, value ->
-                    if(bus=="rio") talonFxsService.activeOpposeMain = value
-                    else talonFxsFDService.activeOpposeMain = value
+                    if(bus=="rio") {
+                        talonFxsService.activeOpposeMain = value
+                        talonFxsService.active.forEach { it.opposeMain = value }
+                    }
+                    else {
+                        talonFxsFDService.activeOpposeMain = value
+                        talonFxsFDService.active.forEach { it.opposeMain = value }
+                    }
                 }
                 else -> throw IllegalArgumentException()
             }
@@ -1665,16 +1677,28 @@ class Phoenix6ParameterCommand(
                     if(bus=="rio") talonFxService.activeDifferentialSlot
                     else talonFxFDService.activeDifferentialSlot){ talonFx, value ->
                     if(value >= 0 && value <= 2){
-                        if(bus=="rio") talonFxService.activeDifferentialSlot = value
-                        else talonFxFDService.activeDifferentialSlot = value
+                        if(bus=="rio") {
+                            talonFxService.activeDifferentialSlot = value
+                            talonFxsService.active.forEach { it.differentialSlot = value }
+                        }
+                        else {
+                            talonFxFDService.activeDifferentialSlot = value
+                            talonFxFDService.active.forEach { it.differentialSlot = value }
+                        }
                     } else terminal.warn("${value} is not a valid slot index, must be 0-2")
                 }
                 "fxs" -> configFXSIntParam(
                     if(bus=="rio") talonFxsService.activeDifferentialSlot
                     else talonFxsFDService.activeDifferentialSlot) { talonFXS, value ->
                     if(value >= 0 && value <= 2) {
-                        if(bus=="rio") talonFxsService.activeDifferentialSlot = value
-                        else talonFxsFDService.activeDifferentialSlot = value
+                        if(bus=="rio") {
+                            talonFxsService.activeDifferentialSlot = value
+                            talonFxsService.active.forEach { it.differentialSlot = value }
+                        }
+                        else {
+                            talonFxsFDService.activeDifferentialSlot = value
+                            talonFxsFDService.active.forEach { it.differentialSlot = value }
+                        }
                     } else terminal.warn("${value} is not a valid slot index, must be 0-2")
                 }
                 else -> throw IllegalArgumentException()
@@ -1698,14 +1722,26 @@ class Phoenix6ParameterCommand(
                 "fx" -> configFXBooleanParam(
                     if(bus=="rio") talonFxService.activeFOC
                     else talonFxFDService.activeFOC){ talonFx, value ->
-                    if(bus=="rio") talonFxService.activeFOC = value
-                    else talonFxFDService.activeFOC = value
+                    if(bus=="rio") {
+                        talonFxService.activeFOC = value
+                        talonFxService.active.forEach { it.setUseFOC(value) }
+                    }
+                    else {
+                        talonFxFDService.activeFOC = value
+                        talonFxFDService.active.forEach { it.setUseFOC(value) }
+                    }
                 }
                 "fxs" -> configFXSBooleanParam(
                     if(bus=="rio") talonFxsService.activeFOC
                     else talonFxsFDService.activeFOC) { talonFXS, value ->
-                    if(bus=="rio") talonFxsService.activeFOC = value
-                    else talonFxsFDService.activeFOC = value
+                    if(bus=="rio") {
+                        talonFxsService.activeFOC = value
+                        talonFxsService.active.forEach { it.setUseFOC(value) }
+                    }
+                    else {
+                        talonFxsFDService.activeFOC = value
+                        talonFxsFDService.active.forEach { it.setUseFOC(value) }
+                    }
                 }
                 else -> throw IllegalArgumentException()
             }
@@ -1713,14 +1749,26 @@ class Phoenix6ParameterCommand(
                 "fx" -> configFXBooleanParam(
                     if(bus=="rio") talonFxService.activeOverrideNeutral
                     else talonFxFDService.activeOverrideNeutral){ talonFx, value ->
-                    if(bus=="rio") talonFxService.activeOverrideNeutral = value
-                    else talonFxFDService.activeOverrideNeutral = value
+                    if(bus=="rio") {
+                        talonFxService.activeOverrideNeutral = value
+                        talonFxService.active.forEach { it.overrideNeutral = value }
+                    }
+                    else {
+                        talonFxFDService.activeOverrideNeutral = value
+                        talonFxFDService.active.forEach { it.overrideNeutral = value }
+                    }
                 }
                 "fxs" -> configFXSBooleanParam(
                     if(bus=="rio") talonFxsService.activeOverrideNeutral
                     else talonFxsFDService.activeOverrideNeutral) { talonFXS, value ->
-                    if(bus=="rio") talonFxsService.activeOverrideNeutral = value
-                    else talonFxsFDService.activeOverrideNeutral = value
+                    if(bus=="rio") {
+                        talonFxsService.activeOverrideNeutral = value
+                        talonFxsService.active.forEach { it.overrideNeutral = value }
+                    }
+                    else {
+                        talonFxsFDService.activeOverrideNeutral = value
+                        talonFxsFDService.active.forEach { it.overrideNeutral = value }
+                    }
                 }
                 else -> throw IllegalArgumentException()
             }
@@ -1728,14 +1776,26 @@ class Phoenix6ParameterCommand(
                 "fx" -> configFXBooleanParam(
                     if(bus=="rio") talonFxService.limFwdMotion
                     else talonFxFDService.limFwdMotion) { talonFx, value ->
-                    if(bus=="rio") talonFxService.limFwdMotion = value
-                    else talonFxFDService.limFwdMotion = value
+                    if(bus=="rio") {
+                        talonFxService.limFwdMotion = value
+                        talonFxService.active.forEach { it.forceFwdLimit(value) }
+                    }
+                    else {
+                        talonFxFDService.limFwdMotion = value
+                        talonFxFDService.active.forEach { it.forceFwdLimit(value) }
+                    }
                 }
                 "fxs" -> configFXSBooleanParam(
                     if(bus=="rio") talonFxsService.limFwdMotion
                     else talonFxsFDService.limFwdMotion) { talonFXS, value ->
-                    if(bus=="rio") talonFxsService.limFwdMotion = value
-                    else talonFxsFDService.limFwdMotion = value
+                    if(bus=="rio") {
+                        talonFxsService.limFwdMotion = value
+                        talonFxsService.active.forEach { it.forceFwdLimit(value) }
+                    }
+                    else {
+                        talonFxsFDService.limFwdMotion = value
+                        talonFxsFDService.active.forEach { it.forceFwdLimit(value) }
+                    }
                 }
                 else -> throw IllegalArgumentException()
             }
@@ -1743,14 +1803,26 @@ class Phoenix6ParameterCommand(
                 "fx" -> configFXBooleanParam(
                     if(bus=="rio") talonFxService.limRevMotion
                     else talonFxFDService.limRevMotion) { talonFx, value ->
-                    if(bus=="rio") talonFxService.limRevMotion = value
-                    else talonFxFDService.limRevMotion = value
+                    if(bus=="rio") {
+                        talonFxService.limRevMotion = value
+                        talonFxService.active.forEach { it.forceRevLimit(value) }
+                    }
+                    else {
+                        talonFxFDService.limRevMotion = value
+                        talonFxFDService.active.forEach { it.forceRevLimit(value) }
+                    }
                 }
                 "fxs" -> configFXSBooleanParam(
                     if(bus=="rio") talonFxsService.limRevMotion
                     else talonFxsFDService.limRevMotion) { talonFXS, value ->
-                    if(bus=="rio") talonFxsService.limRevMotion = value
-                    else talonFxsFDService.limRevMotion = value
+                    if(bus=="rio") {
+                        talonFxsService.limRevMotion = value
+                        talonFxsService.active.forEach { it.forceRevLimit(value) }
+                    }
+                    else {
+                        talonFxsFDService.limRevMotion = value
+                        talonFxsFDService.active.forEach { it.forceRevLimit(value) }
+                    }
                 }
                 else -> throw IllegalArgumentException()
             }
